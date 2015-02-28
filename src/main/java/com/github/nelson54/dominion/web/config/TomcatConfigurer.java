@@ -10,7 +10,7 @@ public class TomcatConfigurer implements EmbeddedServletContainerCustomizer {
 
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
-        container.setPort(8001);
+        container.setPort(8080);
     }
 
 }
