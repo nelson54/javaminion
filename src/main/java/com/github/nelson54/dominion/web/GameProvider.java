@@ -1,4 +1,4 @@
-package com.github.nelson54.dominionweb;
+package com.github.nelson54.dominion.web;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.GameFactory;

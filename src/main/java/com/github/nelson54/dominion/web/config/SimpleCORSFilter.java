@@ -1,4 +1,4 @@
-package com.github.nelson54.dominionweb.config;
+package com.github.nelson54.dominion.web.config;
 
 import org.springframework.stereotype.Component;
 

@@ -1,10 +1,10 @@
-package com.github.nelson54.dominionweb.controllers;
+package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.cards.Kingdom;
-import com.github.nelson54.dominionweb.GameProvider;
+import com.github.nelson54.dominion.web.GameProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

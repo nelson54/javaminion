@@ -1,4 +1,4 @@
-package com.github.nelson54.dominionweb.controllers;
+package com.github.nelson54.dominion.web.controllers;
 
 /**
  * Created by dnelson on 2/27/2015.

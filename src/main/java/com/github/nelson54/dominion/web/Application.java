@@ -1,4 +1,4 @@
-package com.github.nelson54.dominionweb;
+package com.github.nelson54.dominion.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
