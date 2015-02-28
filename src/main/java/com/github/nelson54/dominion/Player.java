@@ -38,7 +38,7 @@ public class Player {
         id = UUID.randomUUID();
         play = new HashSet<>();
         hand = new HashSet<>();
-        deck = new HashSet<>();
+        deck = new TreeSet<>();
         discard = new HashSet<>();
     }
 
