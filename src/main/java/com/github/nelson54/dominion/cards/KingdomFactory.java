@@ -7,35 +7,30 @@ import com.google.common.collect.ArrayListMultimap;
  */
 public class KingdomFactory {
 
-    Kingdom kingdom;
 
     public Kingdom getKingdom() throws IllegalAccessException, InstantiationException {
-        if(kingdom != null){
-            return kingdom;
-        }
-
-        kingdom = new Kingdom();
+        Kingdom kingdom = new Kingdom();
         kingdom.cardMarket = ArrayListMultimap.create();
 
-        addTreasureCards();
-        addVictoryCards();
+        addTreasureCards(kingdom);
+        addVictoryCards(kingdom);
 
         return kingdom;
     }
 
-    void addTreasureCards() throws InstantiationException, IllegalAccessException {
-        addXCardsOfType(60, Copper.class);
-        addXCardsOfType(60, Silver.class);
-        addXCardsOfType(60, Gold.class);
+    void addTreasureCards(Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+        addXCardsOfType(60, Copper.class, kingdom);
+        addXCardsOfType(60, Silver.class, kingdom);
+        addXCardsOfType(60, Gold.class, kingdom);
     }
 
-    void addVictoryCards() throws InstantiationException, IllegalAccessException {
-        addXCardsOfType(30, Estate.class);
-        addXCardsOfType(20, Duchy.class);
-        addXCardsOfType(10, Province.class);
+    void addVictoryCards(Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+        addXCardsOfType(30, Estate.class, kingdom);
+        addXCardsOfType(20, Duchy.class, kingdom);
+        addXCardsOfType(10, Province.class, kingdom);
     }
 
-    void addXCardsOfType(int x, Class<? extends Card> clazz) throws IllegalAccessException, InstantiationException {
+    void addXCardsOfType(int x, Class<? extends Card> clazz, Kingdom kingdom) throws IllegalAccessException, InstantiationException {
         for(; x > 0; x--) {
             Card card = clazz.newInstance();
             kingdom.cardMarket.put(card.getName(), card);
