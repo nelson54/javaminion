@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,23 +16,26 @@ public class GameProvider {
     @Autowired
     GameFactory gameFactory;
 
-    Map<String, Game> games;
+    Map<String, Game> gamesById;
+    Set<String> games;
 
     public GameProvider(){
-        games = new HashMap<>();
+        gamesById = new HashMap<>();
+        games = new LinkedHashSet<>();
     }
 
     public Game getGameByUuid(String uuid){
-        return games.get(uuid);
+        return gamesById.get(uuid);
     }
 
     public Game createGame() throws IllegalAccessException, InstantiationException {
         Game game = gameFactory.createGame(2);
-        games.put(game.getId().toString(), game);
+        games.add(game.getId().toString());
+        gamesById.put(game.getId().toString(), game);
         return game;
     }
 
     public Set<String> listGames(){
-        return games.keySet();
+        return games;
     }
 }
