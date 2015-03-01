@@ -13,6 +13,7 @@ import com.github.nelson54.dominion.exceptions.InsufficientActionsException;
 import com.github.nelson54.dominion.exceptions.InsufficientBuysException;
 import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static com.github.nelson54.dominion.Phase.ACTION;
@@ -41,6 +42,11 @@ public class Turn {
     long buyPool;
 
     String playerId;
+
+    public Turn() {
+        unresolvedChoices = new HashSet<>();
+        resolvedChoices = new HashSet<>();
+    }
 
     public void endPhase(){
         switch(phase){
