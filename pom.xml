@@ -36,7 +36,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/src/main/resources/public</outputDirectory>
+                            <outputDirectory>${basedir}/src/main/public</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${basedir}/src/main/js/dist</directory>
@@ -52,7 +52,7 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>${basedir}/src/main/resources/public</directory>
+                            <directory>${basedir}/src/main/public</directory>
                             <includes>
                                 <include>**/*</include>
                                 <include>**/*</include>
