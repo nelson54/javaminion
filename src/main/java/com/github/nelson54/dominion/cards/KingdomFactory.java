@@ -37,14 +37,14 @@ public class KingdomFactory {
         addXCardsOfType(10, Smithy.class, kingdom);
         addXCardsOfType(10, Village.class, kingdom);
         addXCardsOfType(10, CouncilRoom.class, kingdom);
-        //addXCardsOfType(10, Feast.class, kingdom);
+        addXCardsOfType(10, Feast.class, kingdom);
         addXCardsOfType(10, Festival.class, kingdom);
         addXCardsOfType(10, Gardens.class, kingdom);
         addXCardsOfType(10, Laboratory.class, kingdom);
         addXCardsOfType(10, Market.class, kingdom);
         addXCardsOfType(10, Moneylender.class, kingdom);
-        //addXCardsOfType(10, ThroneRoom.class, kingdom);
-        //addXCardsOfType(10, Witch.class, kingdom);
+        addXCardsOfType(10, ThroneRoom.class, kingdom);
+        addXCardsOfType(10, Witch.class, kingdom);
         addXCardsOfType(10, Woodcutter.class, kingdom);
 
     }

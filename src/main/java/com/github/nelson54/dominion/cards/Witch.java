@@ -21,8 +21,7 @@ public class Witch extends ActionAttackCard {
 
     @Override
     public void attack(Player player, Game game) {
-        getOtherPlayers(player, game)
-                .stream().forEach(p -> game.giveCardToPlayer("Curse", p));
+        game.giveCardToPlayer("Curse", player);
     }
 
     @Override
