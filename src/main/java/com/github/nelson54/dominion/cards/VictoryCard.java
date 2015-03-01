@@ -21,7 +21,11 @@ public abstract class VictoryCard extends Card {
         return victoryPoints;
     }
 
-    public void setVictoryPoints(byte victoryPoints) {
+    void setVictoryPoints(byte victoryPoints) {
         this.victoryPoints = victoryPoints;
+    }
+
+    public byte getVictoryPoints() {
+        return victoryPoints;
     }
 }

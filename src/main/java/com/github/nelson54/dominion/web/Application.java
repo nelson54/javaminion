@@ -1,5 +1,8 @@
 package com.github.nelson54.dominion.web;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.github.nelson54.dominion.GameFactory;
@@ -31,6 +34,7 @@ public class Application {
     public ObjectMapper getObjectMapper(){
 
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new GuavaModule());
 
         return objectMapper;

@@ -2,8 +2,7 @@ package com.github.nelson54.dominion;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.cards.TreasureCard;
+import com.github.nelson54.dominion.cards.*;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.cards.TreasureCard;
 
@@ -22,11 +21,23 @@ public class Player {
     @JsonProperty
     Set<Card> discard;
 
+
+
     Player(){
         id = UUID.randomUUID();
         hand = new HashSet<>();
         deck = new LinkedHashSet<>();
         discard = new HashSet<>();
+    }
+
+    @JsonProperty
+    public long getVictoryPoints(){
+        return getAllCards()
+                .stream()
+                .filter(card -> card instanceof VictoryCard)
+                .map(card -> (VictoryCard) card)
+                .mapToLong(VictoryCard::getVictoryPoints)
+                .sum();
     }
 
     @JsonIgnore
@@ -89,8 +100,6 @@ public class Player {
         this.id = id;
     }
 
-
-
     public Set<Card> getHand() {
         return hand;
     }
@@ -113,6 +122,16 @@ public class Player {
 
     public void setDiscard(Set<Card> discard) {
         this.discard = discard;
+    }
+
+    public Set<Card> getAllCards(){
+        Set<Card> allCards = new HashSet<>();
+
+        allCards.addAll(hand);
+        allCards.addAll(deck);
+        allCards.addAll(discard);
+
+        return allCards;
     }
 
     @Override
