@@ -1,6 +1,6 @@
 package com.github.nelson54.dominion.cards;
 
-public class Duchy extends VictoryCard {
+class Duchy extends VictoryCard {
 
     public Duchy() {
         super();

@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.*;
 import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.cards.TreasureCard;
 
 import java.util.*;
+
+import static com.github.nelson54.dominion.Phase.ACTION;
 
 public class Player {
     @JsonProperty
@@ -21,7 +22,11 @@ public class Player {
     @JsonProperty
     Set<Card> discard;
 
+    @JsonIgnore
+    Game game;
 
+    @JsonProperty
+    Turn currentTurn;
 
     Player(){
         id = UUID.randomUUID();
@@ -36,7 +41,7 @@ public class Player {
                 .stream()
                 .filter(card -> card instanceof VictoryCard)
                 .map(card -> (VictoryCard) card)
-                .mapToLong(VictoryCard::getVictoryPoints)
+                .mapToLong(card-> card.getVictoryPoints())
                 .sum();
     }
 
@@ -45,9 +50,22 @@ public class Player {
         return false;
     }
 
-    public void resetForTurn(){
+    public void resetForNextTurn(Turn turn){
+        if(turn != null)
+            hand.addAll(turn.getPlay());
+
         discardHand();
         drawHand();
+
+        currentTurn = new Turn();
+        currentTurn.setPlayerId(id.toString());
+        currentTurn.setGame(game);
+        currentTurn.setBuyPool(1);
+        currentTurn.setActionPool(1);
+        currentTurn.setMoneyPool(0);
+        currentTurn.setPhase(ACTION);
+        currentTurn.setPlay(new LinkedHashSet<>());
+        currentTurn.setPlayer(this);
 
     }
 
@@ -70,6 +88,8 @@ public class Player {
     }
 
     public void discardHand(){
+
+
         discard.addAll(hand);
         hand.clear();
     }
@@ -90,6 +110,16 @@ public class Player {
 
         hand.addAll(drawnCards);
         deck.removeAll(drawnCards);
+    }
+
+    public Set<Card> getAllCards(){
+        Set<Card> allCards = new HashSet<>();
+
+        allCards.addAll(hand);
+        allCards.addAll(deck);
+        allCards.addAll(discard);
+
+        return allCards;
     }
 
     public UUID getId() {
@@ -124,14 +154,20 @@ public class Player {
         this.discard = discard;
     }
 
-    public Set<Card> getAllCards(){
-        Set<Card> allCards = new HashSet<>();
+    public Game getGame() {
+        return game;
+    }
 
-        allCards.addAll(hand);
-        allCards.addAll(deck);
-        allCards.addAll(discard);
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
-        return allCards;
+    public Turn getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public void setCurrentTurn(Turn currentTurn) {
+        this.currentTurn = currentTurn;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.github.nelson54.dominion.cards;
+import com.github.nelson54.dominion.Kingdom;
 
-import com.github.nelson54.dominion.cards.*;
 import com.google.common.collect.ArrayListMultimap;
 
 /**
@@ -8,9 +8,9 @@ import com.google.common.collect.ArrayListMultimap;
  */
 public class KingdomFactory {
 
-    public com.github.nelson54.dominion.Kingdom getKingdom() throws IllegalAccessException, InstantiationException {
+    public Kingdom getKingdom() throws IllegalAccessException, InstantiationException {
 
-        com.github.nelson54.dominion.Kingdom kingdom = new com.github.nelson54.dominion.Kingdom();
+        Kingdom kingdom = new Kingdom();
         kingdom.setCardMarket(ArrayListMultimap.create());
 
         addTreasureCards(kingdom);
@@ -20,24 +20,36 @@ public class KingdomFactory {
         return kingdom;
     }
 
-    void addTreasureCards(com.github.nelson54.dominion.Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+    void addTreasureCards(Kingdom kingdom) throws InstantiationException, IllegalAccessException {
         addXCardsOfType(60, Copper.class, kingdom);
         addXCardsOfType(60, Silver.class, kingdom);
         addXCardsOfType(60, Gold.class, kingdom);
     }
 
-    void addVictoryCards(com.github.nelson54.dominion.Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+    void addVictoryCards(Kingdom kingdom) throws InstantiationException, IllegalAccessException {
         addXCardsOfType(30, Estate.class, kingdom);
         addXCardsOfType(20, Duchy.class, kingdom);
         addXCardsOfType(10, Province.class, kingdom);
+        addXCardsOfType(20, CurseCard.class, kingdom);
     }
 
-    void addKingdomCards(com.github.nelson54.dominion.Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+    void addKingdomCards(Kingdom kingdom) throws InstantiationException, IllegalAccessException {
         addXCardsOfType(10, Smithy.class, kingdom);
         addXCardsOfType(10, Village.class, kingdom);
+        addXCardsOfType(10, CouncilRoom.class, kingdom);
+        //addXCardsOfType(10, Feast.class, kingdom);
+        addXCardsOfType(10, Festival.class, kingdom);
+        addXCardsOfType(10, Gardens.class, kingdom);
+        addXCardsOfType(10, Laboratory.class, kingdom);
+        addXCardsOfType(10, Market.class, kingdom);
+        addXCardsOfType(10, Moneylender.class, kingdom);
+        //addXCardsOfType(10, ThroneRoom.class, kingdom);
+        //addXCardsOfType(10, Witch.class, kingdom);
+        addXCardsOfType(10, Woodcutter.class, kingdom);
+
     }
 
-    void addXCardsOfType(int x, Class<? extends Card> clazz, com.github.nelson54.dominion.Kingdom kingdom) throws IllegalAccessException, InstantiationException {
+    void addXCardsOfType(int x, Class<? extends Card> clazz, Kingdom kingdom) throws IllegalAccessException, InstantiationException {
         for(; x > 0; x--) {
             Card card = clazz.newInstance();
             kingdom.getCardMarket().put(card.getName(), card);

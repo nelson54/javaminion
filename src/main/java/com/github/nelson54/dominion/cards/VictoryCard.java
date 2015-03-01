@@ -1,8 +1,6 @@
 package com.github.nelson54.dominion.cards;
 
-import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Player;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Created by dnelson on 2/26/2015.
@@ -10,22 +8,19 @@ import com.github.nelson54.dominion.Player;
 public abstract class VictoryCard extends Card {
 
     byte moneyCost;
-    byte victoryPoints;
+    private byte victoryPoints;
 
     public VictoryCard() {
         super();
         cardTypes.add(CardType.VICTORY);
     }
 
-    byte getVictoryPoints(Player player, Game game){
+    @JsonIgnore
+    public byte getVictoryPoints(){
         return victoryPoints;
     }
 
     void setVictoryPoints(byte victoryPoints) {
         this.victoryPoints = victoryPoints;
-    }
-
-    public byte getVictoryPoints() {
-        return victoryPoints;
     }
 }

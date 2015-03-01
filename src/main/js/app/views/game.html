@@ -40,6 +40,15 @@
 
 
   <div>
+    <h3>Play ({{turn.play.length}})</h3>
+    <ul>
+      <li ng-repeat="card in turn.play">
+        <button ng-disabled="" ng-click="play(card)">{{card.name}}</button>
+      </li>
+    </ul>
+  </div>
+
+  <div>
     <h3>Hand ({{player.hand.length}})</h3>
     <ul>
       <li ng-repeat="card in player.hand">

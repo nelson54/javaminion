@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.cards.effects.Effect;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,27 +13,27 @@ import java.util.UUID;
 public class Card {
 
     @JsonProperty
+    private
     UUID id;
 
-    @JsonBackReference
+    @JsonIgnore
+    private
     Player owner;
 
     @JsonProperty
+    private
     String name;
 
     @JsonProperty
+    private
     Cost cost;
 
     @JsonProperty
     Set<CardType> cardTypes;
 
-    @JsonIgnore
-    Set<Effect> effects;
-
     public Card() {
         id = UUID.randomUUID();
-        effects = new HashSet<Effect>();
-        cardTypes = new HashSet<CardType>();
+        cardTypes = new HashSet<>();
     }
 
     public UUID getId() {
@@ -57,7 +56,7 @@ public class Card {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -65,7 +64,7 @@ public class Card {
         return cost;
     }
 
-    public void setCost(Cost cost) {
+    void setCost(Cost cost) {
         this.cost = cost;
     }
 
@@ -75,13 +74,5 @@ public class Card {
 
     public void setCardTypes(Set<CardType> cardTypes) {
         this.cardTypes = cardTypes;
-    }
-
-    public Set<Effect> getEffects() {
-        return effects;
-    }
-
-    public void setEffects(Set<Effect> effects) {
-        this.effects = effects;
     }
 }

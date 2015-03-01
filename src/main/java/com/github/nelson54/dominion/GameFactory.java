@@ -28,18 +28,23 @@ public class GameFactory {
 
     void addPlayers(int players, Game game){
         for(; players > 0; players--){
-            addPlayer(game, game.getPlayers(), game.getKingdom());
+            Player player = createPlayer(game, game.getPlayers(), game.getKingdom());
+
+            game.getPlayers().put(player.getId().toString(), player);
+
         }
     }
 
-    void addPlayer(Game game, Map<String, Player> players, Kingdom kingdom){
+    Player createPlayer(Game game, Map<String, Player> players, Kingdom kingdom){
         Player player = new Player();
+        player.setGame(game);
         addStartingCardsToPlayer(player, kingdom, game);
 
-        players.put(player.getId().toString(), player);
         game.getTurnOrder().add(player);
 
-        player.resetForTurn();
+        player.resetForNextTurn(null);
+
+        return player;
     }
 
     void addStartingCardsToPlayer(Player player, Kingdom kingdom, Game game){

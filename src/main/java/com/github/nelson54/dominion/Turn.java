@@ -1,11 +1,13 @@
 package com.github.nelson54.dominion;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.ActionCard;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.cards.TreasureCard;
+import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
 import com.github.nelson54.dominion.exceptions.InsufficientActionsException;
 import com.github.nelson54.dominion.exceptions.InsufficientBuysException;
@@ -16,28 +18,37 @@ import java.util.Set;
 import static com.github.nelson54.dominion.Phase.ACTION;
 import static com.github.nelson54.dominion.Phase.BUY;
 
-/**
- * Created by dnelson on 2/28/2015.
- */
 public class Turn {
 
     @JsonBackReference
     Game game;
+    @JsonIgnore
     Player player;
+    @JsonProperty
     Phase phase;
 
+    @JsonProperty
+    Set<Choice> unresolvedChoices;
+    @JsonIgnore
+    Set<Choice> resolvedChoices;
+
+
+    @JsonProperty
     Set<Card> play;
 
     long actionPool;
     long moneyPool;
     long buyPool;
 
+    String playerId;
 
     public void endPhase(){
         switch(phase){
+            case WAITING_FOR_EFFECTS:
+                break;
             case BUY:
                 phase = ACTION;
-                player.resetForTurn();
+                player.resetForNextTurn(this);
                 game.nextPlayer();
                 break;
             case ACTION:
@@ -46,7 +57,6 @@ public class Turn {
                 break;
         }
     }
-
 
     public void playCard(ActionCard card, Player player, Game game){
         if(phase != ACTION){
@@ -58,6 +68,8 @@ public class Turn {
         }
 
         actionPool--;
+        player.getHand().remove(card);
+        getPlay().add(card);
         card.apply(player, game);
     }
 
@@ -91,6 +103,11 @@ public class Turn {
                 .map(card -> (TreasureCard)card)
                 .mapToLong(card -> (int)card.getMoneyValue(player, game))
                 .sum() + moneyPool;
+    }
+
+    public void addChoice(Choice<?> choice){
+        phase = Phase.WAITING_FOR_CHOICE;
+        unresolvedChoices.add(choice);
     }
 
     public long addToMoneyPool(long money){
@@ -155,5 +172,29 @@ public class Turn {
 
     public void setBuyPool(long buyPool) {
         this.buyPool = buyPool;
+    }
+
+    public Set<Choice> getUnresolvedChoices() {
+        return unresolvedChoices;
+    }
+
+    public void setUnresolvedChoices(Set<Choice> unresolvedChoices) {
+        this.unresolvedChoices = unresolvedChoices;
+    }
+
+    public Set<Choice> getResolvedChoices() {
+        return resolvedChoices;
+    }
+
+    public void setResolvedChoices(Set<Choice> resolvedChoices) {
+        this.resolvedChoices = resolvedChoices;
+    }
+
+    public String getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
     }
 }

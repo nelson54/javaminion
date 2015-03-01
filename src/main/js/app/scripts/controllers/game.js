@@ -64,7 +64,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.isActivePlayer = function(player) {
-      return game.turn.player.id === player.id;
+      return game.turn.playerId === player.id;
     }
 
     $scope.hasCurrentPlayer = function(){

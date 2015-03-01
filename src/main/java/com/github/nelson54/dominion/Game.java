@@ -23,6 +23,9 @@ public class Game {
     @JsonIgnore
     List<Turn> pastTurns;
 
+    @JsonProperty
+    Set<Card> trash;
+
     @JsonIgnore
     Iterator<Player> turnerator;
 
@@ -38,6 +41,7 @@ public class Game {
     public Game() {
         id = UUID.randomUUID();
         pastTurns = new ArrayList<>();
+        trash = new HashSet<>();
     }
 
     Player nextPlayer(){
@@ -51,17 +55,10 @@ public class Game {
             return null;
         }
 
+        Player nextPlayer = turnerator.next();
         pastTurns.add(turn);
-        turn = new Turn();
-        turn.setGame(this);
-        turn.setBuyPool(1);
-        turn.setActionPool(1);
-        turn.setMoneyPool(0);
-        turn.setPhase(ACTION);
-        turn.setPlay(new LinkedHashSet<>());
-        turn.setPlayer(turnerator.next());
-
-        return turn.getPlayer();
+        turn = nextPlayer.getCurrentTurn();
+        return nextPlayer;
     }
 
     public Card giveCardToPlayer(String name, Player player){
@@ -125,5 +122,17 @@ public class Game {
 
     public void setTurn(Turn turn) {
         this.turn = turn;
+    }
+
+    public void trashCard(Card card){
+        Player player = card.getOwner();
+
+        player.getDiscard().remove(card);
+        player.getDeck().remove(card);
+        player.getHand().remove(card);
+
+        card.setOwner(null);
+
+        trash.add(card);
     }
 }

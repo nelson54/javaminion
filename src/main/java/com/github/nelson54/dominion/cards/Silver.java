@@ -3,7 +3,7 @@ package com.github.nelson54.dominion.cards;
 /**
  * Created by dnelson on 2/26/2015.
  */
-public class Silver extends TreasureCard {
+class Silver extends TreasureCard {
 
     public Silver() {
         super();

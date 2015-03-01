@@ -1,9 +1,7 @@
 package com.github.nelson54.dominion.cards;
 
-/**
- * Created by dnelson on 2/26/2015.
- */
-public class Estate extends VictoryCard {
+
+class Estate extends VictoryCard {
 
     public Estate() {
         super();

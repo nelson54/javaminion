@@ -9,7 +9,7 @@ import com.github.nelson54.dominion.Player;
 public abstract class TreasureCard extends Card {
 
     byte moneyCost;
-    byte moneyValue;
+    private byte moneyValue;
 
     public TreasureCard() {
         super();
