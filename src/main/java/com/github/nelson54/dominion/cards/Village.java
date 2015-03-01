@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.Turn;
 
 /**
  * Created by dnelson on 2/28/2015.
@@ -21,7 +22,8 @@ public class Village extends ActionCard {
 
     @Override
     public void apply(Player player, Game game) {
+        Turn turn = game.getTurn();
         player.drawXCards(1);
-        player.setActions(player.getActions()+2);
+        turn.setActionPool(turn.getActionPool() + 2);
     }
 }

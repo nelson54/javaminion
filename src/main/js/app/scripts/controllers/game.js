@@ -56,7 +56,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.canAfford = function(card){
-      return $scope.getCurrentPlayer() && $scope.getCurrentPlayer().money >= card.cost.money;
+      return $scope.getCurrentPlayer() && $scope.game.turn.money >= card.cost.money;
     };
 
     $scope.isCurrentPlayer = function(player) {
@@ -64,7 +64,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.isActivePlayer = function(player) {
-      return game.active.id === player.id;
+      return game.turn.player.id === player.id;
     }
 
     $scope.hasCurrentPlayer = function(){

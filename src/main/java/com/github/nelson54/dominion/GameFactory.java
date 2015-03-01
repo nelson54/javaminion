@@ -1,8 +1,5 @@
 package com.github.nelson54.dominion;
 
-import com.github.nelson54.dominion.cards.Kingdom;
-import com.github.nelson54.dominion.cards.KingdomFactory;
-import com.github.nelson54.dominion.cards.Kingdom;
 import com.github.nelson54.dominion.cards.KingdomFactory;
 
 import java.util.HashMap;
@@ -19,15 +16,12 @@ public class GameFactory {
     public Game createGame(int players) throws InstantiationException, IllegalAccessException {
         Game game = new Game();
 
-        game.setPhase(Phase.BUY);
         game.setKingdom(kingdomFactory.getKingdom());
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new HashSet<>());
 
         addPlayers(players, game);
-
         game.nextPlayer();
-        game.endPhase();
 
         return game;
     }
@@ -40,7 +34,7 @@ public class GameFactory {
 
     void addPlayer(Game game, Map<String, Player> players, Kingdom kingdom){
         Player player = new Player();
-        addStartingCardsToPlayer(player, kingdom);
+        addStartingCardsToPlayer(player, kingdom, game);
 
         players.put(player.getId().toString(), player);
         game.getTurnOrder().add(player);
@@ -48,18 +42,18 @@ public class GameFactory {
         player.resetForTurn();
     }
 
-    void addStartingCardsToPlayer(Player player, Kingdom kingdom){
+    void addStartingCardsToPlayer(Player player, Kingdom kingdom, Game game){
 
-        kingdom.giveCardToPlayer("Estate", player);
-        kingdom.giveCardToPlayer("Estate", player);
-        kingdom.giveCardToPlayer("Estate", player);
-        kingdom.giveCardToPlayer("Copper", player);
-        kingdom.giveCardToPlayer("Copper", player);
-        kingdom.giveCardToPlayer("Copper", player);
-        kingdom.giveCardToPlayer("Copper", player);
-        kingdom.giveCardToPlayer("Copper", player);
-        kingdom.giveCardToPlayer("Copper", player);
-        kingdom.giveCardToPlayer("Copper", player);
+        game.giveCardToPlayer("Estate", player);
+        game.giveCardToPlayer("Estate", player);
+        game.giveCardToPlayer("Estate", player);
+        game.giveCardToPlayer("Copper", player);
+        game.giveCardToPlayer("Copper", player);
+        game.giveCardToPlayer("Copper", player);
+        game.giveCardToPlayer("Copper", player);
+        game.giveCardToPlayer("Copper", player);
+        game.giveCardToPlayer("Copper", player);
+        game.giveCardToPlayer("Copper", player);
 
     }
 

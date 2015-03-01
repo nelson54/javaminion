@@ -6,5 +6,5 @@ package com.github.nelson54.dominion;
 public enum Phase {
     ACTION,
     BUY,
-    END
+    END_OF_GAME
 }

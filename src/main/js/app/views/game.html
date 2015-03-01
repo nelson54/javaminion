@@ -1,13 +1,12 @@
 <div>
   <h4>Game - {{game.id}}</h4>
-  <p>Phase: {{game.phase}}</p>
 </div>
 
 <div>
   <h3>Kingdom</h3>
   <ul>
     <li ng-repeat="(name, cards) in game.kingdom.cardMarket">
-      <button class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || game.phase !== 'BUY'">{{name}} ({{cards.length}})</button>
+      <button class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || game.turn.phase !== 'BUY'">{{name}} ({{cards.length}})</button>
     </li>
   </ul>
 </div>
@@ -19,12 +18,12 @@
   </li>
 </ul>
 
-<div ng-if="hasCurrentPlayer()" ng-init="player = getCurrentPlayer()">
-  <h4>Current Player - {{getCurrentPlayer().id}}</h4>
+<div ng-if="hasCurrentPlayer()" ng-init="player = getCurrentPlayer(); turn = game.turn;">
+  <p>Phase: {{turn.phase}}</p>
   <span>Id: {{player.id}}</span><br>
-  <span>Actions: {{player.actions}}</span><br>
-  <span>Buys: {{player.buys}}</span><br>
-  <span>Money: {{player.money}}</span><br>
+  <span>Actions: {{turn.actionPool}}</span><br>
+  <span>Buys: {{turn.buyPool}}</span><br>
+  <span>Money: {{turn.money}}</span><br>
   <p>
     <button ng-click="shuffle()">Shuffle</button>
   </p>

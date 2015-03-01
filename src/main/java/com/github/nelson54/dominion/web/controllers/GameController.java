@@ -38,7 +38,6 @@ public class GameController {
             String id
     ){
         Game game = gameProvider.getGameByUuid(id);
-        game.endPhase();
+        game.getTurn().endPhase();
     }
-
 }

@@ -14,9 +14,6 @@ public class Player {
     UUID id;
 
     @JsonProperty
-    Set<Card> play;
-
-    @JsonProperty
     Set<Card> hand;
 
     @JsonProperty
@@ -25,18 +22,8 @@ public class Player {
     @JsonProperty
     Set<Card> discard;
 
-    @JsonProperty
-    long actions = 1;
-
-    @JsonProperty
-    long buys = 1;
-
-    @JsonIgnore
-    long moneys = 0;
-
     Player(){
         id = UUID.randomUUID();
-        play = new HashSet<>();
         hand = new HashSet<>();
         deck = new LinkedHashSet<>();
         discard = new HashSet<>();
@@ -48,29 +35,9 @@ public class Player {
     }
 
     public void resetForTurn(){
-        buys = 1;
-        actions = 1;
-        moneys = 0;
-
-        hand.addAll(play);
-        play.clear();
-
         discardHand();
         drawHand();
 
-    }
-
-    @JsonProperty("money")
-    public long getMoney() {
-        return hand.stream()
-                .filter(card -> card instanceof TreasureCard)
-                .map(card -> (TreasureCard)card)
-                .mapToLong(card -> (int)card.getMoneyValue(this))
-                .sum() + moneys;
-    }
-
-    public void spendMoney(long money) {
-        moneys -= money;
     }
 
     public void shuffle(){
@@ -94,10 +61,6 @@ public class Player {
     public void discardHand(){
         discard.addAll(hand);
         hand.clear();
-    }
-
-    public long addToMoneyPool(long money){
-        return moneys += money;
     }
 
     public void drawXCards(long x){
@@ -150,23 +113,6 @@ public class Player {
 
     public void setDiscard(Set<Card> discard) {
         this.discard = discard;
-    }
-
-
-    public long getActions() {
-        return actions;
-    }
-
-    public void setActions(long actions) {
-        this.actions = actions;
-    }
-
-    public long getBuys() {
-        return buys;
-    }
-
-    public void setBuys(long buys) {
-        this.buys = buys;
     }
 
     @Override

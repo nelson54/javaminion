@@ -2,24 +2,15 @@ package com.github.nelson54.dominion;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.nelson54.dominion.cards.ActionCard;
 import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.cards.Kingdom;
-import com.github.nelson54.dominion.cards.Kingdom;
-import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
-import com.github.nelson54.dominion.exceptions.InsufficientActionsException;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static com.github.nelson54.dominion.Phase.*;
 
-/**
- * Created by dnelson on 2/26/2015.
- */
+
 public class Game {
+
     @JsonProperty
     UUID id;
 
@@ -30,29 +21,23 @@ public class Game {
     Set<Player> turnOrder;
 
     @JsonIgnore
+    List<Turn> pastTurns;
+
+    @JsonIgnore
     Iterator<Player> turnerator;
 
     @JsonProperty
     Map<String, Player> players;
 
     @JsonProperty
-    Player active;
+    boolean gameOver;
 
     @JsonProperty
-    Phase phase;
+    Turn turn;
 
-    public void endPhase(){
-        switch(phase){
-            case BUY:
-                phase = ACTION;
-                active.resetForTurn();
-                nextPlayer();
-                break;
-            case ACTION:
-            default:
-                phase = BUY;
-                break;
-        }
+    public Game() {
+        id = UUID.randomUUID();
+        pastTurns = new ArrayList<>();
     }
 
     Player nextPlayer(){
@@ -61,32 +46,41 @@ public class Game {
         }
 
         if(isGameOver()){
-            phase = END;
+            turn.phase = END_OF_GAME;
+            gameOver = true;
             return null;
         }
 
-        return active = turnerator.next();
+        pastTurns.add(turn);
+        turn = new Turn();
+        turn.setGame(this);
+        turn.setBuyPool(1);
+        turn.setActionPool(1);
+        turn.setMoneyPool(0);
+        turn.setPhase(ACTION);
+        turn.setPlay(new LinkedHashSet<>());
+        turn.setPlayer(turnerator.next());
+
+        return turn.getPlayer();
     }
 
-    public void playCard(ActionCard card, Player player){
-        if(phase != ACTION){
-            throw new IncorrectPhaseException();
-        }
+    public Card giveCardToPlayer(String name, Player player){
+        Collection<Card> cards = kingdom.getCardsByName(name);
+        Optional<Card> purchasedCard;
 
-        if(player.actions == 0) {
-            throw new InsufficientActionsException();
+        if(cards != null) {
+            purchasedCard = cards.stream().filter(card -> card.getOwner() == null).findFirst();
+            cards.remove(purchasedCard.get());
+            purchasedCard.ifPresent(card -> card.setOwner(player));
+            player.getDiscard().add(purchasedCard.get());
+            return purchasedCard.get();
+        } else {
+            return null;
         }
-
-        player.actions--;
-        card.apply(player, this);
     }
 
     boolean isGameOver(){
         return kingdom.getNumberOfRemainingCardsByName("Province") == 0;
-    }
-
-    public Game() {
-        id = UUID.randomUUID();
     }
 
     public UUID getId() {
@@ -113,27 +107,23 @@ public class Game {
         this.kingdom = kingdom;
     }
 
-    public Player getActive() {
-        return active;
-    }
-
-    public void setActive(Player active) {
-        this.active = active;
-    }
-
-    public Phase getPhase() {
-        return phase;
-    }
-
-    public void setPhase(Phase phase) {
-        this.phase = phase;
-    }
-
     Set<Player> getTurnOrder() {
         return turnOrder;
     }
 
     void setTurnOrder(Set<Player> turnOrder) {
         this.turnOrder = turnOrder;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+    public Turn getTurn() {
+        return turn;
+    }
+
+    public void setTurn(Turn turn) {
+        this.turn = turn;
     }
 }

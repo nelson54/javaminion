@@ -16,7 +16,6 @@ public class Card {
     @JsonProperty
     UUID id;
 
-    @JsonProperty
     @JsonBackReference
     Player owner;
 
