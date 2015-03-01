@@ -14,6 +14,7 @@ import com.github.nelson54.dominion.exceptions.InsufficientBuysException;
 import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.github.nelson54.dominion.Phase.ACTION;
@@ -74,7 +75,7 @@ public class Turn {
         }
 
         actionPool--;
-        player.getHand().remove(card);
+        player.getHand();
         getPlay().add(card);
         card.apply(player, game);
     }
@@ -114,6 +115,20 @@ public class Turn {
     public void addChoice(Choice<?> choice){
         phase = Phase.WAITING_FOR_CHOICE;
         unresolvedChoices.add(choice);
+    }
+
+    public Optional<Choice>  getUnresolvedChoiceById(String id){
+        Optional<Choice> optChoice = Optional.empty();
+
+        for(Choice choice : unresolvedChoices){
+            if(choice.getId().toString().equals(id)){
+
+                optChoice = Optional.of(choice);
+                break;
+            }
+        }
+
+        return optChoice;
     }
 
     public long addToMoneyPool(long money){

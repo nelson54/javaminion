@@ -1,16 +1,10 @@
 package com.github.nelson54.dominion.effects;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
-import com.github.nelson54.dominion.choices.ChoiceType;
-
-import java.util.Set;
 
 public abstract class Effect<T> {
 
@@ -31,13 +25,13 @@ public abstract class Effect<T> {
         cancelled = false;
     }
 
-    public void resolve(ChoiceResponse<T> response){
+    public void resolve(ChoiceResponse response){
         if(!cancelled){
-            effect(response.getResponse());
+            effect(response);
         }
     }
 
-    abstract void effect(T response);
+    abstract void effect(ChoiceResponse response);
 
     public Player getOwner() {
         return owner;

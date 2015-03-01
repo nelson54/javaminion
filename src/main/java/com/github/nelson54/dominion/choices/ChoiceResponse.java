@@ -1,5 +1,6 @@
 package com.github.nelson54.dominion.choices;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.effects.Effect;
@@ -9,23 +10,21 @@ import java.util.Set;
 /**
  * Created by dnelson on 3/1/2015.
  */
-public class ChoiceResponse<T> {
+public class ChoiceResponse {
 
+    String targetChoice;
+
+    @JsonIgnore
     Player source;
+    @JsonIgnore
     Effect effect;
 
     ChoiceType choiceType;
+    Card card;
     Set<Card> cards;
+    String choice;
+    Set<String> choices;
 
-    T response;
-
-    public T getResponse() {
-        return response;
-    }
-
-    public void setResponse(T response) {
-        this.response = response;
-    }
 
     public Player getSource() {
         return source;
@@ -51,11 +50,43 @@ public class ChoiceResponse<T> {
         this.choiceType = choiceType;
     }
 
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
     public Set<Card> getCards() {
         return cards;
     }
 
-    public void setCards(Set<Card> cards) {
-        this.cards = cards;
+    public void setCardsChoice(Set<Card> cardsChoice) {
+        this.cards = cardsChoice;
+    }
+
+    public String getChoice() {
+        return choice;
+    }
+
+    public void setChoice(String choice) {
+        this.choice = choice;
+    }
+
+    public Set<String> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(Set<String> choiceTexts) {
+        this.choices = choiceTexts;
+    }
+
+    public String getTargetChoice() {
+        return targetChoice;
+    }
+
+    public void setTargetChoice(String targetChoice) {
+        this.targetChoice = targetChoice;
     }
 }

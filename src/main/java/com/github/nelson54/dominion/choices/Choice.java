@@ -1,5 +1,6 @@
 package com.github.nelson54.dominion.choices;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
@@ -7,10 +8,13 @@ import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.effects.Effect;
 
 import java.util.Set;
+import java.util.UUID;
 
 public class Choice<T> {
-
+    UUID id;
+    @JsonIgnore
     Player target;
+    @JsonIgnore
     Player owner;
     Card source;
 
@@ -23,9 +27,9 @@ public class Choice<T> {
 
     Effect<T> effect;
 
-    Turn turn;
-
     public Choice(Player target, Card source){
+
+        this.id = UUID.randomUUID();
         this.target = target;
         this.source = source;
         this.owner = source.getOwner();
@@ -39,19 +43,21 @@ public class Choice<T> {
         effect.setChoice(this);
     }
 
-    public void apply(ChoiceResponse<T> response){
+    public void apply(ChoiceResponse choiceResponse, Turn turn){
         Set<Choice> choices = turn.getUnresolvedChoices();
         Set<Choice> resolved = turn.getResolvedChoices();
 
         choices.remove(this);
         resolved.add(this);
 
-        effect.resolve(response);
+        effect.resolve(choiceResponse);
 
         if(choices.size() == 0){
             turn.setPhase(Phase.ACTION);
         }
-    };
+    }
+
+
 
     public String getMessage() {
         return message;
@@ -83,14 +89,6 @@ public class Choice<T> {
 
     public void setEffect(Effect<T> effect) {
         this.effect = effect;
-    }
-
-    public Turn getTurn() {
-        return turn;
-    }
-
-    public void setTurn(Turn turn) {
-        this.turn = turn;
     }
 
     public Range getRange() {
@@ -131,5 +129,13 @@ public class Choice<T> {
 
     public void setSource(Card source) {
         this.source = source;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

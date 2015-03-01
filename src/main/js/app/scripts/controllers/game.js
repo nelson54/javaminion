@@ -31,6 +31,11 @@ angular.module('dominionFrontendApp')
       Game.get({gameId : game.id, playerId : playerId}, $route.reload);
     };
 
+    $scope.canAfford = function(card){
+      return $scope.getCurrentPlayer() && $scope.game.turn.money >= card.cost.money;
+    };
+
+
     $scope.purchase = function(card){
       var Purchase = $resource('/dominion/:gameId/:playerId/purchase');
 
@@ -55,8 +60,14 @@ angular.module('dominionFrontendApp')
       endPhase.$save({gameId : game.id},$route.reload);
     };
 
-    $scope.canAfford = function(card){
-      return $scope.getCurrentPlayer() && $scope.game.turn.money >= card.cost.money;
+    $scope.choose = function(game, player, choose, response){
+      var Choice = $resource('/dominion/:gameId/:playerId/choice');
+
+      var choice = new Choice();
+      choice.targetChoice = choose.id;
+      choice.card = response;
+
+      choice.$save({gameId : game.id, playerId:player.id},$route.reload);
     };
 
     $scope.isCurrentPlayer = function(player) {

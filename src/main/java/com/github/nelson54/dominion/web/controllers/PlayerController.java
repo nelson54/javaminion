@@ -2,9 +2,10 @@ package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.ActionCard;
 import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.Kingdom;
+import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.web.GameProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -79,14 +80,14 @@ public class PlayerController {
     }
 
     @RequestMapping(value = "/play", method = RequestMethod.POST)
-    Game play(
-            @PathVariable("gameId")
-            String gameId,
-            @PathVariable("playerId")
-            String playerId,
-            @RequestBody
-            Card card
-    ) {
+     Game play(
+                    @PathVariable("gameId")
+                    String gameId,
+                    @PathVariable("playerId")
+                    String playerId,
+                    @RequestBody
+                    Card card
+            ) {
         Game game = gameProvider.getGameByUuid(gameId);
         Player player = game.getPlayers().get(playerId);
 
@@ -101,6 +102,25 @@ public class PlayerController {
         } else {
             throw new IllegalStateException();
         }
+
+        return game;
+    }
+
+    @RequestMapping(value = "/choice", method = RequestMethod.POST)
+    Game chooseCard(
+            @PathVariable("gameId")
+            String gameId,
+            @PathVariable("playerId")
+            String playerId,
+            @RequestBody
+            ChoiceResponse choiceResponse
+    ) {
+        Game game = gameProvider.getGameByUuid(gameId);
+        Player player = game.getPlayers().get(playerId);
+        Turn turn = player.getCurrentTurn();
+
+        turn.getUnresolvedChoiceById(choiceResponse.getTargetChoice())
+                .ifPresent(choice -> choice.apply(choiceResponse, turn));
 
         return game;
     }

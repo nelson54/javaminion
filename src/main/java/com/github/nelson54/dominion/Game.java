@@ -3,10 +3,11 @@ package com.github.nelson54.dominion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.Card;
+import com.google.common.collect.Multimap;
 
 import java.util.*;
 
-import static com.github.nelson54.dominion.Phase.*;
+import static com.github.nelson54.dominion.Phase.END_OF_GAME;
 
 
 public class Game {
@@ -19,6 +20,9 @@ public class Game {
 
     @JsonIgnore
     Set<Player> turnOrder;
+
+    @JsonIgnore
+    Map<String, Card> allCards;
 
     @JsonIgnore
     List<Turn> pastTurns;
@@ -41,6 +45,7 @@ public class Game {
     public Game() {
         id = UUID.randomUUID();
         pastTurns = new ArrayList<>();
+        allCards = new HashMap<>();
         trash = new HashSet<>();
     }
 
@@ -101,6 +106,15 @@ public class Game {
     }
 
     public void setKingdom(Kingdom kingdom) {
+        Multimap<String, Card> market = kingdom.getCardMarket();
+        Set<Card> allCards = new HashSet<>();
+        market.keySet().stream()
+                .map(market::get)
+                .forEach(allCards::addAll);
+
+        allCards.stream()
+                .forEach(card -> this.allCards.put(card.getId().toString(), card));
+
         this.kingdom = kingdom;
     }
 
@@ -134,5 +148,13 @@ public class Game {
         card.setOwner(null);
 
         trash.add(card);
+    }
+
+    public Map<String, Card> getAllCards() {
+        return allCards;
+    }
+
+    public void setAllCards(Map<String, Card> allCards) {
+        this.allCards = allCards;
     }
 }

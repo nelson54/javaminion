@@ -51,8 +51,6 @@ public class Player {
     }
 
     public void resetForNextTurn(Turn turn){
-        if(turn != null)
-            hand.addAll(turn.getPlay());
 
         discardHand();
         drawHand();
