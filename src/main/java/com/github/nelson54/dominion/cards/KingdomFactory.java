@@ -7,13 +7,14 @@ import com.google.common.collect.ArrayListMultimap;
  */
 public class KingdomFactory {
 
-
     public Kingdom getKingdom() throws IllegalAccessException, InstantiationException {
+
         Kingdom kingdom = new Kingdom();
         kingdom.cardMarket = ArrayListMultimap.create();
 
         addTreasureCards(kingdom);
         addVictoryCards(kingdom);
+        addKingdomCards(kingdom);
 
         return kingdom;
     }
@@ -28,6 +29,11 @@ public class KingdomFactory {
         addXCardsOfType(30, Estate.class, kingdom);
         addXCardsOfType(20, Duchy.class, kingdom);
         addXCardsOfType(10, Province.class, kingdom);
+    }
+
+    void addKingdomCards(Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+        addXCardsOfType(10, Smithy.class, kingdom);
+        addXCardsOfType(10, Village.class, kingdom);
     }
 
     void addXCardsOfType(int x, Class<? extends Card> clazz, Kingdom kingdom) throws IllegalAccessException, InstantiationException {

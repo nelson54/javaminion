@@ -2,8 +2,12 @@ package com.github.nelson54.dominion;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.nelson54.dominion.cards.ActionCard;
+import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.cards.Kingdom;
 import com.github.nelson54.dominion.cards.Kingdom;
+import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
+import com.github.nelson54.dominion.exceptions.InsufficientActionsException;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -62,6 +66,19 @@ public class Game {
         }
 
         return active = turnerator.next();
+    }
+
+    public void playCard(ActionCard card, Player player){
+        if(phase != ACTION){
+            throw new IncorrectPhaseException();
+        }
+
+        if(player.actions == 0) {
+            throw new InsufficientActionsException();
+        }
+
+        player.actions--;
+        card.apply(player, this);
     }
 
     boolean isGameOver(){

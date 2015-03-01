@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
-import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
+import com.github.nelson54.dominion.exceptions.*;
 import com.google.common.collect.Multimap;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Phase;
@@ -45,6 +44,10 @@ public class Kingdom {
 
         if(!canAffordCost(player, card.getCost())){
             throw new InsufficientFundsException();
+        }
+
+        if(player.getBuys() == 0){
+            throw new InsufficientBuysException();
         }
 
         long buys = player.getBuys();
