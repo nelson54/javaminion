@@ -1,31 +1,45 @@
 package com.github.nelson54.dominion.choices;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.ComplexActionCard;
 import com.github.nelson54.dominion.effects.Effect;
 
 import java.util.Set;
 import java.util.UUID;
 
-public class Choice<T> {
+public class Choice {
     UUID id;
     @JsonIgnore
     Player target;
     @JsonIgnore
     Player owner;
+    @JsonIgnore
+    Game game;
     Card source;
 
     String message;
     ChoiceType choiceType;
-    Set<T> options;
+
+    boolean isComplete;
+
+    Set<String> textOptions;
+    Set<Card> cardOptions;
+
+    @JsonIgnore
+    Choice parentChoice;
+    @JsonIgnore
+    ChoiceResponse response;
 
     byte number;
     Range range;
 
-    Effect<T> effect;
+    @JsonIgnore
+    Effect effect;
 
     public Choice(Player target, Card source){
 
@@ -35,8 +49,9 @@ public class Choice<T> {
         this.owner = source.getOwner();
     }
 
-    public void bind(Effect<T> effect){
+    public void bind(Effect effect){
         this.effect = effect;
+
         effect.setSource(source);
         effect.setTarget(target);
         effect.setOwner(owner);
@@ -44,20 +59,33 @@ public class Choice<T> {
     }
 
     public void apply(ChoiceResponse choiceResponse, Turn turn){
+        setResponse(choiceResponse);
+        effect.resolve(choiceResponse, turn, turn.getGame());
+
+        resolveIfComplete(turn);
+    }
+
+    public void resolveIfComplete(Turn turn){
         Set<Choice> choices = turn.getUnresolvedChoices();
         Set<Choice> resolved = turn.getResolvedChoices();
 
-        choices.remove(this);
-        resolved.add(this);
+        if(isComplete){
+            choices.remove(this);
+            resolved.add(this);
+            if(choices.size() == 0){
+                turn.setPhase(Phase.ACTION);
+            }
+        } else if(source instanceof ComplexActionCard) {
+            Player player = this.getTarget();
+            Game game = player.getGame();
+            ComplexActionCard complexCard = (ComplexActionCard) source;
 
-        effect.resolve(choiceResponse);
-
-        if(choices.size() == 0){
-            turn.setPhase(Phase.ACTION);
+            complexCard.addChoice(player, game);
+            choices.remove(this);
         }
+
+
     }
-
-
 
     public String getMessage() {
         return message;
@@ -75,19 +103,27 @@ public class Choice<T> {
         this.choiceType = choiceType;
     }
 
-    public Set<T> getOptions() {
-        return options;
+    public Set<String> getTextOptions() {
+        return textOptions;
     }
 
-    public void setOptions(Set<T> options) {
-        this.options = options;
+    public void setTextOptions(Set<String> textOptions) {
+        this.textOptions = textOptions;
     }
 
-    public Effect<T> getEffect() {
+    public Set<Card> getCardOptions() {
+        return cardOptions;
+    }
+
+    public void setCardOptions(Set<Card> cardOptions) {
+        this.cardOptions = cardOptions;
+    }
+
+    public Effect getEffect() {
         return effect;
     }
 
-    public void setEffect(Effect<T> effect) {
+    public void setEffect(Effect effect) {
         this.effect = effect;
     }
 
@@ -137,5 +173,29 @@ public class Choice<T> {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean isComplete) {
+        this.isComplete = isComplete;
+    }
+
+    public Choice getParentChoice() {
+        return parentChoice;
+    }
+
+    public void setParentChoice(Choice parentChoice) {
+        this.parentChoice = parentChoice;
+    }
+
+    public ChoiceResponse getResponse() {
+        return response;
+    }
+
+    public void setResponse(ChoiceResponse response) {
+        this.response = response;
     }
 }

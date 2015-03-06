@@ -18,7 +18,9 @@
   </li>
 </ul>
 
-<div ng-if="hasCurrentPlayer()" ng-init="player = getCurrentPlayer(); turn = game.turn;">
+<div ng-if="hasCurrentPlayer()" ng-init="player = getCurrentPlayer(); turn = game.turn
+
+;">
   <p>Phase: {{turn.phase}}</p>
   <span>Id: {{player.id}}</span><br>
   <span>Actions: {{turn.actionPool}}</span><br>
@@ -41,7 +43,7 @@
   <div ng-if="turn.unresolvedChoices.length > 0">
     <h3>Choice </h3>
     <ul ng-init="choice = turn.unresolvedChoices[0];">
-      <li ng-repeat="card in choice.options">
+      <li ng-repeat="card in choice.cardOptions">
         <button ng-disabled="" ng-click="choose(game, player, choice, card)">{{card.name}}</button>
       </li>
     </ul>

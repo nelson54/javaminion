@@ -8,7 +8,7 @@ import java.util.Set;
 public abstract class ActionAttackCard extends ActionCard {
 
     ActionAttackCard(){
-        cardTypes.add(CardType.ACTION);
+        super();
         cardTypes.add(CardType.ATTACK);
     }
 

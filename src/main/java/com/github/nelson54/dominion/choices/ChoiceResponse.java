@@ -13,6 +13,7 @@ import java.util.Set;
 public class ChoiceResponse {
 
     String targetChoice;
+    String decisionId;
 
     @JsonIgnore
     Player source;
@@ -20,6 +21,7 @@ public class ChoiceResponse {
     Effect effect;
 
     ChoiceType choiceType;
+
     Card card;
     Set<Card> cards;
     String choice;
@@ -88,5 +90,13 @@ public class ChoiceResponse {
 
     public void setTargetChoice(String targetChoice) {
         this.targetChoice = targetChoice;
+    }
+
+    public String getDecisionId() {
+        return decisionId;
+    }
+
+    public void setDecisionId(String decisionId) {
+        this.decisionId = decisionId;
     }
 }

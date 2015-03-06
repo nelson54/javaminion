@@ -1,19 +1,25 @@
 package com.github.nelson54.dominion.effects;
 
 import com.github.nelson54.dominion.Game;
+import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 
-public class FeastEffect extends Effect<Card> {
+public class FeastEffect extends Effect {
+
+
 
     @Override
-    void effect(ChoiceResponse response) {
-        Game game = getTarget().getGame();
+    boolean effect(ChoiceResponse response, Turn turn, Game game) {
+
         Card option = game.getAllCards().get(response.getCard().getId().toString());
 
-        if(getChoice().getOptions().contains(option)){
+        if(getChoice().getCardOptions().contains(option)){
             game.giveCardToPlayer(option.getName(), getTarget());
+            return true;
         }
+
+        return false;
     }
 
 }

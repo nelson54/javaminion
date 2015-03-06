@@ -15,5 +15,5 @@ public enum ChoiceType {
     LIST_OF_CARDS,
     DISCARD,
     KEEP_IN_PLAY,
-    CARDS
+    CARD
 }

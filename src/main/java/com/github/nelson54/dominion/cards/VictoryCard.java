@@ -12,6 +12,7 @@ public abstract class VictoryCard extends Card {
 
     public VictoryCard() {
         super();
+        isKingdom = false;
         cardTypes.add(CardType.VICTORY);
     }
 

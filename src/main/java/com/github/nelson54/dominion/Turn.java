@@ -13,9 +13,7 @@ import com.github.nelson54.dominion.exceptions.InsufficientActionsException;
 import com.github.nelson54.dominion.exceptions.InsufficientBuysException;
 import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.github.nelson54.dominion.Phase.ACTION;
 import static com.github.nelson54.dominion.Phase.BUY;
@@ -36,7 +34,7 @@ public class Turn {
 
 
     @JsonProperty
-    Set<Card> play;
+    Map<String, Card> play;
 
     long actionPool;
     long moneyPool;
@@ -76,7 +74,7 @@ public class Turn {
 
         actionPool--;
         player.getHand();
-        getPlay().add(card);
+        getPlay().put(card.getId().toString(), card);
         card.apply(player, game);
     }
 
@@ -112,7 +110,7 @@ public class Turn {
                 .sum() + moneyPool;
     }
 
-    public void addChoice(Choice<?> choice){
+    public void addChoice(Choice choice){
         phase = Phase.WAITING_FOR_CHOICE;
         unresolvedChoices.add(choice);
     }
@@ -163,11 +161,11 @@ public class Turn {
         this.phase = phase;
     }
 
-    public Set<Card> getPlay() {
+    public Map<String, Card> getPlay() {
         return play;
     }
 
-    public void setPlay(Set<Card> play) {
+    public void setPlay(Map<String, Card> play) {
         this.play = play;
     }
 

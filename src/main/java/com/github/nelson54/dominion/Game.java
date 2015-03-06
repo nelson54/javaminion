@@ -3,6 +3,8 @@ package com.github.nelson54.dominion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.events.GameEvent;
+import com.github.nelson54.dominion.events.GameEventFactory;
 import com.google.common.collect.Multimap;
 
 import java.util.*;
@@ -42,11 +44,19 @@ public class Game {
     @JsonProperty
     Turn turn;
 
+    @JsonIgnore
+    GameEventFactory gameEventFactory;
+
     public Game() {
         id = UUID.randomUUID();
         pastTurns = new ArrayList<>();
         allCards = new HashMap<>();
         trash = new HashSet<>();
+
+    }
+
+    public GameEvent trigger(GameEvent gameEvent){
+        return gameEvent;
     }
 
     Player nextPlayer(){
@@ -75,6 +85,7 @@ public class Game {
             cards.remove(purchasedCard.get());
             purchasedCard.ifPresent(card -> card.setOwner(player));
             player.getDiscard().add(purchasedCard.get());
+            purchasedCard.ifPresent(card -> card.setOwner(player));
             return purchasedCard.get();
         } else {
             return null;
@@ -156,5 +167,13 @@ public class Game {
 
     public void setAllCards(Map<String, Card> allCards) {
         this.allCards = allCards;
+    }
+
+    public GameEventFactory getGameEventFactory() {
+        return gameEventFactory;
+    }
+
+    public void setGameEventFactory(GameEventFactory gameEventFactory) {
+        this.gameEventFactory = gameEventFactory;
     }
 }

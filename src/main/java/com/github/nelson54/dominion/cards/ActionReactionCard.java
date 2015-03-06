@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 /**
  * Created by dnelson on 2/28/2015.
  */
-public abstract class ActionReactionCard extends Card {
+public abstract class ActionReactionCard extends ActionCard {
 
     ActionReactionCard(){
-        cardTypes.add(CardType.ACTION);
+        super();
         cardTypes.add(CardType.REACTION);
     }
 
@@ -32,5 +32,8 @@ public abstract class ActionReactionCard extends Card {
                 .filter(p -> !p.getId().equals(player.getId()))
                 .collect(Collectors.toSet());
     }
+
+    @Override
+    public abstract void onEnterHand();
 
 }

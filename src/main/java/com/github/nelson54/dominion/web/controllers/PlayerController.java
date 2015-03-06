@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Game;
+import com.github.nelson54.dominion.Kingdom;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.ActionCard;
@@ -116,8 +117,11 @@ public class PlayerController {
             ChoiceResponse choiceResponse
     ) {
         Game game = gameProvider.getGameByUuid(gameId);
+        Kingdom kingdom = game.getKingdom();
         Player player = game.getPlayers().get(playerId);
         Turn turn = player.getCurrentTurn();
+        choiceResponse.setSource(player);
+        choiceResponse.setCard(kingdom.getAllCards().get(choiceResponse.getCard().getId().toString()));
 
         turn.getUnresolvedChoiceById(choiceResponse.getTargetChoice())
                 .ifPresent(choice -> choice.apply(choiceResponse, turn));

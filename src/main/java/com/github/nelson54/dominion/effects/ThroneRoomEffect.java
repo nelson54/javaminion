@@ -9,12 +9,10 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 /**
  * Created by dnelson on 3/1/2015.
  */
-public class ThroneRoomEffect extends Effect<ActionCard> {
+public class ThroneRoomEffect extends Effect {
 
     @Override
-    void effect(ChoiceResponse response) {
-        Game game = getTarget().getGame();
-        Turn turn = game.getTurn();
+    boolean effect(ChoiceResponse response, Turn turn, Game game) {
 
         Card option = game.getAllCards().get(response.getCard().toString());;
         ActionCard actionCard = null;
@@ -23,10 +21,12 @@ public class ThroneRoomEffect extends Effect<ActionCard> {
             actionCard = (ActionCard)option;
         }
 
-        if(getChoice().getOptions().contains(response)){
+        if(getChoice().getCardOptions().contains(response)){
             turn.playCard(actionCard, getTarget(), game);
             //response.apply(getTarget(), game);
         }
+
+        return false;
     }
 
 }

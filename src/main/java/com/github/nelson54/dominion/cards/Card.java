@@ -1,6 +1,5 @@
 package com.github.nelson54.dominion.cards;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.Player;
@@ -27,6 +26,9 @@ public class Card {
     @JsonProperty
     private
     Cost cost;
+
+    @JsonProperty
+    boolean isKingdom;
 
     @JsonProperty
     Set<CardType> cardTypes;
@@ -74,5 +76,13 @@ public class Card {
 
     public void setCardTypes(Set<CardType> cardTypes) {
         this.cardTypes = cardTypes;
+    }
+
+    public void onEnterHand(){
+
+    }
+
+    public void onLeaveHand(){
+
     }
 }
