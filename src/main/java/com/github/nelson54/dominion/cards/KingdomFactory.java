@@ -51,6 +51,7 @@ public class KingdomFactory {
         addXCardsOfType(10, Woodcutter.class, kingdom);
         addXCardsOfType(10, Remodel.class, kingdom);
         addXCardsOfType(10, Mine.class, kingdom);
+        addXCardsOfType(10, Workshop.class, kingdom);
 
     }
 
