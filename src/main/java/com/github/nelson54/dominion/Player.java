@@ -17,7 +17,7 @@ public class Player {
     Set<Card> hand;
 
     @JsonProperty
-    Set<Card> deck;
+    SortedSet<Card> deck;
 
     @JsonProperty
     Set<Card> discard;
@@ -31,7 +31,7 @@ public class Player {
     Player(){
         id = UUID.randomUUID();
         hand = new HashSet<>();
-        deck = new LinkedHashSet<>();
+        deck = new TreeSet<>();
         discard = new HashSet<>();
     }
 
@@ -106,16 +106,16 @@ public class Player {
                 .limit(x)
                 .forEachOrdered(drawnCards::add);
 
-        /*for(Card card : drawnCards){
-            GameEvent gameEvent = game
-                    .getGameEventFactory()
-                    .createEntersHandEvent(card);
-
-            game.trigger(gameEvent);
-        }*/
-
         hand.addAll(drawnCards);
         deck.removeAll(drawnCards);
+    }
+
+    public Card revealCard(){
+        if(deck.size() == 0){
+            shuffle();
+        }
+
+        return deck.first();
     }
 
     public Map<String, Card> getAllCards(){
@@ -144,11 +144,11 @@ public class Player {
         this.hand = hand;
     }
 
-    public Set<Card> getDeck() {
+    public SortedSet<Card> getDeck() {
         return deck;
     }
 
-    public void setDeck(Set<Card> deck) {
+    public void setDeck(SortedSet<Card> deck) {
         this.deck = deck;
     }
 
