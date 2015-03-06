@@ -14,7 +14,7 @@ public class ThroneRoomEffect extends Effect {
     @Override
     boolean effect(ChoiceResponse response, Turn turn, Game game) {
 
-        Card option = game.getAllCards().get(response.getCard().toString());;
+        Card option = game.getAllCards().get(response.getCard().toString());
         ActionCard actionCard = null;
 
         if(option instanceof ActionCard){
