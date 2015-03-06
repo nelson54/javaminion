@@ -5,9 +5,7 @@ import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 
-/**
- * Created by dnelson on 3/1/2015.
- */
+
 public class ChancellorEffect extends Effect {
 
     @Override

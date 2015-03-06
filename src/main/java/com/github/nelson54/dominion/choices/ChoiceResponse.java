@@ -7,9 +7,7 @@ import com.github.nelson54.dominion.effects.Effect;
 
 import java.util.Set;
 
-/**
- * Created by dnelson on 3/1/2015.
- */
+
 public class ChoiceResponse {
 
     String targetChoice;

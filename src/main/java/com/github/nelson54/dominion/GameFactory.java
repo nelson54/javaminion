@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-/**
- * Created by dnelson on 2/26/2015.
- */
+
 public class GameFactory {
 
     KingdomFactory kingdomFactory;

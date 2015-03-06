@@ -9,9 +9,6 @@ import com.google.common.collect.Multimap;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Created by dnelson on 2/26/2015.
- */
 
 @JsonAutoDetect
 public class Kingdom {
