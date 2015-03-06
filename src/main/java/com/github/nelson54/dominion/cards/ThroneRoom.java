@@ -4,7 +4,7 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.choices.ChoiceType;
+import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.choices.Range;
 import com.github.nelson54.dominion.effects.Effect;
 import com.github.nelson54.dominion.effects.ThroneRoomEffect;
@@ -35,7 +35,7 @@ public class ThroneRoom extends ActionCard {
 
         choice.bind(effect);
 
-        choice.setChoiceType(ChoiceType.CARD);
+        choice.setExpectedAnswerType(OptionType.CARD);
         choice.setNumber((byte) 1);
         choice.setRange(Range.EXACTLY);
         choice.setCardOptions(getOptions(player.getHand()));

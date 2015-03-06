@@ -17,7 +17,7 @@ public class Player {
     Set<Card> hand;
 
     @JsonProperty
-    SortedSet<Card> deck;
+    Set<Card> deck;
 
     @JsonProperty
     Set<Card> discard;
@@ -31,7 +31,7 @@ public class Player {
     Player(){
         id = UUID.randomUUID();
         hand = new HashSet<>();
-        deck = new TreeSet<>();
+        deck = new LinkedHashSet<>();
         discard = new HashSet<>();
     }
 
@@ -115,7 +115,9 @@ public class Player {
             shuffle();
         }
 
-        return deck.first();
+        return deck.stream()
+                .findFirst()
+                .get();
     }
 
     public Map<String, Card> getAllCards(){
@@ -144,11 +146,11 @@ public class Player {
         this.hand = hand;
     }
 
-    public SortedSet<Card> getDeck() {
+    public Set<Card> getDeck() {
         return deck;
     }
 
-    public void setDeck(SortedSet<Card> deck) {
+    public void setDeck(Set<Card> deck) {
         this.deck = deck;
     }
 

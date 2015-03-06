@@ -3,7 +3,7 @@ package com.github.nelson54.dominion.cards;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.choices.ChoiceType;
+import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.effects.Effect;
 import com.github.nelson54.dominion.effects.RemodelEffect;
 import com.google.common.collect.Multimap;
@@ -29,7 +29,7 @@ public class Remodel extends ComplexActionCard {
     Choice getChoiceForTarget(Choice parent, Player target, Game game) {
         Choice choice = new Choice(target, this);
 
-        choice.setChoiceType(ChoiceType.CARD);
+        choice.setExpectedAnswerType(OptionType.CARD);
 
         if(parent == null) {
             choice.setCardOptions(target.getHand());

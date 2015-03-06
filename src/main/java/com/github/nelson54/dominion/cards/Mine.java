@@ -5,7 +5,7 @@ import com.github.nelson54.dominion.Kingdom;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
-import com.github.nelson54.dominion.choices.ChoiceType;
+import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.effects.Effect;
 import com.github.nelson54.dominion.effects.MineEffect;
 
@@ -29,7 +29,7 @@ public class Mine extends ComplexActionCard {
     Choice getChoiceForTarget(Choice parent, Player target, Game game) {
         Choice choice = new Choice(target, this);
 
-        choice.setChoiceType(ChoiceType.CARD);
+        choice.setExpectedAnswerType(OptionType.CARD);
 
         if(parent == null) {
             getTrashOptions(target.getHand());

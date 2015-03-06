@@ -15,13 +15,16 @@ public class ChoiceResponse {
     String targetChoice;
     String decisionId;
 
+    String message;
+
     @JsonIgnore
     Player source;
     @JsonIgnore
     Effect effect;
 
-    ChoiceType choiceType;
+    boolean done;
 
+    boolean yesOrNo;
     Card card;
     Set<Card> cards;
     String choice;
@@ -42,14 +45,6 @@ public class ChoiceResponse {
 
     public void setEffect(Effect effect) {
         this.effect = effect;
-    }
-
-    public ChoiceType getChoiceType() {
-        return choiceType;
-    }
-
-    public void setChoiceType(ChoiceType choiceType) {
-        this.choiceType = choiceType;
     }
 
     public Card getCard() {
@@ -98,5 +93,33 @@ public class ChoiceResponse {
 
     public void setDecisionId(String decisionId) {
         this.decisionId = decisionId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public boolean isYes() {
+        return yesOrNo;
+    }
+
+    public void setYesOrNo(boolean yesOrNo) {
+        this.yesOrNo = yesOrNo;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
     }
 }

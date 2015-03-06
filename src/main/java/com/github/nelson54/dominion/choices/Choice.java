@@ -26,9 +26,12 @@ public class Choice {
     ChoiceType choiceType;
 
     boolean isComplete;
+    boolean isRequired;
 
     Set<String> textOptions;
     Set<Card> cardOptions;
+
+    OptionType expectedAnswerType;
 
     @JsonIgnore
     Choice parentChoice;
@@ -197,5 +200,29 @@ public class Choice {
 
     public void setResponse(ChoiceResponse response) {
         this.response = response;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public boolean isRequired() {
+        return isRequired;
+    }
+
+    public void setRequired(boolean isRequired) {
+        this.isRequired = isRequired;
+    }
+
+    public OptionType getExpectedAnswerType() {
+        return expectedAnswerType;
+    }
+
+    public void setExpectedAnswerType(OptionType expectedAnswerType) {
+        this.expectedAnswerType = expectedAnswerType;
     }
 }

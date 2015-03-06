@@ -4,41 +4,36 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.effects.ChapelEffect;
+import com.github.nelson54.dominion.effects.ChancellorEffect;
 import com.github.nelson54.dominion.effects.Effect;
 
-import java.util.HashSet;
-import java.util.Set;
+public class Chancellor extends ComplexActionCard {
 
-public class Chapel extends ComplexActionCard {
-
-    public Chapel() {
+    public Chancellor() {
         super();
-        byte moneyCost = 2;
+        byte moneyCost = 3;
 
         Cost cost = new Cost();
         cost.setMoney(moneyCost);
         setCost(cost);
 
-        setName("Chapel");
+        setName("Chancellor");
     }
 
     @Override
     Choice getChoiceForTarget(Choice parent, Player target, Game game) {
-        Set<Card> options = new HashSet<>();
         Choice choice = new Choice(target, this);
 
-        options.addAll(Cards.cardsRemainingInHand(target));
-
-        choice.setExpectedAnswerType(OptionType.CARD);
-        choice.setCardOptions(options);
+        choice.setMessage("Would you like to put your deck into your discard pile?");
+        choice.setExpectedAnswerType(OptionType.YES_OR_NO);
+        choice.setRequired(true);
 
         return choice;
     }
 
     @Override
     Effect getEffect(Player player, Game game) {
-        Effect effect = new ChapelEffect();
+        Effect effect = new ChancellorEffect();
         effect.setOwner(getOwner());
         effect.setTarget(player);
 
@@ -46,6 +41,7 @@ public class Chapel extends ComplexActionCard {
     }
 
     @Override
-    void play(Player player, Game game) {}
-
+    void play(Player player, Game game) {
+        game.trashCard(this);
+    }
 }

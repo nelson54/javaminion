@@ -28,7 +28,9 @@ public abstract class Effect {
     }
 
     public void resolve(ChoiceResponse response, Turn turn, Game game){
-        if(!cancelled){
+        if(cancelled || response.isDone()) {
+            choice.setComplete(true);
+        } else {
             choice.setComplete(effect(response, turn, game));
         }
     }

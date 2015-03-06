@@ -3,7 +3,7 @@ package com.github.nelson54.dominion.cards;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.choices.ChoiceType;
+import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.choices.Range;
 import com.github.nelson54.dominion.effects.Effect;
 import com.github.nelson54.dominion.effects.FeastEffect;
@@ -30,7 +30,8 @@ public class Feast extends ComplexActionCard {
     Choice getChoiceForTarget(Choice parent, Player target, Game game) {
         Choice choice = new Choice(target, this);
 
-        choice.setChoiceType(ChoiceType.CARD);
+        choice.setExpectedAnswerType(OptionType.CARD);
+        choice.setRequired(false);
         choice.setNumber((byte) 1);
         choice.setRange(Range.EXACTLY);
         choice.setCardOptions(getOptions(target, game));
