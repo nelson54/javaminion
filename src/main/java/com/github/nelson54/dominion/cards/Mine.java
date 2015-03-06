@@ -51,9 +51,7 @@ public class Mine extends ComplexActionCard {
     }
 
     private Set<Card> getTrashOptions(Set<Card> hand) {
-        return hand.stream()
-                .filter(card -> card instanceof TreasureCard)
-                .collect(Collectors.toSet());
+        return Cards.cardsOfType(hand, TreasureCard.class);
     }
 
     @Override
