@@ -1,11 +1,9 @@
 package com.github.nelson54.dominion.cards;
 
-/**
- * Created by dnelson on 2/26/2015.
- */
-class Gold extends TreasureCard {
 
-    Gold(){
+public class Gold extends TreasureCard {
+
+    Gold() {
         super();
         byte moneyCost = 6;
         byte moneyValue = 3;

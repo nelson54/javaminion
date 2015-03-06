@@ -13,38 +13,44 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Choice {
-    UUID id;
+    private UUID id;
     @JsonIgnore
+    private
     Player target;
     @JsonIgnore
+    private
     Player owner;
     @JsonIgnore
+    private
     Game game;
-    Card source;
+    private Card source;
 
-    String message;
-    ChoiceType choiceType;
+    private String message;
+    private ChoiceType choiceType;
 
-    boolean isComplete;
-    boolean isRequired;
+    private boolean isComplete;
+    private boolean isRequired;
 
-    Set<String> textOptions;
-    Set<Card> cardOptions;
+    private Set<String> textOptions;
+    private Set<Card> cardOptions;
 
-    OptionType expectedAnswerType;
+    private OptionType expectedAnswerType;
 
     @JsonIgnore
+    private
     Choice parentChoice;
     @JsonIgnore
+    private
     ChoiceResponse response;
 
-    byte number;
-    Range range;
+    private byte number;
+    private Range range;
 
     @JsonIgnore
+    private
     Effect effect;
 
-    public Choice(Player target, Card source){
+    public Choice(Player target, Card source) {
 
         this.id = UUID.randomUUID();
         this.target = target;
@@ -52,7 +58,7 @@ public class Choice {
         this.owner = source.getOwner();
     }
 
-    public void bind(Effect effect){
+    public void bind(Effect effect) {
         this.effect = effect;
 
         effect.setSource(source);
@@ -61,24 +67,24 @@ public class Choice {
         effect.setChoice(this);
     }
 
-    public void apply(ChoiceResponse choiceResponse, Turn turn){
+    public void apply(ChoiceResponse choiceResponse, Turn turn) {
         setResponse(choiceResponse);
         effect.resolve(choiceResponse, turn, turn.getGame());
 
         resolveIfComplete(turn);
     }
 
-    public void resolveIfComplete(Turn turn){
+    void resolveIfComplete(Turn turn) {
         Set<Choice> choices = turn.getUnresolvedChoices();
         Set<Choice> resolved = turn.getResolvedChoices();
 
-        if(isComplete){
+        if (isComplete) {
             choices.remove(this);
             resolved.add(this);
-            if(choices.size() == 0){
+            if (choices.size() == 0) {
                 turn.setPhase(Phase.ACTION);
             }
-        } else if(source instanceof ComplexActionCard) {
+        } else if (source instanceof ComplexActionCard) {
             Player player = this.getTarget();
             Game game = player.getGame();
             ComplexActionCard complexCard = (ComplexActionCard) source;
@@ -146,7 +152,7 @@ public class Choice {
         this.number = number;
     }
 
-    public Player getTarget() {
+    Player getTarget() {
         return target;
     }
 
@@ -198,7 +204,7 @@ public class Choice {
         return response;
     }
 
-    public void setResponse(ChoiceResponse response) {
+    void setResponse(ChoiceResponse response) {
         this.response = response;
     }
 

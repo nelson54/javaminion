@@ -11,24 +11,30 @@ import static com.github.nelson54.dominion.Phase.ACTION;
 
 public class Player {
     @JsonProperty
+    private
     UUID id;
 
     @JsonProperty
+    private
     Set<Card> hand;
 
     @JsonProperty
+    private
     Set<Card> deck;
 
     @JsonProperty
+    private
     Set<Card> discard;
 
     @JsonIgnore
+    private
     Game game;
 
     @JsonProperty
+    private
     Turn currentTurn;
 
-    Player(){
+    Player() {
         id = UUID.randomUUID();
         hand = new HashSet<>();
         deck = new LinkedHashSet<>();
@@ -36,21 +42,21 @@ public class Player {
     }
 
     @JsonProperty
-    public long getVictoryPoints(){
+    public long getVictoryPoints() {
         return getAllCards()
                 .values().stream()
                 .filter(card -> card instanceof VictoryCard)
                 .map(card -> (VictoryCard) card)
-                .mapToLong(card-> card.getVictoryPoints())
+                .mapToLong(VictoryCard::getVictoryPoints)
                 .sum();
     }
 
     @JsonIgnore
-    public boolean hasActionsInHand(){
+    public boolean hasActionsInHand() {
         return false;
     }
 
-    public void resetForNextTurn(Turn turn){
+    public void resetForNextTurn(Turn turn) {
 
         discardHand();
         drawHand();
@@ -67,7 +73,7 @@ public class Player {
 
     }
 
-    public void shuffle(){
+    public void shuffle() {
         List<Card> shuffledDeck = new ArrayList<>();
 
         shuffledDeck.addAll(discard);
@@ -81,21 +87,21 @@ public class Player {
         deck.addAll(shuffledDeck);
     }
 
-    public void drawHand(){
+    public void drawHand() {
         drawXCards(5);
     }
 
-    public void discardHand(){
+    public void discardHand() {
 
 
         discard.addAll(hand);
         hand.clear();
     }
 
-    public void drawXCards(long x){
+    public void drawXCards(long x) {
         List<Card> drawnCards = new ArrayList<>();
 
-        if(deck.size() < x){
+        if (deck.size() < x) {
             drawnCards.addAll(deck);
             deck.clear();
             x -= drawnCards.size();
@@ -110,8 +116,8 @@ public class Player {
         deck.removeAll(drawnCards);
     }
 
-    public Card revealCard(){
-        if(deck.size() == 0){
+    public Card revealCard() {
+        if (deck.size() == 0) {
             shuffle();
         }
 
@@ -120,12 +126,12 @@ public class Player {
                 .get();
     }
 
-    public Map<String, Card> getAllCards(){
-        Map<String,Card> allCards = new HashMap<>();
+    public Map<String, Card> getAllCards() {
+        Map<String, Card> allCards = new HashMap<>();
 
-        hand.stream().forEach(card-> allCards.put(card.getId().toString(), card));
-        deck.stream().forEach(card-> allCards.put(card.getId().toString(), card));
-        discard.stream().forEach(card-> allCards.put(card.getId().toString(), card));
+        hand.stream().forEach(card -> allCards.put(card.getId().toString(), card));
+        deck.stream().forEach(card -> allCards.put(card.getId().toString(), card));
+        discard.stream().forEach(card -> allCards.put(card.getId().toString(), card));
 
         return allCards;
     }
@@ -185,9 +191,8 @@ public class Player {
 
         Player player = (Player) o;
 
-        if (!id.toString().equals(player.id.toString())) return false;
+        return id.toString().equals(player.id.toString());
 
-        return true;
     }
 
     @Override
@@ -195,7 +200,7 @@ public class Player {
         return id.hashCode();
     }
 
-    void meh(Optional<String> str){
+    void meh(Optional<String> str) {
 
         str.ifPresent(String::trim);
 

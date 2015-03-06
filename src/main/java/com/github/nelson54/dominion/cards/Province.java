@@ -1,9 +1,7 @@
 package com.github.nelson54.dominion.cards;
 
-/**
- * Created by dnelson on 2/26/2015.
- */
-class Province extends VictoryCard {
+
+public class Province extends VictoryCard {
     public Province() {
         super();
 

@@ -66,14 +66,14 @@ public class PlayerController {
     }
 
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
-     Game purchase(
-                    @PathVariable("gameId")
-                    String gameId,
-                    @PathVariable("playerId")
-                    String playerId,
-                    @RequestBody
-                    Card card
-            ) {
+    Game purchase(
+            @PathVariable("gameId")
+            String gameId,
+            @PathVariable("playerId")
+            String playerId,
+            @RequestBody
+            Card card
+    ) {
         Game game = gameProvider.getGameByUuid(gameId);
         Player player = game.getPlayers().get(playerId);
 
@@ -83,14 +83,14 @@ public class PlayerController {
     }
 
     @RequestMapping(value = "/play", method = RequestMethod.POST)
-     Game play(
-                    @PathVariable("gameId")
-                    String gameId,
-                    @PathVariable("playerId")
-                    String playerId,
-                    @RequestBody
-                    Card card
-            ) {
+    Game play(
+            @PathVariable("gameId")
+            String gameId,
+            @PathVariable("playerId")
+            String playerId,
+            @RequestBody
+            Card card
+    ) {
         Game game = gameProvider.getGameByUuid(gameId);
         Player player = game.getPlayers().get(playerId);
 
@@ -100,8 +100,8 @@ public class PlayerController {
                 .findFirst()
                 .get();
 
-        if(playing instanceof ActionCard) {
-            game.getTurn().playCard((ActionCard)playing, player, game);
+        if (playing instanceof ActionCard) {
+            game.getTurn().playCard((ActionCard) playing, player, game);
         } else {
             throw new IllegalStateException();
         }
@@ -129,7 +129,7 @@ public class PlayerController {
 
         OptionType expectedType = choice.getExpectedAnswerType();
 
-        if(!choiceResponse.isDone()) {
+        if (!choiceResponse.isDone()) {
             if (expectedType.equals(OptionType.CARD)) {
                 choiceResponse.setCard(kingdom.getAllCards().get(choiceResponse.getCard().getId().toString()));
             }

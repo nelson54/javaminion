@@ -21,7 +21,7 @@ public class Festival extends ActionCard {
     @Override
     public void apply(Player player, Game game) {
         Turn turn = game.getTurn();
-        turn.setBuyPool(turn.getBuyPool()+1);
+        turn.setBuyPool(turn.getBuyPool() + 1);
         turn.setActionPool(turn.getActionPool() + 2);
         turn.setMoneyPool(turn.getMoneyPool() + 2);
     }

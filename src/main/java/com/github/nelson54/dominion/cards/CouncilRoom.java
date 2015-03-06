@@ -24,7 +24,7 @@ public class CouncilRoom extends ActionCard {
     public void apply(Player player, Game game) {
         Turn turn = game.getTurn();
         player.drawXCards(4);
-        turn.setBuyPool(turn.getBuyPool()+1);
+        turn.setBuyPool(turn.getBuyPool() + 1);
         Map<String, Player> players = game.getPlayers();
 
         game.getPlayers()

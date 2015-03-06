@@ -7,14 +7,14 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 
 public class ChapelEffect extends Effect {
 
-    int trashed = 0;
+    private int trashed = 0;
 
     @Override
     boolean effect(ChoiceResponse response, Turn turn, Game game) {
 
         Card option = game.getAllCards().get(response.getCard().getId().toString());
 
-        if(getChoice().getCardOptions().contains(option)){
+        if (getChoice().getCardOptions().contains(option)) {
             game.trashCard(option);
             trashed++;
         }

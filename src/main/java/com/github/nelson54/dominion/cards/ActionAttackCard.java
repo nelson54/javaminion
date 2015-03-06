@@ -7,13 +7,13 @@ import java.util.Set;
 
 public abstract class ActionAttackCard extends ActionCard {
 
-    ActionAttackCard(){
+    ActionAttackCard() {
         super();
         cardTypes.add(CardType.ATTACK);
     }
 
-    public void apply(Player player, Game game){
-        Set<Player> others = getOtherPlayers(player,game);
+    public void apply(Player player, Game game) {
+        Set<Player> others = getOtherPlayers(player, game);
         bonus(player, game);
         others.stream().forEach(other -> attack(other, game));
     }

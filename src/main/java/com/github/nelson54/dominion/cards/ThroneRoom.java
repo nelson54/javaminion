@@ -48,10 +48,10 @@ public class ThroneRoom extends ActionCard {
     }
 
 
-    Set<Card> getOptions(Set<Card> hand){
+    Set<Card> getOptions(Set<Card> hand) {
         return hand.stream()
                 .filter(card -> card instanceof ActionCard)
-                .map(card -> (ActionCard)card)
+                .map(card -> (ActionCard) card)
                 .collect(Collectors.toSet());
     }
 }

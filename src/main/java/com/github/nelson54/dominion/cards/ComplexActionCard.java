@@ -12,30 +12,32 @@ import java.util.stream.Collectors;
 
 public abstract class ComplexActionCard extends ActionCard {
 
-    ComplexActionCard(){
+    ComplexActionCard() {
         isKingdom = true;
         cardTypes.add(CardType.ACTION);
     }
 
     abstract Choice getChoiceForTarget(Choice parent, Player target, Game game);
+
     abstract Effect getEffect(Player player, Game game);
+
     abstract void play(Player player, Game game);
 
-    public Set<Player> getTargets(Player player, Game game){
+    Set<Player> getTargets(Player player, Game game) {
         Set<Player> targets = new HashSet<>();
         targets.add(player);
         return targets;
     }
 
-    public void apply(Player player, Game game){
+    public void apply(Player player, Game game) {
         play(player, game);
 
-        for(Player target : getTargets(player, game)){
+        for (Player target : getTargets(player, game)) {
             addChoice(player, game);
         }
     }
 
-    public void addChoice(Player player, Game game){
+    public void addChoice(Player player, Game game) {
         Turn turn = player.getCurrentTurn();
         Choice parent = findParentChoice(player);
         Choice choice = getChoiceForTarget(parent, player, game);
@@ -43,7 +45,7 @@ public abstract class ComplexActionCard extends ActionCard {
         choice.setSource(this);
 
         Effect effect;
-        if(parent == null ) {
+        if (parent == null) {
             effect = getEffect(player, game);
         } else {
             effect = parent.getEffect();
@@ -54,11 +56,11 @@ public abstract class ComplexActionCard extends ActionCard {
         turn.addChoice(choice);
     }
 
-    Choice findParentChoice(Player player){
+    Choice findParentChoice(Player player) {
         Turn turn = player.getCurrentTurn();
 
-        for(Choice choice : turn.getUnresolvedChoices()){
-            if(this.equals(choice.getSource())){
+        for (Choice choice : turn.getUnresolvedChoices()) {
+            if (this.equals(choice.getSource())) {
                 return choice;
             }
         }
@@ -67,7 +69,7 @@ public abstract class ComplexActionCard extends ActionCard {
     }
 
 
-    Set<Player> getOtherPlayers(Player player, Game game){
+    Set<Player> getOtherPlayers(Player player, Game game) {
         return game.getPlayers()
                 .values()
                 .stream()

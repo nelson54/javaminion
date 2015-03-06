@@ -12,28 +12,23 @@ import java.util.UUID;
 public class Card {
 
     @JsonProperty
+    boolean isKingdom;
+    @JsonProperty
+    Set<CardType> cardTypes;
+    @JsonProperty
     private
     UUID id;
-
     @JsonIgnore
     private
     Player owner;
-
     @JsonProperty
     private
     String name;
-
     @JsonProperty
     private
     Cost cost;
 
-    @JsonProperty
-    boolean isKingdom;
-
-    @JsonProperty
-    Set<CardType> cardTypes;
-
-    public Card() {
+    Card() {
         id = UUID.randomUUID();
         cardTypes = new HashSet<>();
     }
@@ -78,11 +73,11 @@ public class Card {
         this.cardTypes = cardTypes;
     }
 
-    public void onEnterHand(){
+    public void onEnterHand() {
 
     }
 
-    public void onLeaveHand(){
+    public void onLeaveHand() {
 
     }
 }

@@ -21,6 +21,6 @@ public class Gardens extends VictoryCard {
     @Override
     public byte getVictoryPoints() {
         Player owner = getOwner();
-        return (byte) (Math.floor(owner.getAllCards().size())/10*3);
+        return (byte) (Math.floor(owner.getAllCards().size()) / 10 * 3);
     }
 }

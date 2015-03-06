@@ -12,7 +12,7 @@ public class ChancellorEffect extends Effect {
     boolean effect(ChoiceResponse response, Turn turn, Game game) {
 
         Player player = response.getSource();
-        if(response.isYes()) {
+        if (response.isYes()) {
             player.getDiscard().addAll(player.getDeck());
 
             player.getDeck().clear();

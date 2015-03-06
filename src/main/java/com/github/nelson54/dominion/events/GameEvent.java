@@ -8,19 +8,19 @@ import com.github.nelson54.dominion.choices.ChoiceType;
 import java.util.UUID;
 
 public class GameEvent {
-    UUID id;
+    private UUID id;
 
-    ChoiceType choiceType;
-    String message;
+    private ChoiceType choiceType;
+    private String message;
 
-    Player owner;
-    Player target;
+    private Player owner;
+    private Player target;
 
-    EventType type;
+    private EventType type;
 
-    Card card;
-    byte cost;
-    Choice choice;
+    private Card card;
+    private byte cost;
+    private Choice choice;
 
     public GameEvent() {
 

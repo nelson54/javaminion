@@ -1,13 +1,11 @@
-package com.github.nelson54.dominion.cards;
+package com.github.nelson54.dominion;
 
-import com.github.nelson54.dominion.Kingdom;
+import com.github.nelson54.dominion.cards.*;
 import com.google.common.collect.ArrayListMultimap;
 
 import java.util.HashMap;
 
-/**
- * Created by dnelson on 2/26/2015.
- */
+
 public class KingdomFactory {
 
     public Kingdom getKingdom() throws IllegalAccessException, InstantiationException {
@@ -59,7 +57,7 @@ public class KingdomFactory {
     }
 
     void addXCardsOfType(int x, Class<? extends Card> clazz, Kingdom kingdom) throws IllegalAccessException, InstantiationException {
-        for(; x > 0; x--) {
+        for (; x > 0; x--) {
             Card card = clazz.newInstance();
             kingdom.getCardMarket().put(card.getName(), card);
             kingdom.getAllCards().put(card.getId().toString(), card);

@@ -23,10 +23,10 @@ public class Adventurer extends ActionCard {
     public void apply(Player player, Game game) {
         Set<Card> treasures = new HashSet<>();
 
-        while(isDoneLooking(player, treasures)){
+        while (isDoneLooking(player, treasures)) {
             Card topCard = player.revealCard();
 
-            if(topCard instanceof TreasureCard){
+            if (topCard instanceof TreasureCard) {
                 treasures.add(topCard);
             } else {
                 player.getDeck().remove(topCard);
@@ -34,16 +34,16 @@ public class Adventurer extends ActionCard {
             }
         }
 
-        if(treasures.size() > 0){
+        if (treasures.size() > 0) {
             player.getHand().addAll(treasures);
         }
     }
 
-    private boolean isDoneLooking(Player player, Set<Card> treasures){
+    private boolean isDoneLooking(Player player, Set<Card> treasures) {
         return !hasCardsRemaining(player) || treasures.size() == 2;
     }
 
-    private boolean hasCardsRemaining(Player player){
+    private boolean hasCardsRemaining(Player player) {
         return player.getDeck().size() == 0 && player.getDiscard().size() == 0;
     }
 }

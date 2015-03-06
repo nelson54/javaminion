@@ -15,11 +15,11 @@ public class ThroneRoomEffect extends Effect {
         Card option = game.getAllCards().get(response.getCard().toString());
         ActionCard actionCard = null;
 
-        if(option instanceof ActionCard){
-            actionCard = (ActionCard)option;
+        if (option instanceof ActionCard) {
+            actionCard = (ActionCard) option;
         }
 
-        if(getChoice().getCardOptions().contains(response)){
+        if (getChoice().getCardOptions().contains(option)) {
             turn.playCard(actionCard, getTarget(), game);
             //response.apply(getTarget(), game);
         }

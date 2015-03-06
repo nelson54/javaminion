@@ -4,9 +4,7 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 
-/**
- * Created by dnelson on 2/28/2015.
- */
+
 public class Village extends ActionCard {
 
     public Village() {

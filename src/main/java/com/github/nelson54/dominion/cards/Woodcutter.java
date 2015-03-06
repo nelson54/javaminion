@@ -4,9 +4,7 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 
-/**
- * Created by dnelson on 2/28/2015.
- */
+
 public class Woodcutter extends ActionCard {
 
     public Woodcutter() {
@@ -23,7 +21,7 @@ public class Woodcutter extends ActionCard {
     @Override
     public void apply(Player player, Game game) {
         Turn turn = game.getTurn();
-        turn.setBuyPool(turn.getBuyPool()+1);
+        turn.setBuyPool(turn.getBuyPool() + 1);
         turn.setMoneyPool(turn.getMoneyPool() + 2);
     }
 }

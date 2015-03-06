@@ -10,23 +10,25 @@ import java.util.Set;
 
 public class ChoiceResponse {
 
-    String targetChoice;
-    String decisionId;
+    private String targetChoice;
+    private String decisionId;
 
-    String message;
+    private String message;
 
     @JsonIgnore
+    private
     Player source;
     @JsonIgnore
+    private
     Effect effect;
 
-    boolean done;
+    private boolean done;
 
-    boolean yesOrNo;
-    Card card;
-    Set<Card> cards;
-    String choice;
-    Set<String> choices;
+    private boolean yesOrNo;
+    private Card card;
+    private Set<Card> cards;
+    private String choice;
+    private Set<String> choices;
 
 
     public Player getSource() {
@@ -55,6 +57,10 @@ public class ChoiceResponse {
 
     public Set<Card> getCards() {
         return cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
     }
 
     public void setCardsChoice(Set<Card> cardsChoice) {
@@ -115,9 +121,5 @@ public class ChoiceResponse {
 
     public void setYesOrNo(boolean yesOrNo) {
         this.yesOrNo = yesOrNo;
-    }
-
-    public void setCards(Set<Card> cards) {
-        this.cards = cards;
     }
 }

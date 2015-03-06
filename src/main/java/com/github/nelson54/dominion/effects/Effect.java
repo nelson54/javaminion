@@ -11,24 +11,28 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 public abstract class Effect {
 
     @JsonBackReference
+    private
     Player owner;
     @JsonBackReference
+    private
     Player target;
 
     @JsonBackReference
+    private
     Card source;
 
-    boolean cancelled;
+    private boolean cancelled;
 
     @JsonBackReference
+    private
     Choice choice;
 
-    public Effect(){
+    Effect() {
         cancelled = false;
     }
 
-    public void resolve(ChoiceResponse response, Turn turn, Game game){
-        if(cancelled || response.isDone()) {
+    public void resolve(ChoiceResponse response, Turn turn, Game game) {
+        if (cancelled || response.isDone()) {
             choice.setComplete(true);
         } else {
             choice.setComplete(effect(response, turn, game));
@@ -45,7 +49,7 @@ public abstract class Effect {
         this.owner = owner;
     }
 
-    public Player getTarget() {
+    Player getTarget() {
         return target;
     }
 
@@ -69,7 +73,7 @@ public abstract class Effect {
         this.cancelled = cancelled;
     }
 
-    public Choice getChoice() {
+    Choice getChoice() {
         return choice;
     }
 

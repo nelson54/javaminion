@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class Mine extends ComplexActionCard {
 
-    Mine(){
+    Mine() {
         super();
         byte moneyCost = 5;
 
@@ -31,9 +31,9 @@ public class Mine extends ComplexActionCard {
 
         choice.setExpectedAnswerType(OptionType.CARD);
 
-        if(parent == null) {
+        if (parent == null) {
             getTrashOptions(target.getHand());
-        } else if(parent.getResponse() != null){
+        } else if (parent.getResponse() != null) {
             ChoiceResponse response = parent.getResponse();
 
             choice.setCardOptions(

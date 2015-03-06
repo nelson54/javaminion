@@ -5,13 +5,11 @@ import com.github.nelson54.dominion.cards.Card;
 
 public class GameEventFactory {
 
-    Game game;
-
     public GameEventFactory(Game game) {
-        this.game = game;
+        Game game1 = game;
     }
 
-    public GameEvent createEntersHandEvent(Card card){
+    public GameEvent createEntersHandEvent(Card card) {
         GameEvent gameEvent = new GameEvent();
 
         gameEvent.setOwner(card.getOwner());

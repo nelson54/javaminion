@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Cards {
+class Cards {
 
     public static Set<Card> cardsOfType(Set<Card> cards, Class<? extends Card> clazz) {
         return cards.stream()
@@ -15,7 +15,7 @@ public class Cards {
                 .collect(Collectors.toSet());
     }
 
-    public static Set<Card> cardsRemainingInHand(Player player){
+    public static Set<Card> cardsRemainingInHand(Player player) {
         Collection<Card> cardsInPlay = player.getCurrentTurn().getPlay().values();
         Set<Card> cardsInHand = new HashSet<>();
         cardsInHand.addAll(player.getHand());

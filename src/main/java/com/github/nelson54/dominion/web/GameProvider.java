@@ -16,15 +16,15 @@ public class GameProvider {
     @Autowired
     GameFactory gameFactory;
 
-    Map<String, Game> gamesById;
-    Set<String> games;
+    private Map<String, Game> gamesById;
+    private Set<String> games;
 
-    public GameProvider(){
+    public GameProvider() {
         gamesById = new HashMap<>();
         games = new LinkedHashSet<>();
     }
 
-    public Game getGameByUuid(String uuid){
+    public Game getGameByUuid(String uuid) {
         return gamesById.get(uuid);
     }
 
@@ -35,7 +35,7 @@ public class GameProvider {
         return game;
     }
 
-    public Set<String> listGames(){
+    public Set<String> listGames() {
         return games;
     }
 }

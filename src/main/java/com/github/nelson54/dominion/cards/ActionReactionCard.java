@@ -8,12 +8,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * Created by dnelson on 2/28/2015.
- */
+
 public abstract class ActionReactionCard extends ActionCard {
 
-    ActionReactionCard(){
+    ActionReactionCard() {
         super();
         cardTypes.add(CardType.REACTION);
     }
@@ -22,7 +20,7 @@ public abstract class ActionReactionCard extends ActionCard {
 
     public abstract void react(Effect effect);
 
-    public Set<Player> getOtherPlayers(Player player, Game game){
+    public Set<Player> getOtherPlayers(Player player, Game game) {
         Map<String, Player> players = game.getPlayers();
 
         return game.getPlayers()
