@@ -3,8 +3,8 @@ package com.github.nelson54.dominion.cards;
 
 public class Cost {
 
-    byte money = 0;
-    byte potions = 0;
+    private byte money = 0;
+    private byte potions = 0;
 
     public Cost() {
     }

@@ -9,18 +9,17 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 import java.util.Set;
 
 public class MineEffect extends Effect {
-    Card gainedCard;
-    Card trashedCard;
+    private Card trashedCard;
 
     @Override
     boolean effect(ChoiceResponse response, Turn turn, Game game) {
         Player source = response.getSource();
-        if(trashedCard == null && response.getCard() != null){
+        if (trashedCard == null && response.getCard() != null) {
             trashedCard = response.getCard();
             game.trashCard(trashedCard);
             return false;
-        } else if (response.getCard() != null){
-            gainedCard = response.getCard();
+        } else if (response.getCard() != null) {
+            Card gainedCard = response.getCard();
             Card card = game.giveCardToPlayer(gainedCard.getName(), source);
 
             moveCardToHand(source, card);
@@ -31,7 +30,7 @@ public class MineEffect extends Effect {
         return false;
     }
 
-    private void moveCardToHand(Player player, Card card){
+    private void moveCardToHand(Player player, Card card) {
         Set<Card> discard = player.getDiscard();
         Set<Card> hand = player.getHand();
 

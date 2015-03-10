@@ -31,9 +31,9 @@ public class Remodel extends ComplexActionCard {
 
         choice.setExpectedAnswerType(OptionType.CARD);
 
-        if(parent == null) {
+        if (parent == null) {
             choice.setCardOptions(target.getHand());
-        } else if(parent.getResponse() != null){
+        } else if (parent.getResponse() != null) {
             Card lastChoice = parent.getResponse().getCard();
             //Set<Card> oldOptions = parent.getCardOptions();
 
@@ -52,20 +52,21 @@ public class Remodel extends ComplexActionCard {
     }
 
     @Override
-    void play(Player player, Game game) {}
+    void play(Player player, Game game) {
+    }
 
-    Set<Card> getTrashCardOptions(Player player){
+    Set<Card> getTrashCardOptions(Player player) {
         return player.getHand();
     }
 
-    Set<Card> getGainOptions(Game game, byte cost){
+    Set<Card> getGainOptions(Game game, byte cost) {
         Multimap<String, Card> market = game.getKingdom().getCardMarket();
 
         Set<Card> options = market.keySet().stream()
                 .map(market::get)
                 .map(cards -> cards.stream().findAny())
                 .map(Optional::get)
-                .filter( card -> card.getCost().getMoney() <= 5 )
+                .filter(card -> card.getCost().getMoney() <= 5)
                 .collect(Collectors.toSet());
 
         options.removeAll(game.getTurn().getPlay().values());

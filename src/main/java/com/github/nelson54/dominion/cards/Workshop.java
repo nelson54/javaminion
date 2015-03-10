@@ -52,14 +52,14 @@ public class Workshop extends ComplexActionCard {
         game.trashCard(this);
     }
 
-    Set<Card> getOptions(Player player, Game game){
+    Set<Card> getOptions(Player player, Game game) {
         Multimap<String, Card> market = game.getKingdom().getCardMarket();
 
         return market.keySet().stream()
                 .map(market::get)
                 .map(cards -> cards.stream().findAny())
                 .map(Optional::get)
-                .filter( card -> card.getCost().getMoney() <= 4)
+                .filter(card -> card.getCost().getMoney() <= 4)
                 .collect(Collectors.toSet());
     }
 }

@@ -46,6 +46,7 @@ public class Chapel extends ComplexActionCard {
     }
 
     @Override
-    void play(Player player, Game game) {}
+    void play(Player player, Game game) {
+    }
 
 }

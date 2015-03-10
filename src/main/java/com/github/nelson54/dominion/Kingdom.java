@@ -9,24 +9,22 @@ import com.google.common.collect.Multimap;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Created by dnelson on 2/26/2015.
- */
 
 @JsonAutoDetect
 public class Kingdom {
 
     @JsonProperty
+    private
     Multimap<String, Card> cardMarket;
 
-    Map<String, Card> allCards;
+    private Map<String, Card> allCards;
 
-    Collection<Card> getCardsByName(String name){
+    Collection<Card> getCardsByName(String name) {
         return cardMarket.get(name);
     }
 
-    public long getNumberOfRemainingCardsByName(String name){
-        if(!cardMarket.containsKey(name))
+    public long getNumberOfRemainingCardsByName(String name) {
+        if (!cardMarket.containsKey(name))
             return 0;
         else
             return getCardsByName(name).size();
@@ -48,18 +46,18 @@ public class Kingdom {
         this.allCards = allCards;
     }
 
-    public Set<Card> getCardOfEachType(){
+    Set<Card> getCardOfEachType() {
         Set<Card> cardsOfEachType = new HashSet<>();
 
         cardMarket.keySet().stream()
                 .map(id -> new ArrayList<>(cardMarket.get(id)))
-                .map(cards-> cards.get(0))
-                .forEach(card-> cardsOfEachType.add(card));
+                .map(cards -> cards.get(0))
+                .forEach(cardsOfEachType::add);
 
         return cardsOfEachType;
     }
 
-    public Set<Card> getTreasureCards(){
+    public Set<Card> getTreasureCards() {
         return getCardOfEachType().stream()
                 .filter(card -> card instanceof TreasureCard)
                 .collect(Collectors.toSet());

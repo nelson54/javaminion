@@ -1,8 +1,6 @@
 package com.github.nelson54.dominion.choices;
 
-/**
- * Created by dnelson on 3/1/2015.
- */
+
 public enum ChoiceType {
     TRASH_CARD_TO_GAIN,
     RETURN_DISCARD_PILE,

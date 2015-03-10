@@ -6,9 +6,7 @@ import com.github.nelson54.dominion.Turn;
 
 import java.util.Optional;
 
-/**
- * Created by dnelson on 2/28/2015.
- */
+
 public class Moneylender extends ActionCard {
 
     public Moneylender() {
@@ -28,13 +26,13 @@ public class Moneylender extends ActionCard {
         Copper copper;
         Optional<Copper> maybe = player.getHand()
                 .stream()
-                .filter(card->card instanceof Copper)
+                .filter(card -> card instanceof Copper)
                 .map(card -> (Copper) card)
                 .findFirst();
 
         copper = maybe.get();
 
-        if(copper != null){
+        if (copper != null) {
             game.trashCard(copper);
             turn.setMoneyPool(turn.getMoneyPool() + 3);
         }

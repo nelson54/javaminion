@@ -8,13 +8,12 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 public class FeastEffect extends Effect {
 
 
-
     @Override
     boolean effect(ChoiceResponse response, Turn turn, Game game) {
 
         Card option = game.getAllCards().get(response.getCard().getId().toString());
 
-        if(getChoice().getCardOptions().contains(option)){
+        if (getChoice().getCardOptions().contains(option)) {
             game.giveCardToPlayer(option.getName(), getTarget());
             return true;
         }

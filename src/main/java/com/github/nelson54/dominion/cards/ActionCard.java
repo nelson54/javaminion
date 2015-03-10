@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 
 public abstract class ActionCard extends Card {
 
-    ActionCard(){
+    ActionCard() {
         isKingdom = true;
         cardTypes.add(CardType.ACTION);
     }
 
     public abstract void apply(Player player, Game game);
 
-    Set<Player> getOtherPlayers(Player player, Game game){
+    Set<Player> getOtherPlayers(Player player, Game game) {
         return game.getPlayers()
                 .values()
                 .stream()

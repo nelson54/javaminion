@@ -1,18 +1,15 @@
 package com.github.nelson54.dominion;
 
-import com.github.nelson54.dominion.cards.KingdomFactory;
 import com.github.nelson54.dominion.events.GameEventFactory;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-/**
- * Created by dnelson on 2/26/2015.
- */
+
 public class GameFactory {
 
-    KingdomFactory kingdomFactory;
+    private KingdomFactory kingdomFactory;
 
     public Game createGame(int players) throws InstantiationException, IllegalAccessException {
         Game game = new Game();
@@ -27,8 +24,8 @@ public class GameFactory {
         return game;
     }
 
-    void addPlayers(int players, Game game){
-        for(; players > 0; players--){
+    void addPlayers(int players, Game game) {
+        for (; players > 0; players--) {
             Player player = createPlayer(game, game.getPlayers(), game.getKingdom());
 
             game.getPlayers().put(player.getId().toString(), player);
@@ -36,7 +33,7 @@ public class GameFactory {
         }
     }
 
-    Player createPlayer(Game game, Map<String, Player> players, Kingdom kingdom){
+    Player createPlayer(Game game, Map<String, Player> players, Kingdom kingdom) {
         Player player = new Player();
         player.setGame(game);
         addStartingCardsToPlayer(player, kingdom, game);
@@ -48,7 +45,7 @@ public class GameFactory {
         return player;
     }
 
-    void addStartingCardsToPlayer(Player player, Kingdom kingdom, Game game){
+    void addStartingCardsToPlayer(Player player, Kingdom kingdom, Game game) {
 
         game.giveCardToPlayer("Estate", player);
         game.giveCardToPlayer("Estate", player);

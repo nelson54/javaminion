@@ -1,7 +1,7 @@
 package com.github.nelson54.dominion.cards;
 
 
-class CurseCard extends Card {
+public class CurseCard extends Card {
 
     byte moneyCost = 0;
     private byte victoryPoints = -1;
@@ -20,7 +20,7 @@ class CurseCard extends Card {
         setName("Curse");
     }
 
-    public byte getVictoryPoints(){
+    public byte getVictoryPoints() {
         return victoryPoints;
     }
 

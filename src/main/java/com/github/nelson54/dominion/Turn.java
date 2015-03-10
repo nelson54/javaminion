@@ -23,35 +23,39 @@ import static com.github.nelson54.dominion.Phase.BUY;
 
 public class Turn {
 
-    @JsonBackReference
-    Game game;
-    @JsonIgnore
-    Player player;
     @JsonProperty
     Phase phase;
-
+    @JsonBackReference
+    private
+    Game game;
+    @JsonIgnore
+    private
+    Player player;
     @JsonProperty
+    private
     Set<Choice> unresolvedChoices;
     @JsonIgnore
+    private
     Set<Choice> resolvedChoices;
 
 
     @JsonProperty
+    private
     Map<String, Card> play;
 
-    long actionPool;
-    long moneyPool;
-    long buyPool;
+    private long actionPool;
+    private long moneyPool;
+    private long buyPool;
 
-    String playerId;
+    private String playerId;
 
     public Turn() {
         unresolvedChoices = new HashSet<>();
         resolvedChoices = new HashSet<>();
     }
 
-    public void endPhase(){
-        switch(phase){
+    public void endPhase() {
+        switch (phase) {
             case WAITING_FOR_EFFECTS:
                 break;
             case BUY:
@@ -66,12 +70,12 @@ public class Turn {
         }
     }
 
-    public void playCard(ActionCard card, Player player, Game game){
-        if(phase != ACTION || !player.getId().equals(this.player.getId())){
+    public void playCard(ActionCard card, Player player, Game game) {
+        if (phase != ACTION || !player.getId().equals(this.player.getId())) {
             throw new IncorrectPhaseException();
         }
 
-        if(actionPool == 0) {
+        if (actionPool == 0) {
             throw new InsufficientActionsException();
         }
 
@@ -83,15 +87,15 @@ public class Turn {
 
     public Card purchaseCardForPlayer(Card card, Player player, Game game)
             throws IncorrectPhaseException, InsufficientFundsException {
-        if(!phase.equals(Phase.BUY) || !player.getId().equals(this.player.getId())) {
+        if (!phase.equals(Phase.BUY) || !player.getId().equals(this.player.getId())) {
             throw new IncorrectPhaseException();
         }
 
-        if(!canAffordCost(player, card.getCost())){
+        if (!canAffordCost(player, card.getCost())) {
             throw new InsufficientFundsException();
         }
 
-        if(buyPool == 0){
+        if (buyPool == 0) {
             throw new InsufficientBuysException();
         }
 
@@ -100,29 +104,29 @@ public class Turn {
         return game.giveCardToPlayer(card.getName(), player);
     }
 
-    public boolean canAffordCost(Player player, Cost cost) {
+    boolean canAffordCost(Player player, Cost cost) {
         return getMoney() >= cost.getMoney();
     }
 
     @JsonProperty("money")
-    public long getMoney() {
+    long getMoney() {
         return player.getHand().stream()
                 .filter(card -> card instanceof TreasureCard)
-                .map(card -> (TreasureCard)card)
-                .mapToLong(card -> (int)card.getMoneyValue(player, game))
+                .map(card -> (TreasureCard) card)
+                .mapToLong(card -> (int) card.getMoneyValue(player, game))
                 .sum() + moneyPool;
     }
 
-    public void addChoice(Choice choice){
+    public void addChoice(Choice choice) {
         phase = Phase.WAITING_FOR_CHOICE;
         unresolvedChoices.add(choice);
     }
 
-    public Optional<Choice>  getUnresolvedChoiceById(String id){
+    public Optional<Choice> getUnresolvedChoiceById(String id) {
         Optional<Choice> optChoice = Optional.empty();
 
-        for(Choice choice : unresolvedChoices){
-            if(choice.getId().toString().equals(id)){
+        for (Choice choice : unresolvedChoices) {
+            if (choice.getId().toString().equals(id)) {
 
                 optChoice = Optional.of(choice);
                 break;
@@ -132,11 +136,11 @@ public class Turn {
         return optChoice;
     }
 
-    public long addToMoneyPool(long money){
+    public long addToMoneyPool(long money) {
         return moneyPool += money;
     }
 
-    public void spendMoney(long money) {
+    void spendMoney(long money) {
         moneyPool -= money;
     }
 

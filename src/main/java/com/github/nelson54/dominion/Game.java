@@ -3,7 +3,8 @@ package com.github.nelson54.dominion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.choices.Choice;
+import com.github.nelson54.dominion.events.GameEvent;
+import com.github.nelson54.dominion.events.GameEventFactory;
 import com.google.common.collect.Multimap;
 
 import java.util.*;
@@ -43,15 +44,19 @@ public class Game {
     @JsonProperty
     Turn turn;
 
-    @JsonProperty
-    Map<String, Choice> choices;
+    @JsonIgnore
+    GameEventFactory gameEventFactory;
 
     public Game() {
         id = UUID.randomUUID();
         pastTurns = new ArrayList<>();
         allCards = new HashMap<>();
         trash = new HashSet<>();
-        choices = new HashMap<>();
+
+    }
+
+    public GameEvent trigger(GameEvent gameEvent){
+        return gameEvent;
     }
 
     Player nextPlayer(){
@@ -80,56 +85,12 @@ public class Game {
             cards.remove(purchasedCard.get());
             purchasedCard.ifPresent(card -> card.setOwner(player));
             player.getDiscard().add(purchasedCard.get());
+            purchasedCard.ifPresent(card -> card.setOwner(player));
             return purchasedCard.get();
         } else {
             return null;
         }
     }
-
-    public void addChoice(Choice choice){
-        turn.setPhase(Phase.WAITING_FOR_CHOICE);
-        choices.put(choice.getId().toString(), choice);
-    }
-
-    public Optional<Choice>  getUnresolvedChoiceById(String id){
-        Optional<Choice> optChoice = Optional.empty();
-
-        for(Choice choice : choices.values()){
-            if(choice.getId().toString().equals(id)){
-
-                optChoice = Optional.of(choice);
-                break;
-            }
-        }
-
-        return optChoice;
-    }
-
-    public void trashCard(Card card){
-        Player player = card.getOwner();
-
-        player.getDiscard().remove(card);
-        player.getDeck().remove(card);
-        player.getHand().remove(card);
-
-        card.setOwner(null);
-
-        trash.add(card);
-    }
-
-    public void setKingdom(Kingdom kingdom) {
-        Multimap<String, Card> market = kingdom.getCardMarket();
-        Set<Card> allCards = new HashSet<>();
-        market.keySet().stream()
-                .map(market::get)
-                .forEach(allCards::addAll);
-
-        allCards.stream()
-                .forEach(card -> this.allCards.put(card.getId().toString(), card));
-
-        this.kingdom = kingdom;
-    }
-
 
     boolean isGameOver(){
         return kingdom.getNumberOfRemainingCardsByName("Province") == 0;
@@ -155,6 +116,19 @@ public class Game {
         return kingdom;
     }
 
+    public void setKingdom(Kingdom kingdom) {
+        Multimap<String, Card> market = kingdom.getCardMarket();
+        Set<Card> allCards = new HashSet<>();
+        market.keySet().stream()
+                .map(market::get)
+                .forEach(allCards::addAll);
+
+        allCards.stream()
+                .forEach(card -> this.allCards.put(card.getId().toString(), card));
+
+        this.kingdom = kingdom;
+    }
+
     Set<Player> getTurnOrder() {
         return turnOrder;
     }
@@ -175,6 +149,18 @@ public class Game {
         this.turn = turn;
     }
 
+    public void trashCard(Card card){
+        Player player = card.getOwner();
+
+        player.getDiscard().remove(card);
+        player.getDeck().remove(card);
+        player.getHand().remove(card);
+
+        card.setOwner(null);
+
+        trash.add(card);
+    }
+
     public Map<String, Card> getAllCards() {
         return allCards;
     }
@@ -183,11 +169,11 @@ public class Game {
         this.allCards = allCards;
     }
 
-    public Map<String, Choice> getChoices() {
-        return choices;
+    public GameEventFactory getGameEventFactory() {
+        return gameEventFactory;
     }
 
-    public void setChoices(Map<String, Choice> choices) {
-        this.choices = choices;
+    public void setGameEventFactory(GameEventFactory gameEventFactory) {
+        this.gameEventFactory = gameEventFactory;
     }
 }

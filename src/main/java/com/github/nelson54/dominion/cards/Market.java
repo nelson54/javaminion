@@ -4,9 +4,7 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 
-/**
- * Created by dnelson on 2/28/2015.
- */
+
 public class Market extends ActionCard {
 
     public Market() {
@@ -24,8 +22,8 @@ public class Market extends ActionCard {
     public void apply(Player player, Game game) {
         Turn turn = game.getTurn();
         player.drawXCards(1);
-        turn.setBuyPool(turn.getBuyPool()+1);
+        turn.setBuyPool(turn.getBuyPool() + 1);
         turn.setActionPool(turn.getActionPool() + 1);
-        turn.setMoneyPool(turn.getMoneyPool()+1);
+        turn.setMoneyPool(turn.getMoneyPool() + 1);
     }
 }

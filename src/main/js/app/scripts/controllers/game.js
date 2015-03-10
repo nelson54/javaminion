@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name dominionFrontendApp.controller:AboutCtrl
- * @description
- * # AboutCtrl
- * Controller of the dominionFrontendApp
- */
 angular.module('dominionFrontendApp')
   .controller('GameCtrl', function ($scope, $http, $resource, $route, game, playerId) {
 
@@ -69,8 +62,10 @@ angular.module('dominionFrontendApp')
         case 'CARD':
           choice.targetChoice = choose.id;
           choice.card = response;
+          break;
         case 'YES_OR_NO':
           choice.isYesOrNo = response;
+          break;
       }
       if(choose.expectedAnswerType == 'CARD') {
 

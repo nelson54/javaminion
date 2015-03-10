@@ -6,9 +6,7 @@ import com.github.nelson54.dominion.cards.ActionCard;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 
-/**
- * Created by dnelson on 3/1/2015.
- */
+
 public class ThroneRoomEffect extends Effect {
 
     @Override
@@ -17,11 +15,11 @@ public class ThroneRoomEffect extends Effect {
         Card option = game.getAllCards().get(response.getCard().toString());
         ActionCard actionCard = null;
 
-        if(option instanceof ActionCard){
-            actionCard = (ActionCard)option;
+        if (option instanceof ActionCard) {
+            actionCard = (ActionCard) option;
         }
 
-        if(getChoice().getCardOptions().contains(response)){
+        if (getChoice().getCardOptions().contains(option)) {
             turn.playCard(actionCard, getTarget(), game);
             //response.apply(getTarget(), game);
         }

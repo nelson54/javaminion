@@ -9,7 +9,6 @@ import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.cards.ComplexActionCard;
 import com.github.nelson54.dominion.effects.Effect;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -62,9 +61,7 @@ public class Choice {
         effect.setChoice(this);
     }
 
-    public void apply(ChoiceResponse choiceResponse, Turn turn, Game game){
-        Map<String, Choice> choices = game.getChoices();
-
+    public void apply(ChoiceResponse choiceResponse, Turn turn){
         setResponse(choiceResponse);
         effect.resolve(choiceResponse, turn, turn.getGame());
 
@@ -75,8 +72,6 @@ public class Choice {
         Set<Choice> choices = turn.getUnresolvedChoices();
         Set<Choice> resolved = turn.getResolvedChoices();
 
-        choices.remove(getId().toString());
-        resolved.add(this);
         if(isComplete){
             choices.remove(this);
             resolved.add(this);
@@ -88,14 +83,9 @@ public class Choice {
             Game game = player.getGame();
             ComplexActionCard complexCard = (ComplexActionCard) source;
 
-        effect.resolve(response, turn, game);
-
-        if(choices.size() == 0){
-            turn.setPhase(Phase.ACTION);
             complexCard.addChoice(player, game);
             choices.remove(this);
         }
-    }
 
 
     }

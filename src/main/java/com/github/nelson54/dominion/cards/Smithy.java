@@ -3,9 +3,7 @@ package com.github.nelson54.dominion.cards;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 
-/**
- * Created by dnelson on 2/28/2015.
- */
+
 public class Smithy extends ActionCard {
 
     public Smithy() {

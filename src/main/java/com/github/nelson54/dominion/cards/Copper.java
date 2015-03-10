@@ -1,7 +1,7 @@
 package com.github.nelson54.dominion.cards;
 
 
-class Copper extends TreasureCard {
+public class Copper extends TreasureCard {
 
     public Copper() {
         super();
