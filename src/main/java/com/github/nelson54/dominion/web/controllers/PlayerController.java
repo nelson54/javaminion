@@ -135,7 +135,7 @@ public class PlayerController {
             }
         }
 
-        choice.apply(choiceResponse, turn);
+        choice.apply(choiceResponse, turn, game);
 
         return game;
     }

@@ -24,9 +24,6 @@ public class GameFactory {
         addPlayers(players, game);
         game.nextPlayer();
 
-        GameEventFactory gameEventFactory = new GameEventFactory(game);
-        game.setGameEventFactory(gameEventFactory);
-
         return game;
     }
 
