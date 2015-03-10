@@ -40,7 +40,7 @@
 
   <div ng-if="turn.unresolvedChoices.length > 0">
     <h3>Choice </h3>
-    <ul ng-init="choice = getChoice(player);">
+    <ul ng-init="choice = turn.unresolvedChoices[0];">
       <li ng-repeat="card in choice.options">
         <button ng-disabled="" ng-click="choose(game, player, choice, card)">{{card.name}}</button>
       </li>

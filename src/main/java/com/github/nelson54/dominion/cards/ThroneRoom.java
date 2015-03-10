@@ -1,11 +1,10 @@
 package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Kingdom;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.choices.ChoiceType;
+import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.choices.Range;
 import com.github.nelson54.dominion.effects.Effect;
 import com.github.nelson54.dominion.effects.ThroneRoomEffect;
@@ -31,15 +30,15 @@ public class ThroneRoom extends ActionCard {
         Turn turn = game.getTurn();
         game.trashCard(this);
 
-        Choice<ActionCard> choice = new Choice<>(player, this);
-        Effect<ActionCard> effect = new ThroneRoomEffect();
+        Choice choice = new Choice(player, this);
+        Effect effect = new ThroneRoomEffect();
 
         choice.bind(effect);
 
-        choice.setChoiceType(ChoiceType.CARDS);
+        choice.setExpectedAnswerType(OptionType.CARD);
         choice.setNumber((byte) 1);
         choice.setRange(Range.EXACTLY);
-        choice.setOptions(getOptions(player.getHand()));
+        choice.setCardOptions(getOptions(player.getHand()));
 
         effect.setChoice(choice);
         effect.setOwner(getOwner());
@@ -49,7 +48,7 @@ public class ThroneRoom extends ActionCard {
     }
 
 
-    Set<ActionCard> getOptions(Set<Card> hand){
+    Set<Card> getOptions(Set<Card> hand){
         return hand.stream()
                 .filter(card -> card instanceof ActionCard)
                 .map(card -> (ActionCard)card)

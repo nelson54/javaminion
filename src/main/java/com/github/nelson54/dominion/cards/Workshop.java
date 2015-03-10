@@ -13,17 +13,17 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Feast extends ComplexActionCard {
+public class Workshop extends ComplexActionCard {
 
-    public Feast() {
+    public Workshop() {
         super();
-        byte moneyCost = 4;
+        byte moneyCost = 3;
 
         Cost cost = new Cost();
         cost.setMoney(moneyCost);
         setCost(cost);
 
-        setName("Feast");
+        setName("Workshop");
     }
 
     @Override
@@ -31,7 +31,6 @@ public class Feast extends ComplexActionCard {
         Choice choice = new Choice(target, this);
 
         choice.setExpectedAnswerType(OptionType.CARD);
-        choice.setRequired(false);
         choice.setNumber((byte) 1);
         choice.setRange(Range.EXACTLY);
         choice.setCardOptions(getOptions(target, game));
@@ -60,7 +59,7 @@ public class Feast extends ComplexActionCard {
                 .map(market::get)
                 .map(cards -> cards.stream().findAny())
                 .map(Optional::get)
-                .filter( card -> card.getCost().getMoney() <=5 )
+                .filter( card -> card.getCost().getMoney() <= 4)
                 .collect(Collectors.toSet());
     }
 }

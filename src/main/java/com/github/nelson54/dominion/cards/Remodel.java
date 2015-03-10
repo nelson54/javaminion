@@ -4,18 +4,17 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.choices.Range;
 import com.github.nelson54.dominion.effects.Effect;
-import com.github.nelson54.dominion.effects.FeastEffect;
+import com.github.nelson54.dominion.effects.RemodelEffect;
 import com.google.common.collect.Multimap;
 
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Feast extends ComplexActionCard {
+public class Remodel extends ComplexActionCard {
 
-    public Feast() {
+    public Remodel() {
         super();
         byte moneyCost = 4;
 
@@ -23,7 +22,7 @@ public class Feast extends ComplexActionCard {
         cost.setMoney(moneyCost);
         setCost(cost);
 
-        setName("Feast");
+        setName("Remodel");
     }
 
     @Override
@@ -31,36 +30,46 @@ public class Feast extends ComplexActionCard {
         Choice choice = new Choice(target, this);
 
         choice.setExpectedAnswerType(OptionType.CARD);
-        choice.setRequired(false);
-        choice.setNumber((byte) 1);
-        choice.setRange(Range.EXACTLY);
-        choice.setCardOptions(getOptions(target, game));
+
+        if(parent == null) {
+            choice.setCardOptions(target.getHand());
+        } else if(parent.getResponse() != null){
+            Card lastChoice = parent.getResponse().getCard();
+            //Set<Card> oldOptions = parent.getCardOptions();
+
+            choice.setCardOptions(
+                    getGainOptions(game, lastChoice.getCost().getMoney())
+            );
+        }
 
         return choice;
     }
 
     @Override
     Effect getEffect(Player player, Game game) {
-        Effect effect = new FeastEffect();
-        effect.setOwner(getOwner());
-        effect.setTarget(player);
 
-        return effect;
+        return new RemodelEffect();
     }
 
     @Override
-    void play(Player player, Game game) {
-        game.trashCard(this);
+    void play(Player player, Game game) {}
+
+    Set<Card> getTrashCardOptions(Player player){
+        return player.getHand();
     }
 
-    Set<Card> getOptions(Player player, Game game){
+    Set<Card> getGainOptions(Game game, byte cost){
         Multimap<String, Card> market = game.getKingdom().getCardMarket();
 
-        return market.keySet().stream()
+        Set<Card> options = market.keySet().stream()
                 .map(market::get)
                 .map(cards -> cards.stream().findAny())
                 .map(Optional::get)
-                .filter( card -> card.getCost().getMoney() <=5 )
+                .filter( card -> card.getCost().getMoney() <= 5 )
                 .collect(Collectors.toSet());
+
+        options.removeAll(game.getTurn().getPlay().values());
+
+        return options;
     }
 }

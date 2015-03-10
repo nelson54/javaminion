@@ -1,12 +1,14 @@
 package com.github.nelson54.dominion.effects;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 
-public abstract class Effect<T> {
+public abstract class Effect {
 
     @JsonBackReference
     Player owner;
@@ -19,19 +21,21 @@ public abstract class Effect<T> {
     boolean cancelled;
 
     @JsonBackReference
-    Choice<T> choice;
+    Choice choice;
 
     public Effect(){
         cancelled = false;
     }
 
-    public void resolve(ChoiceResponse response){
-        if(!cancelled){
-            effect(response);
+    public void resolve(ChoiceResponse response, Turn turn, Game game){
+        if(cancelled || response.isDone()) {
+            choice.setComplete(true);
+        } else {
+            choice.setComplete(effect(response, turn, game));
         }
     }
 
-    abstract void effect(ChoiceResponse response);
+    abstract boolean effect(ChoiceResponse response, Turn turn, Game game);
 
     public Player getOwner() {
         return owner;
@@ -65,11 +69,11 @@ public abstract class Effect<T> {
         this.cancelled = cancelled;
     }
 
-    public Choice<T> getChoice() {
+    public Choice getChoice() {
         return choice;
     }
 
-    public void setChoice(Choice<T> choice) {
+    public void setChoice(Choice choice) {
         this.choice = choice;
     }
 }

@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion;
 
 import com.github.nelson54.dominion.cards.KingdomFactory;
+import com.github.nelson54.dominion.events.GameEventFactory;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,6 +23,9 @@ public class GameFactory {
 
         addPlayers(players, game);
         game.nextPlayer();
+
+        GameEventFactory gameEventFactory = new GameEventFactory(game);
+        game.setGameEventFactory(gameEventFactory);
 
         return game;
     }

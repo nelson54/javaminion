@@ -64,8 +64,27 @@ angular.module('dominionFrontendApp')
       var Choice = $resource('/dominion/:gameId/:playerId/choice');
 
       var choice = new Choice();
-      choice.targetChoice = choose.id;
-      choice.card = response;
+
+      switch (choose.expectedAnswerType) {
+        case 'CARD':
+          choice.targetChoice = choose.id;
+          choice.card = response;
+        case 'YES_OR_NO':
+          choice.isYesOrNo = response;
+      }
+      if(choose.expectedAnswerType == 'CARD') {
+
+      }
+
+      choice.$save({gameId : game.id, playerId:player.id},$route.reload);
+    };
+
+    $scope.chooseDone = function(game, player, choose, response){
+      var Choice = $resource('/dominion/:gameId/:playerId/choice');
+
+      var choice = new Choice();
+
+      choice.done = true;
 
       choice.$save({gameId : game.id, playerId:player.id},$route.reload);
     };

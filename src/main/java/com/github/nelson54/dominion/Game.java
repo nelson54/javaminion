@@ -3,7 +3,6 @@ package com.github.nelson54.dominion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.choices.Choice;
 import com.google.common.collect.Multimap;
 
 import java.util.*;
@@ -52,6 +51,10 @@ public class Game {
         allCards = new HashMap<>();
         trash = new HashSet<>();
         choices = new HashMap<>();
+    }
+
+    public GameEvent trigger(GameEvent gameEvent){
+        return gameEvent;
     }
 
     Player nextPlayer(){
@@ -155,6 +158,19 @@ public class Game {
         return kingdom;
     }
 
+    public void setKingdom(Kingdom kingdom) {
+        Multimap<String, Card> market = kingdom.getCardMarket();
+        Set<Card> allCards = new HashSet<>();
+        market.keySet().stream()
+                .map(market::get)
+                .forEach(allCards::addAll);
+
+        allCards.stream()
+                .forEach(card -> this.allCards.put(card.getId().toString(), card));
+
+        this.kingdom = kingdom;
+    }
+
     Set<Player> getTurnOrder() {
         return turnOrder;
     }
@@ -175,12 +191,32 @@ public class Game {
         this.turn = turn;
     }
 
+    public void trashCard(Card card){
+        Player player = card.getOwner();
+
+        player.getDiscard().remove(card);
+        player.getDeck().remove(card);
+        player.getHand().remove(card);
+
+        card.setOwner(null);
+
+        trash.add(card);
+    }
+
     public Map<String, Card> getAllCards() {
         return allCards;
     }
 
     public void setAllCards(Map<String, Card> allCards) {
         this.allCards = allCards;
+    }
+
+    public GameEventFactory getGameEventFactory() {
+        return gameEventFactory;
+    }
+
+    public void setGameEventFactory(GameEventFactory gameEventFactory) {
+        this.gameEventFactory = gameEventFactory;
     }
 
     public Map<String, Choice> getChoices() {

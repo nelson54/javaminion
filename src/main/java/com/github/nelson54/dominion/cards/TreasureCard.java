@@ -13,6 +13,7 @@ public abstract class TreasureCard extends Card {
 
     public TreasureCard() {
         super();
+        isKingdom = false;
         cardTypes.add(CardType.TREASURE);
     }
 

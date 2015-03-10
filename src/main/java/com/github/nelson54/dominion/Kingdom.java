@@ -3,9 +3,11 @@ package com.github.nelson54.dominion;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.TreasureCard;
 import com.google.common.collect.Multimap;
 
-import java.util.Collection;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by dnelson on 2/26/2015.
@@ -16,6 +18,8 @@ public class Kingdom {
 
     @JsonProperty
     Multimap<String, Card> cardMarket;
+
+    Map<String, Card> allCards;
 
     Collection<Card> getCardsByName(String name){
         return cardMarket.get(name);
@@ -34,5 +38,30 @@ public class Kingdom {
 
     public void setCardMarket(Multimap<String, Card> cardMarket) {
         this.cardMarket = cardMarket;
+    }
+
+    public Map<String, Card> getAllCards() {
+        return allCards;
+    }
+
+    public void setAllCards(Map<String, Card> allCards) {
+        this.allCards = allCards;
+    }
+
+    public Set<Card> getCardOfEachType(){
+        Set<Card> cardsOfEachType = new HashSet<>();
+
+        cardMarket.keySet().stream()
+                .map(id -> new ArrayList<>(cardMarket.get(id)))
+                .map(cards-> cards.get(0))
+                .forEach(card-> cardsOfEachType.add(card));
+
+        return cardsOfEachType;
+    }
+
+    public Set<Card> getTreasureCards(){
+        return getCardOfEachType().stream()
+                .filter(card -> card instanceof TreasureCard)
+                .collect(Collectors.toSet());
     }
 }

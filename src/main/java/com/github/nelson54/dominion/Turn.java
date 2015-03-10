@@ -29,12 +29,14 @@ public class Turn {
     @JsonProperty
     Phase phase;
 
+    @JsonProperty
+    Set<Choice> unresolvedChoices;
     @JsonIgnore
     Set<Choice> resolvedChoices;
 
 
     @JsonProperty
-    Set<Card> play;
+    Map<String, Card> play;
 
     long actionPool;
     long moneyPool;
@@ -43,6 +45,7 @@ public class Turn {
     String playerId;
 
     public Turn() {
+        unresolvedChoices = new HashSet<>();
         resolvedChoices = new HashSet<>();
     }
 
@@ -73,7 +76,7 @@ public class Turn {
 
         actionPool--;
         player.getHand();
-        getPlay().add(card);
+        getPlay().put(card.getId().toString(), card);
         card.apply(player, game);
     }
 
@@ -109,6 +112,25 @@ public class Turn {
                 .sum() + moneyPool;
     }
 
+    public void addChoice(Choice choice){
+        phase = Phase.WAITING_FOR_CHOICE;
+        unresolvedChoices.add(choice);
+    }
+
+    public Optional<Choice>  getUnresolvedChoiceById(String id){
+        Optional<Choice> optChoice = Optional.empty();
+
+        for(Choice choice : unresolvedChoices){
+            if(choice.getId().toString().equals(id)){
+
+                optChoice = Optional.of(choice);
+                break;
+            }
+        }
+
+        return optChoice;
+    }
+
     public long addToMoneyPool(long money){
         return moneyPool += money;
     }
@@ -141,11 +163,11 @@ public class Turn {
         this.phase = phase;
     }
 
-    public Set<Card> getPlay() {
+    public Map<String, Card> getPlay() {
         return play;
     }
 
-    public void setPlay(Set<Card> play) {
+    public void setPlay(Map<String, Card> play) {
         this.play = play;
     }
 
@@ -171,6 +193,14 @@ public class Turn {
 
     public void setBuyPool(long buyPool) {
         this.buyPool = buyPool;
+    }
+
+    public Set<Choice> getUnresolvedChoices() {
+        return unresolvedChoices;
+    }
+
+    public void setUnresolvedChoices(Set<Choice> unresolvedChoices) {
+        this.unresolvedChoices = unresolvedChoices;
     }
 
     public Set<Choice> getResolvedChoices() {

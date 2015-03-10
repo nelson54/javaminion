@@ -2,8 +2,8 @@ package com.github.nelson54.dominion;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.nelson54.dominion.cards.*;
 import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.VictoryCard;
 
 import java.util.*;
 
@@ -38,7 +38,7 @@ public class Player {
     @JsonProperty
     public long getVictoryPoints(){
         return getAllCards()
-                .stream()
+                .values().stream()
                 .filter(card -> card instanceof VictoryCard)
                 .map(card -> (VictoryCard) card)
                 .mapToLong(card-> card.getVictoryPoints())
@@ -62,7 +62,7 @@ public class Player {
         currentTurn.setActionPool(1);
         currentTurn.setMoneyPool(0);
         currentTurn.setPhase(ACTION);
-        currentTurn.setPlay(new LinkedHashSet<>());
+        currentTurn.setPlay(new LinkedHashMap<>());
         currentTurn.setPlayer(this);
 
     }
@@ -110,12 +110,22 @@ public class Player {
         deck.removeAll(drawnCards);
     }
 
-    public Set<Card> getAllCards(){
-        Set<Card> allCards = new HashSet<>();
+    public Card revealCard(){
+        if(deck.size() == 0){
+            shuffle();
+        }
 
-        allCards.addAll(hand);
-        allCards.addAll(deck);
-        allCards.addAll(discard);
+        return deck.stream()
+                .findFirst()
+                .get();
+    }
+
+    public Map<String, Card> getAllCards(){
+        Map<String,Card> allCards = new HashMap<>();
+
+        hand.stream().forEach(card-> allCards.put(card.getId().toString(), card));
+        deck.stream().forEach(card-> allCards.put(card.getId().toString(), card));
+        discard.stream().forEach(card-> allCards.put(card.getId().toString(), card));
 
         return allCards;
     }
@@ -183,5 +193,11 @@ public class Player {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    void meh(Optional<String> str){
+
+        str.ifPresent(String::trim);
+
     }
 }

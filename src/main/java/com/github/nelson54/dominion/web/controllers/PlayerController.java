@@ -1,11 +1,14 @@
 package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Game;
+import com.github.nelson54.dominion.Kingdom;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.ActionCard;
 import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
+import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.web.GameProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -116,11 +119,23 @@ public class PlayerController {
             ChoiceResponse choiceResponse
     ) {
         Game game = gameProvider.getGameByUuid(gameId);
+        Kingdom kingdom = game.getKingdom();
         Player player = game.getPlayers().get(playerId);
         Turn turn = player.getCurrentTurn();
+        choiceResponse.setSource(player);
 
-        turn.getUnresolvedChoiceById(choiceResponse.getTargetChoice())
-                .ifPresent(choice -> choice.apply(choiceResponse, turn));
+        Choice choice = turn.getUnresolvedChoiceById(choiceResponse.getTargetChoice())
+                .get();
+
+        OptionType expectedType = choice.getExpectedAnswerType();
+
+        if(!choiceResponse.isDone()) {
+            if (expectedType.equals(OptionType.CARD)) {
+                choiceResponse.setCard(kingdom.getAllCards().get(choiceResponse.getCard().getId().toString()));
+            }
+        }
+
+        choice.apply(choiceResponse, turn);
 
         return game;
     }

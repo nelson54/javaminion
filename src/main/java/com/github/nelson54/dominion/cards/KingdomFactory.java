@@ -1,7 +1,9 @@
 package com.github.nelson54.dominion.cards;
-import com.github.nelson54.dominion.Kingdom;
 
+import com.github.nelson54.dominion.Kingdom;
 import com.google.common.collect.ArrayListMultimap;
+
+import java.util.HashMap;
 
 /**
  * Created by dnelson on 2/26/2015.
@@ -9,13 +11,14 @@ import com.google.common.collect.ArrayListMultimap;
 public class KingdomFactory {
 
     public Kingdom getKingdom() throws IllegalAccessException, InstantiationException {
-
         Kingdom kingdom = new Kingdom();
+        kingdom.setAllCards(new HashMap<>());
         kingdom.setCardMarket(ArrayListMultimap.create());
 
         addTreasureCards(kingdom);
         addVictoryCards(kingdom);
         addKingdomCards(kingdom);
+
 
         return kingdom;
     }
@@ -46,6 +49,12 @@ public class KingdomFactory {
         addXCardsOfType(10, ThroneRoom.class, kingdom);
         addXCardsOfType(10, Witch.class, kingdom);
         addXCardsOfType(10, Woodcutter.class, kingdom);
+        addXCardsOfType(10, Remodel.class, kingdom);
+        addXCardsOfType(10, Mine.class, kingdom);
+        addXCardsOfType(10, Workshop.class, kingdom);
+        addXCardsOfType(10, Chapel.class, kingdom);
+        addXCardsOfType(10, Adventurer.class, kingdom);
+        addXCardsOfType(10, Chancellor.class, kingdom);
 
     }
 
@@ -53,6 +62,7 @@ public class KingdomFactory {
         for(; x > 0; x--) {
             Card card = clazz.newInstance();
             kingdom.getCardMarket().put(card.getName(), card);
+            kingdom.getAllCards().put(card.getId().toString(), card);
         }
     }
 }
