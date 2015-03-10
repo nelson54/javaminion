@@ -1,12 +1,14 @@
 package com.github.nelson54.dominion.choices;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.effects.Effect;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -43,16 +45,16 @@ public class Choice<T> {
         effect.setChoice(this);
     }
 
-    public void apply(ChoiceResponse choiceResponse, Turn turn){
-        Set<Choice> choices = turn.getUnresolvedChoices();
+    public void apply(ChoiceResponse choiceResponse, Turn turn, Game game){
+        Map<String, Choice> choices = game.getChoices();
         Set<Choice> resolved = turn.getResolvedChoices();
 
-        choices.remove(this);
+        choices.remove(getId().toString());
         resolved.add(this);
 
         effect.resolve(choiceResponse);
 
-        if(choices.size() == 0){
+        if(choices.values().size() == 0){
             turn.setPhase(Phase.ACTION);
         }
     }

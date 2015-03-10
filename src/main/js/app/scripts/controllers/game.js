@@ -89,6 +89,14 @@ angular.module('dominionFrontendApp')
 
     $scope.hasCardType = function(type, card){
       card.cardTypes.includes(type);
-    }
+    };
+
+    $scope.getChoices = function(player){
+      for ( var choice in game.choices ) {
+        if (choice.target == player.id){
+          return choice;
+        }
+      }
+    };
 
   });
