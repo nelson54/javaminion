@@ -31,7 +31,7 @@ public abstract class Effect {
         cancelled = false;
     }
 
-    public void resolve(ChoiceResponse response, Turn turn, Game game) {
+    public void resolve(ChoiceResponse response, Player target, Turn turn, Game game) {
         if (cancelled || response.isDone()) {
             choice.setComplete(true);
         } else {

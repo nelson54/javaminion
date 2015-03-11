@@ -13,6 +13,9 @@ import com.github.nelson54.dominion.web.GameProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/dominion/{gameId}/{playerId}")
 public class PlayerController {
@@ -124,7 +127,7 @@ public class PlayerController {
         Turn turn = player.getCurrentTurn();
         choiceResponse.setSource(player);
 
-        Choice choice = turn.getUnresolvedChoiceById(choiceResponse.getTargetChoice())
+        Choice choice = game.getChoiceById(choiceResponse.getTargetChoice())
                 .get();
 
         OptionType expectedType = choice.getExpectedAnswerType();
@@ -132,6 +135,14 @@ public class PlayerController {
         if (!choiceResponse.isDone()) {
             if (expectedType.equals(OptionType.CARD)) {
                 choiceResponse.setCard(kingdom.getAllCards().get(choiceResponse.getCard().getId().toString()));
+            } else if (expectedType.equals(OptionType.LIST_OF_CARDS)) {
+                Set<Card> choices = choiceResponse.getCards().stream()
+                        .map(card -> card.getId().toString())
+                        .map(id -> kingdom.getAllCards().get(id))
+                        .collect(Collectors.toSet());
+
+                choiceResponse.getCards().clear();
+                choiceResponse.getCards().addAll(choices);
             }
         }
 

@@ -63,13 +63,15 @@ public class Choice {
 
     public void apply(ChoiceResponse choiceResponse, Turn turn){
         setResponse(choiceResponse);
-        effect.resolve(choiceResponse, turn, turn.getGame());
+        choiceResponse.getChoice();
+
+        effect.resolve(choiceResponse, target, turn, turn.getGame());
 
         resolveIfComplete(turn);
     }
 
     public void resolveIfComplete(Turn turn){
-        Set<Choice> choices = turn.getUnresolvedChoices();
+        Set<Choice> choices = game.getChoices();
         Set<Choice> resolved = turn.getResolvedChoices();
 
         if(isComplete){

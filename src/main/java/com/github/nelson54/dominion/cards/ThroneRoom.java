@@ -44,7 +44,7 @@ public class ThroneRoom extends ActionCard {
         effect.setOwner(getOwner());
         effect.setTarget(player);
 
-        turn.addChoice(choice);
+        game.addChoice(choice);
     }
 
 

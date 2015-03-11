@@ -3,6 +3,7 @@ package com.github.nelson54.dominion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.events.GameEvent;
 import com.github.nelson54.dominion.events.GameEventFactory;
 import com.google.common.collect.Multimap;
@@ -44,6 +45,10 @@ public class Game {
     @JsonProperty
     Turn turn;
 
+    @JsonProperty
+    private
+    Set<Choice> choices;
+
     @JsonIgnore
     GameEventFactory gameEventFactory;
 
@@ -52,6 +57,7 @@ public class Game {
         pastTurns = new ArrayList<>();
         allCards = new HashMap<>();
         trash = new HashSet<>();
+        choices = new HashSet<>();
 
     }
 
@@ -63,6 +69,9 @@ public class Game {
         if(turnerator == null || !turnerator.hasNext()){
             turnerator = turnOrder.iterator();
         }
+
+        turn.getResolvedChoices().addAll(choices);
+        choices.clear();
 
         if(isGameOver()){
             turn.phase = END_OF_GAME;
@@ -90,6 +99,25 @@ public class Game {
         } else {
             return null;
         }
+    }
+
+    public Optional<Choice> getChoiceById(String id) {
+        Optional<Choice> optChoice = Optional.empty();
+
+        for (Choice choice : choices) {
+            if (choice.getId().toString().equals(id)) {
+
+                optChoice = Optional.of(choice);
+                break;
+            }
+        }
+
+        return optChoice;
+    }
+
+    public void addChoice(Choice choice) {
+        turn.phase = Phase.WAITING_FOR_CHOICE;
+        choices.add(choice);
     }
 
     boolean isGameOver(){
@@ -175,5 +203,13 @@ public class Game {
 
     public void setGameEventFactory(GameEventFactory gameEventFactory) {
         this.gameEventFactory = gameEventFactory;
+    }
+
+    public Set<Choice> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(Set<Choice> choices) {
+        this.choices = choices;
     }
 }
