@@ -33,7 +33,7 @@ public abstract class ComplexActionCard extends ActionCard {
         play(player, game);
 
         for (Player target : getTargets(player, game)) {
-            addChoice(player, game);
+            addChoice(target, game);
         }
     }
 
@@ -53,13 +53,13 @@ public abstract class ComplexActionCard extends ActionCard {
 
         choice.bind(effect);
 
-        turn.addChoice(choice);
+        game.addChoice(choice);
     }
 
     Choice findParentChoice(Player player) {
         Turn turn = player.getCurrentTurn();
 
-        for (Choice choice : turn.getUnresolvedChoices()) {
+        for (Choice choice : turn.getResolvedChoices()) {
             if (this.equals(choice.getSource())) {
                 return choice;
             }
