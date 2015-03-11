@@ -19,7 +19,7 @@ public class Moat extends ActionReactionCard {
 
     @Override
     public void apply(Player player, Game game) {
-
+        player.drawXCards(2);
     }
 
     @Override

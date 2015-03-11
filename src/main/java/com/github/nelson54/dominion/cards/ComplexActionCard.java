@@ -54,6 +54,8 @@ public abstract class ComplexActionCard extends ActionCard {
         choice.bind(effect);
 
         game.addChoice(choice);
+
+        choice.resolveIfComplete(turn);
     }
 
     Choice findParentChoice(Player player) {

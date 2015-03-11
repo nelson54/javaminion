@@ -54,6 +54,8 @@ public class KingdomFactory {
         addXCardsOfType(10, Adventurer.class, kingdom);
         addXCardsOfType(10, Chancellor.class, kingdom);
         addXCardsOfType(10, Militia.class, kingdom);
+        addXCardsOfType(10, Cellar.class, kingdom);
+        addXCardsOfType(10, Moat.class, kingdom);
 
     }
 

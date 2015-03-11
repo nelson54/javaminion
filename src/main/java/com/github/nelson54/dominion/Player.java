@@ -73,6 +73,16 @@ public class Player {
 
     }
 
+    public void discard(Set<Card> cards){
+        hand.removeAll(cards);
+        discard.addAll(cards);
+    }
+
+    public void putOnTopOfDeck(Card card){
+        hand.remove(card);
+        deck.add(card);
+    }
+
     public void shuffle() {
         List<Card> shuffledDeck = new ArrayList<>();
 
