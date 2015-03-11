@@ -12,7 +12,7 @@ public class MineEffect extends Effect {
     private Card trashedCard;
 
     @Override
-    boolean effect(ChoiceResponse response, Turn turn, Game game) {
+    boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
         Player source = response.getSource();
         if (trashedCard == null && response.getCard() != null) {
             trashedCard = response.getCard();

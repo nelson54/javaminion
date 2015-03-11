@@ -9,7 +9,7 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 public class ChancellorEffect extends Effect {
 
     @Override
-    boolean effect(ChoiceResponse response, Turn turn, Game game) {
+    boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
 
         Player player = response.getSource();
         if (response.isYes()) {

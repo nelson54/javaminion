@@ -35,11 +35,11 @@ public abstract class Effect {
         if (cancelled || response.isDone()) {
             choice.setComplete(true);
         } else {
-            choice.setComplete(effect(response, turn, game));
+            choice.setComplete(effect(response, target, turn, game));
         }
     }
 
-    abstract boolean effect(ChoiceResponse response, Turn turn, Game game);
+    abstract boolean effect(ChoiceResponse response, Player target, Turn turn, Game game);
 
     public Player getOwner() {
         return owner;
