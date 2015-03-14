@@ -9,7 +9,7 @@ import com.github.nelson54.dominion.choices.Range;
 import com.github.nelson54.dominion.effects.Effect;
 
 public class Cellar extends ComplexActionCard {
-    Cellar(){
+    public Cellar(){
         super();
         byte moneyCost = 2;
 

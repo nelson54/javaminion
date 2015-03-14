@@ -70,8 +70,10 @@ public class Game {
             turnerator = turnOrder.iterator();
         }
 
-        turn.getResolvedChoices().addAll(choices);
-        choices.clear();
+        if(turn != null ) {
+            turn.getResolvedChoices().addAll(choices);
+            choices.clear();
+        }
 
         if(isGameOver()){
             turn.phase = END_OF_GAME;

@@ -3,7 +3,7 @@ package com.github.nelson54.dominion.cards;
 
 public class Gold extends TreasureCard {
 
-    Gold() {
+    public Gold() {
         super();
         byte moneyCost = 6;
         byte moneyValue = 3;

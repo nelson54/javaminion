@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class Mine extends ComplexActionCard {
 
-    Mine() {
+    public Mine() {
         super();
         byte moneyCost = 5;
 
