@@ -13,15 +13,16 @@ class GameTest {
     GameFactory gameFactory
     KingdomFactory kingdomFactory
     Kingdom kingdom
+    Player player
     @Before
     void setUp() {
-
         gameFactory = new GameFactory()
         kingdomFactory = new KingdomFactory()
         gameFactory.setKingdomFactory(kingdomFactory)
 
         game = gameFactory.createGame(2)
         kingdom = game.kingdom
+        player = getCurrentPlayer()
     }
 
     @Test
@@ -30,7 +31,7 @@ class GameTest {
         game.nextPlayer()
 
         Turn turn = game.getTurn()
-        Player player = turn.getPlayer()
+        player = getCurrentPlayer()
 
         assert game.turnerator.hasNext(), 'There should be a next player'
 

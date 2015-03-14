@@ -17,11 +17,9 @@ class SmithyTest extends GameTest {
 
     @Test
     void testApply() {
-        Player player = getCurrentPlayer()
+        ActionCard card = (ActionCard)game.giveCardToPlayer("Smithy", player)
 
         int startingHandSize = player.hand.size()
-
-        ActionCard card = (ActionCard)game.giveCardToPlayer("Smithy", player)
         card.apply(player, game)
 
         assert player.hand.size()-startingHandSize == 3, "Playing smithy draws 3 cards"
