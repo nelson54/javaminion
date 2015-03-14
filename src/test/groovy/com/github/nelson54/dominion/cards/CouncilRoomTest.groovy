@@ -13,7 +13,6 @@ class CouncilRoomTest extends GameTest {
     @Before
     void setUp() {
         super.setUp()
-
     }
 
     @Test
