@@ -1,13 +1,13 @@
 package com.github.nelson54.dominion.cards
 
-import com.github.nelson54.dominion.GameTest
+import com.github.nelson54.dominion.DominionTestCase
 import org.junit.Before
 import org.junit.Test
 
 /**
  * Created by Derek on 3/14/2015.
  */
-class MarketTest extends GameTest {
+class MarketTest extends DominionTestCase {
 
     @Before
     void setUp() {

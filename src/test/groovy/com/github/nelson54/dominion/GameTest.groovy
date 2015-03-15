@@ -4,25 +4,13 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * Created by Derek on 3/14/2015.
+ * Created by Derek on 3/15/2015.
  */
+class GameTest extends DominionTestCase {
 
-class GameTest {
-
-    Game game
-    GameFactory gameFactory
-    KingdomFactory kingdomFactory
-    Kingdom kingdom
-    Player player
     @Before
     void setUp() {
-        gameFactory = new GameFactory()
-        kingdomFactory = new KingdomFactory()
-        gameFactory.setKingdomFactory(kingdomFactory)
-
-        game = gameFactory.createGame(2)
-        kingdom = game.kingdom
-        player = getCurrentPlayer()
+        super.setUp()
     }
 
     @Test
@@ -54,7 +42,4 @@ class GameTest {
         assert game.isGameOver(), 'Game ends if cards are gone.'
     }
 
-    Player getCurrentPlayer(){
-        return game.getTurn().getPlayer()
-    }
 }
