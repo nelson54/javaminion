@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.events.GameEvent;
-import com.github.nelson54.dominion.events.GameEventFactory;
 import com.google.common.collect.Multimap;
 
 import java.util.*;
@@ -49,9 +47,6 @@ public class Game {
     private
     Set<Choice> choices;
 
-    @JsonIgnore
-    GameEventFactory gameEventFactory;
-
     public Game() {
         id = UUID.randomUUID();
         pastTurns = new ArrayList<>();
@@ -59,10 +54,6 @@ public class Game {
         trash = new HashSet<>();
         choices = new HashSet<>();
 
-    }
-
-    public GameEvent trigger(GameEvent gameEvent){
-        return gameEvent;
     }
 
     Player nextPlayer(){
@@ -199,19 +190,15 @@ public class Game {
         this.allCards = allCards;
     }
 
-    public GameEventFactory getGameEventFactory() {
-        return gameEventFactory;
-    }
-
-    public void setGameEventFactory(GameEventFactory gameEventFactory) {
-        this.gameEventFactory = gameEventFactory;
-    }
-
     public Set<Choice> getChoices() {
         return choices;
     }
 
     public void setChoices(Set<Choice> choices) {
         this.choices = choices;
+    }
+
+    public Set<Card> getTrash() {
+        return trash;
     }
 }

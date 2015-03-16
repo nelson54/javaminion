@@ -24,6 +24,7 @@ public class Cellar extends ComplexActionCard {
     Choice getChoiceForTarget(Choice parent, Player target, Game game) {
         Choice choice = new Choice(target, this);
 
+        choice.setGame(game);
         choice.setExpectedAnswerType(OptionType.CARD);
         choice.setRequired(false);
         choice.setRange(Range.ANY);

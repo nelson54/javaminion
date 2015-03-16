@@ -6,7 +6,6 @@ import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.cards.ComplexActionCard;
 import com.github.nelson54.dominion.effects.Effect;
 
 import java.util.Set;
@@ -23,7 +22,6 @@ public class Choice {
     Card source;
 
     String message;
-    ChoiceType choiceType;
 
     boolean isComplete;
     boolean isRequired;
@@ -80,14 +78,14 @@ public class Choice {
             if(choices.size() == 0){
                 turn.setPhase(Phase.ACTION);
             }
-        } else if(source instanceof ComplexActionCard) {
+        } /*else if(source instanceof ComplexActionCard) {
             Player player = this.getTarget();
             Game game = player.getGame();
             ComplexActionCard complexCard = (ComplexActionCard) source;
 
             complexCard.addChoice(player, game);
             choices.remove(this);
-        }
+        }*/
 
 
     }
@@ -98,14 +96,6 @@ public class Choice {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public ChoiceType getChoiceType() {
-        return choiceType;
-    }
-
-    public void setChoiceType(ChoiceType choiceType) {
-        this.choiceType = choiceType;
     }
 
     public Set<String> getTextOptions() {

@@ -1,7 +1,5 @@
 package com.github.nelson54.dominion;
 
-import com.github.nelson54.dominion.events.GameEventFactory;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

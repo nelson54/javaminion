@@ -29,12 +29,13 @@ public class Feast extends ComplexActionCard {
     @Override
     Choice getChoiceForTarget(Choice parent, Player target, Game game) {
         Choice choice = new Choice(target, this);
-
+        choice.setGame(game);
         choice.setExpectedAnswerType(OptionType.CARD);
         choice.setRequired(false);
         choice.setNumber((byte) 1);
         choice.setRange(Range.EXACTLY);
         choice.setCardOptions(getOptions(target, game));
+        choice.setComplete(false);
 
         return choice;
     }

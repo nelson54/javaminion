@@ -27,7 +27,7 @@ public class Chapel extends ComplexActionCard {
     Choice getChoiceForTarget(Choice parent, Player target, Game game) {
         Set<Card> options = new HashSet<>();
         Choice choice = new Choice(target, this);
-
+        choice.setGame(game);
         options.addAll(Cards.cardsRemainingInHand(target));
 
         choice.setExpectedAnswerType(OptionType.CARD);

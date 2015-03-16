@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.Game;
+import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.choices.Choice;
@@ -31,7 +32,7 @@ public abstract class ComplexActionCard extends ActionCard {
 
     public void apply(Player player, Game game) {
         play(player, game);
-
+        game.getTurn().setPhase(Phase.WAITING_FOR_CHOICE);
         for (Player target : getTargets(player, game)) {
             addChoice(target, game);
         }
@@ -41,7 +42,7 @@ public abstract class ComplexActionCard extends ActionCard {
         Turn turn = player.getCurrentTurn();
         Choice parent = findParentChoice(player);
         Choice choice = getChoiceForTarget(parent, player, game);
-
+        //choice.setGame(game);
         choice.setSource(this);
 
         Effect effect;
