@@ -27,8 +27,8 @@ public class Workshop extends ComplexActionCard {
     }
 
     @Override
-    Choice getChoiceForTarget(Choice parent, Player target, Game game) {
-        Choice choice = new Choice(target, this);
+    Choice getChoiceForTarget(Choice choice, Player target, Game game) {
+        Choice parent = choice.getParentChoice();
 
         choice.setExpectedAnswerType(OptionType.CARD);
         choice.setNumber((byte) 1);

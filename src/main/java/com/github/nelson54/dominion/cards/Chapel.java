@@ -24,9 +24,9 @@ public class Chapel extends ComplexActionCard {
     }
 
     @Override
-    Choice getChoiceForTarget(Choice parent, Player target, Game game) {
+    Choice getChoiceForTarget(Choice choice, Player target, Game game) {
+        Choice parent = choice.getParentChoice();
         Set<Card> options = new HashSet<>();
-        Choice choice = new Choice(target, this);
         choice.setGame(game);
         options.addAll(Cards.cardsRemainingInHand(target));
 

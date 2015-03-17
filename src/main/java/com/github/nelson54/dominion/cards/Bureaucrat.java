@@ -5,8 +5,9 @@ import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
+import com.github.nelson54.dominion.effects.BureaucratEffect;
 import com.github.nelson54.dominion.effects.Effect;
-import com.github.nelson54.dominion.effects.MilitiaEffect;
+import com.github.nelson54.dominion.exceptions.NoValidChoiceException;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,33 +27,31 @@ public class Bureaucrat extends ComplexActionAttackCard {
     }
 
     @Override
-    Choice getChoiceForTarget(Choice parent, Player target, Game game) {
-        Choice choice = new Choice(target, this);
+    Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException {
+        Choice parent = choice.getParentChoice();
         choice.setMessage("Choose 3 cards to keep in your hand.");
 
         Set<Card> victoryCardsInHand = target.getHand().stream()
-                .filter(card-> card instanceof TreasureCard)
+                .filter(card-> card instanceof VictoryCard)
                 .collect(Collectors.toSet());
 
         if(victoryCardsInHand.size() > 0) {
 
             choice.setCardOptions(victoryCardsInHand);
 
-            choice.setExpectedAnswerType(OptionType.LIST_OF_CARDS);
+            choice.setExpectedAnswerType(OptionType.CARD);
             choice.setRequired(true);
             choice.setNumber((byte) 3);
 
             return choice;
         } else {
-            choice.setComplete(true);
+            throw new NoValidChoiceException();
         }
-
-        return choice;
     }
 
     @Override
     Effect getEffect(Player player, Game game) {
-        return new MilitiaEffect();
+        return new BureaucratEffect();
     }
 
     @Override

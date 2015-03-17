@@ -7,7 +7,6 @@ import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.effects.Effect;
 import com.github.nelson54.dominion.effects.MilitiaEffect;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 public class Militia extends ComplexActionAttackCard {
@@ -24,8 +23,8 @@ public class Militia extends ComplexActionAttackCard {
     }
 
     @Override
-    Choice getChoiceForTarget(Choice parent, Player target, Game game) {
-        Choice choice = new Choice(target, this);
+    Choice getChoiceForTarget(Choice choice, Player target, Game game) {
+        Choice parent = choice.getParentChoice();
         choice.setMessage("Choose 3 cards to keep in your hand.");
 
         choice.setCardOptions(target.getHand());

@@ -25,8 +25,8 @@ public class Library extends ComplexActionCard {
     }
 
     @Override
-    Choice getChoiceForTarget(Choice parent, Player target, Game game) {
-        Choice choice = new Choice(target, this);
+    Choice getChoiceForTarget(Choice choice, Player target, Game game) {
+        Choice parent = choice.getParentChoice();
         choice.setMessage("Would you like to set this card aside?");
 
         Set<Card> card = new HashSet<>();

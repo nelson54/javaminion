@@ -19,7 +19,7 @@ class FeastEffectTest extends DominionTestCase {
         feast = (ComplexActionCard) card
 
         turn.playCard(feast, player, game)
-        //remodel.apply(player, game)
+        //bureaucrat.apply(player, game)
 
         choice = getChoice();
     }

@@ -6,6 +6,7 @@ import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.effects.Effect;
+import com.github.nelson54.dominion.exceptions.NoValidChoiceException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,7 @@ public abstract class ComplexActionCard extends ActionCard {
         cardTypes.add(CardType.ACTION);
     }
 
-    abstract Choice getChoiceForTarget(Choice parent, Player target, Game game);
+    abstract Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException ;
 
     abstract Effect getEffect(Player player, Game game);
 
@@ -32,16 +33,19 @@ public abstract class ComplexActionCard extends ActionCard {
 
     public void apply(Player player, Game game) {
         play(player, game);
-        game.getTurn().setPhase(Phase.WAITING_FOR_CHOICE);
+
         for (Player target : getTargets(player, game)) {
             addChoice(target, game);
         }
     }
 
     public void addChoice(Player player, Game game) {
-        Turn turn = player.getCurrentTurn();
-        Choice parent = findParentChoice(player);
-        Choice choice = getChoiceForTarget(parent, player, game);
+        Turn turn = game.getTurn();
+        Choice parent = findParentChoice(game);
+        Choice choice = new Choice(player, this);
+        choice.setComplete(false);
+        choice.setParentChoice(parent);
+        choice.setGame(game);
         choice.setGame(game);
         choice.setSource(this);
 
@@ -51,16 +55,22 @@ public abstract class ComplexActionCard extends ActionCard {
         } else {
             effect = parent.getEffect();
         }
-
         choice.bind(effect);
+
+        try {
+            choice = getChoiceForTarget(choice, player, game);
+        } catch (NoValidChoiceException e) {
+            choice.getEffect().setNoValidTarget(true);
+            choice.setComplete(true);
+        }
 
         game.addChoice(choice);
 
         choice.resolveIfComplete(turn);
     }
 
-    Choice findParentChoice(Player player) {
-        Turn turn = player.getCurrentTurn();
+    Choice findParentChoice(Game game) {
+        Turn turn = game.getTurn();
 
         for (Choice choice : turn.getResolvedChoices()) {
             if (this.equals(choice.getSource())) {

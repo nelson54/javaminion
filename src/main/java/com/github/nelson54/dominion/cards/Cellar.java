@@ -21,8 +21,8 @@ public class Cellar extends ComplexActionCard {
     }
 
     @Override
-    Choice getChoiceForTarget(Choice parent, Player target, Game game) {
-        Choice choice = new Choice(target, this);
+    Choice getChoiceForTarget(Choice choice, Player target, Game game) {
+        Choice parent = choice.getParentChoice();
 
         choice.setGame(game);
         choice.setExpectedAnswerType(OptionType.CARD);

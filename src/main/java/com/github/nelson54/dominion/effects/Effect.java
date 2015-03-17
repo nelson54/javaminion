@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.effects;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
@@ -9,6 +10,9 @@ import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 
 public abstract class Effect {
+
+    @JsonIgnore
+    private boolean noValidTarget;
 
     @JsonBackReference
     private
@@ -33,13 +37,21 @@ public abstract class Effect {
 
     public void resolve(ChoiceResponse response, Player target, Turn turn, Game game) {
         if (cancelled || response.isDone()) {
+
+            if(noValidTarget){
+                onNoValidTarget(choice, target, turn, game);
+            }
+
             choice.setComplete(true);
+;
         } else {
             choice.setComplete(effect(response, target, turn, game));
         }
     }
 
     abstract boolean effect(ChoiceResponse response, Player target, Turn turn, Game game);
+
+    void onNoValidTarget(Choice choice, Player target, Turn turn, Game game) {}
 
     public Player getOwner() {
         return owner;
@@ -79,5 +91,13 @@ public abstract class Effect {
 
     public void setChoice(Choice choice) {
         this.choice = choice;
+    }
+
+    public boolean hasNoValidTarget() {
+        return noValidTarget;
+    }
+
+    public void setNoValidTarget(boolean noValidTarget) {
+        this.noValidTarget = noValidTarget;
     }
 }

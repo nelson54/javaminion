@@ -12,10 +12,11 @@ import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
 import com.github.nelson54.dominion.exceptions.InsufficientActionsException;
 import com.github.nelson54.dominion.exceptions.InsufficientBuysException;
 import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import static com.github.nelson54.dominion.Phase.ACTION;
@@ -41,6 +42,8 @@ public class Turn {
     private
     Map<String, Card> play;
 
+    Multimap<String, Card> revealed;
+
     private long actionPool;
     private long moneyPool;
     private long buyPool;
@@ -48,6 +51,8 @@ public class Turn {
     private String playerId;
 
     public Turn() {
+        revealed = ArrayListMultimap.create();
+
         resolvedChoices = new HashSet<>();
     }
 
@@ -192,5 +197,9 @@ public class Turn {
 
     public void setPlayerId(String playerId) {
         this.playerId = playerId;
+    }
+
+    public Multimap<String, Card> getRevealed() {
+        return revealed;
     }
 }
