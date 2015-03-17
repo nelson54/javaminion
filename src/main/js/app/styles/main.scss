@@ -94,6 +94,11 @@ body {
   }
 }
 
+.controls-container {
+  float: right;
+  text-align: right;
+}
+
 .hand-container, .kingdom-container {
 
   .name {
@@ -112,4 +117,18 @@ body {
     display:inline-block;
   }
 
+}
+
+.cards-container {
+  img {
+    height: 50px;
+  }
+
+  span {
+    display: block;
+  }
+}
+
+.modal {
+  display:block;
 }

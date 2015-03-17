@@ -8572,19 +8572,39 @@ body {
     border-bottom: 0;
   }
 }
-/* line 99, ../../app/styles/main.scss */
+/* line 97, ../../app/styles/main.scss */
+.controls-container {
+  float: right;
+  text-align: right;
+}
+
+/* line 104, ../../app/styles/main.scss */
 .hand-container .name, .kingdom-container .name {
   display: none;
 }
-/* line 103, ../../app/styles/main.scss */
+/* line 108, ../../app/styles/main.scss */
 .hand-container .count, .kingdom-container .count {
   display: block;
 }
-/* line 107, ../../app/styles/main.scss */
+/* line 112, ../../app/styles/main.scss */
 .hand-container img, .kingdom-container img {
   height: 150px;
 }
-/* line 111, ../../app/styles/main.scss */
+/* line 116, ../../app/styles/main.scss */
 .hand-container li, .kingdom-container li {
   display: inline-block;
+}
+
+/* line 123, ../../app/styles/main.scss */
+.cards-container img {
+  height: 50px;
+}
+/* line 127, ../../app/styles/main.scss */
+.cards-container span {
+  display: block;
+}
+
+/* line 132, ../../app/styles/main.scss */
+.modal {
+  display: block;
 }

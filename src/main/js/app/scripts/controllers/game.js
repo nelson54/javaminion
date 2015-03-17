@@ -4,6 +4,7 @@ angular.module('dominionFrontendApp')
   .controller('GameCtrl', function ($scope, $http, $resource, $route, game, playerId) {
 
     $scope.game = game;
+    $scope.test = false;
 
     $scope.shuffle = function(){
       var Game = $resource('/dominion/:gameId/:playerId/shuffle');
