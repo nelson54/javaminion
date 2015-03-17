@@ -6,6 +6,7 @@ import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.cards.VictoryCard;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.github.nelson54.dominion.Phase.ACTION;
 
@@ -141,6 +142,16 @@ public class Player {
         return deck.stream()
                 .findFirst()
                 .get();
+    }
+
+    public Set<Card> revealCards(int number) {
+        if (deck.size() == 0) {
+            shuffle();
+        }
+
+        return deck.stream()
+                .limit(number)
+                .collect(Collectors.toSet());
     }
 
     public Map<String, Card> getAllCards() {

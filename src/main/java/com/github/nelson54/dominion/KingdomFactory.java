@@ -59,7 +59,7 @@ public class KingdomFactory {
         addXCardsOfType(10, Moat.class, kingdom);
         addXCardsOfType(10, Library.class, kingdom);
         addXCardsOfType(10, Spy.class, kingdom);
-
+        addXCardsOfType(10, Thief.class, kingdom);
     }
 
     void addXCardsOfType(int x, Class<? extends Card> clazz, Kingdom kingdom) throws IllegalAccessException, InstantiationException {
