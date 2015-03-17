@@ -93,3 +93,23 @@ body {
     border-bottom: 0;
   }
 }
+
+.hand-container, .kingdom-container {
+
+  .name {
+    display: none;
+  }
+
+  .count {
+    display:block;
+  }
+
+  img {
+    height: 150px;
+  }
+
+  li {
+    display:inline-block;
+  }
+
+}

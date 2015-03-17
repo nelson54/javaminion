@@ -8572,3 +8572,15 @@ body {
     border-bottom: 0;
   }
 }
+/* line 99, ../../app/styles/main.scss */
+.hand-container .name, .kingdom-container .name {
+  display: none;
+}
+/* line 103, ../../app/styles/main.scss */
+.hand-container .count, .kingdom-container .count {
+  display: block;
+}
+/* line 107, ../../app/styles/main.scss */
+.hand-container li, .kingdom-container li {
+  display: inline-block;
+}

@@ -113,4 +113,8 @@ angular.module('dominionFrontendApp')
       }
     };
 
+    $scope.getImagePath = function(card) {
+      return '/images/'+ card.name.toLowerCase().replace(/\s/g, '') + '.jpg';
+    }
+
   });

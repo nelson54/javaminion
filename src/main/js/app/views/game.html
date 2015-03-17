@@ -2,11 +2,15 @@
   <h4>Game - {{game.id}}</h4>
 </div>
 
-<div>
+<div class="kingdom-container">
   <h3>Kingdom</h3>
   <ul>
     <li ng-repeat="(name, cards) in game.kingdom.cardMarket">
-      <button class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || game.turn.phase !== 'BUY'">{{name}} ({{cards.length}})</button>
+      <button class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || game.turn.phase !== 'BUY'">
+        <img src="{{getImagePath(cards[0])}}" />
+        <span class="name">{{name}}</span>
+        <span class="count">({{cards.length}})</span>
+      </button>
     </li>
   </ul>
 </div>
@@ -56,11 +60,13 @@
     </ul>
   </div>
 
-  <div>
+  <div class="hand-container">
     <h3>Hand ({{player.hand.length}})</h3>
     <ul>
       <li ng-repeat="card in player.hand">
-        <button ng-disabled="" ng-click="play(card)">{{card.name}}</button>
+        <button ng-disabled="" ng-click="play(card)">
+          <img src="{{getImagePath(card)}}" />
+        </button>
       </li>
     </ul>
   </div>
@@ -79,4 +85,3 @@
     </ul>
   </div>
 </div>
-
