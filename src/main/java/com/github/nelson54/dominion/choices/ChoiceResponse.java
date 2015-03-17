@@ -30,6 +30,7 @@ public class ChoiceResponse {
     private String choice;
     private Set<String> choices;
 
+    private int choiceStringNumber;
 
     public Player getSource() {
         return source;
@@ -119,7 +120,11 @@ public class ChoiceResponse {
         return yesOrNo;
     }
 
-    public void setYesOrNo(boolean yesOrNo) {
-        this.yesOrNo = yesOrNo;
+    public int getChoiceStringNumber() {
+        return choiceStringNumber;
+    }
+
+    public void setChoiceStringNumber(int choiceStringNumber) {
+        this.choiceStringNumber = choiceStringNumber;
     }
 }

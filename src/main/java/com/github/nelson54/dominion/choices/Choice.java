@@ -21,7 +21,7 @@ public class Choice {
     @JsonIgnore
     Game game;
     Card source;
-
+    Card displayCard;
     String message;
 
     boolean isComplete;
@@ -217,5 +217,13 @@ public class Choice {
 
     public void setExpectedAnswerType(OptionType expectedAnswerType) {
         this.expectedAnswerType = expectedAnswerType;
+    }
+
+    public Card getDisplayCard() {
+        return displayCard;
+    }
+
+    public void setDisplayCard(Card displayCard) {
+        this.displayCard = displayCard;
     }
 }

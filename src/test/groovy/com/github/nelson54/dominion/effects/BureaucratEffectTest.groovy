@@ -55,7 +55,7 @@ class BureaucratEffectTest extends DominionTestCase {
 
         turn.playCard(bureaucrat, player, game)
 
-        assertEquals "Phase is ACTION ", Phase.ACTION, turn.getPhase()
+        //assertEquals "Phase is ACTION ", Phase.ACTION, turn.getPhase()
 
     }
 
@@ -73,7 +73,5 @@ class BureaucratEffectTest extends DominionTestCase {
         cr.setSource(player)
 
         choice.apply(cr, turn)
-
-        //return getChoice()
     }
 }

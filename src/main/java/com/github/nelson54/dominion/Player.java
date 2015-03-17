@@ -73,8 +73,15 @@ public class Player {
 
     }
 
+    public void discard(Card card){
+        hand.remove(card);
+        deck.remove(card);
+        discard.add(card);
+    }
+
     public void discard(Set<Card> cards){
         hand.removeAll(cards);
+        deck.removeAll(cards);
         discard.addAll(cards);
     }
 
