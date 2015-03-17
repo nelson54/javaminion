@@ -42,7 +42,7 @@ public abstract class ComplexActionCard extends ActionCard {
         Turn turn = player.getCurrentTurn();
         Choice parent = findParentChoice(player);
         Choice choice = getChoiceForTarget(parent, player, game);
-        //choice.setGame(game);
+        choice.setGame(game);
         choice.setSource(this);
 
         Effect effect;

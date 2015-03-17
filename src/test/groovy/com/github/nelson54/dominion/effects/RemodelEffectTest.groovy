@@ -7,18 +7,18 @@ import com.github.nelson54.dominion.cards.ComplexActionCard
 import com.github.nelson54.dominion.choices.Choice
 import com.github.nelson54.dominion.choices.ChoiceResponse
 
-class FeastEffectTest extends DominionTestCase {
+class RemodelEffectTest extends DominionTestCase {
     Card card
-    ComplexActionCard feast
+    ComplexActionCard remodel
     Choice choice
 
     void setUp() {
         super.setUp()
         Turn turn = game.getTurn()
-        card = game.giveCardToPlayer("Feast", player)
-        feast = (ComplexActionCard) card
+        card = game.giveCardToPlayer("Remodel", player)
+        remodel = (ComplexActionCard) card
 
-        turn.playCard(feast, player, game)
+        turn.playCard(remodel, player, game)
         //remodel.apply(player, game)
 
         choice = getChoice();
@@ -27,16 +27,26 @@ class FeastEffectTest extends DominionTestCase {
     void testEffect() {
         Turn turn = game.getTurn()
 
-        Card toGain = choice.getCardOptions().first();
+        Card toTrash = choice.getCardOptions().first();
 
         assertEquals "Phase is WAITING_FOR_CHOICE ", turn.getPhase(), Phase.WAITING_FOR_CHOICE
 
         applyChoice(choice, turn);
 
+        Choice nextChoice = getChoice()
+
+        ChoiceResponse ncr = new ChoiceResponse();
+        Card toGain = nextChoice.getCardOptions().first()
+
+        ncr.setCard(toGain)
+        ncr.setSource(player)
+
+        nextChoice.apply(ncr, turn)
+
         assertEquals "Phase is ACTION ", turn.getPhase(), Phase.ACTION
 
-        assertFalse "Player doesn't have trashed card", player.getAllCards().values().contains(card)
-        assertTrue "Trashed card is in trash", game.getTrash().contains(card)
+        assertFalse "Player doesn't have trashed card", player.getAllCards().values().contains(toTrash)
+        assertTrue "Trashed card is in trash", game.getTrash().contains(toTrash)
 
         assertTrue "Player has gained card", player.getAllCards().values().contains(toGain)
 
