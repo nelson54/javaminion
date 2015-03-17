@@ -8581,6 +8581,10 @@ body {
   display: block;
 }
 /* line 107, ../../app/styles/main.scss */
+.hand-container img, .kingdom-container img {
+  height: 150px;
+}
+/* line 111, ../../app/styles/main.scss */
 .hand-container li, .kingdom-container li {
   display: inline-block;
 }
