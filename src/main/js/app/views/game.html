@@ -94,7 +94,7 @@
   <div class="discard-container">
     <button>
       <img ng-show="player.discard.length == 0" src="/images/empty-card-back.jpg" />
-      <img ng-show="player.discard.length > 0" src="{{getImagePath(player.discard[player.discard.length+1])}}" />
+      <img ng-show="player.discard.length > 0" src="{{getImagePath(player.discard[player.discard.length-1])}}" />
       <span class="count">{{player.discard.length}}</span>
     </button>
   </div>
