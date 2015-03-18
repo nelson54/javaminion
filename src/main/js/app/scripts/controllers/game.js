@@ -93,9 +93,10 @@ angular.module('dominionFrontendApp')
 
       var choice = new Choice();
 
+      choice.targetChoice = choose.id;
+
       switch (choose.expectedAnswerType) {
         case 'CARD':
-          choice.targetChoice = choose.id;
           choice.card = response;
           break;
         case 'YES_OR_NO':
@@ -109,11 +110,11 @@ angular.module('dominionFrontendApp')
       choice.$save({gameId : game.id, playerId:player.id},$route.reload);
     };
 
-    $scope.chooseDone = function(game, player, choose, response){
+    $scope.chooseDone = function(game, player, choose){
       var Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice');
 
       var choice = new Choice();
-
+      choice.targetChoice = choose.id;
       choice.done = true;
 
       choice.$save({gameId : game.id, playerId:player.id},$route.reload);
@@ -140,12 +141,8 @@ angular.module('dominionFrontendApp')
       card.cardTypes.includes(type);
     };
 
-    $scope.getChoices = function(player){
-      for ( var choice in game.choices ) {
-        if (choice.target == player.id){
-          return choice;
-        }
-      }
+    $scope.getChoices = function(){
+      return $scope.getCurrentPlayer().choices;
     };
 
     $scope.getImagePath = function(card) {

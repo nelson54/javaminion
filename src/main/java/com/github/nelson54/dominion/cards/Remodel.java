@@ -26,17 +26,24 @@ public class Remodel extends ComplexActionCard {
     }
 
     @Override
+    CardState getState(Choice choice){
+        if(choice.getParentChoice() == null){
+            return CardState.TRASHING_CARD;
+        } else {
+            return CardState.GAINING_CARD;
+        }
+    }
+
+    @Override
     Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();
 
         choice.setExpectedAnswerType(OptionType.CARD);
 
-        if (parent == null) {
+        if (choice.getState() == CardState.TRASHING_CARD) {
             choice.setCardOptions(target.getHand());
-        } else if (parent.getResponse() != null) {
+        } else if (choice.getState() == CardState.GAINING_CARD) {
             Card lastChoice = parent.getResponse().getCard();
-            //Set<Card> oldOptions = parent.getCardOptions();
-
             choice.setCardOptions(
                     getGainOptions(game, lastChoice.getCost().getMoney())
             );
@@ -66,7 +73,7 @@ public class Remodel extends ComplexActionCard {
                 .map(market::get)
                 .map(cards -> cards.stream().findAny())
                 .map(Optional::get)
-                .filter(card -> card.getCost().getMoney() <= 5)
+                .filter(card -> card.getCost().getMoney() <= cost+2)
                 .collect(Collectors.toSet());
 
         options.removeAll(game.getTurn().getPlay().values());

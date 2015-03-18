@@ -35,17 +35,16 @@ public abstract class Effect {
         cancelled = false;
     }
 
-    public void resolve(ChoiceResponse response, Player target, Turn turn, Game game) {
-        if (cancelled || response.isDone()) {
+    public boolean resolve(ChoiceResponse response, Player target, Turn turn, Game game) {
+        if (cancelled) {
 
             if(noValidTarget){
                 onNoValidTarget(choice, target, turn, game);
             }
 
-            choice.setComplete(true);
-;
+            return true;
         } else {
-            choice.setComplete(effect(response, target, turn, game));
+            return effect(response, target, turn, game);
         }
     }
 

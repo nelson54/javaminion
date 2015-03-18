@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.cards.VictoryCard;
+import com.github.nelson54.dominion.choices.Choice;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,11 +36,16 @@ public class Player {
     private
     Turn currentTurn;
 
+    @JsonProperty
+    private
+    Set<Choice> choices;
+
     Player() {
         id = UUID.randomUUID();
         hand = new HashSet<>();
         deck = new LinkedHashSet<>();
         discard = new HashSet<>();
+        choices = new HashSet<>();
     }
 
     @JsonProperty
@@ -232,5 +238,13 @@ public class Player {
 
         str.ifPresent(String::trim);
 
+    }
+
+    public Set<Choice> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(Set<Choice> choices) {
+        this.choices = choices;
     }
 }

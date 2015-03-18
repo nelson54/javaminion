@@ -7,6 +7,7 @@ import com.github.nelson54.dominion.choices.Choice;
 import com.google.common.collect.Multimap;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.github.nelson54.dominion.Phase.ACTION;
 import static com.github.nelson54.dominion.Phase.BUY;
@@ -45,17 +46,11 @@ public class Game {
     @JsonProperty
     Turn turn;
 
-    @JsonProperty
-    private
-    Set<Choice> choices;
-
     public Game() {
         id = UUID.randomUUID();
         pastTurns = new ArrayList<>();
         allCards = new HashMap<>();
         trash = new HashSet<>();
-        choices = new HashSet<>();
-
     }
 
     Player nextPlayer(){
@@ -64,8 +59,7 @@ public class Game {
         }
 
         if(turn != null ) {
-            turn.getResolvedChoices().addAll(choices);
-            choices.clear();
+            clearAllChoices();
         }
 
         if(isGameOver()){
@@ -87,6 +81,13 @@ public class Game {
         return nextPlayer;
     }
 
+    void clearAllChoices(){
+        for(Player player : players.values()){
+            turn.getResolvedChoices().addAll(player.getChoices());
+            player.getChoices().clear();
+        }
+    }
+
     public Card giveCardToPlayer(String name, Player player){
         Collection<Card> cards = kingdom.getCardsByName(name);
         Optional<Card> purchasedCard;
@@ -106,7 +107,7 @@ public class Game {
     public Optional<Choice> getChoiceById(String id) {
         Optional<Choice> optChoice = Optional.empty();
 
-        for (Choice choice : choices) {
+        for (Choice choice : getChoices()) {
             if (choice.getId().toString().equals(id)) {
 
                 optChoice = Optional.of(choice);
@@ -117,9 +118,15 @@ public class Game {
         return optChoice;
     }
 
+    public Set<Choice> getChoices(){
+        return players.values().stream()
+                .flatMap(p->p.getChoices().stream())
+                .collect(Collectors.toSet());
+    }
+
     public void addChoice(Choice choice) {
         turn.phase = Phase.WAITING_FOR_CHOICE;
-        choices.add(choice);
+        choice.getTarget().getChoices().add(choice);
     }
 
     boolean isGameOver(){
@@ -197,14 +204,6 @@ public class Game {
 
     public void setAllCards(Map<String, Card> allCards) {
         this.allCards = allCards;
-    }
-
-    public Set<Choice> getChoices() {
-        return choices;
-    }
-
-    public void setChoices(Set<Choice> choices) {
-        this.choices = choices;
     }
 
     public Set<Card> getTrash() {

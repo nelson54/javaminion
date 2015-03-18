@@ -35,6 +35,8 @@ class ChapelEffectTest extends DominionTestCase {
 
         choice.apply(cr, turn)
 
+        choice = getChoice()
+
         assertFalse "Player doesn't have trashed card", player.getAllCards().values().contains(toTrash)
         assertTrue "Trashed card is in trash", game.getTrash().contains(toTrash)
 
@@ -42,7 +44,7 @@ class ChapelEffectTest extends DominionTestCase {
         cr.setDone(true)
 
         choice.apply(cr, turn)
-        assertEquals "Phase is ACTION ", turn.getPhase(), Phase.ACTION
+        assertEquals "Phase is ACTION ", Phase.ACTION, turn.getPhase()
     }
 
     Choice getChoice(){

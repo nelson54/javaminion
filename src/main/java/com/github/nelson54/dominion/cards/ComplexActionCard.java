@@ -1,7 +1,6 @@
 package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.choices.Choice;
@@ -25,6 +24,10 @@ public abstract class ComplexActionCard extends ActionCard {
 
     abstract void play(Player player, Game game);
 
+    CardState getState(Choice choice){
+        return CardState.RESOLVING;
+    }
+
     Set<Player> getTargets(Player player, Game game) {
         Set<Player> targets = new HashSet<>();
         targets.add(player);
@@ -41,13 +44,14 @@ public abstract class ComplexActionCard extends ActionCard {
 
     public void addChoice(Player player, Game game) {
         Turn turn = game.getTurn();
-        Choice parent = findParentChoice(game);
+        Choice parent = findParentChoice(game, player);
         Choice choice = new Choice(player, this);
         choice.setComplete(false);
         choice.setParentChoice(parent);
         choice.setGame(game);
-        choice.setGame(game);
         choice.setSource(this);
+
+        choice.setState(getState(choice));
 
         Effect effect;
         if (parent == null) {
@@ -69,10 +73,10 @@ public abstract class ComplexActionCard extends ActionCard {
         choice.resolveIfComplete(turn);
     }
 
-    Choice findParentChoice(Game game) {
+    Choice findParentChoice(Game game, Player player) {
         Turn turn = game.getTurn();
 
-        for (Choice choice : turn.getResolvedChoices()) {
+        for (Choice choice : player.getChoices()) {
             if (this.equals(choice.getSource())) {
                 return choice;
             }

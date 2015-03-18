@@ -53,22 +53,20 @@
   </p>
 </div>
 
-<div class="modal choice-box" ng-if="game.choices.length > 0" ng-init="player = getCurrentPlayer(); turn = game.turn;">
+<div class="modal choice-box" ng-if="getChoices() && getChoices().length > 0" ng-init="player = getCurrentPlayer(); turn = game.turn; choice =  getChoices()[0]">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
         <h4 class="modal-title" id="modal-title">Choice<a class="anchorjs-link" href="#modal-title"><span class="anchorjs-icon"></span></a></h4>
       </div>
       <p ng-if="choice.message">{{choice.message}}</p>
-      <ul ng-init="choice = game.choices[0];">
+      <ul>
         <li ng-repeat="card in choice.cardOptions">
           <button ng-disabled="" ng-click="choose(game, player, choice, card)">{{card.name}}</button>
         </li>
       </ul>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
-
+      <div ng-if="!choice.required" class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="chooseDone(game, player, choice)">Done</button>
       </div>
     </div>
   </div>

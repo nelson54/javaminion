@@ -6,6 +6,7 @@ import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.choices.Range;
+import com.github.nelson54.dominion.effects.CellarEffect;
 import com.github.nelson54.dominion.effects.Effect;
 
 public class Cellar extends ComplexActionCard {
@@ -35,7 +36,7 @@ public class Cellar extends ComplexActionCard {
 
     @Override
     Effect getEffect(Player player, Game game) {
-        return null;
+        return new CellarEffect();
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.CardState;
 import com.github.nelson54.dominion.cards.ComplexActionCard;
 import com.github.nelson54.dominion.effects.Effect;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 public class Choice {
     UUID id;
+    CardState state;
     @JsonIgnore
     Player target;
     @JsonIgnore
@@ -64,13 +66,26 @@ public class Choice {
         setResponse(choiceResponse);
         choiceResponse.getChoice();
 
-        effect.resolve(choiceResponse, target, turn, turn.getGame());
+        if(choiceResponse.isDone()){
+            setComplete(true);
+        } else {
+            setComplete(effect.resolve(choiceResponse, target, turn, turn.getGame()));
+        }
+
+        if(!isComplete){
+            Player player = this.getTarget();
+            Game game = player.getGame();
+            ComplexActionCard complexCard = (ComplexActionCard) source;
+
+            complexCard.addChoice(player, game);
+            player.getChoices().remove(this);
+        }
 
         resolveIfComplete(turn);
     }
 
     public void resolveIfComplete(Turn turn){
-        Set<Choice> choices = game.getChoices();
+        Set<Choice> choices = target.getChoices();
         Set<Choice> resolved = turn.getResolvedChoices();
 
         if(isComplete){
@@ -79,16 +94,7 @@ public class Choice {
             if(choices.size() == 0){
                 turn.setPhase(Phase.ACTION);
             }
-        } /*else if(source instanceof ComplexActionCard) {
-            Player player = this.getTarget();
-            Game game = player.getGame();
-            ComplexActionCard complexCard = (ComplexActionCard) source;
-
-            complexCard.addChoice(player, game);
-            choices.remove(this);
-        }*/
-
-
+        }
     }
 
     public String getMessage() {
@@ -225,5 +231,13 @@ public class Choice {
 
     public void setDisplayCard(Card displayCard) {
         this.displayCard = displayCard;
+    }
+
+    public CardState getState() {
+        return state;
+    }
+
+    public void setState(CardState state) {
+        this.state = state;
     }
 }

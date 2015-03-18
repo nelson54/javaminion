@@ -29,9 +29,15 @@ class RemodelEffectTest extends DominionTestCase {
 
         Card toTrash = choice.getCardOptions().first();
 
-        assertEquals "Phase is WAITING_FOR_CHOICE ", turn.getPhase(), Phase.WAITING_FOR_CHOICE
+        assertEquals "Phase is WAITING_FOR_CHOICE ", Phase.WAITING_FOR_CHOICE, turn.getPhase()
 
-        applyChoice(choice, turn);
+        Choice choice = getChoice()
+
+        ChoiceResponse cr = new ChoiceResponse();
+        cr.setCard(toTrash)
+        cr.setSource(player)
+
+        choice.apply(cr, turn)
 
         Choice nextChoice = getChoice()
 
@@ -43,7 +49,7 @@ class RemodelEffectTest extends DominionTestCase {
 
         nextChoice.apply(ncr, turn)
 
-        assertEquals "Phase is ACTION ", turn.getPhase(), Phase.ACTION
+        assertEquals "Phase is ACTION ", Phase.ACTION, turn.getPhase()
 
         assertFalse "Player doesn't have trashed card", player.getAllCards().values().contains(toTrash)
         assertTrue "Trashed card is in trash", game.getTrash().contains(toTrash)
@@ -53,20 +59,8 @@ class RemodelEffectTest extends DominionTestCase {
     }
 
     Choice getChoice(){
-        return game.getChoices().stream()
-                .filter( { ch -> ch.getSource().equals(card) } )
-                .findFirst().get();
+        return player.getChoices().first();
     }
 
-    void applyChoice(Choice choice, Turn turn){
-        Card toTrash = choice.getCardOptions().first();
 
-        ChoiceResponse cr = new ChoiceResponse();
-        cr.setCard(toTrash)
-        cr.setSource(player)
-
-        choice.apply(cr, turn)
-
-        //return getChoice()
-    }
 }

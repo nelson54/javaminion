@@ -4,6 +4,8 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.CardState;
+import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 
 import java.util.Set;
@@ -13,16 +15,18 @@ public class MineEffect extends Effect {
 
     @Override
     boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
-        Player source = response.getSource();
-        if (trashedCard == null && response.getCard() != null) {
+        Card card = response.getCard();
+        Choice choice = getChoice();
+
+        if ( card != null && choice.getState() == CardState.TRASHING_CARD) {
             trashedCard = response.getCard();
             game.trashCard(trashedCard);
             return false;
-        } else if (response.getCard() != null) {
+        } else if (choice.getState() == CardState.GAINING_CARD) {
             Card gainedCard = response.getCard();
-            Card card = game.giveCardToPlayer(gainedCard.getName(), source);
+            Card toGive = game.giveCardToPlayer(gainedCard.getName(), target);
 
-            moveCardToHand(source, card);
+            moveCardToHand(target, toGive);
 
             return true;
         }
@@ -32,9 +36,11 @@ public class MineEffect extends Effect {
 
     private void moveCardToHand(Player player, Card card) {
         Set<Card> discard = player.getDiscard();
+        Set<Card> deck = player.getDeck();
         Set<Card> hand = player.getHand();
 
         discard.remove(card);
+        deck.remove(card);
         hand.add(card);
     }
 }

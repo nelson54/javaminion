@@ -26,14 +26,25 @@ public class Mine extends ComplexActionCard {
     }
 
     @Override
+    CardState getState(Choice choice){
+        if(choice.getParentChoice() == null){
+            return CardState.TRASHING_CARD;
+        } else {
+            return CardState.GAINING_CARD;
+        }
+    }
+
+    @Override
     Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();
 
         choice.setExpectedAnswerType(OptionType.CARD);
 
-        if (parent == null) {
-            getTrashOptions(target.getHand());
-        } else if (parent.getResponse() != null) {
+        if (choice.getState() == CardState.TRASHING_CARD) {
+            choice.setCardOptions(
+                    getTrashOptions(target.getHand())
+            );
+        } else if (parent != null && choice.getState() == CardState.GAINING_CARD) {
             ChoiceResponse response = parent.getResponse();
 
             choice.setCardOptions(

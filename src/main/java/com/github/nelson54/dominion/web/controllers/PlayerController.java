@@ -127,8 +127,8 @@ public class PlayerController {
         Turn turn = player.getCurrentTurn();
         choiceResponse.setSource(player);
 
-        Choice choice = game.getChoiceById(choiceResponse.getTargetChoice())
-                .get();
+        Choice choice = game.getChoiceById(choiceResponse.getTargetChoice()).get();
+
 
         OptionType expectedType = choice.getExpectedAnswerType();
 
