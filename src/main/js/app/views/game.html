@@ -37,7 +37,8 @@
     <button ng-click="discardHand()">Discard Hand</button>
   </p>
   <p>
-    <button ng-click="nextPhase()">Next Phase</button>
+    <button ng-if="turn.phase != 'BUY'" ng-disable="turn.phase != 'ACTION'" ng-click="nextPhase()">Next Phase</button>
+    <button ng-if="turn.phase == 'BUY'" ng-click="nextPhase()">End Turn</button>
   </p>
 </div>
 
@@ -91,8 +92,10 @@
   </div>
 
   <div class="discard-container">
-    <img ng-show="player.discard.length == 0" src="/images/card-back.jpg" />
-    <img ng-show="player.discard.length > 0" src="{{getImagePath(player.discard[player.discard.length+1])}}" />
-    <span class="count">{{player.discard.length}}</span>
+    <button>
+      <img ng-show="player.discard.length == 0" src="/images/empty-card-back.jpg" />
+      <img ng-show="player.discard.length > 0" src="{{getImagePath(player.discard[player.discard.length+1])}}" />
+      <span class="count">{{player.discard.length}}</span>
+    </button>
   </div>
 </div>

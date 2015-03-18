@@ -8603,8 +8603,12 @@ body {
 .cards-container span {
   display: block;
 }
+/* line 131, ../../app/styles/main.scss */
+.cards-container div {
+  display: inline-block;
+}
 
-/* line 132, ../../app/styles/main.scss */
+/* line 136, ../../app/styles/main.scss */
 .modal {
   display: block;
 }
