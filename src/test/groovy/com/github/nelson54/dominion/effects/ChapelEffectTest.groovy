@@ -21,7 +21,9 @@ class ChapelEffectTest extends DominionTestCase {
     }
 
     void testEffect() {
+        turn.setPhase(Phase.ACTION)
         turn.playCard(chapel, player, game)
+
         choice = getChoice();
         Card toTrash = choice.getCardOptions().first();
 

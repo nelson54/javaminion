@@ -18,6 +18,7 @@ class FeastEffectTest extends DominionTestCase {
         card = game.giveCardToPlayer("Feast", player)
         feast = (ComplexActionCard) card
 
+        turn.setPhase(Phase.ACTION)
         turn.playCard(feast, player, game)
         //bureaucrat.apply(player, game)
 
@@ -25,8 +26,6 @@ class FeastEffectTest extends DominionTestCase {
     }
 
     void testEffect() {
-        Turn turn = game.getTurn()
-
         Card toGain = choice.getCardOptions().first();
 
         assertEquals "Phase is WAITING_FOR_CHOICE ", turn.getPhase(), Phase.WAITING_FOR_CHOICE

@@ -110,6 +110,12 @@ public class Turn {
         return getMoney() >= cost.getMoney();
     }
 
+    boolean hasActionsInHand(){
+        return player.getHand().stream()
+                .filter(c-> c instanceof ActionCard)
+                .count() > 0;
+    }
+
     @JsonProperty("money")
     long getMoney() {
         return player.getHand().stream()

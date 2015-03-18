@@ -17,7 +17,7 @@ class RemodelEffectTest extends DominionTestCase {
         Turn turn = game.getTurn()
         card = game.giveCardToPlayer("Remodel", player)
         remodel = (ComplexActionCard) card
-
+        turn.setPhase(Phase.ACTION)
         turn.playCard(remodel, player, game)
         //bureaucrat.apply(player, game)
 

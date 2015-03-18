@@ -14,6 +14,7 @@ class DominionTestCase extends GroovyTestCase {
     KingdomFactory kingdomFactory
     Kingdom kingdom
     Player player
+    Turn turn
 
     @Before
     void setUp() {
@@ -22,6 +23,8 @@ class DominionTestCase extends GroovyTestCase {
         gameFactory.setKingdomFactory(kingdomFactory)
 
         game = gameFactory.createGame(2)
+        turn = game.getTurn()
+        turn.setPhase(Phase.ACTION)
         kingdom = game.kingdom
         player = getCurrentPlayer()
     }

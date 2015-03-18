@@ -36,6 +36,7 @@ class DominionControllerTest extends DominionTestCase {
 
     @Test
     void testEndPhase() {
+        game.getTurn().setPhase(Phase.ACTION)
         Phase pastPhase = game.getTurn().getPhase()
         gameController.endPhase(game.getId().toString())
 
