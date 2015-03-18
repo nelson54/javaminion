@@ -7,8 +7,8 @@ public class Gardens extends VictoryCard {
     public Gardens() {
         super();
 
-        byte moneyCost = 5;
-        byte victoryPoints = 3;
+        byte moneyCost = 4;
+        byte victoryPoints = 0;
 
         Cost cost = new Cost();
         cost.setMoney(moneyCost);
@@ -21,6 +21,6 @@ public class Gardens extends VictoryCard {
     @Override
     public byte getVictoryPoints() {
         Player owner = getOwner();
-        return (byte) (Math.floor(owner.getAllCards().size()) / 10 * 3);
+        return (byte) (Math.floor(owner.getAllCards().size()) / 10 * 1);
     }
 }
