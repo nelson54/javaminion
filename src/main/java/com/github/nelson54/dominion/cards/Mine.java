@@ -32,7 +32,7 @@ public class Mine extends ComplexActionCard {
         choice.setExpectedAnswerType(OptionType.CARD);
 
         if (parent == null) {
-            getTrashOptions(target.getHand());
+            choice.setCardOptions(getTrashOptions(target.getHand()));
         } else if (parent.getResponse() != null) {
             ChoiceResponse response = parent.getResponse();
 

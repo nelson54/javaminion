@@ -66,10 +66,8 @@ public class Remodel extends ComplexActionCard {
                 .map(market::get)
                 .map(cards -> cards.stream().findAny())
                 .map(Optional::get)
-                .filter(card -> card.getCost().getMoney() <= 5)
+                .filter(card -> card.getCost().getMoney() >= 2+cost)
                 .collect(Collectors.toSet());
-
-        options.removeAll(game.getTurn().getPlay().values());
 
         return options;
     }
