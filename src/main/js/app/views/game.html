@@ -10,7 +10,7 @@
 <div class="kingdom-container">
   <ul>
     <li ng-repeat="name in commonCards">
-      <button ng-init="cards = game.kingdom.cardMarket[name]" class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || game.turn.phase !== 'BUY'">
+      <button ng-init="cards = game.kingdom.cardMarket[name]" class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || getCurrentPlayer().currentTurn.phase !== 'BUY'">
         <img src="{{getImagePath(cards[0])}}" />
         <span class="name">{{name}}</span>
         <span class="count">({{cards.length}})</span>
@@ -22,7 +22,7 @@
 <div class="kingdom-container">
   <ul>
     <li ng-repeat="name in kingdomCards">
-      <button ng-init="cards = game.kingdom.cardMarket[name]" class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || game.turn.phase !== 'BUY'">
+      <button ng-init="cards = game.kingdom.cardMarket[name]" class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || getCurrentPlayer().currentTurn.phase !== 'BUY'">
         <img src="{{getImagePath(cards[0])}}" />
         <span class="name">{{name}}</span>
         <span class="count">({{cards.length}})</span>
@@ -74,7 +74,7 @@
   </div>
 </div>
 
-<div class="play-container" ng-init="player = getCurrentPlayer(); turn = game.turn;">
+<div class="play-container" ng-if="hasCurrentPlayer()" ng-init="player = getCurrentPlayer(); turn = game.turn;">
   <h3>Play ({{turn.play.length}})</h3>
   <ul>
     <li ng-repeat="card in turn.play">
@@ -83,7 +83,7 @@
   </ul>
 </div>
 
-<div class="player-area">
+<div class="player-area" ng-if="hasCurrentPlayer()">
     <div class="hand-container" ng-init="player = getCurrentPlayer(); turn = game.turn;">
     <h3>Hand ({{player.hand.length}})</h3>
     <ul>

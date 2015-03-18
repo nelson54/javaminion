@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dominionFrontendApp')
-  .controller('GameCtrl', function ($scope, $http, $resource, $route, game, playerId) {
+  .controller('GameCtrl', function ($scope, $http, $resource, $route, $timeout, game, playerId) {
     var baseUrl = "";
     $scope.game = game;
     $scope.test = false;
@@ -152,4 +152,9 @@ angular.module('dominionFrontendApp')
       return '/images/'+ card.name.toLowerCase().replace(/\s/g, '') + '.jpg';
     }
 
+    if($scope.getCurrentPlayer() && $scope.getCurrentPlayer().currentTurn.phase === 'WAITING_FOR_OPPONENT'){
+        $timeout(function() {
+          $route.reload();
+        }, 1000);
+    }
   });
