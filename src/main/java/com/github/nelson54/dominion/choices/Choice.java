@@ -92,7 +92,7 @@ public class Choice {
             choices.remove(this);
             resolved.add(this);
             if(choices.size() == 0){
-                turn.setPhase(Phase.ACTION);
+                game.getTurn().setPhase(Phase.ACTION);
             }
         }
     }

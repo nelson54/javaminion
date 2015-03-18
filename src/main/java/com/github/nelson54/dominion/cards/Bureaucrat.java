@@ -29,7 +29,7 @@ public class Bureaucrat extends ComplexActionAttackCard {
     @Override
     Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException {
         Choice parent = choice.getParentChoice();
-        choice.setMessage("Choose 3 cards to keep in your hand.");
+        choice.setMessage("Choose a victory card to put on top of your deck.");
 
         Set<Card> victoryCardsInHand = target.getHand().stream()
                 .filter(card-> card instanceof VictoryCard)
@@ -56,7 +56,6 @@ public class Bureaucrat extends ComplexActionAttackCard {
 
     @Override
     void play(Player player, Game game) {
-        Turn turn = player.getCurrentTurn();
         game.giveCardToPlayer("Silver", player);
     }
 }
