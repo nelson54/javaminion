@@ -8,7 +8,7 @@ public class Moat extends ActionReactionCard {
 
     public Moat() {
         super();
-        byte moneyCost = 4;
+        byte moneyCost = 2;
 
         Cost cost = new Cost();
         cost.setMoney(moneyCost);
