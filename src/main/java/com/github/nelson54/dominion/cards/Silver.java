@@ -13,7 +13,7 @@ public class Silver extends TreasureCard {
         setCost(cost);
 
         setMoneyValue(moneyValue);
-
+        kingdomSortOrder = 11;
         setName("Silver");
     }
 }

@@ -27,6 +27,8 @@ public class Card {
     @JsonProperty
     private
     Cost cost;
+    @JsonProperty
+    int kingdomSortOrder = 0;
 
     Card() {
         id = UUID.randomUUID();
@@ -80,4 +82,6 @@ public class Card {
     public void onLeaveHand() {
 
     }
+
+
 }

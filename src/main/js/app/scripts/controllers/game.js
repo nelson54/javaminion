@@ -2,26 +2,60 @@
 
 angular.module('dominionFrontendApp')
   .controller('GameCtrl', function ($scope, $http, $resource, $route, game, playerId) {
-
+    var baseUrl = "";
     $scope.game = game;
     $scope.test = false;
 
+    var commonComparator = function(id1, id2){
+      var c1 = game.kingdom.cardMarket[id1][0];
+      var c2 = game.kingdom.cardMarket[id2][0];
+
+      if(c1.kingdomSortOrder == c2.kingdomSortOrder){
+        return 0;
+      } else if (c1.kingdomSortOrder > c2.kingdomSortOrder) {
+        return 1;
+      } else {
+        return -1;
+      }
+    };
+
+    var kingdomComparator = function(id1, id2){
+      var c1 = game.kingdom.cardMarket[id1][0];
+      var c2 = game.kingdom.cardMarket[id2][0];
+
+      if(c1.cost.money == c2.cost.money){
+        return 0;
+      } else if (c1.cost.money > c2.cost.money) {
+        return 1;
+      } else {
+        return -1;
+      }
+    };
+
+    $scope.commonCards = Object.keys(game.kingdom.cardMarket)
+      .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
+      .sort(commonComparator);
+
+    $scope.kingdomCards = Object.keys(game.kingdom.cardMarket)
+      .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
+      .sort(kingdomComparator);
+
     $scope.shuffle = function(){
-      var Game = $resource('/dominion/:gameId/:playerId/shuffle');
+      var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/shuffle');
       Game.get({gameId : game.id, playerId : playerId}, function(){
         $route.reload();
       });
     };
 
     $scope.drawHand = function(){
-      var Game = $resource('/dominion/:gameId/:playerId/draw');
+      var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/draw');
       Game.get({gameId : game.id, playerId : playerId}, function(){
         $route.reload();
       });
     };
 
     $scope.discardHand = function(){
-      var Game = $resource('/dominion/:gameId/:playerId/discard');
+      var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/discard');
       Game.get({gameId : game.id, playerId : playerId}, $route.reload);
     };
 
@@ -31,7 +65,7 @@ angular.module('dominionFrontendApp')
 
 
     $scope.purchase = function(card){
-      var Purchase = $resource('/dominion/:gameId/:playerId/purchase');
+      var Purchase = $resource(baseUrl+'/dominion/:gameId/:playerId/purchase');
 
       var purchase = new Purchase(card);
 
@@ -39,7 +73,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.play = function(card){
-      var Play = $resource('/dominion/:gameId/:playerId/play');
+      var Play = $resource(baseUrl+'/dominion/:gameId/:playerId/play');
 
       var play = new Play(card);
 
@@ -47,7 +81,7 @@ angular.module('dominionFrontendApp')
     }
 
     $scope.nextPhase = function(card){
-      var EndPhase = $resource('/dominion/:gameId/next-phase');
+      var EndPhase = $resource(baseUrl+'/dominion/:gameId/next-phase');
 
       var endPhase = new EndPhase(card);
 
@@ -55,7 +89,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.choose = function(game, player, choose, response){
-      var Choice = $resource('/dominion/:gameId/:playerId/choice');
+      var Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice');
 
       var choice = new Choice();
 
@@ -76,7 +110,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.chooseDone = function(game, player, choose, response){
-      var Choice = $resource('/dominion/:gameId/:playerId/choice');
+      var Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice');
 
       var choice = new Choice();
 

@@ -13,6 +13,7 @@ public class Gold extends TreasureCard {
         setCost(cost);
 
         setMoneyValue(moneyValue);
+        kingdomSortOrder = 12;
 
         setName("Gold");
     }

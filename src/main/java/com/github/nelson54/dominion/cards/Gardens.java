@@ -14,7 +14,7 @@ public class Gardens extends VictoryCard {
         cost.setMoney(moneyCost);
         setCost(cost);
         setVictoryPoints(victoryPoints);
-
+        isKingdom = true;
         setName("Gardens");
     }
 

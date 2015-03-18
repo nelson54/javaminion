@@ -17,6 +17,8 @@ public class CurseCard extends Card {
         setCost(cost);
         setVictoryPoints(victoryPoints);
 
+        kingdomSortOrder = 100;
+
         setName("Curse");
     }
 

@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @EnableAutoConfiguration
-@ComponentScan
+@ComponentScan("com.github.nelson54.dominion.web")
 public class Application {
 
     public static void main(String[] args) throws Exception {

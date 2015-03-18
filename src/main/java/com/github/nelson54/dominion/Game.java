@@ -8,6 +8,7 @@ import com.google.common.collect.Multimap;
 
 import java.util.*;
 
+import static com.github.nelson54.dominion.Phase.ACTION;
 import static com.github.nelson54.dominion.Phase.BUY;
 import static com.github.nelson54.dominion.Phase.END_OF_GAME;
 
@@ -79,6 +80,8 @@ public class Game {
 
         if(!turn.hasActionsInHand()){
             turn.setPhase(BUY);
+        } else {
+            turn.setPhase(ACTION);
         }
 
         return nextPlayer;

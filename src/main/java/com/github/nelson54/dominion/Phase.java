@@ -6,5 +6,7 @@ public enum Phase {
     BUY,
     WAITING_FOR_EFFECTS,
     WAITING_FOR_CHOICE,
+    WAITING_FOR_OPPONENT,
     END_OF_GAME
+
 }

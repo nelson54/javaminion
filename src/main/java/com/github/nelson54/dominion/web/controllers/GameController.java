@@ -30,7 +30,7 @@ public class GameController {
         return gameProvider.getGameByUuid(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.OPTIONS})
     Game createGame() throws InstantiationException, IllegalAccessException {
         return gameProvider.createGame();
     }

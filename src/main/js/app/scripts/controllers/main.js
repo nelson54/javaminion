@@ -9,13 +9,13 @@
  */
 angular.module('dominionFrontendApp')
   .controller('MainCtrl', function ($scope, $http, $resource, $route) {
-
-    var Game = $resource('/dominion/');
+    var baseUrl = "";
+    var Game = $resource(baseUrl+'/dominion/');
 
     $scope.games = [];
 
     $scope.getGames = function(){
-      return $http.get('/dominion/')
+      return $http.get(baseUrl+'/dominion/')
         .success(function(response){
           $scope.games = response;
         });

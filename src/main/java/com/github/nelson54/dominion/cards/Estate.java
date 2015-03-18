@@ -14,6 +14,8 @@ public class Estate extends VictoryCard {
         setCost(cost);
         setVictoryPoints(victoryPoints);
 
+        kingdomSortOrder = 0;
+
         setName("Estate");
     }
 }

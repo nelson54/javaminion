@@ -12,6 +12,7 @@ public class Province extends VictoryCard {
         cost.setMoney(moneyCost);
         setCost(cost);
         setVictoryPoints(victoryPoints);
+        kingdomSortOrder = 2;
         setName("Province");
     }
 }

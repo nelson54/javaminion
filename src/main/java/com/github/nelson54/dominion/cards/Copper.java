@@ -13,7 +13,7 @@ public class Copper extends TreasureCard {
         setCost(cost);
 
         setMoneyValue(moneyValue);
-
+        kingdomSortOrder = 10;
         setName("Copper");
     }
 }

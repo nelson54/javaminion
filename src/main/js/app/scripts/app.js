@@ -8,6 +8,8 @@
  *
  * Main module of the application.
  */
+var baseUrl = "";
+
 angular
   .module('dominionFrontendApp', [
     'ngAnimate',
@@ -29,12 +31,15 @@ angular
         templateUrl: 'views/game.html',
         controller: 'GameCtrl',
         resolve: {
-          game : function($route, $resource){
-            var Game = $resource('/dominion/:gameId');
+          game : function($route, $resource, $q){
+            var defer = $q.defer();
+            var Game = $resource(baseUrl+'/dominion/:gameId');
             var game = $route.current.params['game'];
 
-
-            return Game.get({gameId : game});
+            Game.get({gameId : game}, function(response){
+              defer.resolve(response);
+            });
+            return defer.promise
           },
           playerId : function(){return null}
         }
@@ -45,7 +50,7 @@ angular
         resolve: {
           game : function($route, $resource, $q){
             var defer = $q.defer();
-            var Game = $resource('/dominion/:gameId');
+            var Game = $resource(baseUrl+'/dominion/:gameId');
             var game = $route.current.params['game'];
 
             Game.get({gameId : game}, function(response){

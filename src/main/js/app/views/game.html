@@ -8,10 +8,9 @@
 </div>
 
 <div class="kingdom-container">
-  <h3>Kingdom</h3>
   <ul>
-    <li ng-repeat="(name, cards) in game.kingdom.cardMarket">
-      <button class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || game.turn.phase !== 'BUY'">
+    <li ng-repeat="name in commonCards">
+      <button ng-init="cards = game.kingdom.cardMarket[name]" class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || game.turn.phase !== 'BUY'">
         <img src="{{getImagePath(cards[0])}}" />
         <span class="name">{{name}}</span>
         <span class="count">({{cards.length}})</span>
@@ -20,7 +19,19 @@
   </ul>
 </div>
 
-<div class="controls-container" ng-if="hasCurrentPlayer()" ng-init="player = getCurrentPlayer(); turn = game.turn;">
+<div class="kingdom-container">
+  <ul>
+    <li ng-repeat="name in kingdomCards">
+      <button ng-init="cards = game.kingdom.cardMarket[name]" class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || game.turn.phase !== 'BUY'">
+        <img src="{{getImagePath(cards[0])}}" />
+        <span class="name">{{name}}</span>
+        <span class="count">({{cards.length}})</span>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<div class="controls-container" ng-if="hasCurrentPlayer()" ng-init="player = getCurrentPlayer(); turn = player.currentTurn;">
   <p>Phase: {{turn.phase}}</p>
   <span ng-if="test">Id: {{player.id}}</span><br>
   <span>Actions: {{turn.actionPool}}</span><br>
@@ -37,7 +48,7 @@
     <button ng-click="discardHand()">Discard Hand</button>
   </p>
   <p>
-    <button ng-if="turn.phase != 'BUY'" ng-disable="turn.phase != 'ACTION'" ng-click="nextPhase()">Next Phase</button>
+    <button ng-if="turn.phase != 'BUY' && turn.phase != 'WAITING_FOR_OPPONENT'" ng-disable="turn.phase != 'ACTION'" ng-click="nextPhase()">Next Phase</button>
     <button ng-if="turn.phase == 'BUY'" ng-click="nextPhase()">End Turn</button>
   </p>
 </div>
@@ -72,30 +83,32 @@
   </ul>
 </div>
 
-<div class="hand-container" ng-init="player = getCurrentPlayer(); turn = game.turn;">
-  <h3>Hand ({{player.hand.length}})</h3>
-  <ul>
-    <li ng-repeat="card in player.hand">
-      <button ng-disabled="" ng-click="play(card)">
-        <img src="{{getImagePath(card)}}" />
-      </button>
-    </li>
-  </ul>
-</div>
-
-<div class="cards-container" ng-init="player = getCurrentPlayer(); turn = game.turn;">
-  <div class="deck-container">
-    <button>
-      <img src="/images/card-back.jpg" />
-      <span class="count">{{player.deck.length}}</span>
-    </button>
+<div class="player-area">
+    <div class="hand-container" ng-init="player = getCurrentPlayer(); turn = game.turn;">
+    <h3>Hand ({{player.hand.length}})</h3>
+    <ul>
+      <li ng-repeat="card in player.hand">
+        <button ng-disabled="" ng-click="play(card)">
+          <img src="{{getImagePath(card)}}" />
+        </button>
+      </li>
+    </ul>
   </div>
 
-  <div class="discard-container">
-    <button>
-      <img ng-show="player.discard.length == 0" src="/images/empty-card-back.jpg" />
-      <img ng-show="player.discard.length > 0" src="{{getImagePath(player.discard[player.discard.length-1])}}" />
-      <span class="count">{{player.discard.length}}</span>
-    </button>
+  <div class="cards-container" ng-init="player = getCurrentPlayer(); turn = game.turn;">
+    <div class="deck-container">
+      <button>
+        <img src="/images/card-back.jpg" />
+        <span class="count">{{player.deck.length}}</span>
+      </button>
+    </div>
+
+    <div class="discard-container">
+      <button>
+        <img ng-show="player.discard.length == 0" src="/images/empty-card-back.jpg" />
+        <img ng-show="player.discard.length > 0" src="{{getImagePath(player.discard[player.discard.length-1])}}" />
+        <span class="count">{{player.discard.length}}</span>
+      </button>
+    </div>
   </div>
 </div>

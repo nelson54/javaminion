@@ -8,7 +8,7 @@ import com.github.nelson54.dominion.cards.VictoryCard;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.github.nelson54.dominion.Phase.ACTION;
+import static com.github.nelson54.dominion.Phase.WAITING_FOR_OPPONENT;
 
 public class Player {
     @JsonProperty
@@ -68,7 +68,7 @@ public class Player {
         currentTurn.setBuyPool(1);
         currentTurn.setActionPool(1);
         currentTurn.setMoneyPool(0);
-        currentTurn.setPhase(ACTION);
+        currentTurn.setPhase(WAITING_FOR_OPPONENT);
         currentTurn.setPlay(new LinkedHashMap<>());
         currentTurn.setPlayer(this);
 

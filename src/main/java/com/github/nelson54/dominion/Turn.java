@@ -59,6 +59,7 @@ public class Turn {
     public void endPhase() {
         switch (phase) {
             case WAITING_FOR_EFFECTS:
+            case WAITING_FOR_CHOICE:
                 break;
             case BUY:
                 phase = ACTION;

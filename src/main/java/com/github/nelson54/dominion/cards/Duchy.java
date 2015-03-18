@@ -13,6 +13,8 @@ public class Duchy extends VictoryCard {
         setCost(cost);
         setVictoryPoints(victoryPoints);
 
+        kingdomSortOrder = 1;
+
         setName("Duchy");
     }
 }
