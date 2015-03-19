@@ -83,5 +83,18 @@ public class Card {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Card)) return false;
 
+        Card card = (Card) o;
+
+        return id.equals(card.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
