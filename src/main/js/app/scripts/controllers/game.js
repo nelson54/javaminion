@@ -35,6 +35,32 @@ angular.module('dominionFrontendApp')
       discard = $scope.discard = game.players[playerId].discard;
       play  = $scope.play = game.turn.play;
 
+      var commonComparator = function(id1, id2){
+        var c1 = game.kingdom.cardMarket[id1][0];
+        var c2 = game.kingdom.cardMarket[id2][0];
+
+        if(c1.kingdomSortOrder == c2.kingdomSortOrder){
+          return 0;
+        } else if (c1.kingdomSortOrder > c2.kingdomSortOrder) {
+          return 1;
+        } else {
+          return -1;
+        }
+      };
+
+      var kingdomComparator = function(id1, id2){
+        var c1 = game.kingdom.cardMarket[id1][0];
+        var c2 = game.kingdom.cardMarket[id2][0];
+
+        if(c1.cost.money == c2.cost.money){
+          return 0;
+        } else if (c1.cost.money > c2.cost.money) {
+          return 1;
+        } else {
+          return -1;
+        }
+      };
+
       $scope.commonCards = Object.keys(game.kingdom.cardMarket)
         .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
         .sort(commonComparator);
@@ -46,32 +72,6 @@ angular.module('dominionFrontendApp')
       repeat();
     };
     if(playerId) updateData(game);
-
-    var commonComparator = function(id1, id2){
-      var c1 = game.kingdom.cardMarket[id1][0];
-      var c2 = game.kingdom.cardMarket[id2][0];
-
-      if(c1.kingdomSortOrder == c2.kingdomSortOrder){
-        return 0;
-      } else if (c1.kingdomSortOrder > c2.kingdomSortOrder) {
-        return 1;
-      } else {
-        return -1;
-      }
-    };
-
-    var kingdomComparator = function(id1, id2){
-      var c1 = game.kingdom.cardMarket[id1][0];
-      var c2 = game.kingdom.cardMarket[id2][0];
-
-      if(c1.cost.money == c2.cost.money){
-        return 0;
-      } else if (c1.cost.money > c2.cost.money) {
-        return 1;
-      } else {
-        return -1;
-      }
-    };
 
     $scope.shuffle = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/shuffle');

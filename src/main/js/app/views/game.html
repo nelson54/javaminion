@@ -7,7 +7,7 @@
   </ul>
 </div>
 
-<div class="kingdom-container">
+<div class="common-container">
   <ul>
     <li ng-repeat="name in commonCards">
       <button ng-init="cards = game.kingdom.cardMarket[name]" class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || getCurrentPlayer().currentTurn.phase !== 'BUY'">

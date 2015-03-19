@@ -28,7 +28,9 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         resolve : {
-          baseUrl: baseUrl
+          baseUrl: function() {
+            return baseUrl;
+          }
         }
       })
       .when('/games/:game', {
@@ -46,7 +48,9 @@ angular
             return defer.promise
           },
           playerId : function(){return null},
-          baseUrl: baseUrl
+          baseUrl: function() {
+            return baseUrl;
+          }
         }
       })
       .when('/games/:game/players/:player', {
@@ -67,7 +71,9 @@ angular
           playerId : function($route) {
             return $route.current.params['player'];
           },
-          baseUrl : baseUrl
+          baseUrl : function() {
+            return baseUrl;
+          }
         }
       })
       .otherwise({

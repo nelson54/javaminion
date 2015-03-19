@@ -8579,48 +8579,57 @@ body {
 }
 
 /* line 104, ../../app/styles/main.scss */
-.hand-container .name, .kingdom-container .name {
+.hand-container .name, .common-container .name, .kingdom-container .name {
   display: none;
 }
 /* line 108, ../../app/styles/main.scss */
-.hand-container .count, .kingdom-container .count {
+.hand-container .count, .common-container .count, .kingdom-container .count {
   display: block;
 }
 /* line 112, ../../app/styles/main.scss */
-.hand-container img, .kingdom-container img {
+.hand-container img, .common-container img, .kingdom-container img {
   height: 150px;
 }
 /* line 116, ../../app/styles/main.scss */
-.hand-container li, .kingdom-container li {
+.hand-container li, .common-container li, .kingdom-container li {
   display: inline-block;
 }
 
-/* line 123, ../../app/styles/main.scss */
+/* line 122, ../../app/styles/main.scss */
+.kingdom-container {
+  width: 675px;
+}
+
+/* line 127, ../../app/styles/main.scss */
 .cards-container img {
   height: 50px;
 }
-/* line 127, ../../app/styles/main.scss */
+/* line 131, ../../app/styles/main.scss */
 .cards-container span {
   display: block;
 }
-/* line 131, ../../app/styles/main.scss */
+/* line 135, ../../app/styles/main.scss */
 .cards-container div {
   display: inline-block;
 }
 
-/* line 136, ../../app/styles/main.scss */
+/* line 140, ../../app/styles/main.scss */
 .modal {
   display: block;
 }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 300px) and (max-width: 768px) {
-  /* line 145, ../../app/styles/main.scss */
-  .hand-container img, .kingdom-container img {
+  /* line 148, ../../app/styles/main.scss */
+  .hand-container, .kingdom-container, .common-container {
+    width: 240px;
+  }
+  /* line 151, ../../app/styles/main.scss */
+  .hand-container img, .kingdom-container img, .common-container img {
     height: 50px;
   }
-  /* line 149, ../../app/styles/main.scss */
-  .hand-container .count, .kingdom-container .count {
+  /* line 155, ../../app/styles/main.scss */
+  .hand-container .count, .kingdom-container .count, .common-container .count {
     font-size: .7em;
   }
 }

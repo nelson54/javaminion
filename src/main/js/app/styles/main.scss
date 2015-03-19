@@ -99,7 +99,7 @@ body {
   text-align: right;
 }
 
-.hand-container, .kingdom-container {
+.hand-container, .common-container, .kingdom-container {
 
   .name {
     display: none;
@@ -117,6 +117,10 @@ body {
     display:inline-block;
   }
 
+}
+
+.kingdom-container {
+  width: 675px;
 }
 
 .cards-container {
@@ -141,7 +145,9 @@ body {
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width:300px) and (max-width: 768px) {
 
-  .hand-container, .kingdom-container {
+  .hand-container, .kingdom-container, .common-container {
+    width:240px;
+
     img {
       height: 50px;
     }
