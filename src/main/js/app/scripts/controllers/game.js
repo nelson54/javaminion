@@ -4,6 +4,7 @@ angular.module('dominionFrontendApp')
   .controller('GameCtrl', function ($scope, $http, $resource, $route, $interval, game, playerId, baseUrl) {
 
     var gameId = game.id,
+      players,
       player,
       hand,
       deck,
@@ -28,6 +29,7 @@ angular.module('dominionFrontendApp')
     };
 
     var updateData = function(game){
+      players = $scope.players = game.players;
       player = $scope.player = game.players[playerId];
       hand  = $scope.hand = game.players[playerId].hand;
       deck  = $scope.deck = game.players[playerId].deck;
@@ -60,7 +62,7 @@ angular.module('dominionFrontendApp')
           return -1;
         }
       };
-
+      $scope.$apply();
       $scope.commonCards = Object.keys(game.kingdom.cardMarket)
         .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
         .sort(commonComparator);
@@ -185,12 +187,19 @@ angular.module('dominionFrontendApp')
       }
     };
 
+    $scope.isCardInPlay = function(card){
+      return Object.keys(play)
+          .map(function(i){play[i].id})
+          .indexOf(card.id) < 0;
+    };
+
     var reload = function(){
-      var Game = $resource(baseUrl+'/dominion/:gameId');
+      /*var Game = $resource(baseUrl+'/dominion/:gameId');
 
       Game.get({gameId : gameId}, function(response){
         updateData(response, playerId);
-      });
+      });*/
+      $route.reload();
     };
 
   });

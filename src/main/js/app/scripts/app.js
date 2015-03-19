@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-var baseUrl = "";
+var baseUrl = "http://localhost:8080";
 
 angular
   .module('dominionFrontendApp', [
