@@ -26,7 +26,10 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        resolve : {
+          baseUrl: baseUrl
+        }
       })
       .when('/games/:game', {
         templateUrl: 'views/game.html',
