@@ -15,7 +15,7 @@ public class KingdomFactory {
 
         addTreasureCards(kingdom);
         addVictoryCards(kingdom);
-        firstGame(kingdom);
+        villageSquare(kingdom);
 
         return kingdom;
     }
@@ -44,6 +44,19 @@ public class KingdomFactory {
         addXCardsOfType(10, Village.class, kingdom);
         addXCardsOfType(10, Woodcutter.class, kingdom);
         addXCardsOfType(10, Workshop.class, kingdom);
+    }
+
+    void villageSquare(Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+        addXCardsOfType(10, Bureaucrat.class, kingdom);
+        addXCardsOfType(10, Cellar.class, kingdom);
+        addXCardsOfType(10, Festival.class, kingdom);
+        addXCardsOfType(10, Library.class, kingdom);
+        addXCardsOfType(10, Market.class, kingdom);
+        addXCardsOfType(10, Remodel.class, kingdom);
+        addXCardsOfType(10, Smithy.class, kingdom);
+        addXCardsOfType(10, ThroneRoom.class, kingdom);
+        addXCardsOfType(10, Woodcutter.class, kingdom);
+        addXCardsOfType(10, Village.class, kingdom);
     }
 
     void addKingdomCards(Kingdom kingdom) throws InstantiationException, IllegalAccessException {
