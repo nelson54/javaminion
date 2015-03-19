@@ -1,9 +1,29 @@
 'use strict';
 
 angular.module('dominionFrontendApp')
-  .controller('GameCtrl', function ($scope, $http, $resource, $route, $timeout, game, playerId) {
-    var baseUrl = "";
+  .controller('GameCtrl', function ($scope, $http, $resource, $route, $interval, game, playerId) {
+    var baseUrl = "",
+      gameId = game.id,
+      player,
+      hand,
+      deck,
+      turn,
+      play,
+      discard,
+      interval;
+
     $scope.game = game;
+
+    if(playerId) {
+      player = $scope.player = game.players[playerId];
+      hand  = $scope.hand = game.players[playerId].hand;
+      deck  = $scope.deck = game.players[playerId].deck;
+      turn  = $scope.turn = game.players[playerId].currentTurn;
+      discard = $scope.discard = game.players[playerId].discard;
+      play  = $scope.play = game.turn.play;
+    }
+
+
     $scope.test = false;
 
     var commonComparator = function(id1, id2){
@@ -43,20 +63,20 @@ angular.module('dominionFrontendApp')
     $scope.shuffle = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/shuffle');
       Game.get({gameId : game.id, playerId : playerId}, function(){
-        $route.reload();
+        reload();
       });
     };
 
     $scope.drawHand = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/draw');
       Game.get({gameId : game.id, playerId : playerId}, function(){
-        $route.reload();
+        reload();
       });
     };
 
     $scope.discardHand = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/discard');
-      Game.get({gameId : game.id, playerId : playerId}, $route.reload);
+      Game.get({gameId : game.id, playerId : playerId}, reload);
     };
 
     $scope.canAfford = function(card){
@@ -69,15 +89,15 @@ angular.module('dominionFrontendApp')
 
       var purchase = new Purchase(card);
 
-      purchase.$save({gameId : game.id, playerId : playerId},$route.reload);
+      purchase.$save({gameId : game.id, playerId : playerId},reload);
     };
 
-    $scope.play = function(card){
+    $scope.playCard = function(card){
       var Play = $resource(baseUrl+'/dominion/:gameId/:playerId/play');
 
       var play = new Play(card);
 
-      play.$save({gameId : game.id, playerId : playerId},$route.reload);
+      play.$save({gameId : game.id, playerId : playerId},reload);
     }
 
     $scope.nextPhase = function(card){
@@ -85,7 +105,7 @@ angular.module('dominionFrontendApp')
 
       var endPhase = new EndPhase(card);
 
-      endPhase.$save({gameId : game.id},$route.reload);
+      endPhase.$save({gameId : game.id},reload);
     };
 
     $scope.choose = function(game, player, choose, response){
@@ -107,7 +127,7 @@ angular.module('dominionFrontendApp')
 
       }
 
-      choice.$save({gameId : game.id, playerId:player.id},$route.reload);
+      choice.$save({gameId : game.id, playerId:player.id},reload);
     };
 
     $scope.chooseDone = function(game, player, choose){
@@ -117,7 +137,7 @@ angular.module('dominionFrontendApp')
       choice.targetChoice = choose.id;
       choice.done = true;
 
-      choice.$save({gameId : game.id, playerId:player.id},$route.reload);
+      choice.$save({gameId : game.id, playerId:player.id},reload);
     };
 
     $scope.isCurrentPlayer = function(player) {
@@ -146,12 +166,44 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.getImagePath = function(card) {
-      return '/images/'+ card.name.toLowerCase().replace(/\s/g, '') + '.jpg';
-    }
+      if(card && card.name) {
+        return '/images/' + card.name.toLowerCase().replace(/\s/g, '') + '.jpg';
+      } else {
+        return '/images/empty-card-back.jpg';
+      }
+    };
 
-    if($scope.getCurrentPlayer() && $scope.getCurrentPlayer().currentTurn.phase === 'WAITING_FOR_OPPONENT'){
-        $timeout(function() {
-          $route.reload();
+    var updateData = function(game){
+      player = $scope.player = game.players[playerId];
+      hand  = $scope.hand = game.players[playerId].hand;
+      deck  = $scope.deck = game.players[playerId].deck;
+      turn  = $scope.turn = game.players[playerId].currentTurn;
+      discard = $scope.discard = game.players[playerId].discard;
+      play  = $scope.play = game.turn.play;
+
+      repeat();
+    };
+
+    var reload = function(){
+      var Game = $resource(baseUrl+'/dominion/:gameId');
+
+      Game.get({gameId : gameId}, function(response){
+        updateData(response, playerId);
+      });
+    };
+
+    var repeat = function() {
+      if (!interval && player && player.currentTurn.phase === 'WAITING_FOR_OPPONENT') {
+        interval = $interval(function () {
+          //console.log("reloaded")
+          reload(gameId);//gameId);
         }, 1000);
-    }
+      } else if (interval && player.currentTurn.phase !== 'WAITING_FOR_OPPONENT') {
+        $interval.cancel(interval);
+        interval = undefined;
+      }
+    };
+
+    repeat();
+
   });

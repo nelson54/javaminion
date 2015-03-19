@@ -11,7 +11,7 @@
   <ul>
     <li ng-repeat="name in commonCards">
       <button ng-init="cards = game.kingdom.cardMarket[name]" class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || getCurrentPlayer().currentTurn.phase !== 'BUY'">
-        <img src="{{getImagePath(cards[0])}}" />
+        <img ng-src="{{getImagePath(cards[0])}}" />
         <span class="name">{{name}}</span>
         <span class="count">({{cards.length}})</span>
       </button>
@@ -23,7 +23,7 @@
   <ul>
     <li ng-repeat="name in kingdomCards">
       <button ng-init="cards = game.kingdom.cardMarket[name]" class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || getCurrentPlayer().currentTurn.phase !== 'BUY'">
-        <img src="{{getImagePath(cards[0])}}" />
+        <img ng-src="{{getImagePath(cards[0])}}" />
         <span class="name">{{name}}</span>
         <span class="count">({{cards.length}})</span>
       </button>
@@ -31,7 +31,7 @@
   </ul>
 </div>
 
-<div class="controls-container" ng-if="hasCurrentPlayer()" ng-init="player = getCurrentPlayer(); turn = player.currentTurn;">
+<div class="controls-container" ng-if="hasCurrentPlayer()">
   <p>Phase: {{turn.phase}}</p>
   <span ng-if="test">Id: {{player.id}}</span><br>
   <span>Actions: {{turn.actionPool}}</span><br>
@@ -53,7 +53,7 @@
   </p>
 </div>
 
-<div class="modal choice-box" ng-if="getChoices() && getChoices().length > 0" ng-init="player = getCurrentPlayer(); turn = game.turn; choice =  getChoices()[0]">
+<div class="modal choice-box" ng-if="player.choices && player.choices.length > 0" ng-init="choice =  player.choices[0]">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -72,40 +72,39 @@
   </div>
 </div>
 
-<div class="play-container" ng-if="hasCurrentPlayer()" ng-init="player = getCurrentPlayer(); turn = game.turn;">
-  <h3>Play ({{turn.play.length}})</h3>
+<div class="play-container" ng-if="hasCurrentPlayer()">
+  <h3>Play ({{play.length}})</h3>
   <ul>
-    <li ng-repeat="card in turn.play">
-      <button ng-disabled="" ng-click="play(card)">{{card.name}}</button>
+    <li ng-repeat="card in play">
+      <button>{{card.name}}</button>
     </li>
   </ul>
 </div>
 
 <div class="player-area" ng-if="hasCurrentPlayer()">
-    <div class="hand-container" ng-init="player = getCurrentPlayer(); turn = game.turn;">
-    <h3>Hand ({{player.hand.length}})</h3>
+  <div class="hand-container">
+    <h3>Hand ({{hand.length}})</h3>
     <ul>
-      <li ng-repeat="card in player.hand">
-        <button ng-disabled="" ng-click="play(card)">
-          <img src="{{getImagePath(card)}}" />
+      <li ng-repeat="card in hand">
+        <button ng-disabled="" ng-click="playCard(card)">
+          <img ng-src="{{getImagePath(card)}}" />
         </button>
       </li>
     </ul>
   </div>
 
-  <div class="cards-container" ng-init="player = getCurrentPlayer(); turn = game.turn;">
+  <div class="cards-container">
     <div class="deck-container">
       <button>
-        <img src="/images/card-back.jpg" />
-        <span class="count">{{player.deck.length}}</span>
+        <img ng-src="/images/card-back.jpg" />
+        <span class="count">{{deck.length}}</span>
       </button>
     </div>
 
     <div class="discard-container">
       <button>
-        <img ng-show="player.discard.length == 0" src="/images/empty-card-back.jpg" />
-        <img ng-show="player.discard.length > 0" src="{{getImagePath(player.discard[player.discard.length-1])}}" />
-        <span class="count">{{player.discard.length}}</span>
+        <img ng-src="{{getImagePath(discard[discard.length-1])}}" />
+        <span class="count">{{discard.length}}</span>
       </button>
     </div>
   </div>
