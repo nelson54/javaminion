@@ -52,14 +52,6 @@ angular.module('dominionFrontendApp')
       }
     };
 
-    $scope.commonCards = Object.keys(game.kingdom.cardMarket)
-      .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
-      .sort(commonComparator);
-
-    $scope.kingdomCards = Object.keys(game.kingdom.cardMarket)
-      .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
-      .sort(kingdomComparator);
-
     $scope.shuffle = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/shuffle');
       Game.get({gameId : game.id, playerId : playerId}, function(){
@@ -80,7 +72,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.canAfford = function(card){
-      return $scope.getCurrentPlayer() && $scope.game.turn.money >= card.cost.money;
+      return player && game.turn.money >= card.cost.money;
     };
 
 
@@ -181,6 +173,14 @@ angular.module('dominionFrontendApp')
       discard = $scope.discard = game.players[playerId].discard;
       play  = $scope.play = game.turn.play;
 
+      $scope.commonCards = Object.keys(game.kingdom.cardMarket)
+        .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
+        .sort(commonComparator);
+
+      $scope.kingdomCards = Object.keys(game.kingdom.cardMarket)
+        .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
+        .sort(kingdomComparator);
+
       repeat();
     };
 
@@ -204,6 +204,7 @@ angular.module('dominionFrontendApp')
       }
     };
 
+    updateData(game);
     repeat();
 
   });
