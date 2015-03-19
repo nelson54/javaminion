@@ -22,7 +22,7 @@ class DominionTestCase extends GroovyTestCase {
         kingdomFactory = new KingdomFactory()
         gameFactory.setKingdomFactory(kingdomFactory)
 
-        game = gameFactory.createGame(2)
+        game = gameFactory.createGameAllCards(2)
         turn = game.getTurn()
         turn.setPhase(Phase.ACTION)
         kingdom = game.kingdom

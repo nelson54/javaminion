@@ -20,6 +20,18 @@ public class KingdomFactory {
         return kingdom;
     }
 
+    public Kingdom getKingdomAllCards() throws IllegalAccessException, InstantiationException {
+        Kingdom kingdom = new Kingdom();
+        kingdom.setAllCards(new HashMap<>());
+        kingdom.setCardMarket(ArrayListMultimap.create());
+
+        addTreasureCards(kingdom);
+        addVictoryCards(kingdom);
+        addKingdomCards(kingdom);
+
+        return kingdom;
+    }
+
     void addTreasureCards(Kingdom kingdom) throws InstantiationException, IllegalAccessException {
         addXCardsOfType(60, Copper.class, kingdom);
         addXCardsOfType(60, Silver.class, kingdom);

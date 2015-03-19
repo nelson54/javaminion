@@ -22,6 +22,19 @@ public class GameFactory {
         return game;
     }
 
+    public Game createGameAllCards(int players) throws InstantiationException, IllegalAccessException {
+        Game game = new Game();
+
+        game.setKingdom(kingdomFactory.getKingdomAllCards());
+        game.setPlayers(new HashMap<>());
+        game.setTurnOrder(new HashSet<>());
+
+        addPlayers(players, game);
+        game.nextPlayer();
+
+        return game;
+    }
+
     void addPlayers(int players, Game game) {
         for (; players > 0; players--) {
             Player player = createPlayer(game, game.getPlayers(), game.getKingdom());
