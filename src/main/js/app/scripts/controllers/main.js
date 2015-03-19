@@ -8,8 +8,8 @@
  * Controller of the dominionFrontendApp
  */
 angular.module('dominionFrontendApp')
-  .controller('MainCtrl', function ($scope, $http, $resource, $route) {
-    var baseUrl = "http://localhost:8080";
+  .controller('MainCtrl', function ($scope, $http, $resource, $route, baseUrl) {
+
     var Game = $resource(baseUrl+'/dominion/');
 
     $scope.games = [];
