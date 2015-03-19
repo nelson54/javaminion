@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/dominionweb-1.0-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -Dnewrelic.environment=development -jar target/dominionweb-1.0-SNAPSHOT.jar
