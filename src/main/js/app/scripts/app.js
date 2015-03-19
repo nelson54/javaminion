@@ -8,6 +8,7 @@
  *
  * Main module of the application.
  */
+
 var baseUrl = "";
 
 angular
@@ -41,7 +42,8 @@ angular
             });
             return defer.promise
           },
-          playerId : function(){return null}
+          playerId : function(){return null},
+          baseUrl: baseUrl
         }
       })
       .when('/games/:game/players/:player', {
@@ -58,10 +60,11 @@ angular
             });
 
             return defer.promise
-  },
+          },
           playerId : function($route) {
             return $route.current.params['player'];
-          }
+          },
+          baseUrl : baseUrl
         }
       })
       .otherwise({

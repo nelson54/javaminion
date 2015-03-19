@@ -16,6 +16,8 @@ import static com.github.nelson54.dominion.Phase.END_OF_GAME;
 
 public class Game {
 
+    long lastModified;
+
     @JsonProperty
     UUID id;
 

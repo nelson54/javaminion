@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('dominionFrontendApp')
-  .controller('GameCtrl', function ($scope, $http, $resource, $route, $interval, game, playerId) {
-    var baseUrl = "",
-      gameId = game.id,
+  .controller('GameCtrl', function ($scope, $http, $resource, $route, $interval, game, playerId, baseUrl) {
+
+    var gameId = game.id,
       player,
       hand,
       deck,
@@ -12,19 +12,40 @@ angular.module('dominionFrontendApp')
       discard,
       interval;
 
+    $scope.test = false;
     $scope.game = game;
 
-    if(playerId) {
+    var repeat = function() {
+      if (!interval && player && player.currentTurn.phase === 'WAITING_FOR_OPPONENT') {
+        interval = $interval(function () {
+          //console.log("reloaded")
+          reload(gameId);//gameId);
+        }, 1000);
+      } else if (interval && player.currentTurn.phase !== 'WAITING_FOR_OPPONENT') {
+        $interval.cancel(interval);
+        interval = undefined;
+      }
+    };
+
+    var updateData = function(game){
       player = $scope.player = game.players[playerId];
       hand  = $scope.hand = game.players[playerId].hand;
       deck  = $scope.deck = game.players[playerId].deck;
       turn  = $scope.turn = game.players[playerId].currentTurn;
       discard = $scope.discard = game.players[playerId].discard;
       play  = $scope.play = game.turn.play;
-    }
 
+      $scope.commonCards = Object.keys(game.kingdom.cardMarket)
+        .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
+        .sort(commonComparator);
 
-    $scope.test = false;
+      $scope.kingdomCards = Object.keys(game.kingdom.cardMarket)
+        .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
+        .sort(kingdomComparator);
+
+      repeat();
+    };
+    if(playerId) updateData(game);
 
     var commonComparator = function(id1, id2){
       var c1 = game.kingdom.cardMarket[id1][0];
@@ -164,25 +185,6 @@ angular.module('dominionFrontendApp')
       }
     };
 
-    var updateData = function(game){
-      player = $scope.player = game.players[playerId];
-      hand  = $scope.hand = game.players[playerId].hand;
-      deck  = $scope.deck = game.players[playerId].deck;
-      turn  = $scope.turn = game.players[playerId].currentTurn;
-      discard = $scope.discard = game.players[playerId].discard;
-      play  = $scope.play = game.turn.play;
-
-      $scope.commonCards = Object.keys(game.kingdom.cardMarket)
-        .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
-        .sort(commonComparator);
-
-      $scope.kingdomCards = Object.keys(game.kingdom.cardMarket)
-        .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
-        .sort(kingdomComparator);
-
-      repeat();
-    };
-
     var reload = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId');
 
@@ -190,20 +192,5 @@ angular.module('dominionFrontendApp')
         updateData(response, playerId);
       });
     };
-
-    var repeat = function() {
-      if (!interval && player && player.currentTurn.phase === 'WAITING_FOR_OPPONENT') {
-        interval = $interval(function () {
-          //console.log("reloaded")
-          reload(gameId);//gameId);
-        }, 1000);
-      } else if (interval && player.currentTurn.phase !== 'WAITING_FOR_OPPONENT') {
-        $interval.cancel(interval);
-        interval = undefined;
-      }
-    };
-
-    updateData(game);
-    repeat();
 
   });

@@ -9,7 +9,7 @@
  */
 angular.module('dominionFrontendApp')
   .controller('MainCtrl', function ($scope, $http, $resource, $route) {
-    var baseUrl = "";
+    var baseUrl = "http://localhost:8080";
     var Game = $resource(baseUrl+'/dominion/');
 
     $scope.games = [];
