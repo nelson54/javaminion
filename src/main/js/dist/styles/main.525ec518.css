@@ -8612,3 +8612,15 @@ body {
 .modal {
   display: block;
 }
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 300px) and (max-width: 768px) {
+  /* line 145, ../../app/styles/main.scss */
+  .hand-container img, .kingdom-container img {
+    height: 50px;
+  }
+  /* line 149, ../../app/styles/main.scss */
+  .hand-container .count, .kingdom-container .count {
+    font-size: .7em;
+  }
+}

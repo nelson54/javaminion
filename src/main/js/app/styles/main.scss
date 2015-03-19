@@ -136,3 +136,19 @@ body {
 .modal {
   display:block;
 }
+
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width:300px) and (max-width: 768px) {
+
+  .hand-container, .kingdom-container {
+    img {
+      height: 50px;
+    }
+
+    .count {
+      font-size: .7em;
+    }
+  }
+}
+
