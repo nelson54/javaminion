@@ -5,13 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.google.common.collect.Multimap;
+import org.joda.time.DateTime;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.github.nelson54.dominion.Phase.ACTION;
-import static com.github.nelson54.dominion.Phase.BUY;
-import static com.github.nelson54.dominion.Phase.END_OF_GAME;
+import static com.github.nelson54.dominion.Phase.*;
 
 
 public class Game {
@@ -166,6 +165,10 @@ public class Game {
                 .forEach(card -> this.allCards.put(card.getId().toString(), card));
 
         this.kingdom = kingdom;
+    }
+
+    public void updateModified(){
+        lastModified = DateTime.now().getMillis();
     }
 
     Set<Player> getTurnOrder() {

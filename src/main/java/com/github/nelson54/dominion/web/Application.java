@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 
 @EnableAutoConfiguration
@@ -40,5 +41,10 @@ public class Application {
         objectMapper.registerModule(new GuavaModule());
 
         return objectMapper;
+    }
+
+    @Bean
+    public ShallowEtagHeaderFilter getEtagFilter() {
+        return new ShallowEtagHeaderFilter();
     }
 }
