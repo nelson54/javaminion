@@ -30,12 +30,15 @@ angular.module('dominionFrontendApp')
 
     var updateData = function(game){
       players = $scope.players = game.players;
-      player = $scope.player = game.players[playerId];
-      hand  = $scope.hand = game.players[playerId].hand;
-      deck  = $scope.deck = game.players[playerId].deck;
-      turn  = $scope.turn = game.players[playerId].currentTurn;
-      discard = $scope.discard = game.players[playerId].discard;
-      play  = $scope.play = game.turn.play;
+
+      if(playerId) {
+        player = $scope.player = game.players[playerId];
+        hand = $scope.hand = game.players[playerId].hand;
+        deck = $scope.deck = game.players[playerId].deck;
+        turn = $scope.turn = game.players[playerId].currentTurn;
+        discard = $scope.discard = game.players[playerId].discard;
+        play = $scope.play = game.turn.play;
+      }
 
       var commonComparator = function(id1, id2){
         var c1 = game.kingdom.cardMarket[id1][0];
@@ -62,7 +65,7 @@ angular.module('dominionFrontendApp')
           return -1;
         }
       };
-      $scope.$apply();
+
       $scope.commonCards = Object.keys(game.kingdom.cardMarket)
         .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
         .sort(commonComparator);
@@ -70,10 +73,11 @@ angular.module('dominionFrontendApp')
       $scope.kingdomCards = Object.keys(game.kingdom.cardMarket)
         .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
         .sort(kingdomComparator);
-
+      //$scope.$apply();
       repeat();
     };
-    if(playerId) updateData(game);
+
+    updateData(game);
 
     $scope.shuffle = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/shuffle');
