@@ -75,7 +75,6 @@ angular.module('dominionFrontendApp')
       return player && game.turn.money >= card.cost.money;
     };
 
-
     $scope.purchase = function(card){
       var Purchase = $resource(baseUrl+'/dominion/:gameId/:playerId/purchase');
 
