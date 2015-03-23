@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dominionFrontendApp')
-  .controller('GameCtrl', function ($scope, $http, $resource, $route, $interval, game, playerId, baseUrl) {
+  .controller('GameCtrl', function ($scope, $http, $resource, $route, $timeout, game, playerId, baseUrl) {
 
     var gameId = game.id,
       players,
@@ -11,20 +11,20 @@ angular.module('dominionFrontendApp')
       turn,
       play,
       discard,
-      interval;
+      choice;
 
     $scope.test = false;
     $scope.game = game;
 
     var repeat = function() {
-      if (!interval && player && player.currentTurn.phase === 'WAITING_FOR_OPPONENT') {
-        interval = $interval(function () {
-          //console.log("reloaded")
+      if (player &&
+        player.currentTurn.phase === 'WAITING_FOR_OPPONENT' ||
+        player.currentTurn.phase === 'WAITING_FOR_CHOICE'
+      ) {
+
+        $timeout(function () {
           reload(gameId);//gameId);
         }, 1000);
-      } else if (interval && player.currentTurn.phase !== 'WAITING_FOR_OPPONENT') {
-        $interval.cancel(interval);
-        interval = undefined;
       }
     };
 
@@ -33,11 +33,16 @@ angular.module('dominionFrontendApp')
 
       if(playerId) {
         player = $scope.player = game.players[playerId];
+
         hand = $scope.hand = game.players[playerId].hand;
         deck = $scope.deck = game.players[playerId].deck;
         turn = $scope.turn = game.players[playerId].currentTurn;
         discard = $scope.discard = game.players[playerId].discard;
         play = $scope.play = game.turn.play;
+
+        if(game.players[playerId] && game.players[playerId].choices){
+          choice = $scope.choice = game.players[playerId].choices[0];
+        }
       }
 
       var commonComparator = function(id1, id2){
@@ -198,12 +203,12 @@ angular.module('dominionFrontendApp')
     };
 
     var reload = function(){
-      /*var Game = $resource(baseUrl+'/dominion/:gameId');
+      var Game = $resource(baseUrl+'/dominion/:gameId');
 
       Game.get({gameId : gameId}, function(response){
         updateData(response, playerId);
-      });*/
-      $route.reload();
+      });
+      //$route.reload();
     };
 
   });
