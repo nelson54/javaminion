@@ -18,8 +18,8 @@ angular.module('dominionFrontendApp')
 
     var repeat = function() {
       if (player &&
-        player.currentTurn.phase === 'WAITING_FOR_OPPONENT' ||
-        player.currentTurn.phase === 'WAITING_FOR_CHOICE'
+        (player.currentTurn.phase === 'WAITING_FOR_OPPONENT' ||
+        player.currentTurn.phase === 'WAITING_FOR_CHOICE')
       ) {
 
         $timeout(function () {
