@@ -78,33 +78,29 @@ angular.module('dominionFrontendApp')
       $scope.kingdomCards = Object.keys(game.kingdom.cardMarket)
         .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
         .sort(kingdomComparator);
-      //$scope.$apply();
+      //$scope.$digest();
       repeat();
     };
 
-    updateData(game);
-
     $scope.shuffle = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/shuffle');
-      Game.get({gameId : game.id, playerId : playerId}, function(){
-        reload();
+      Game.get({gameId : game.id, playerId : playerId}, function(game){
+        updateData(game);
       });
     };
 
     $scope.drawHand = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/draw');
-      Game.get({gameId : game.id, playerId : playerId}, function(){
-        reload();
-      });
+      Game.get({gameId : game.id, playerId : playerId}, updateData);
     };
 
     $scope.discardHand = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/discard');
-      Game.get({gameId : game.id, playerId : playerId}, reload);
+      Game.get({gameId : game.id, playerId : playerId}, updateData);
     };
 
     $scope.canAfford = function(card){
-      return player && game.turn.money >= card.cost.money;
+      return player && turn.money >= card.cost.money;
     };
 
     $scope.purchase = function(card){
@@ -112,7 +108,7 @@ angular.module('dominionFrontendApp')
 
       var purchase = new Purchase(card);
 
-      purchase.$save({gameId : game.id, playerId : playerId},reload);
+      purchase.$save({gameId : game.id, playerId : playerId},updateData);
     };
 
     $scope.playCard = function(card){
@@ -120,7 +116,7 @@ angular.module('dominionFrontendApp')
 
       var play = new Play(card);
 
-      play.$save({gameId : game.id, playerId : playerId},reload);
+      play.$save({gameId : game.id, playerId : playerId},updateData);
     }
 
     $scope.nextPhase = function(card){
@@ -128,7 +124,7 @@ angular.module('dominionFrontendApp')
 
       var endPhase = new EndPhase(card);
 
-      endPhase.$save({gameId : game.id},reload);
+      endPhase.$save({gameId : game.id},updateData);
     };
 
     $scope.choose = function(game, player, choose, response){
@@ -150,7 +146,7 @@ angular.module('dominionFrontendApp')
 
       }
 
-      choice.$save({gameId : game.id, playerId:player.id},reload);
+      choice.$save({gameId : game.id, playerId:player.id},updateData);
     };
 
     $scope.chooseDone = function(game, player, choose){
@@ -160,7 +156,7 @@ angular.module('dominionFrontendApp')
       choice.targetChoice = choose.id;
       choice.done = true;
 
-      choice.$save({gameId : game.id, playerId:player.id},reload);
+      choice.$save({gameId : game.id, playerId:player.id},updateData);
     };
 
     $scope.isCurrentPlayer = function(player) {
@@ -168,7 +164,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.isActivePlayer = function(player) {
-      return game.turn.playerId === player.id;
+      return playerId === player.id;
     }
 
     $scope.hasCurrentPlayer = function(){
@@ -177,7 +173,7 @@ angular.module('dominionFrontendApp')
 
     $scope.getCurrentPlayer = function(){
       if ($scope.hasCurrentPlayer())
-        return $scope.game.players[playerId];
+        return players[playerId];
     };
 
     $scope.hasCardType = function(type, card){
@@ -208,7 +204,7 @@ angular.module('dominionFrontendApp')
       Game.get({gameId : gameId}, function(response){
         updateData(response, playerId);
       });
-      //$route.reload();
     };
 
+    updateData(game);
   });

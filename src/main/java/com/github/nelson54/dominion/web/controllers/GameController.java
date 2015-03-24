@@ -36,11 +36,13 @@ public class GameController {
     }
 
     @RequestMapping(value = "/{gameId}/next-phase", method = RequestMethod.POST)
-    void endPhase(
+    Game endPhase(
             @PathVariable("gameId")
             String id
     ) {
         Game game = gameProvider.getGameByUuid(id);
         game.getTurn().endPhase();
+
+        return game;
     }
 }

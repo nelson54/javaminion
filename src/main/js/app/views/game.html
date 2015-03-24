@@ -10,10 +10,10 @@
 <div class="common-container" ng-if="hasCurrentPlayer()">
   <ul>
     <li ng-repeat="name in commonCards">
-      <button ng-init="cards = game.kingdom.cardMarket[name]" class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || player.currentTurn.phase !== 'BUY'">
-        <img ng-src="{{getImagePath(cards[0])}}" />
+      <button class="btn" ng-click="purchase(game.kingdom.cardMarket[name][0])" ng-disabled="!canAfford(game.kingdom.cardMarket[name][0]) || player.currentTurn.phase !== 'BUY'">
+        <img ng-src="{{getImagePath(game.kingdom.cardMarket[name][0])}}" />
         <span class="name">{{name}}</span>
-        <span class="count">({{cards.length}})</span>
+        <span class="count" ng-bind="(game.kingdom.cardMarket[name]).length"></span>
       </button>
     </li>
   </ul>
@@ -22,10 +22,10 @@
 <div class="kingdom-container" ng-if="hasCurrentPlayer()">
   <ul>
     <li ng-repeat="name in kingdomCards">
-      <button ng-init="cards = game.kingdom.cardMarket[name]" class="btn" ng-click="purchase(cards[0])" ng-disabled="!canAfford(cards[0]) || player.currentTurn.phase !== 'BUY'">
-        <img ng-src="{{getImagePath(cards[0])}}" />
+      <button class="btn" ng-click="purchase(game.kingdom.cardMarket[name][0])" ng-disabled="!canAfford(game.kingdom.cardMarket[name][0]) || player.currentTurn.phase !== 'BUY'">
+        <img ng-src="{{getImagePath(game.kingdom.cardMarket[name][0])}}" />
         <span class="name">{{name}}</span>
-        <span class="count">({{cards.length}})</span>
+        <span class="count" ng-bind="(game.kingdom.cardMarket[name]).length"></span>
       </button>
     </li>
   </ul>
