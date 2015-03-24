@@ -130,6 +130,12 @@ public class Game {
         choice.getTarget().getChoices().add(choice);
     }
 
+    public void endGame() {
+        players.values().stream()
+                .map(Player::getCurrentTurn)
+                .forEach(turn -> turn.setPhase(END_OF_GAME));
+    }
+
     boolean isGameOver(){
         return kingdom.getNumberOfRemainingCardsByName("Province") == 0;
     }

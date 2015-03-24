@@ -18,7 +18,6 @@ import java.util.Set;
 
 import static com.github.nelson54.dominion.Phase.ACTION;
 import static com.github.nelson54.dominion.Phase.BUY;
-import static com.github.nelson54.dominion.Phase.END_OF_GAME;
 
 public class Turn {
 
@@ -55,11 +54,12 @@ public class Turn {
 
     public void endPhase() {
         switch (phase) {
+            case END_OF_GAME:
             case WAITING_FOR_CHOICE:
                 break;
             case BUY:
                 if(game.isGameOver()){
-                    phase = END_OF_GAME;
+                    game.endGame();
                 } else {
                     phase = ACTION;
                     player.resetForNextTurn(this);
