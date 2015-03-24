@@ -68,9 +68,9 @@ public class Choice {
 
         if(choiceResponse.isDone()){
             setComplete(true);
-        } else {
-            setComplete(effect.resolve(choiceResponse, target, turn, turn.getGame()));
         }
+
+        setComplete(effect.resolve(choiceResponse, target, turn, turn.getGame()));
 
         if(!isComplete){
             Player player = this.getTarget();

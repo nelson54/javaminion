@@ -9,6 +9,9 @@ import com.github.nelson54.dominion.choices.Range;
 import com.github.nelson54.dominion.effects.CellarEffect;
 import com.github.nelson54.dominion.effects.Effect;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Cellar extends ComplexActionCard {
     public Cellar(){
         super();
@@ -24,12 +27,24 @@ public class Cellar extends ComplexActionCard {
     @Override
     Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();
+        Set<Card> options;
+
+        if(parent == null){
+            options = new HashSet<>();
+            options.addAll(target.getHand());
+        } else {
+            options = parent.getCardOptions();
+
+            if(parent.getResponse() != null && parent.getResponse().getCard() != null){
+                options.remove(parent.getResponse().getCard());
+            }
+        }
 
         choice.setGame(game);
         choice.setExpectedAnswerType(OptionType.CARD);
         choice.setRequired(false);
         choice.setRange(Range.ANY);
-        choice.setCardOptions(target.getHand());
+        choice.setCardOptions(options);
 
         return choice;
     }
