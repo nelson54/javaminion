@@ -76,7 +76,7 @@ public class Remodel extends ComplexActionCard {
                 .filter(card -> card.getCost().getMoney() <= cost+2)
                 .collect(Collectors.toSet());
 
-        options.removeAll(game.getTurn().getPlay().values());
+        options.removeAll(game.getTurn().getPlay());
 
         return options;
     }

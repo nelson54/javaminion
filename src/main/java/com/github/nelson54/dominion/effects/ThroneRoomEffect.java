@@ -14,20 +14,26 @@ public class ThroneRoomEffect extends Effect {
     boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
 
         if(response.isDone()){
+
             return true;
         } else {
-            Card option = game.getAllCards().get(response.getCard().toString());
+            Card option = game.getAllCards().get(response.getCard().getId().toString());
             ActionCard actionCard = null;
 
             if (option instanceof ActionCard) {
                 actionCard = (ActionCard) option;
             }
 
-            if (getChoice().getCardOptions().contains(option)) {
-                turn.playCard(actionCard, getTarget(), game);
+            if (actionCard != null) {
+                actionCard.apply(getTarget(), game);
+                actionCard.apply(getTarget(), game);
+
+                turn.getPlay().add(actionCard);
+                turn.getPlay().add(actionCard);
                 return true;
             }
         }
+
         return false;
     }
 

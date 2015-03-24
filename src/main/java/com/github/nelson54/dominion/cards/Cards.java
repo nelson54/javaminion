@@ -16,7 +16,7 @@ class Cards {
     }
 
     public static Set<Card> cardsRemainingInHand(Player player) {
-        Collection<Card> cardsInPlay = player.getCurrentTurn().getPlay().values();
+        Collection<Card> cardsInPlay = player.getCurrentTurn().getPlay();
         Set<Card> cardsInHand = new HashSet<>();
         cardsInHand.addAll(player.getHand());
         cardsInHand.removeAll(cardsInPlay);

@@ -37,7 +37,7 @@ class BureaucratEffectTest extends DominionTestCase {
         player.setHand(hand)
 
         turn.playCard(bureaucrat, player, game)
-
+        turn.getPlay().clear();
         assertEquals "Phase is WAITING_FOR_CHOICE ", Phase.WAITING_FOR_CHOICE, turn.getPhase()
 
         applyChoice(getChoice(), turn);
@@ -54,7 +54,7 @@ class BureaucratEffectTest extends DominionTestCase {
         }
 
         turn.playCard(bureaucrat, player, game)
-
+        turn.getPlay().clear();
         //assertEquals "Phase is ACTION ", Phase.ACTION, turn.getPhase()
 
     }

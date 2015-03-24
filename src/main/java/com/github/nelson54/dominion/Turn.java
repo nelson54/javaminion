@@ -13,11 +13,12 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 import static com.github.nelson54.dominion.Phase.ACTION;
 import static com.github.nelson54.dominion.Phase.BUY;
+import static com.github.nelson54.dominion.Phase.END_OF_GAME;
 
 public class Turn {
 
@@ -36,7 +37,7 @@ public class Turn {
 
     @JsonProperty
     private
-    Map<String, Card> play;
+    List<Card> play;
 
     Multimap<String, Card> revealed;
 
@@ -57,9 +58,13 @@ public class Turn {
             case WAITING_FOR_CHOICE:
                 break;
             case BUY:
-                phase = ACTION;
-                player.resetForNextTurn(this);
-                game.nextPlayer();
+                if(game.isGameOver()){
+                    phase = END_OF_GAME;
+                } else {
+                    phase = ACTION;
+                    player.resetForNextTurn(this);
+                    game.nextPlayer();
+                }
                 break;
             case ACTION:
             default:
@@ -77,13 +82,13 @@ public class Turn {
             throw new InsufficientActionsException();
         }
 
-        if (play.keySet().contains(card.getId().toString())){
+        if (play.contains(card)){
             throw new AlreadyPlayedException();
         }
 
         actionPool--;
-        player.getHand();
-        getPlay().put(card.getId().toString(), card);
+        player.getHand().remove(card);
+        getPlay().add(card);
         card.apply(player, game);
     }
 
@@ -157,11 +162,11 @@ public class Turn {
         this.phase = phase;
     }
 
-    public Map<String, Card> getPlay() {
+    public List<Card> getPlay() {
         return play;
     }
 
-    public void setPlay(Map<String, Card> play) {
+    public void setPlay(List<Card> play) {
         this.play = play;
     }
 

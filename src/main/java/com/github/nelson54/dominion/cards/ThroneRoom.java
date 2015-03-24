@@ -29,7 +29,7 @@ public class ThroneRoom extends ComplexActionCard {
     Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException {
 
         Set<Card> options = getOptions(target.getHand());
-
+        options.remove(this);
         if(options.isEmpty()){
             throw new NoValidChoiceException();
         }

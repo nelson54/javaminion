@@ -64,6 +64,9 @@ public class Player {
     }
 
     public void resetForNextTurn(Turn turn) {
+        if(turn != null){
+            hand.addAll(turn.getPlay());
+        }
 
         discardHand();
         drawHand();
@@ -75,7 +78,7 @@ public class Player {
         currentTurn.setActionPool(1);
         currentTurn.setMoneyPool(0);
         currentTurn.setPhase(WAITING_FOR_OPPONENT);
-        currentTurn.setPlay(new LinkedHashMap<>());
+        currentTurn.setPlay(new ArrayList<>());
         currentTurn.setPlayer(this);
 
     }
