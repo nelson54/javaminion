@@ -4,7 +4,6 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 
 public class ChapelEffect extends Effect {
@@ -13,7 +12,6 @@ public class ChapelEffect extends Effect {
 
     @Override
     boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
-        Choice choice = getChoice();
         Card option = response.getCard();
 
         if (getChoice().getCardOptions().contains(option)) {

@@ -2,17 +2,17 @@ package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.choices.Range;
 import com.github.nelson54.dominion.effects.Effect;
 import com.github.nelson54.dominion.effects.ThroneRoomEffect;
+import com.github.nelson54.dominion.exceptions.NoValidChoiceException;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ThroneRoom extends ActionCard {
+public class ThroneRoom extends ComplexActionCard {
 
     public ThroneRoom() {
         super();
@@ -26,27 +26,32 @@ public class ThroneRoom extends ActionCard {
     }
 
     @Override
-    public void apply(Player player, Game game) {
-        Turn turn = game.getTurn();
-        game.trashCard(this);
+    Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException {
 
-        Choice choice = new Choice(player, this);
-        Effect effect = new ThroneRoomEffect();
+        Set<Card> options = getOptions(target.getHand());
 
-        choice.bind(effect);
+        if(options.isEmpty()){
+            throw new NoValidChoiceException();
+        }
 
+        choice.setCardOptions(options);
         choice.setExpectedAnswerType(OptionType.CARD);
+        choice.setRequired(false);
         choice.setNumber((byte) 1);
         choice.setRange(Range.EXACTLY);
-        choice.setCardOptions(getOptions(player.getHand()));
 
-        effect.setChoice(choice);
-        effect.setOwner(getOwner());
-        effect.setTarget(player);
-
-        game.addChoice(choice);
+        return choice;
     }
 
+    @Override
+    Effect getEffect(Player player, Game game) {
+        return new ThroneRoomEffect();
+    }
+
+    @Override
+    void play(Player player, Game game) {
+
+    }
 
     Set<Card> getOptions(Set<Card> hand) {
         return hand.stream()

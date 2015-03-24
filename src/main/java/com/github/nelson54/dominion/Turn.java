@@ -8,10 +8,7 @@ import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.cards.TreasureCard;
 import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
-import com.github.nelson54.dominion.exceptions.InsufficientActionsException;
-import com.github.nelson54.dominion.exceptions.InsufficientBuysException;
-import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
+import com.github.nelson54.dominion.exceptions.*;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
@@ -36,7 +33,6 @@ public class Turn {
     @JsonIgnore
     private
     Set<Choice> resolvedChoices;
-
 
     @JsonProperty
     private
@@ -79,6 +75,10 @@ public class Turn {
 
         if (actionPool == 0) {
             throw new InsufficientActionsException();
+        }
+
+        if (play.keySet().contains(card.getId().toString())){
+            throw new AlreadyPlayedException();
         }
 
         actionPool--;
