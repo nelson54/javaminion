@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.web.controllers
 
 import com.github.nelson54.dominion.Phase
+import com.github.nelson54.dominion.cards.RecommendedCards
 import com.github.nelson54.dominion.web.Application
 import org.junit.Test
 import org.springframework.boot.test.SpringApplicationConfiguration
@@ -20,7 +21,7 @@ class DominionControllerTest extends DominionTestCase {
     @Before
     void setUp() {
         super.setUp()
-        game = gameController.createGame();
+        game = gameController.createGame(RecommendedCards.FIRST_GAME.getName());
     }
 
     @Test
