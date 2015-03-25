@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.effects
 
 import com.github.nelson54.dominion.DominionTestCase
 import com.github.nelson54.dominion.Phase
+import com.github.nelson54.dominion.Player
 import com.github.nelson54.dominion.Turn
 import com.github.nelson54.dominion.cards.Card
 import com.github.nelson54.dominion.cards.ComplexActionCard
@@ -32,6 +33,10 @@ class BureaucratEffectTest extends DominionTestCase {
         for (int i = 0; i < 5; i++) {
             Card card = game.giveCardToPlayer("Estate", player)
             hand.add(card)
+        }
+
+        for(Player p : game.getPlayers().values()){
+            game.giveCardToPlayer("Estate", p);
         }
 
         player.setHand(hand)
