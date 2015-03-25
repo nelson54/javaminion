@@ -20,6 +20,21 @@ public class KingdomFactory {
         return kingdom;
     }
 
+    public Kingdom getKingdomFromCards(Class<? extends Card>[] cards) throws IllegalAccessException, InstantiationException {
+        Kingdom kingdom = new Kingdom();
+        kingdom.setAllCards(new HashMap<>());
+        kingdom.setCardMarket(ArrayListMultimap.create());
+
+        addTreasureCards(kingdom);
+        addVictoryCards(kingdom);
+
+        for(Class<? extends Card> clazz: cards){
+            addXCardsOfType(10, clazz, kingdom);
+        }
+
+        return kingdom;
+    }
+
     public Kingdom getKingdomAllCards() throws IllegalAccessException, InstantiationException {
         Kingdom kingdom = new Kingdom();
         kingdom.setAllCards(new HashMap<>());
@@ -69,6 +84,32 @@ public class KingdomFactory {
         addXCardsOfType(10, ThroneRoom.class, kingdom);
         addXCardsOfType(10, Woodcutter.class, kingdom);
         addXCardsOfType(10, Village.class, kingdom);
+    }
+
+    void sizeDistortion(Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+        addXCardsOfType(10, Cellar.class, kingdom);
+        addXCardsOfType(10, Chapel.class, kingdom);
+        addXCardsOfType(10, Feast.class, kingdom);
+        addXCardsOfType(10, Gardens.class, kingdom);
+        addXCardsOfType(10, Laboratory.class, kingdom);
+        addXCardsOfType(10, Thief.class, kingdom);
+        addXCardsOfType(10, Village.class, kingdom);
+        addXCardsOfType(10, Witch.class, kingdom);
+        addXCardsOfType(10, Woodcutter.class, kingdom);
+        addXCardsOfType(10, Workshop.class, kingdom);
+    }
+
+    void bigMoney(Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+        addXCardsOfType(10, Cellar.class, kingdom);
+        addXCardsOfType(10, Chapel.class, kingdom);
+        addXCardsOfType(10, Feast.class, kingdom);
+        addXCardsOfType(10, Gardens.class, kingdom);
+        addXCardsOfType(10, Laboratory.class, kingdom);
+        addXCardsOfType(10, Thief.class, kingdom);
+        addXCardsOfType(10, Village.class, kingdom);
+        addXCardsOfType(10, Witch.class, kingdom);
+        addXCardsOfType(10, Woodcutter.class, kingdom);
+        addXCardsOfType(10, Workshop.class, kingdom);
     }
 
     void addKingdomCards(Kingdom kingdom) throws InstantiationException, IllegalAccessException {

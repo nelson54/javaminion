@@ -1,12 +1,10 @@
 package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Game;
+import com.github.nelson54.dominion.cards.RecommendedCards;
 import com.github.nelson54.dominion.web.GameProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -16,6 +14,11 @@ public class GameController {
 
     @Autowired
     GameProvider gameProvider;
+
+    @RequestMapping(value = "/recommended", method = RequestMethod.GET)
+    RecommendedCards[] getRecomendedCards(){
+        return RecommendedCards.values();
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     Set<String> getGames() throws InstantiationException, IllegalAccessException {
@@ -31,8 +34,10 @@ public class GameController {
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.OPTIONS})
-    Game createGame() throws InstantiationException, IllegalAccessException {
-        return gameProvider.createGame();
+    Game createGame(
+            @RequestParam String cardSet
+    ) throws InstantiationException, IllegalAccessException {
+        return gameProvider.createGameBySet(cardSet);
     }
 
     @RequestMapping(value = "/{gameId}/next-phase", method = RequestMethod.POST)

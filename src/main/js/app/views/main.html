@@ -1,3 +1,6 @@
+<select ng-model="cardSet">
+  <option ng-repeat="cardSet in recommendedCards">{{cardSet.name}}</option>
+</select>
 <button ng-click="createGame()">Create Game</button>
 <button ng-click="getGames()">Refresh</button>
 

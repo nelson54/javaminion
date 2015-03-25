@@ -8,11 +8,12 @@
  * Controller of the dominionFrontendApp
  */
 angular.module('dominionFrontendApp')
-  .controller('MainCtrl', function ($scope, $http, $resource, $route, baseUrl) {
+  .controller('MainCtrl', function ($scope, $http, $resource, $route, baseUrl, recommendedCards) {
 
     var Game = $resource(baseUrl+'/dominion/');
 
     $scope.games = [];
+    $scope.recommendedCards = recommendedCards;
 
     $scope.getGames = function(){
       return $http.get(baseUrl+'/dominion/')
@@ -22,8 +23,8 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.createGame = function(){
-      var game = new Game({});
-      game.$save($scope.getGames, $route.reload);
+      var game = new Game({cardSet: $scope.cardSet});
+      game.$save(game, $route.reload);
     };
 
     $scope.getGames();

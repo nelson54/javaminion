@@ -1,5 +1,7 @@
 package com.github.nelson54.dominion;
 
+import com.github.nelson54.dominion.cards.Card;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -9,10 +11,10 @@ public class GameFactory {
 
     private KingdomFactory kingdomFactory;
 
-    public Game createGame(int players) throws InstantiationException, IllegalAccessException {
+    public Game createGame(Class<? extends Card>[] cards, int players) throws InstantiationException, IllegalAccessException {
         Game game = new Game();
 
-        game.setKingdom(kingdomFactory.getKingdom());
+        game.setKingdom(kingdomFactory.getKingdomFromCards(cards));
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new HashSet<>());
 

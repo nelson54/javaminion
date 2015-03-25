@@ -72,6 +72,22 @@
   </div>
 </div>
 
+<div class="modal choice-box" ng-if="turn.phase == 'END_OF_GAME'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Scores<a class="anchorjs-link" href="#modal-title"><span class="anchorjs-icon"></span></a></h4>
+      </div>
+      <p ng-if="choice.message">{{choice.message}}</p>
+      <ul>
+        <li ng-repeat="(id, player) in game.players">
+          <span><strong>{{id}}</strong>: {{player.victoryPoints}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 <div class="play-container" ng-if="hasCurrentPlayer()">
   <h3>Play ({{play.length}})</h3>
   <ul>

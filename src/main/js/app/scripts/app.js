@@ -9,8 +9,8 @@
  * Main module of the application.
  */
 
-//var baseUrl = "http://localhost:9001";
-var baseUrl = "";
+var baseUrl = "http://localhost:9001";
+//var baseUrl = "";
 
 angular
   .module('dominionFrontendApp', [
@@ -31,6 +31,14 @@ angular
         resolve : {
           baseUrl: function() {
             return baseUrl;
+          },
+          recommendedCards: function($q, $http){
+            var defer = $q.defer();
+            $http.get(baseUrl+'/dominion/recommended')
+              .success(function(response){
+                defer.resolve(response);
+              });
+            return defer.promise;
           }
         }
       })
