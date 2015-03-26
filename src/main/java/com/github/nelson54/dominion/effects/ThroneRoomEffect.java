@@ -30,6 +30,8 @@ public class ThroneRoomEffect extends Effect {
 
                 turn.getPlay().add(actionCard);
                 turn.getPlay().add(actionCard);
+
+                target.getHand().remove(actionCard);
                 return true;
             }
         }
