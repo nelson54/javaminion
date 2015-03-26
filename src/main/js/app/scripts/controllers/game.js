@@ -71,13 +71,21 @@ angular.module('dominionFrontendApp')
         }
       };
 
-      $scope.commonCards = Object.keys(game.kingdom.cardMarket)
-        .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
-        .sort(commonComparator);
+      $scope.commonCards = [];
+      Object.keys(game.kingdom.cardMarket)
+          .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
+          .sort(commonComparator)
+          .forEach(function(id){
+            kingdomCards[id] = game.kingdom.cardMarket[id];
+          });
 
-      $scope.kingdomCards = Object.keys(game.kingdom.cardMarket)
-        .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
-        .sort(kingdomComparator);
+      $scope.kingdomCards = {};
+      Object.keys(game.kingdom.cardMarket)
+          .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
+          .sort(kingdomComparator)
+          .forEach(function(id){
+            kingdomCards[id] = game.kingdom.cardMarket[id];
+          });
       //$scope.$digest();
       repeat();
     };

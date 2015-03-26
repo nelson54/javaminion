@@ -42,6 +42,7 @@ public class Chancellor extends ComplexActionCard {
 
     @Override
     void play(Player player, Game game) {
-        game.trashCard(this);
+        long money = player.getCurrentTurn().getMoneyPool();
+        player.getCurrentTurn().setMoneyPool(money + 2);
     }
 }
