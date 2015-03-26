@@ -5,7 +5,11 @@ import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.ActionCard;
 import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class ThroneRoomEffect extends Effect {
@@ -25,8 +29,17 @@ public class ThroneRoomEffect extends Effect {
             }
 
             if (actionCard != null) {
+                Set<Choice> choiceSet = new HashSet<>();
+
                 actionCard.apply(getTarget(), game);
+                choiceSet.addAll(target.getChoices());
+                target.getChoices().clear();
+
                 actionCard.apply(getTarget(), game);
+                choiceSet.addAll(target.getChoices());
+                target.getChoices().clear();
+
+                target.getChoices().addAll(choiceSet);
 
                 turn.getPlay().add(actionCard);
                 turn.getPlay().add(actionCard);
