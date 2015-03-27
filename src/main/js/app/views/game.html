@@ -9,11 +9,11 @@
 
 <div class="common-container" ng-if="hasCurrentPlayer()">
   <ul>
-    <li ng-repeat="name in commonCards">
-      <button class="btn" ng-click="purchase(pile[0])" ng-disabled="!canAfford(pile[0]) || player.currentTurn.phase !== 'BUY' || player.currentTurn.buyPool === 0">
-        <img ng-src="{{getImagePath(pile[0])}}" />
-        <span class="name">{{name}}</span>
-        <span class="count" ng-bind="pile.length"></span>
+    <li ng-repeat="card in commonCards | orderBy : 'kingdomSortOrder'">
+      <button class="btn" ng-click="purchase(card)" ng-disabled="!canAfford(card) || player.currentTurn.phase !== 'BUY' || player.currentTurn.buyPool === 0">
+        <img ng-src="{{getImagePath(card)}}" />
+        <span class="name">{{card.name}}</span>
+        <span class="count" ng-bind="pile"></span>
       </button>
     </li>
   </ul>
@@ -21,11 +21,11 @@
 
 <div class="kingdom-container" ng-if="hasCurrentPlayer()">
   <ul>
-    <li ng-repeat="(name, pile) in kingdomCards">
-      <button class="btn" ng-click="purchase(pile[0])" ng-disabled="!canAfford(pile[0]) || player.currentTurn.phase !== 'BUY' || player.currentTurn.buyPool === 0">
-        <img ng-src="{{getImagePath(pile[0])}}" />
+    <li ng-repeat="card in kingdomCards | orderBy : 'cost.money'">
+      <button class="btn" ng-click="purchase(card)" ng-disabled="!canAfford(card) || player.currentTurn.phase !== 'BUY' || player.currentTurn.buyPool === 0">
+        <img ng-src="{{getImagePath(card)}}" />
         <span class="name">{{name}}</span>
-        <span class="count" ng-bind="pile.length"></span>
+        <span class="count" ng-bind="pile"></span>
       </button>
     </li>
   </ul>

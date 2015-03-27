@@ -26,6 +26,19 @@ public class GameFactory {
         return game;
     }
 
+    public Game createAiGame(Class<? extends Card>[] cards, int players) throws InstantiationException, IllegalAccessException {
+        Game game = new Game();
+
+        game.setKingdom(kingdomFactory.getKingdomFromCards(cards));
+        game.setPlayers(new HashMap<>());
+        game.setTurnOrder(new HashSet<>());
+
+        addSomeAiPlayers(players, game);
+        game.nextPlayer();
+
+        return game;
+    }
+
     public Game createGameAllCards(int players) throws InstantiationException, IllegalAccessException {
         Game game = new Game();
 
@@ -40,6 +53,15 @@ public class GameFactory {
     }
 
     void addPlayers(int players, Game game) {
+        for (; players > 0; players--) {
+            Player player = createHumanPlayer(game, game.getPlayers(), game.getKingdom());
+
+            game.getPlayers().put(player.getId().toString(), player);
+
+        }
+    }
+
+    void addSomeAiPlayers(int players, Game game) {
         for (; players > 0; players--) {
             Player player;
             if(players == 1) {

@@ -17,12 +17,12 @@ public class AiPlayer extends Player {
 
     @Override
     public void onStartOfBuyPhase() {
-
+        aiProvider.buyPhase(new AiGameFacade(getGame(), getCurrentTurn(), this));
     }
 
     @Override
     public void onChoice() {
-
+        aiProvider.choice(new AiGameFacade(getGame(), getCurrentTurn(), this));
     }
 
     public void setAiProvider(AiProvider aiProvider) {

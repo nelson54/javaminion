@@ -37,7 +37,7 @@ public class GameController {
     Game createGame(
             @RequestParam String cardSet
     ) throws InstantiationException, IllegalAccessException {
-        return gameProvider.createGameBySet(cardSet);
+        return gameProvider.createAiGameBySet(cardSet);
     }
 
     @RequestMapping(value = "/{gameId}/next-phase", method = RequestMethod.POST)

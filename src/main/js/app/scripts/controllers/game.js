@@ -45,10 +45,7 @@ angular.module('dominionFrontendApp')
         }
       }
 
-      var commonComparator = function(id1, id2){
-        var c1 = game.kingdom.cardMarket[id1][0];
-        var c2 = game.kingdom.cardMarket[id2][0];
-
+      $scope.commonComparator = function(c1, c2){
         if(c1.kingdomSortOrder == c2.kingdomSortOrder){
           return 0;
         } else if (c1.kingdomSortOrder > c2.kingdomSortOrder) {
@@ -58,33 +55,32 @@ angular.module('dominionFrontendApp')
         }
       };
 
-      var kingdomComparator = function(id1, id2){
-        var c1 = game.kingdom.cardMarket[id1][0];
-        var c2 = game.kingdom.cardMarket[id2][0];
-
-        if(c1.cost.money == c2.cost.money){
-          return 0;
-        } else if (c1.cost.money > c2.cost.money) {
+      $scope.kingdomComparator = function(c1, c2){
+        try {
+          if (c1.cost.money == c2.cost.money) {
+            return 0;
+          } else if (c1.cost.money > c2.cost.money) {
+            return 1;
+          } else {
+            return -1;
+          }
+        } catch(e) {
           return 1;
-        } else {
-          return -1;
         }
       };
 
       $scope.commonCards = [];
       Object.keys(game.kingdom.cardMarket)
           .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
-          .sort(commonComparator)
           .forEach(function(id){
-            kingdomCards[id] = game.kingdom.cardMarket[id];
+            $scope.commonCards.push(game.kingdom.cardMarket[id][0]);
           });
 
-      $scope.kingdomCards = {};
+      $scope.kingdomCards = [];
       Object.keys(game.kingdom.cardMarket)
           .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
-          .sort(kingdomComparator)
           .forEach(function(id){
-            kingdomCards[id] = game.kingdom.cardMarket[id];
+            $scope.kingdomCards.push(game.kingdom.cardMarket[id][0]);
           });
       //$scope.$digest();
       repeat();

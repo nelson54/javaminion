@@ -38,6 +38,15 @@ public class GameProvider {
         return game;
     }
 
+    public Game createAiGameBySet(String cardSet) throws IllegalAccessException, InstantiationException {
+        RecommendedCards rc = RecommendedCards.ofName(cardSet);
+
+        Game game = gameFactory.createAiGame(rc.getCards(), 2);
+        games.add(game.getId().toString());
+        gamesById.put(game.getId().toString(), game);
+        return game;
+    }
+
     public Set<String> listGames() {
         return games;
     }
