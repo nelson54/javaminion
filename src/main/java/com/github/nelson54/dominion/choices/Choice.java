@@ -79,6 +79,7 @@ public class Choice {
 
             complexCard.addChoice(player, game);
             player.getChoices().remove(this);
+            player.onChoice();
         }
 
         resolveIfComplete(turn);

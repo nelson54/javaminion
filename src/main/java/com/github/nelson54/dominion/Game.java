@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
-import com.github.nelson54.dominion.exceptions.InsufficientBuysException;
-import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
 import com.google.common.collect.Multimap;
 import org.joda.time.DateTime;
 
@@ -78,10 +75,10 @@ public class Game {
 
         if(!turn.hasActionsInHand()){
             turn.setPhase(BUY);
-            nextPlayer.onStartOfBuyPhase();
+            nextPlayer.onBuyPhase();
         } else {
             turn.setPhase(ACTION);
-            nextPlayer.onStartOfActionPhase();
+            nextPlayer.onActionPhase();
         }
 
         return nextPlayer;

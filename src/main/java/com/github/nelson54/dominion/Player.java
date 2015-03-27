@@ -173,11 +173,11 @@ public class Player {
         return allCards;
     }
 
-    public void onStartOfActionPhase(){
+    public void onActionPhase(){
 
     }
 
-    public void onStartOfBuyPhase(){
+    public void onBuyPhase(){
 
     }
 

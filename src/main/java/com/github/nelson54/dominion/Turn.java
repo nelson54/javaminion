@@ -69,7 +69,7 @@ public class Turn {
             case ACTION:
             default:
                 phase = BUY;
-                player.onStartOfBuyPhase();
+                player.onBuyPhase();
                 break;
         }
     }
@@ -91,6 +91,10 @@ public class Turn {
         player.getHand().remove(card);
         getPlay().add(card);
         card.apply(player, game);
+
+        if(player.getCurrentTurn().getPhase().equals(ACTION)){
+            player.onActionPhase();
+        }
     }
 
     public Card purchaseCardForPlayer(Card card, Player player)

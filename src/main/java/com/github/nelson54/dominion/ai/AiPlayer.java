@@ -11,12 +11,12 @@ public class AiPlayer extends Player {
     }
 
     @Override
-    public void onStartOfActionPhase() {
+    public void onActionPhase() {
         aiProvider.actionPhase(new AiGameFacade(getGame(), getCurrentTurn(), this));
     }
 
     @Override
-    public void onStartOfBuyPhase() {
+    public void onBuyPhase() {
         aiProvider.buyPhase(new AiGameFacade(getGame(), getCurrentTurn(), this));
     }
 
