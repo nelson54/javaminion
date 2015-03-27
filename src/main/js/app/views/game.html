@@ -10,10 +10,10 @@
 <div class="common-container" ng-if="hasCurrentPlayer()">
   <ul>
     <li ng-repeat="name in commonCards">
-      <button class="btn" ng-click="purchase(game.kingdom.cardMarket[name][0])" ng-disabled="!canAfford(game.kingdom.cardMarket[name][0]) || player.currentTurn.phase !== 'BUY'">
-        <img ng-src="{{getImagePath(game.kingdom.cardMarket[name][0])}}" />
+      <button class="btn" ng-click="purchase(pile[0])" ng-disabled="!canAfford(pile[0]) || player.currentTurn.phase !== 'BUY' || player.currentTurn.buyPool === 0">
+        <img ng-src="{{getImagePath(pile[0])}}" />
         <span class="name">{{name}}</span>
-        <span class="count" ng-bind="(game.kingdom.cardMarket[name]).length"></span>
+        <span class="count" ng-bind="pile.length"></span>
       </button>
     </li>
   </ul>
@@ -21,11 +21,11 @@
 
 <div class="kingdom-container" ng-if="hasCurrentPlayer()">
   <ul>
-    <li ng-repeat="name in kingdomCards">
-      <button class="btn" ng-click="purchase(game.kingdom.cardMarket[name][0])" ng-disabled="!canAfford(game.kingdom.cardMarket[name][0]) || player.currentTurn.phase !== 'BUY'">
-        <img ng-src="{{getImagePath(game.kingdom.cardMarket[name][0])}}" />
+    <li ng-repeat="(name, pile) in kingdomCards">
+      <button class="btn" ng-click="purchase(pile[0])" ng-disabled="!canAfford(pile[0]) || player.currentTurn.phase !== 'BUY' || player.currentTurn.buyPool === 0">
+        <img ng-src="{{getImagePath(pile[0])}}" />
         <span class="name">{{name}}</span>
-        <span class="count" ng-bind="(game.kingdom.cardMarket[name]).length"></span>
+        <span class="count" ng-bind="pile.length"></span>
       </button>
     </li>
   </ul>
@@ -67,6 +67,10 @@
       </ul>
       <div ng-if="!choice.required" class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="chooseDone(game, player, choice)">Done</button>
+      </div>
+      <div ng-if="YES_OR_NO" class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="choose(game, player, choice, true)">Yes</button>
+        <button type="button" class="btn btn-default" ng-click="choose(game, player, choice, false)">No</button>
       </div>
     </div>
   </div>
