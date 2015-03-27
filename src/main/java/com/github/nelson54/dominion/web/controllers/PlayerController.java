@@ -9,7 +9,7 @@ import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.web.GameProvider;
+import com.github.nelson54.dominion.GameProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -80,7 +80,7 @@ public class PlayerController {
         Game game = gameProvider.getGameByUuid(gameId);
         Player player = game.getPlayers().get(playerId);
 
-        game.getTurn().purchaseCardForPlayer(card, player, game);
+        game.getTurn().purchaseCardForPlayer(card, player);
 
         return game;
     }

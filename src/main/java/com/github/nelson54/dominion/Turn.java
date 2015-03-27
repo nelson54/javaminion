@@ -92,7 +92,7 @@ public class Turn {
         card.apply(player, game);
     }
 
-    public Card purchaseCardForPlayer(Card card, Player player, Game game)
+    public Card purchaseCardForPlayer(Card card, Player player)
             throws IncorrectPhaseException, InsufficientFundsException {
         if (!phase.equals(Phase.BUY) || !player.getId().equals(this.player.getId())) {
             throw new IncorrectPhaseException();
@@ -108,7 +108,7 @@ public class Turn {
 
         spendMoney(card.getCost().getMoney());
         buyPool--;
-        return game.giveCardToPlayer(card.getName(), player);
+        return getGame().giveCardToPlayer(card.getName(), player);
     }
 
     boolean canAffordCost(Player player, Cost cost) {

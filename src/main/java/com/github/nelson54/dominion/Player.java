@@ -40,7 +40,7 @@ public class Player {
     private
     Set<Choice> choices;
 
-    Player() {
+    public Player() {
         id = UUID.randomUUID();
         hand = new HashSet<>();
         deck = new LinkedHashSet<>();

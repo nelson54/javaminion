@@ -120,6 +120,10 @@ public class ChoiceResponse {
         return yesOrNo;
     }
 
+    public void setYes(boolean isYes){
+        this.yesOrNo = isYes;
+    }
+
     public int getChoiceStringNumber() {
         return choiceStringNumber;
     }

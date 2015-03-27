@@ -2,7 +2,7 @@ package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.cards.RecommendedCards;
-import com.github.nelson54.dominion.web.GameProvider;
+import com.github.nelson54.dominion.GameProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
