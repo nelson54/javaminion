@@ -69,6 +69,7 @@ public class Turn {
             case ACTION:
             default:
                 phase = BUY;
+                player.onStartOfBuyPhase();
                 break;
         }
     }

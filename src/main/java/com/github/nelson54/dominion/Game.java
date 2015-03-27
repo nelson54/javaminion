@@ -78,8 +78,10 @@ public class Game {
 
         if(!turn.hasActionsInHand()){
             turn.setPhase(BUY);
+            nextPlayer.onStartOfBuyPhase();
         } else {
             turn.setPhase(ACTION);
+            nextPlayer.onStartOfActionPhase();
         }
 
         return nextPlayer;
@@ -131,6 +133,7 @@ public class Game {
     public void addChoice(Choice choice) {
         turn.phase = Phase.WAITING_FOR_CHOICE;
         choice.getTarget().getChoices().add(choice);
+        choice.getTarget().onChoice();
     }
 
     public void endGame() {

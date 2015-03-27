@@ -18,27 +18,30 @@ public class AiGameFacade {
     private Player player;
     private Turn turn;
 
-    @Autowired
-    GameProvider gameProvider;
+    AiGameFacade (Game game, Turn turn, Player player){
+        this.game = game;
+        this.player = player;
+        this.turn = turn;
+    }
 
     Phase getPhase(String gameId, String playerId){
-        return getTurn(gameId, playerId).getPhase();
+        return turn.getPhase();
     }
 
     long getMoney(String gameId, String playerId){
-        return getTurn(gameId, playerId).getMoneyPool();
+        return turn.getMoneyPool();
     }
 
     long getActions(String gameId, String playerId){
-        return getTurn(gameId, playerId).getActionPool();
+        return turn.getActionPool();
     }
 
     long getBuys(String gameId, String playerId){
-        return getTurn(gameId, playerId).getBuyPool();
+        return turn.getBuyPool();
     }
 
     Kingdom getKingdom(String gameId){
-        return getGame(gameId).getKingdom();
+        return game.getKingdom();
     }
 
     Choice getChoice(){
@@ -62,17 +65,4 @@ public class AiGameFacade {
     void endPhase(){
         turn.endPhase();
     }
-
-    private Game getGame(String gameId){
-        return gameProvider.getGameByUuid(gameId);
-    }
-
-    private Player getPlayer(String gameId, String playerId){
-        return getGame(gameId).getPlayers().get(playerId);
-    }
-
-    private Turn getTurn(String gameId, String playerId){
-        return getPlayer(gameId, playerId).getCurrentTurn();
-    }
-
 }

@@ -1,12 +1,31 @@
 package com.github.nelson54.dominion.ai;
 
+import com.github.nelson54.dominion.Player;
 
-public abstract class AiPlayer {
+public class AiPlayer extends Player {
 
-    public abstract void actionPhase(AiGameFacade game);
+    AiProvider aiProvider;
 
-    public abstract void buyPhase(AiGameFacade game);
+    public AiPlayer() {
+        super();
+    }
 
-    public abstract void choice(AiGameFacade game);
+    @Override
+    public void onStartOfActionPhase() {
+        aiProvider.actionPhase(new AiGameFacade(getGame(), getCurrentTurn(), this));
+    }
 
+    @Override
+    public void onStartOfBuyPhase() {
+
+    }
+
+    @Override
+    public void onChoice() {
+
+    }
+
+    public void setAiProvider(AiProvider aiProvider) {
+        this.aiProvider = aiProvider;
+    }
 }

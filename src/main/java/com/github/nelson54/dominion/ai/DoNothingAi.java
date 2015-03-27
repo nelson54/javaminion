@@ -5,7 +5,7 @@ import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.choices.OptionType;
 
-public class DoNothingAi extends AiPlayer {
+public class DoNothingAi extends AiProvider {
     @Override
     public void actionPhase(AiGameFacade game) {
         game.endPhase();

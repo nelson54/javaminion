@@ -173,6 +173,22 @@ public class Player {
         return allCards;
     }
 
+    public void onStartOfActionPhase(){
+
+    }
+
+    public void onStartOfBuyPhase(){
+
+    }
+
+    public void onChoice(){
+
+    }
+
+    public void onEndOfTurn(){
+
+    }
+
     public UUID getId() {
         return id;
     }

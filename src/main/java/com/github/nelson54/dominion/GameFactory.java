@@ -1,5 +1,7 @@
 package com.github.nelson54.dominion;
 
+import com.github.nelson54.dominion.ai.AiPlayer;
+import com.github.nelson54.dominion.ai.AiProviders;
 import com.github.nelson54.dominion.cards.Card;
 
 import java.util.HashMap;
@@ -39,15 +41,33 @@ public class GameFactory {
 
     void addPlayers(int players, Game game) {
         for (; players > 0; players--) {
-            Player player = createPlayer(game, game.getPlayers(), game.getKingdom());
+            Player player;
+            if(players == 1) {
+                player = createHumanPlayer(game, game.getPlayers(), game.getKingdom());
+            } else {
+                player = createAiPlayer(game, game.getPlayers(), game.getKingdom());
+            }
 
             game.getPlayers().put(player.getId().toString(), player);
 
         }
     }
 
-    Player createPlayer(Game game, Map<String, Player> players, Kingdom kingdom) {
+    Player createHumanPlayer(Game game, Map<String, Player> players, Kingdom kingdom) {
         Player player = new Player();
+        player.setGame(game);
+        addStartingCardsToPlayer(player, kingdom, game);
+
+        game.getTurnOrder().add(player);
+
+        player.resetForNextTurn(null);
+
+        return player;
+    }
+
+    Player createAiPlayer(Game game, Map<String, Player> players, Kingdom kingdom) {
+        AiPlayer player = new AiPlayer();
+        player.setAiProvider(AiProviders.random());
         player.setGame(game);
         addStartingCardsToPlayer(player, kingdom, game);
 
