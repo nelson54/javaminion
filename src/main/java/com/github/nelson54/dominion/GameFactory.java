@@ -1,7 +1,7 @@
 package com.github.nelson54.dominion;
 
 import com.github.nelson54.dominion.ai.AiPlayer;
-import com.github.nelson54.dominion.ai.AiProviders;
+import com.github.nelson54.dominion.ai.AiStrategies;
 import com.github.nelson54.dominion.cards.Card;
 
 import java.util.HashMap;
@@ -89,7 +89,7 @@ public class GameFactory {
 
     Player createAiPlayer(Game game, Map<String, Player> players, Kingdom kingdom) {
         AiPlayer player = new AiPlayer();
-        player.setAiProvider(AiProviders.random());
+        player.setAiStrategy(AiStrategies.random());
         player.setGame(game);
         addStartingCardsToPlayer(player, kingdom, game);
 

@@ -1,7 +1,7 @@
 package com.github.nelson54.dominion.ai;
 
 
-public abstract class AiProvider {
+public abstract class AiStrategy {
 
     public abstract void actionPhase(AiGameFacade game);
 

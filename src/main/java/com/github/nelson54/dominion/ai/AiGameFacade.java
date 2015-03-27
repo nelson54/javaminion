@@ -24,23 +24,23 @@ public class AiGameFacade {
         this.turn = turn;
     }
 
-    Phase getPhase(String gameId, String playerId){
+    Phase getPhase(){
         return turn.getPhase();
     }
 
-    long getMoney(String gameId, String playerId){
+    long getMoney(){
         return turn.getMoneyPool();
     }
 
-    long getActions(String gameId, String playerId){
+    long getActions(){
         return turn.getActionPool();
     }
 
-    long getBuys(String gameId, String playerId){
+    long getBuys(){
         return turn.getBuyPool();
     }
 
-    Kingdom getKingdom(String gameId){
+    Kingdom getKingdom(){
         return game.getKingdom();
     }
 
