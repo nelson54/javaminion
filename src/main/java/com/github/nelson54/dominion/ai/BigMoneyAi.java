@@ -42,7 +42,12 @@ public class BigMoneyAi extends AiStrategy {
 
     @Override
     public void choice(AiGameFacade game) {
-        Choice choice = game.getChoice();
+        game.getChoice().ifPresent(
+                c->handleChoice(game, c)
+            );
+    }
+
+    private void handleChoice(AiGameFacade game, Choice choice) {
         ChoiceResponse choiceResponse = new ChoiceResponse();
         choiceResponse.setChoice(choice.getId().toString());
         choiceResponse.setSource(choice.getTarget());

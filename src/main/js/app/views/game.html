@@ -68,7 +68,7 @@
       <div ng-if="!choice.required" class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="chooseDone(game, player, choice)">Done</button>
       </div>
-      <div ng-if="YES_OR_NO" class="modal-footer">
+      <div ng-if="choice.expectedAnswerType == 'YES_OR_NO'" class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="choose(game, player, choice, true)">Yes</button>
         <button type="button" class="btn btn-default" ng-click="choose(game, player, choice, false)">No</button>
       </div>

@@ -20,9 +20,11 @@ public class ThiefEffect extends Effect {
             return false;
         } else if (trashedCard != null && response.isYes()) {
             trashedCard.setOwner(target);
-
+            game.getTrash().remove(trashedCard);
             target.getDiscard().add(trashedCard);
 
+            return true;
+        } else if(!response.isYes()) {
             return true;
         }
 

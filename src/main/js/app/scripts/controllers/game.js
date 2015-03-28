@@ -149,7 +149,7 @@ angular.module('dominionFrontendApp')
           choice.card = response;
           break;
         case 'YES_OR_NO':
-          choice.isYesOrNo = response;
+          choice.yes = response;
           break;
       }
       if(choose.expectedAnswerType == 'CARD') {

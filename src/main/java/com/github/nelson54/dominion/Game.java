@@ -202,7 +202,7 @@ public class Game {
 
     public void trashCard(Card card){
         Player player = card.getOwner();
-
+        player.getCurrentTurn().getPlay().remove(card);
         player.getDiscard().remove(card);
         player.getDeck().remove(card);
         player.getHand().remove(card);

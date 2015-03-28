@@ -45,7 +45,7 @@ public class Player {
         hand = new HashSet<>();
         deck = new LinkedHashSet<>();
         discard = new HashSet<>();
-        choices = new HashSet<>();
+        choices = new LinkedHashSet<>();
     }
 
     @JsonProperty

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Set;
 
 @Component
@@ -45,9 +46,12 @@ public class AiGameFacade {
         return game.getKingdom();
     }
 
-    Choice getChoice(){
+    Optional<Choice> getChoice(){
         Iterator<Choice> choices = player.getChoices().iterator();
-        return choices.next();
+        if(choices.hasNext()){
+            return Optional.of(choices.next());
+        }
+        return Optional.empty();
     }
 
     Set<Card> getAllCards(){
