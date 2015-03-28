@@ -19,7 +19,7 @@ public class BuyCardBuilder {
         return new BuyCardBuilder(parent);
     }
 
-    public BuyCardBuilder buy(String card){
+    public BuyCardBuilder pick(String card){
         if(currentDecision.isPresent()){
             throw new IllegalStateException();
         }
@@ -52,15 +52,17 @@ public class BuyCardBuilder {
     }
 
     public List<Card> matches(){
+        currentDecision.ifPresent(buyOptions::add);
         return buyOptions.stream()
                 .filter(b -> game.getKingdom().getCardMarket().containsKey(b.getObj()))
-                .filter(b -> b.getDecisions().stream().allMatch(t -> t) || b.getDecisions().size() == 0)
+                .filter(b -> b.getDecisions() == null || b.getDecisions().stream().allMatch(t -> t))
                 .map(b -> game.getKingdom().getCardMarket().get(b.getObj()).stream().findFirst().get())
                 .filter(game::canAffordCard)
                 .collect(Collectors.toList());
     }
 
     public Optional<Card> findFirstMatch(){
+
         return matches().stream()
                 .findFirst();
     }
@@ -68,5 +70,7 @@ public class BuyCardBuilder {
     private BuyCardBuilder(AiDecisionBuilder parent){
         this.parent = parent;
         this.game = parent.getFacade();
+        buyOptions = new ArrayList<>();
+        currentDecision = Optional.empty();
     }
 }

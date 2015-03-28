@@ -4,9 +4,13 @@ import com.github.nelson54.dominion.ai.decisions.AiDecisionBuilder;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
-import com.github.nelson54.dominion.choices.OptionType;
 
 import java.util.Optional;
+
+import static com.github.nelson54.dominion.ai.AiUtils.gainsToEndGame;
+import static com.github.nelson54.dominion.ai.AiUtils.getTotalMoney;
+import static com.github.nelson54.dominion.choices.OptionType.CARD;
+import static com.github.nelson54.dominion.choices.OptionType.YES_OR_NO;
 
 public class BigMoneyAi extends AiStrategy {
     @Override
@@ -16,17 +20,17 @@ public class BigMoneyAi extends AiStrategy {
 
     @Override
     public void buyPhase(AiGameFacade game) {
-        int gainsToEndGame = AiUtils.gainsToEndGame(game.getKingdom());
-        int totalMoney = AiUtils.getTotalMoney(game.getAllCards());
+        int gainsToEndGame = gainsToEndGame(game.getKingdom());
+        int totalMoney = getTotalMoney(game.getAllCards());
 
         Optional<Card> card = AiDecisionBuilder.start(game)
                 .buyPreferences()
-                .buy("Province").when(totalMoney > 18).or()
-                .buy("Duchy").when(gainsToEndGame <= 4).or()
-                .buy("Estate").when(gainsToEndGame <= 2).or()
-                .buy("Gold").or()
-                .buy("Duchy").when(gainsToEndGame <= 6).or()
-                .buy("Silver")
+                .pick("Province").when(totalMoney > 18).or()
+                .pick("Duchy").when(gainsToEndGame <= 4).or()
+                .pick("Estate").when(gainsToEndGame <= 2).or()
+                .pick("Gold").or()
+                .pick("Duchy").when(gainsToEndGame <= 6).or()
+                .pick("Silver")
                 .findFirstMatch();
 
         if(card.isPresent()){
@@ -45,9 +49,9 @@ public class BigMoneyAi extends AiStrategy {
 
         if(!choice.isRequired()){
             choiceResponse.setDone(true);
-        } else if (choice.getExpectedAnswerType().equals(OptionType.YES_OR_NO)){
+        } else if (choice.getExpectedAnswerType().equals(YES_OR_NO)){
             choiceResponse.setYes(false);
-        } else if (choice.getExpectedAnswerType().equals(OptionType.CARD)){
+        } else if (choice.getExpectedAnswerType().equals(CARD)){
             Card firstCard = choice.getCardOptions().stream().findFirst().get();
             choiceResponse.setCard(firstCard);
         }

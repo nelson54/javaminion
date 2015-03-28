@@ -113,7 +113,9 @@ public class Turn {
 
         spendMoney(card.getCost().getMoney());
         buyPool--;
-        return getGame().giveCardToPlayer(card.getName(), player);
+        Card bought = getGame().giveCardToPlayer(card.getName(), player);
+        player.onBuyPhase();
+        return bought;
     }
 
     public boolean canAffordCost(Cost cost) {
