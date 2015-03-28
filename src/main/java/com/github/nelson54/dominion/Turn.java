@@ -103,7 +103,7 @@ public class Turn {
             throw new IncorrectPhaseException();
         }
 
-        if (!canAffordCost(player, card.getCost())) {
+        if (!canAffordCost(card.getCost())) {
             throw new InsufficientFundsException();
         }
 
@@ -116,8 +116,12 @@ public class Turn {
         return getGame().giveCardToPlayer(card.getName(), player);
     }
 
-    boolean canAffordCost(Player player, Cost cost) {
+    public boolean canAffordCost(Cost cost) {
         return getMoney() >= cost.getMoney();
+    }
+
+    public boolean canAffordCard(Card card) {
+        return canAffordCost(card.getCost());
     }
 
     boolean hasActionsInHand(){
@@ -131,7 +135,7 @@ public class Turn {
         return player.getHand().stream()
                 .filter(card -> card instanceof TreasureCard)
                 .map(card -> (TreasureCard) card)
-                .mapToLong(card -> (int) card.getMoneyValue(player, game))
+                .mapToLong(card -> (int) card.getMoneyValue())
                 .sum() + moneyPool;
     }
 

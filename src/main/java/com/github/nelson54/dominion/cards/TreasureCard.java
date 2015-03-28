@@ -1,9 +1,5 @@
 package com.github.nelson54.dominion.cards;
 
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Player;
-
-
 public abstract class TreasureCard extends Card {
 
     byte moneyCost;
@@ -15,7 +11,7 @@ public abstract class TreasureCard extends Card {
         cardTypes.add(CardType.TREASURE);
     }
 
-    public byte getMoneyValue(Player player, Game game) {
+    public byte getMoneyValue() {
         return moneyValue;
     }
 

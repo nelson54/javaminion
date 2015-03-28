@@ -3,13 +3,14 @@ package com.github.nelson54.dominion.ai;
 import com.github.nelson54.dominion.*;
 import com.github.nelson54.dominion.cards.ActionCard;
 import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 @Component
 public class AiGameFacade {
@@ -40,7 +41,7 @@ public class AiGameFacade {
         return turn.getBuyPool();
     }
 
-    Kingdom getKingdom(){
+    public Kingdom getKingdom(){
         return game.getKingdom();
     }
 
@@ -49,17 +50,33 @@ public class AiGameFacade {
         return choices.next();
     }
 
-    void play(ActionCard card){
+    Set<Card> getAllCards(){
+        return new HashSet(player.getAllCards().values());
+    }
+
+    public void play(ActionCard card){
         turn.playCard(card, player, game);
     }
 
-    void buy(Card card){
+    public void buy(Card card){
         turn.purchaseCardForPlayer(card, player);
     }
 
     void respond(ChoiceResponse choiceResponse){
         game.getChoiceById(choiceResponse.getChoice())
                 .ifPresent(choice -> choice.apply(choiceResponse, turn));
+    }
+
+    public boolean canAffordCost(Cost cost){
+        return turn.canAffordCost(cost);
+    }
+
+    public boolean canAffordCard(Card card){
+        return canAffordCost(card.getCost());
+    }
+
+    boolean buyCardIf(String cardName, boolean... conditions){
+        return true;
     }
 
     void endPhase(){
