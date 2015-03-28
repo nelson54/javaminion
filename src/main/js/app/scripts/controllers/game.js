@@ -73,14 +73,20 @@ angular.module('dominionFrontendApp')
       Object.keys(game.kingdom.cardMarket)
           .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
           .forEach(function(id){
-            $scope.commonCards.push(game.kingdom.cardMarket[id][0]);
+          var stack = game.kingdom.cardMarket[id],
+            card = stack[0];
+          card.remaining = stack.length;
+          $scope.commonCards.push(card);
           });
 
       $scope.kingdomCards = [];
       Object.keys(game.kingdom.cardMarket)
           .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
           .forEach(function(id){
-            $scope.kingdomCards.push(game.kingdom.cardMarket[id][0]);
+            var stack = game.kingdom.cardMarket[id],
+              card = stack[0];
+            card.remaining = stack.length;
+            $scope.kingdomCards.push(card);
           });
       //$scope.$digest();
       repeat();
@@ -201,6 +207,11 @@ angular.module('dominionFrontendApp')
           .map(function(i){play[i].id})
           .indexOf(card.id) < 0;
     };
+
+    $scope.numberOfCardsInKingdom = function(name){
+      return game.kingdom.cardMarket[name].length;
+    };
+
 
     var reload = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId');

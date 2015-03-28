@@ -13,7 +13,7 @@
       <button class="btn" ng-click="purchase(card)" ng-disabled="!canAfford(card) || player.currentTurn.phase !== 'BUY' || player.currentTurn.buyPool === 0">
         <img ng-src="{{getImagePath(card)}}" />
         <span class="name">{{card.name}}</span>
-        <span class="count" ng-bind="pile"></span>
+        <span class="count" ng-bind="card.remaining"></span>
       </button>
     </li>
   </ul>
@@ -25,7 +25,7 @@
       <button class="btn" ng-click="purchase(card)" ng-disabled="!canAfford(card) || player.currentTurn.phase !== 'BUY' || player.currentTurn.buyPool === 0">
         <img ng-src="{{getImagePath(card)}}" />
         <span class="name">{{name}}</span>
-        <span class="count" ng-bind="pile"></span>
+        <span class="count" ng-bind="card.remaining"></span>
       </button>
     </li>
   </ul>
