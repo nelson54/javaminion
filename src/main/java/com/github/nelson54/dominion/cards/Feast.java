@@ -30,6 +30,7 @@ public class Feast extends ComplexActionCard {
     Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();
         choice.setGame(game);
+        choice.setMessage("Choose a card to gain.");
         choice.setExpectedAnswerType(OptionType.CARD);
         choice.setRequired(false);
         choice.setNumber((byte) 1);

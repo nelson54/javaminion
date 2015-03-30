@@ -30,6 +30,9 @@ public class ThroneRoom extends ComplexActionCard {
 
         Set<Card> options = getOptions(target.getHand());
         options.remove(this);
+
+        choice.setMessage("Choose a card to play twice.");
+
         if(options.isEmpty()){
             throw new NoValidChoiceException();
         }

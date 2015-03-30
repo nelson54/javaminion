@@ -41,10 +41,13 @@ public class Mine extends ComplexActionCard {
         choice.setExpectedAnswerType(OptionType.CARD);
 
         if (choice.getState() == CardState.TRASHING_CARD) {
+            choice.setMessage("Choose a card to trash.");
+
             choice.setCardOptions(
                     getTrashOptions(target.getHand())
             );
         } else if (parent != null && choice.getState() == CardState.GAINING_CARD) {
+            choice.setMessage("Choose a card to gain.");
             ChoiceResponse response = parent.getResponse();
 
             choice.setCardOptions(

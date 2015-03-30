@@ -28,7 +28,7 @@ public class Cellar extends ComplexActionCard {
     Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();
         Set<Card> options;
-
+        choice.setMessage("Choose any number of cards to discard.");
         if(parent == null){
             options = new HashSet<>();
             options.addAll(target.getHand());
