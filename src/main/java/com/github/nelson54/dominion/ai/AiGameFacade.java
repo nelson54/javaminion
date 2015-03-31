@@ -26,6 +26,10 @@ public class AiGameFacade {
         this.turn = turn;
     }
 
+    Set<Card> getHand(){
+        return player.getHand();
+    }
+
     Phase getPhase(){
         return turn.getPhase();
     }

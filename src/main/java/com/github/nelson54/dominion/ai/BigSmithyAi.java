@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.ai;
 
 import com.github.nelson54.dominion.ai.decisions.AiDecisionBuilder;
+import com.github.nelson54.dominion.cards.ActionCard;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
@@ -15,7 +16,17 @@ import static com.github.nelson54.dominion.choices.OptionType.YES_OR_NO;
 public class BigSmithyAi extends AiStrategy {
     @Override
     public void actionPhase(AiGameFacade game) {
-        game.endPhase();
+        Optional<ActionCard> smithy = game.getHand().stream()
+                .filter(c->c.getName().equals("Smithy"))
+                .filter(c->c instanceof ActionCard)
+                .map(c-> (ActionCard)c)
+                .findFirst();
+
+        if(smithy.isPresent() && game.getActions() > 0){
+            game.play(smithy.get());
+        } else {
+            game.endPhase();
+        }
     }
 
     @Override
@@ -26,12 +37,11 @@ public class BigSmithyAi extends AiStrategy {
 
         Optional<Card> card = AiDecisionBuilder.start(game)
                 .buyPreferences()
-                .pick("Province").when(provincesInSupply <= 6).or()
+                .pick("Province").when(0 < provincesInSupply, provincesInSupply <= 6).or()
                 .pick("Duchy").when(gainsToEndGame <= 5).or()
                 .pick("Estate").when(gainsToEndGame <= 2).or()
                 .pick("Gold").or()
-                .pick("Smithy").when(smithysInDeck < 2, game.getAllMyCards().size() >= 16).or()
-                .pick("Smithy").when(smithysInDeck < 1).or()
+                .pick("Smithy").when(smithysInDeck < 3, game.getAllMyCards().size() >= 16).or()
                 .pick("Silver").or()
                 .pick("Copper").when(gainsToEndGame <= 3)
                 .findFirstMatch();
