@@ -37,7 +37,7 @@ public class BigSmithyAi extends AiStrategy {
 
         Optional<Card> card = AiDecisionBuilder.start(game)
                 .buyPreferences()
-                .pick("Province").when(0 < provincesInSupply, provincesInSupply <= 6).or()
+                .pick("Province").when(provincesInSupply <= 6).or()
                 .pick("Duchy").when(gainsToEndGame <= 5).or()
                 .pick("Estate").when(gainsToEndGame <= 2).or()
                 .pick("Gold").or()

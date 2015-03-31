@@ -37,10 +37,10 @@ public class AiSimulator {
         DateTime end;
         while ( completed < timesToRun ){
             if(game == null){
-                game = gameFactory.createTwoPlayerAiGame(ai1, ai2, RecommendedCards.BIG_MONEY.getCards());
+                game = gameFactory.createTwoPlayerAiGame(ai1, ai2, RecommendedCards.FIRST_GAME.getCards());
             } else if (game.getTurn().getPhase().equals(Phase.END_OF_GAME)){
                 completed++;
-                game = gameFactory.createTwoPlayerAiGame(ai1, ai2, RecommendedCards.BIG_MONEY.getCards());
+                game = gameFactory.createTwoPlayerAiGame(ai1, ai2, RecommendedCards.FIRST_GAME.getCards());
 
                 List<Player> players = new ArrayList<>(game.getPlayers().values());
 
