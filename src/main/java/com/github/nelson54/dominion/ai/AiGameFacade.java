@@ -54,7 +54,7 @@ public class AiGameFacade {
         return Optional.empty();
     }
 
-    Set<Card> getAllCards(){
+    Set<Card> getAllMyCards(){
         return new HashSet(player.getAllCards().values());
     }
 

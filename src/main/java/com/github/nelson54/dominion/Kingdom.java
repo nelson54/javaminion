@@ -23,7 +23,7 @@ public class Kingdom {
         return cardMarket.get(name);
     }
 
-    public long getNumberOfRemainingCardsByName(String name) {
+    public int getNumberOfRemainingCardsByName(String name) {
         if (!cardMarket.containsKey(name))
             return 0;
         else

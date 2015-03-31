@@ -8,11 +8,11 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 import java.util.Optional;
 
 import static com.github.nelson54.dominion.ai.AiUtils.gainsToEndGame;
-import static com.github.nelson54.dominion.ai.AiUtils.getTotalMoney;
+import static com.github.nelson54.dominion.ai.AiUtils.numberOfCardsByName;
 import static com.github.nelson54.dominion.choices.OptionType.CARD;
 import static com.github.nelson54.dominion.choices.OptionType.YES_OR_NO;
 
-public class BigMoneyAi extends AiStrategy {
+public class BigSmithyAi extends AiStrategy {
     @Override
     public void actionPhase(AiGameFacade game) {
         game.endPhase();
@@ -20,17 +20,20 @@ public class BigMoneyAi extends AiStrategy {
 
     @Override
     public void buyPhase(AiGameFacade game) {
+        int provincesInSupply = game.getKingdom().getNumberOfRemainingCardsByName("Province");
         int gainsToEndGame = gainsToEndGame(game.getKingdom());
-        int totalMoney = getTotalMoney(game.getAllMyCards());
+        int smithysInDeck = numberOfCardsByName(game.getAllMyCards(), "Smithy");
 
         Optional<Card> card = AiDecisionBuilder.start(game)
                 .buyPreferences()
-                .pick("Province").when(totalMoney > 18).or()
-                .pick("Duchy").when(gainsToEndGame <= 4).or()
+                .pick("Province").when(provincesInSupply <= 6).or()
+                .pick("Duchy").when(gainsToEndGame <= 5).or()
                 .pick("Estate").when(gainsToEndGame <= 2).or()
                 .pick("Gold").or()
-                .pick("Duchy").when(gainsToEndGame <= 6).or()
-                .pick("Silver")
+                .pick("Smithy").when(smithysInDeck < 2, game.getAllMyCards().size() >= 16).or()
+                .pick("Smithy").when(smithysInDeck < 1).or()
+                .pick("Silver").or()
+                .pick("Copper").when(gainsToEndGame <= 3)
                 .findFirstMatch();
 
         if(card.isPresent() && game.getBuys() > 0){

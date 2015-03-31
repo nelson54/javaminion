@@ -27,5 +27,11 @@ public class AiUtils {
                 .sum();
     }
 
+    static int numberOfCardsByName(Set<Card> cards, String name){
+        return (int) cards.stream()
+                .filter(c -> c.getName().equals(name))
+                .count();
+    }
+
 
 }

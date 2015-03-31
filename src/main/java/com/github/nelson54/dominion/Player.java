@@ -16,6 +16,9 @@ public class Player {
     private
     UUID id;
 
+    private
+    String name;
+
     @JsonProperty
     private
     Set<Card> hand;
@@ -265,5 +268,13 @@ public class Player {
 
     public void setChoices(Set<Choice> choices) {
         this.choices = choices;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum AiStrategies {
 
     //DO_NOTHING_AI(new DoNothingAi()),
-    BIG_MONEY(new BigMoneyAi());
+    BIG_MONEY(new BigMoneyAi()),
+    BIG_SMITHY(new BigSmithyAi());
 
     AiStrategy aiStrategy;
 
