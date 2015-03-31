@@ -3,6 +3,8 @@ package com.github.nelson54.dominion;
 import com.github.nelson54.dominion.ai.AiStrategies;
 import com.github.nelson54.dominion.ai.AiStrategy;
 import com.github.nelson54.dominion.cards.RecommendedCards;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ public class AiSimulator {
     GameFactory gameFactory;
 
     int timeout = 60*60*5;
-    int timesToRun = 10;
+    int timesToRun = 1000;
     int completed = 0;
     int p1Wins = 0;
     int p2Wins = 0;
@@ -31,7 +33,8 @@ public class AiSimulator {
 
     private void exec(AiStrategy ai1, AiStrategy ai2) throws IllegalAccessException, InstantiationException {
         Game game =  null;
-
+        DateTime start = DateTime.now();
+        DateTime end;
         while ( completed < timesToRun ){
             if(game == null){
                 game = gameFactory.createTwoPlayerAiGame(ai1, ai2, RecommendedCards.BIG_MONEY.getCards());
@@ -53,7 +56,7 @@ public class AiSimulator {
                 }
 
 
-                System.out.println(firstPlayer.getName()+" wins.");
+                //System.out.println(firstPlayer.getName()+" wins.");
 
                 if(firstPlayer.getVictoryPoints() > secondPlayer.getVictoryPoints()){
                     p1Wins++;
@@ -62,13 +65,13 @@ public class AiSimulator {
                 }
             }
         }
+        end = DateTime.now();
 
-        System.out.println("Ai 1 finished with " + p1Wins + " wins.");
-        System.out.println("Ai 2 finished with " + p2Wins + " wins.");
-    }
+        Duration duration = Duration.millis(end.getMillis() - start.getMillis());
 
-    private void play(Game game){
-
+        System.out.println("Ran " + timesToRun+ " simulations in " +duration.toString());
+        System.out.println( ai1.getClass().toString() + " finished with " + p1Wins +"/"+timesToRun+ " wins.");
+        System.out.println( ai2.getClass().toString() + " finished with " + p2Wins +"/"+timesToRun+ " wins.");
     }
 
     GameFactory getGameFactory() {
