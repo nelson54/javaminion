@@ -55,9 +55,6 @@ public class AiSimulator {
                     secondPlayer = players.get(0);
                 }
 
-
-                //System.out.println(firstPlayer.getName()+" wins.");
-
                 if(firstPlayer.getVictoryPoints() > secondPlayer.getVictoryPoints()){
                     p1Wins++;
                 } else {

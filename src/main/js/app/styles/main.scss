@@ -137,6 +137,17 @@ body {
   }
 }
 
+.play-container {
+  img {
+    height: 75px;
+  }
+
+  li {
+    display:inline-block;
+    list-style:none;
+  }
+}
+
 .modal {
   display:block;
 }

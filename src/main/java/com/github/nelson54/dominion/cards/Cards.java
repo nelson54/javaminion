@@ -23,4 +23,11 @@ class Cards {
         return cardsInHand;
     }
 
+    public static Set<String> getIds(Collection<Card> cards){
+        return cards.stream()
+                .map(Card::getId)
+                .collect(Collectors.toSet());
+    }
+
+    //public static Set<Card> matches(Predicate<>)
 }

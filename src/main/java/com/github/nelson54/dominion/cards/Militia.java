@@ -35,6 +35,11 @@ public class Militia extends ComplexActionAttackCard {
         if(parent == null){
             options = new HashSet<>();
             options.addAll(target.getHand());
+
+            choice.getOptions().addAll(
+                    Cards.getIds(options)
+            );
+
         } else {
             options = parent.getCardOptions();
 
@@ -46,6 +51,7 @@ public class Militia extends ComplexActionAttackCard {
         choice.setCardOptions(options);
 
         choice.setExpectedAnswerType(OptionType.CARD);
+        choice.setIsDialog(false);
         choice.setRequired(true);
         choice.setNumber((byte)3);
 

@@ -137,6 +137,16 @@ angular.module('dominionFrontendApp')
       endPhase.$save({gameId : game.id},updateData);
     };
 
+    $scope.selectCard = function(card){
+      if(turn.phase === "ACTION"){
+        $scope.playCard(card);
+      } else if (turn.phase === "WAITING_FOR_CHOICE"){
+        $scope.choose(game, player, choice, card);
+      } else if (turn.phase === "BUY"){
+        $scope.purchase(card)
+      }
+    };
+
     $scope.choose = function(game, player, choose, response){
       var Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice');
 
@@ -210,6 +220,10 @@ angular.module('dominionFrontendApp')
 
     $scope.numberOfCardsInKingdom = function(name){
       return game.kingdom.cardMarket[name].length;
+    };
+
+    $scope.isOption = function(id){
+      return choice && choice.options && choice.options.indexOf(id) >= 0
     };
 
 

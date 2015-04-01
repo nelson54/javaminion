@@ -10,7 +10,7 @@
 <div class="common-container" ng-if="hasCurrentPlayer()">
   <ul>
     <li ng-repeat="card in commonCards | orderBy : 'kingdomSortOrder'">
-      <button class="btn" ng-click="purchase(card)" ng-disabled="!canAfford(card) || player.currentTurn.phase !== 'BUY' || player.currentTurn.buyPool === 0">
+      <button class="btn" ng-disabled="!(isOption(card.id) || player.currentTurn.phase === 'BUY' && player.currentTurn.buyPool > 0 && canAfford(card))" ng-class="{'btn-success': isOption(card.id)}" ng-click="selectCard(card)">
         <img ng-src="{{getImagePath(card)}}" />
         <span class="name">{{card.name}}</span>
         <span class="count" ng-bind="card.remaining"></span>
@@ -22,7 +22,7 @@
 <div class="kingdom-container" ng-if="hasCurrentPlayer()">
   <ul>
     <li ng-repeat="card in kingdomCards | orderBy : 'cost.money'">
-      <button class="btn" ng-click="purchase(card)" ng-disabled="!canAfford(card) || player.currentTurn.phase !== 'BUY' || player.currentTurn.buyPool === 0">
+      <button class="btn" ng-disabled="!(isOption(card.id) || player.currentTurn.phase === 'BUY' && player.currentTurn.buyPool > 0 && canAfford(card))" ng-class="{'btn-success': isOption(card.id)}" ng-click="selectCard(card)">
         <img ng-src="{{getImagePath(card)}}" />
         <span class="name">{{name}}</span>
         <span class="count" ng-bind="card.remaining"></span>
@@ -48,12 +48,15 @@
     <button ng-click="discardHand()">Discard Hand</button>
   </p>
   <p>
-    <button ng-if="turn.phase != 'BUY' && turn.phase != 'WAITING_FOR_OPPONENT'" ng-disable="turn.phase != 'ACTION'" ng-click="nextPhase()">Next Phase</button>
-    <button ng-if="turn.phase == 'BUY'" ng-click="nextPhase()">End Turn</button>
+    <button ng-if="turn.phase != 'BUY' && turn.phase != 'WAITING_FOR_OPPONENT' && turn.phase != 'WAITING_FOR_CHOICE'" type="button" class="btn btn-default" ng-disable="turn.phase != 'ACTION'" ng-click="nextPhase()">Next Phase</button>
+    <button ng-if="turn.phase == 'BUY'" ng-click="nextPhase()" type="button" class="btn btn-default">End Turn</button>
+    <button ng-if="choice && !choice.dialog" ng-enable="!choice.required" type="button" class="btn btn-default" ng-click="chooseDone(game, player, choice)">
+      Done
+    </button>
   </p>
 </div>
 
-<div class="modal choice-box" ng-if="choice && hasCurrentPlayer()">
+<div class="modal choice-box" ng-if="choice && hasCurrentPlayer() && choice.dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -96,7 +99,9 @@
   <h3>Play ({{play.length}})</h3>
   <ul>
     <li ng-repeat="card in play">
-      <button>{{card.name}}</button>
+      <button ng-if="isCardInPlay(card)" class="btn" ng-disabled="true" ng-class="{'btn-success': isOption(card.id)}" ng-click="selectCard(card)">
+        <img ng-src="{{getImagePath(card)}}" />
+      </button>
     </li>
   </ul>
 </div>
@@ -106,7 +111,7 @@
     <h3>Hand ({{hand.length}})</h3>
     <ul>
       <li ng-repeat="card in hand">
-        <button ng-if="isCardInPlay(card)" ng-disabled="" ng-click="playCard(card)">
+        <button ng-if="isCardInPlay(card)" ng-disabled="" class="btn" ng-class="{'btn-success': isOption(card.id)}" ng-click="selectCard(card)">
           <img ng-src="{{getImagePath(card)}}" />
         </button>
       </li>
@@ -115,14 +120,14 @@
 
   <div class="cards-container">
     <div class="deck-container">
-      <button>
+      <button class="btn">
         <img ng-src="/images/card-back.jpg" />
         <span class="count">{{deck.length}}</span>
       </button>
     </div>
 
     <div class="discard-container">
-      <button>
+      <button class="btn">
         <img ng-src="{{getImagePath(discard[discard.length-1])}}" />
         <span class="count">{{discard.length}}</span>
       </button>

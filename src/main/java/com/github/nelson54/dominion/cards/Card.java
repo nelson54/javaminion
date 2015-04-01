@@ -17,7 +17,7 @@ public class Card {
     Set<CardType> cardTypes;
     @JsonProperty
     private
-    UUID id;
+    String id;
     @JsonIgnore
     private
     Player owner;
@@ -31,15 +31,15 @@ public class Card {
     int kingdomSortOrder = 0;
 
     Card() {
-        id = UUID.randomUUID();
+        id = UUID.randomUUID().toString();
         cardTypes = new HashSet<>();
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

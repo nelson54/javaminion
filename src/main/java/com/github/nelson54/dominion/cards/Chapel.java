@@ -28,8 +28,13 @@ public class Chapel extends ComplexActionCard {
         Choice parent = choice.getParentChoice();
         Set<Card> options = new HashSet<>();
         choice.setGame(game);
+        choice.setIsDialog(false);
         choice.setMessage("Choose up to 4 cards to trash.");
         options.addAll(Cards.cardsRemainingInHand(target));
+
+        choice.getOptions().addAll(
+                Cards.getIds(options)
+        );
 
         choice.setExpectedAnswerType(OptionType.CARD);
         choice.setCardOptions(options);

@@ -29,14 +29,20 @@ public class Feast extends ComplexActionCard {
     @Override
     Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();
+
         choice.setGame(game);
         choice.setMessage("Choose a card to gain.");
         choice.setExpectedAnswerType(OptionType.CARD);
+
+        choice.setCardOptions(getOptions(target, game));
+        choice.getOptions().addAll(Cards.getIds(choice.getCardOptions()));
+
+        choice.setComplete(false);
+        choice.setIsDialog(false);
         choice.setRequired(false);
         choice.setNumber((byte) 1);
+
         choice.setRange(Range.EXACTLY);
-        choice.setCardOptions(getOptions(target, game));
-        choice.setComplete(false);
 
         return choice;
     }

@@ -29,7 +29,8 @@ public class ThroneRoom extends ComplexActionCard {
     Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException {
 
         Set<Card> options = getOptions(target.getHand());
-        options.remove(this);
+        choice.setCardOptions(options);
+        choice.setOptions(Cards.getIds(options));
 
         choice.setMessage("Choose a card to play twice.");
 
@@ -37,10 +38,10 @@ public class ThroneRoom extends ComplexActionCard {
             throw new NoValidChoiceException();
         }
 
-        choice.setCardOptions(options);
         choice.setExpectedAnswerType(OptionType.CARD);
         choice.setRequired(false);
         choice.setNumber((byte) 1);
+        choice.setIsDialog(false);
         choice.setRange(Range.EXACTLY);
 
         return choice;

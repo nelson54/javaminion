@@ -41,9 +41,9 @@ public class BigSmithyAi extends AiStrategy {
                 .pick("Duchy").when(gainsToEndGame <= 5).or()
                 .pick("Estate").when(gainsToEndGame <= 2).or()
                 .pick("Gold").or()
-                .pick("Smithy").when(smithysInDeck < 3, game.getAllMyCards().size() >= 16).or()
+                .pick("Smithy").when(smithysInDeck < 2, game.getAllMyCards().size() >= 16).or()
                 .pick("Silver").or()
-                .pick("Copper").when(gainsToEndGame <= 3)
+                //.pick("Copper").when(gainsToEndGame <= 3)
                 .findFirstMatch();
 
         if(card.isPresent() && game.getBuys() > 0){

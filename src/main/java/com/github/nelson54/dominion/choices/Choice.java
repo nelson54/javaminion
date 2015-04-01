@@ -10,6 +10,7 @@ import com.github.nelson54.dominion.cards.CardState;
 import com.github.nelson54.dominion.cards.ComplexActionCard;
 import com.github.nelson54.dominion.effects.Effect;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,8 +27,11 @@ public class Choice {
     Card displayCard;
     String message;
 
+    Set<String> options;
+
     boolean isComplete;
     boolean isRequired;
+    boolean isDialog;
 
     Set<String> textOptions;
     Set<Card> cardOptions;
@@ -51,6 +55,9 @@ public class Choice {
         this.target = target;
         this.source = source;
         this.owner = source.getOwner();
+        this.options = new HashSet<>();
+        //TODO isDialog should not be true
+        this.setIsDialog(true);
     }
 
     public void bind(Effect effect){
@@ -114,10 +121,11 @@ public class Choice {
         this.textOptions = textOptions;
     }
 
+    @Deprecated
     public Set<Card> getCardOptions() {
         return cardOptions;
     }
-
+    @Deprecated
     public void setCardOptions(Set<Card> cardOptions) {
         this.cardOptions = cardOptions;
     }
@@ -240,5 +248,21 @@ public class Choice {
 
     public void setState(CardState state) {
         this.state = state;
+    }
+
+    public Set<String> getOptions() {
+        return options;
+    }
+
+    public void setOptions(Set<String> options) {
+        this.options = options;
+    }
+
+    public boolean isDialog() {
+        return isDialog;
+    }
+
+    public void setIsDialog(boolean isDialog) {
+        this.isDialog = isDialog;
     }
 }
