@@ -21,7 +21,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'js-data'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -88,6 +89,12 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .factory('GameData', function(DS){
+    return DS.defineResource('dominion');
+  })
+  .config(function (DSProvider) {
+    DSProvider.defaults.basePath = baseUrl; // etc.
   })
   .config(['$resourceProvider', function($resourceProvider) {
     // Don't strip trailing slashes from calculated URLs

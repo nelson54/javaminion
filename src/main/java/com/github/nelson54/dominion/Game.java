@@ -223,4 +223,42 @@ public class Game {
     public Set<Card> getTrash() {
         return trash;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Game)) return false;
+
+        Game game = (Game) o;
+
+        if (gameOver != game.gameOver) return false;
+        if (lastModified != game.lastModified) return false;
+        if (!allCards.equals(game.allCards)) return false;
+        if (!id.equals(game.id)) return false;
+        if (!kingdom.equals(game.kingdom)) return false;
+        if (!pastTurns.equals(game.pastTurns)) return false;
+        if (!players.equals(game.players)) return false;
+        if (!trash.equals(game.trash)) return false;
+        if (!turn.equals(game.turn)) return false;
+        if (!turnOrder.equals(game.turnOrder)) return false;
+        if (!turnerator.equals(game.turnerator)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (lastModified ^ (lastModified >>> 32));
+        result = 31 * result + id.hashCode();
+        result = 31 * result + kingdom.hashCode();
+        result = 31 * result + turnOrder.hashCode();
+        result = 31 * result + allCards.hashCode();
+        result = 31 * result + pastTurns.hashCode();
+        result = 31 * result + trash.hashCode();
+        result = 31 * result + turnerator.hashCode();
+        result = 31 * result + players.hashCode();
+        result = 31 * result + (gameOver ? 1 : 0);
+        result = 31 * result + turn.hashCode();
+        return result;
+    }
 }

@@ -6,16 +6,22 @@ import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.KingdomFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 
 @EnableAutoConfiguration
 @ComponentScan("com.github.nelson54.dominion.web")
-public class Application {
+public class Application extends WebMvcConfigurerAdapter {
+
+    @Autowired
+    EtagHandlerInterceptorAdapter etagHandlerInterceptorAdapter;
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
@@ -44,8 +50,8 @@ public class Application {
         return objectMapper;
     }
 
-    @Bean
-    public ShallowEtagHeaderFilter getEtagFilter() {
-        return new ShallowEtagHeaderFilter();
+    @Override
+    public void addInterceptors(InterceptorRegistry registry){
+        registry.addInterceptor(etagHandlerInterceptorAdapter);
     }
 }

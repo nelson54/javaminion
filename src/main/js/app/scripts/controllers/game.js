@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dominionFrontendApp')
-  .controller('GameCtrl', function ($scope, $http, $resource, $route, $timeout, game, playerId, baseUrl) {
+  .controller('GameCtrl', function ($scope, $http, $resource, $route, $timeout, GameData, game, playerId, baseUrl) {
 
     var gameId = game.id,
       players,
@@ -229,10 +229,13 @@ angular.module('dominionFrontendApp')
 
     var reload = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId');
-
-      Game.get({gameId : gameId}, function(response){
+      GameData.find(gameId, { bypassCache: true })
+        .then(function(response){
+          updateData(response, playerId)
+        });
+      /*Game.get({gameId : gameId}, function(response){
         updateData(response, playerId);
-      });
+      });*/
     };
 
     updateData(game);
