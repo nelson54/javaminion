@@ -50,7 +50,7 @@ public class Remodel extends ComplexActionCard {
                     getGainOptions(game, lastChoice.getCost().getMoney())
             );
 
-            choice.setOptions(Cards.getIds(target.getHand()));
+            choice.setOptions(Cards.getIds(choice.getCardOptions()));
         }
 
         return choice;
