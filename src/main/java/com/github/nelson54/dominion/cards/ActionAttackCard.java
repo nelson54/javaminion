@@ -4,6 +4,7 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public abstract class ActionAttackCard extends ActionCard {
 
@@ -13,7 +14,11 @@ public abstract class ActionAttackCard extends ActionCard {
     }
 
     public void apply(Player player, Game game) {
-        Set<Player> others = getOtherPlayers(player, game);
+        Set<Player> others = getOtherPlayers(player, game).stream()
+                .filter(p -> p.getHand().stream().filter(c-> !c.getName().equals("Moat")).findFirst().isPresent())
+                .collect(Collectors.toSet());
+
+
         bonus(player, game);
         others.stream().forEach(other -> attack(other, game));
     }
