@@ -12,37 +12,37 @@ import com.github.nelson54.dominion.exceptions.*;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static com.github.nelson54.dominion.Phase.ACTION;
 import static com.github.nelson54.dominion.Phase.BUY;
+import static com.github.nelson54.dominion.Phase.WAITING_FOR_OPPONENT;
 
 public class Turn {
 
     @JsonProperty
     Phase phase;
+
     @JsonBackReference
-    private
     Game game;
+
     @JsonIgnore
-    private
     Player player;
 
     @JsonIgnore
-    private
     Set<Choice> resolvedChoices;
 
     @JsonProperty
-    private
     List<Card> play;
 
     Multimap<String, Card> revealed;
 
-    private long actionPool;
-    private long moneyPool;
-    private long buyPool;
+    long actionPool;
+    long moneyPool;
+    long buyPool;
 
     private String playerId;
 
@@ -50,6 +50,20 @@ public class Turn {
         revealed = ArrayListMultimap.create();
 
         resolvedChoices = new HashSet<>();
+    }
+
+    static Turn create(Player player){
+        Turn turn = new Turn();
+        turn.setPlayerId(player.getId().toString());
+        turn.setGame(player.getGame());
+        turn.setBuyPool(1);
+        turn.setActionPool(1);
+        turn.setMoneyPool(0);
+        turn.setPhase(WAITING_FOR_OPPONENT);
+        turn.setPlay(new ArrayList<>());
+        turn.setPlayer(player);
+
+        return turn;
     }
 
     public void endPhase() {
@@ -223,5 +237,41 @@ public class Turn {
 
     public Multimap<String, Card> getRevealed() {
         return revealed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Turn)) return false;
+
+        Turn turn = (Turn) o;
+
+        if (actionPool != turn.actionPool) return false;
+        if (buyPool != turn.buyPool) return false;
+        if (moneyPool != turn.moneyPool) return false;
+        if (!game.equals(turn.game)) return false;
+        if (phase != turn.phase) return false;
+        if (!play.equals(turn.play)) return false;
+        if (!player.equals(turn.player)) return false;
+        if (!playerId.equals(turn.playerId)) return false;
+        if (!resolvedChoices.equals(turn.resolvedChoices)) return false;
+        if (revealed != null ? !revealed.equals(turn.revealed) : turn.revealed != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = phase.hashCode();
+        result = 31 * result + game.hashCode();
+        result = 31 * result + player.hashCode();
+        result = 31 * result + resolvedChoices.hashCode();
+        result = 31 * result + play.hashCode();
+        result = 31 * result + (revealed != null ? revealed.hashCode() : 0);
+        result = 31 * result + (int) (actionPool ^ (actionPool >>> 32));
+        result = 31 * result + (int) (moneyPool ^ (moneyPool >>> 32));
+        result = 31 * result + (int) (buyPool ^ (buyPool >>> 32));
+        result = 31 * result + playerId.hashCode();
+        return result;
     }
 }

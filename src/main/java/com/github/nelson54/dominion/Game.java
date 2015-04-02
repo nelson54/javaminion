@@ -15,8 +15,6 @@ import static com.github.nelson54.dominion.Phase.*;
 
 public class Game {
 
-    long lastModified;
-
     @JsonProperty
     UUID id;
 
@@ -54,16 +52,16 @@ public class Game {
         trash = new HashSet<>();
     }
 
-    Player nextPlayer(){
-        if(turnerator == null || !turnerator.hasNext()){
+    Player nextPlayer() {
+        if (turnerator == null || !turnerator.hasNext()) {
             turnerator = turnOrder.iterator();
         }
 
-        if(turn != null ) {
+        if (turn != null) {
             clearAllChoices();
         }
 
-        if(isGameOver()){
+        if (isGameOver()) {
             turn.phase = END_OF_GAME;
             gameOver = true;
             return null;
@@ -73,7 +71,7 @@ public class Game {
         pastTurns.add(turn);
         turn = nextPlayer.getCurrentTurn();
 
-        if(!turn.hasActionsInHand()){
+        if (!turn.hasActionsInHand()) {
             turn.setPhase(BUY);
             nextPlayer.onBuyPhase();
         } else {
@@ -84,18 +82,26 @@ public class Game {
         return nextPlayer;
     }
 
-    void clearAllChoices(){
-        for(Player player : players.values()){
+    void clearAllChoices() {
+        for (Player player : players.values()) {
             turn.getResolvedChoices().addAll(player.getChoices());
             player.getChoices().clear();
         }
     }
 
-    public Card giveCardToPlayer(String name, Player player){
+    boolean isGameOver() {
+        return kingdom.getNumberOfRemainingCardsByName("Province") == 0;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+    public Card giveCardToPlayer(String name, Player player) {
         Collection<Card> cards = kingdom.getCardsByName(name);
         Optional<Card> purchasedCard;
 
-        if(cards != null) {
+        if (cards != null) {
             purchasedCard = cards.stream().filter(card -> card.getOwner() == null).findFirst();
             cards.remove(purchasedCard.get());
             purchasedCard.ifPresent(card -> card.setOwner(player));
@@ -121,9 +127,9 @@ public class Game {
         return optChoice;
     }
 
-    public Set<Choice> getChoices(){
+    public Set<Choice> getChoices() {
         return players.values().stream()
-                .flatMap(p->p.getChoices().stream())
+                .flatMap(p -> p.getChoices().stream())
                 .collect(Collectors.toSet());
     }
 
@@ -137,10 +143,6 @@ public class Game {
         players.values().stream()
                 .map(Player::getCurrentTurn)
                 .forEach(turn -> turn.setPhase(END_OF_GAME));
-    }
-
-    boolean isGameOver(){
-        return kingdom.getNumberOfRemainingCardsByName("Province") == 0;
     }
 
     public UUID getId() {
@@ -176,20 +178,12 @@ public class Game {
         this.kingdom = kingdom;
     }
 
-    public void updateModified(){
-        lastModified = DateTime.now().getMillis();
-    }
-
     Set<Player> getTurnOrder() {
         return turnOrder;
     }
 
     void setTurnOrder(Set<Player> turnOrder) {
         this.turnOrder = turnOrder;
-    }
-
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
     }
 
     public Turn getTurn() {
@@ -200,7 +194,7 @@ public class Game {
         this.turn = turn;
     }
 
-    public void trashCard(Card card){
+    public void trashCard(Card card) {
         Player player = card.getOwner();
         player.getCurrentTurn().getPlay().remove(card);
         player.getDiscard().remove(card);
@@ -225,6 +219,21 @@ public class Game {
     }
 
     @Override
+    public int hashCode() {
+        int result = (id.hashCode() ^ (id.hashCode() >>> 0));
+        result = 31 * result + kingdom.hashCode();
+        result = 31 * result + turnOrder.hashCode();
+        result = 31 * result + allCards.hashCode();
+        result = 31 * result + pastTurns.hashCode();
+        result = 31 * result + trash.hashCode();
+        result = 31 * result + turnerator.hashCode();
+        result = 31 * result + players.hashCode();
+        result = 31 * result + (gameOver ? 1 : 0);
+        result = 31 * result + turn.hashCode();
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Game)) return false;
@@ -232,7 +241,6 @@ public class Game {
         Game game = (Game) o;
 
         if (gameOver != game.gameOver) return false;
-        if (lastModified != game.lastModified) return false;
         if (!allCards.equals(game.allCards)) return false;
         if (!id.equals(game.id)) return false;
         if (!kingdom.equals(game.kingdom)) return false;
@@ -244,21 +252,5 @@ public class Game {
         if (!turnerator.equals(game.turnerator)) return false;
 
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (lastModified ^ (lastModified >>> 32));
-        result = 31 * result + id.hashCode();
-        result = 31 * result + kingdom.hashCode();
-        result = 31 * result + turnOrder.hashCode();
-        result = 31 * result + allCards.hashCode();
-        result = 31 * result + pastTurns.hashCode();
-        result = 31 * result + trash.hashCode();
-        result = 31 * result + turnerator.hashCode();
-        result = 31 * result + players.hashCode();
-        result = 31 * result + (gameOver ? 1 : 0);
-        result = 31 * result + turn.hashCode();
-        return result;
     }
 }

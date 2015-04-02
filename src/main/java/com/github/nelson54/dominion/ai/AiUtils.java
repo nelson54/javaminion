@@ -12,7 +12,7 @@ public class AiUtils {
     static String province = "Province";
 
     static int gainsToEndGame(Kingdom kingdom){
-        Multimap market = kingdom.getCardMarket();
+        Multimap<String, Card> market = kingdom.getCardMarket();
         if(market.containsKey(province)){
             return market.get(province).size();
         }

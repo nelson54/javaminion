@@ -13,34 +13,26 @@ import static com.github.nelson54.dominion.Phase.WAITING_FOR_OPPONENT;
 
 public class Player {
     @JsonProperty
-    private
     UUID id;
 
-    private
     String name;
 
     @JsonProperty
-    private
     Set<Card> hand;
 
     @JsonProperty
-    private
     Set<Card> deck;
 
     @JsonProperty
-    private
     Set<Card> discard;
 
     @JsonIgnore
-    private
     Game game;
 
     @JsonProperty
-    private
     Turn currentTurn;
 
     @JsonProperty
-    private
     Set<Choice> choices;
 
     public Player() {
@@ -74,15 +66,7 @@ public class Player {
         discardHand();
         drawHand();
 
-        currentTurn = new Turn();
-        currentTurn.setPlayerId(id.toString());
-        currentTurn.setGame(game);
-        currentTurn.setBuyPool(1);
-        currentTurn.setActionPool(1);
-        currentTurn.setMoneyPool(0);
-        currentTurn.setPhase(WAITING_FOR_OPPONENT);
-        currentTurn.setPlay(new ArrayList<>());
-        currentTurn.setPlayer(this);
+        currentTurn = Turn.create(this);
 
     }
 
@@ -240,6 +224,22 @@ public class Player {
         this.currentTurn = currentTurn;
     }
 
+    public Set<Choice> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(Set<Choice> choices) {
+        this.choices = choices;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -256,25 +256,4 @@ public class Player {
         return id.hashCode();
     }
 
-    void meh(Optional<String> str) {
-
-        str.ifPresent(String::trim);
-
-    }
-
-    public Set<Choice> getChoices() {
-        return choices;
-    }
-
-    public void setChoices(Set<Choice> choices) {
-        this.choices = choices;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

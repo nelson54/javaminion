@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Choice {
+
     UUID id;
     CardState state;
     @JsonIgnore
@@ -49,7 +50,7 @@ public class Choice {
     @JsonIgnore
     Effect effect;
 
-    public Choice(Player target, Card source){
+    public Choice(Player target, Card source) {
 
         this.id = UUID.randomUUID();
         this.target = target;
@@ -60,7 +61,11 @@ public class Choice {
         this.setIsDialog(true);
     }
 
-    public void bind(Effect effect){
+    public void setIsDialog(boolean isDialog) {
+        this.isDialog = isDialog;
+    }
+
+    public void bind(Effect effect) {
         this.effect = effect;
 
         effect.setSource(source);
@@ -69,17 +74,17 @@ public class Choice {
         effect.setChoice(this);
     }
 
-    public void apply(ChoiceResponse choiceResponse, Turn turn){
+    public void apply(ChoiceResponse choiceResponse, Turn turn) {
         setResponse(choiceResponse);
         choiceResponse.getChoice();
 
-        if(choiceResponse.isDone()){
+        if (choiceResponse.isDone()) {
             setComplete(true);
         }
 
         setComplete(effect.resolve(choiceResponse, target, turn, turn.getGame()));
 
-        if(!isComplete){
+        if (!isComplete) {
             Player player = this.getTarget();
             Game game = player.getGame();
             ComplexActionCard complexCard = (ComplexActionCard) source;
@@ -92,17 +97,25 @@ public class Choice {
         resolveIfComplete(turn);
     }
 
-    public void resolveIfComplete(Turn turn){
+    public Player getTarget() {
+        return target;
+    }
+
+    public void resolveIfComplete(Turn turn) {
         Set<Choice> choices = target.getChoices();
         Set<Choice> resolved = turn.getResolvedChoices();
 
-        if(isComplete){
+        if (isComplete) {
             choices.remove(this);
             resolved.add(this);
-            if(choices.size() == 0){
+            if (choices.size() == 0) {
                 game.getTurn().setPhase(Phase.ACTION);
             }
         }
+    }
+
+    public void setTarget(Player target) {
+        this.target = target;
     }
 
     public String getMessage() {
@@ -125,6 +138,7 @@ public class Choice {
     public Set<Card> getCardOptions() {
         return cardOptions;
     }
+
     @Deprecated
     public void setCardOptions(Set<Card> cardOptions) {
         this.cardOptions = cardOptions;
@@ -152,14 +166,6 @@ public class Choice {
 
     public void setNumber(byte number) {
         this.number = number;
-    }
-
-    public Player getTarget() {
-        return target;
-    }
-
-    public void setTarget(Player target) {
-        this.target = target;
     }
 
     public Player getOwner() {
@@ -260,9 +266,5 @@ public class Choice {
 
     public boolean isDialog() {
         return isDialog;
-    }
-
-    public void setIsDialog(boolean isDialog) {
-        this.isDialog = isDialog;
     }
 }
