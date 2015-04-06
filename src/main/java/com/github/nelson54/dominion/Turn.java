@@ -89,6 +89,9 @@ public class Turn {
     }
 
     public void playCard(ActionCard card, Player player, Game game) {
+
+        game.log("Player  "+player.getId()+" played card " + card.getName());
+
         if (phase != ACTION || !player.getId().equals(this.player.getId())) {
             throw new IncorrectPhaseException();
         }
@@ -113,6 +116,9 @@ public class Turn {
 
     public Card purchaseCardForPlayer(Card card, Player player)
             throws IncorrectPhaseException, InsufficientFundsException {
+
+        game.log("Player  "+player.getId()+" purchased card " + card.getName());
+
         if (!phase.equals(Phase.BUY) || !player.getId().equals(this.player.getId())) {
             throw new IncorrectPhaseException();
         }

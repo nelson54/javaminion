@@ -15,7 +15,8 @@ public abstract class ActionAttackCard extends ActionCard {
 
     public void apply(Player player, Game game) {
         Set<Player> others = getOtherPlayers(player, game).stream()
-                .filter(p -> p.getHand().stream().filter(c-> !c.getName().equals("Moat")).findFirst().isPresent())
+                .filter(p -> p.getHand().stream()
+                        .filter(c-> !c.getName().equals("Moat")).findFirst().isPresent())
                 .collect(Collectors.toSet());
 
 

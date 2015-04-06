@@ -4,6 +4,7 @@ angular.module('dominionFrontendApp')
   .controller('GameCtrl', function ($scope, $http, $resource, $route, $timeout, GameData, game, playerId, baseUrl) {
 
     var gameId = game.id,
+      logs,
       players,
       player,
       hand,
@@ -30,7 +31,7 @@ angular.module('dominionFrontendApp')
 
     var updateData = function(game){
       players = $scope.players = game.players;
-
+      logs = $scope.logs = game.logs;
       if(playerId) {
         player = $scope.player = game.players[playerId];
 
