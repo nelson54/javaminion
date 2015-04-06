@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.google.common.collect.Multimap;
+import org.joda.time.DateTime;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -210,7 +211,7 @@ public class Game {
     }
 
     public void log(String string){
-        logs.add(string);
+        logs.add(DateTime.now().toString() + ": " + string);
     }
 
     public Map<String, Card> getAllCards() {
