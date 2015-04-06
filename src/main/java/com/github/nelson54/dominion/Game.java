@@ -52,6 +52,7 @@ public class Game {
         pastTurns = new ArrayList<>();
         allCards = new HashMap<>();
         trash = new HashSet<>();
+        logs = new ArrayList<>();
     }
 
     Player nextPlayer() {
