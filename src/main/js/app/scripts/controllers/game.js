@@ -207,7 +207,7 @@ angular.module('dominionFrontendApp')
 
     $scope.getImagePath = function(card) {
       if(card && card.name) {
-        return '/images/' + card.name.toLowerCase().replace(/\s/g, '') + '.jpg';
+        return '/images/cards/' + card.name.toLowerCase().replace(/\s/g, '') + '.jpg';
       } else {
         return '/images/empty-card-back.jpg';
       }

@@ -94,6 +94,15 @@ body {
   }
 }
 
+body {
+  background-image:url( "/images/wood_floor_pattern_seamless.jpg" );
+}
+
+.btn-card {
+  color: white;
+  font-weight: bold;
+}
+
 .controls-container {
   float: right;
   text-align: right;
@@ -138,6 +147,11 @@ body {
 }
 
 .play-container {
+
+  ul {
+    height: 100px;
+  }
+
   img {
     height: 75px;
   }
