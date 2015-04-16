@@ -28,7 +28,6 @@ body {
 
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
   margin-bottom: 10px;
 
   /* Make the masthead heading the same height as the navigation */
@@ -54,7 +53,6 @@ body {
 /* Main marketing message and sign up button */
 .jumbotron {
   text-align: center;
-  border-bottom: 1px solid #e5e5e5;
 
   .btn {
     font-size: 21px;
@@ -94,92 +92,132 @@ body {
   }
 }
 
+
+
 body {
   background-image:url( "/images/wood_floor_pattern_seamless.jpg" );
 }
 
-.btn-card {
-  color: white;
-  font-weight: bold;
+
+
+.game-space {
+  width: 1024px;
 }
 
-.controls-container {
-  float: right;
-  text-align: right;
+.btn-choice {
+  background-color: rgba(96, 179, 96, 0.4);
 }
 
-.hand-container, .common-container, .kingdom-container {
-
-  .name {
-    display: none;
+  .btn.btn-card {
+    color: white;
+    font-weight: bold;
+    padding: 0 3px;
+    margin: 0 3px;
   }
 
-  .count {
-    display:block;
-  }
-
-  img {
-    height: 150px;
-  }
-
-  li {
-    display:inline-block;
-  }
-
-}
-
-.kingdom-container {
-  width: 675px;
-}
-
-.cards-container {
-  img {
-    height: 50px;
-  }
-
-  span {
+  .controls-container {
+    float: right;
+    text-align: right;
+    padding: 10px 15px;
+    background-color: white;
+    border: #572E00 solid 1px;
+    border-radius: 4px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
     display: block;
+    bottom: 128px;
+    position: relative;
   }
 
-  div {
+
+  .hand-container, .common-container, .kingdom-container {
+
+    .name {
+      display: none;
+    }
+
+    .count {
+      display:block;
+    }
+
+    img {
+      height: 150px;
+    }
+
+    li {
+      display:inline-block;
+    }
+
+  }
+
+  .kingdom-container {
+    width: 675px;
+  }
+  .hand-container {
     display: inline-block;
+
+    ul {
+      padding-left:0;
+    }
   }
-}
-
-.play-container {
-
-  ul {
-    height: 100px;
-  }
-
-  img {
-    height: 75px;
-  }
-
-  li {
-    display:inline-block;
-    list-style:none;
-  }
-}
-
-.modal {
-  display:block;
-}
-
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width:300px) and (max-width: 768px) {
-
-  .hand-container, .kingdom-container, .common-container {
-    width:240px;
+  .cards-container {
+    display: inline-block;
+    float: left;
 
     img {
       height: 50px;
     }
 
-    .count {
-      font-size: .7em;
+    span {
+      display: block;
+    }
+
+    .btn.btn-card {
+      padding:0;
     }
   }
-}
+
+  .player-space {
+    width: 100%;
+    background-image: url("/images/wildtextures-Seamless-Dark-Marble-Tiles-Texture1-900x360.jpg");
+    background-size: 35%;
+    border: 2px solid #272727;
+  }
+  .play-container {
+
+    ul {
+      height: 100px;
+    }
+
+    img {
+      height: 75px;
+    }
+
+    li {
+      display:inline-block;
+      list-style:none;
+    }
+  }
+
+  .modal {
+    display:block;
+  }
+
+
+  /* Responsive: Portrait tablets and up */
+  @media screen and (min-width:300px) and (max-width: 768px) {
+
+    .hand-container, .kingdom-container, .common-container {
+      width:240px;
+
+      img {
+        height: 50px;
+      }
+
+      .count {
+        font-size: .7em;
+      }
+    }
+  }
+
 

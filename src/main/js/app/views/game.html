@@ -1,3 +1,4 @@
+<div class="game-space">
 <div class="players-container" ng-show="!hasCurrentPlayer()">
   <h3>Players</h3>
   <ul>
@@ -10,7 +11,7 @@
 <div class="common-container" ng-if="hasCurrentPlayer()">
   <ul>
     <li ng-repeat="card in commonCards | orderBy : 'kingdomSortOrder'">
-      <button class="btn btn-link btn-card" ng-disabled="!(isOption(card.id) || player.currentTurn.phase === 'BUY' && player.currentTurn.buyPool > 0 && canAfford(card))" ng-class="{'btn-success': isOption(card.id)}" ng-click="selectCard(card)">
+      <button class="btn btn-link btn-card" ng-disabled="!(isOption(card.id) || player.currentTurn.phase === 'BUY' && player.currentTurn.buyPool > 0 && canAfford(card))" ng-class="{'btn-choice': isOption(card.id)}" ng-click="selectCard(card)">
         <img ng-src="{{getImagePath(card)}}" />
         <span class="name">{{card.name}}</span>
         <span class="count" ng-bind="card.remaining"></span>
@@ -22,7 +23,7 @@
 <div class="kingdom-container" ng-if="hasCurrentPlayer()">
   <ul>
     <li ng-repeat="card in kingdomCards | orderBy : 'cost.money'">
-      <button class="btn btn-link btn-card" ng-disabled="!(isOption(card.id) || player.currentTurn.phase === 'BUY' && player.currentTurn.buyPool > 0 && canAfford(card))" ng-class="{'btn-success': isOption(card.id)}" ng-click="selectCard(card)">
+      <button class="btn btn-link btn-card" ng-disabled="!(isOption(card.id) || player.currentTurn.phase === 'BUY' && player.currentTurn.buyPool > 0 && canAfford(card))" ng-class="{'btn-choice': isOption(card.id)}" ng-click="selectCard(card)">
         <img ng-src="{{getImagePath(card)}}" />
         <span class="name">{{name}}</span>
         <span class="count" ng-bind="card.remaining"></span>
@@ -94,12 +95,14 @@
     </div>
   </div>
 </div>
-
+</div>
+</div>
+<div class="player-space">
 <div class="play-container" ng-if="hasCurrentPlayer()">
-  <h3>Play ({{play.length}})</h3>
+  <h3 ng-if="test">Play ({{play.length}})</h3>
   <ul>
     <li ng-repeat="card in play">
-      <button ng-if="isCardInPlay(card)" class="btn btn-link btn-card" ng-disabled="true" ng-class="{'btn-success': isOption(card.id)}" ng-click="selectCard(card)">
+      <button ng-if="isCardInPlay(card)" class="btn btn-link btn-card" ng-disabled="true" ng-class="{'btn-choice': isOption(card.id)}" ng-click="selectCard(card)">
         <img ng-src="{{getImagePath(card)}}" />
       </button>
     </li>
@@ -107,30 +110,30 @@
 </div>
 
 <div class="player-area" ng-if="hasCurrentPlayer()">
-  <div class="hand-container">
-    <h3>Hand ({{hand.length}})</h3>
-    <ul>
-      <li ng-repeat="card in hand">
-        <button ng-if="isCardInPlay(card)" ng-disabled="" class="btn btn-link  btn-card" ng-class="{'btn-success': isOption(card.id)}" ng-click="selectCard(card)">
-          <img ng-src="{{getImagePath(card)}}" />
-        </button>
-      </li>
-    </ul>
-  </div>
-
-  <div class="cards-container">
-    <div class="deck-container">
-      <button class="btn btn-link btn-card">
-        <img ng-src="/images/card-back.jpg" />
-        <span class="count">{{deck.length}}</span>
-      </button>
+  <div class="library">
+    <div class="hand-container">
+      <h3 ng-if="test">Hand ({{hand.length}})</h3>
+      <ul>
+        <li ng-repeat="card in hand">
+          <button ng-if="isCardInPlay(card)" ng-disabled="" class="btn btn-link  btn-card" ng-class="{'btn-choice': isOption(card.id)}" ng-click="selectCard(card)">
+            <img ng-src="{{getImagePath(card)}}" />
+          </button>
+        </li>
+      </ul>
     </div>
-
-    <div class="discard-container">
-      <button class="btn btn-link btn-card">
-        <img ng-src="{{getImagePath(discard[discard.length-1])}}" />
-        <span class="count">{{discard.length}}</span>
-      </button>
+    <div class="cards-container">
+      <div class="deck-container">
+        <button class="btn btn-link btn-card">
+          <img ng-src="/images/card-back.jpg" />
+          <span class="count">{{deck.length}}</span>
+        </button>
+      </div>
+      <div class="discard-container">
+        <button class="btn btn-link btn-card">
+          <img ng-src="{{getImagePath(discard[discard.length-1])}}" />
+          <span class="count">{{discard.length}}</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
