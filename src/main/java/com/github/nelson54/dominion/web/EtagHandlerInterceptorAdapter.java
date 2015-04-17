@@ -17,10 +17,9 @@ import java.util.Date;
 import java.util.Random;
 
 
-@Component
+
 public class EtagHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
 
-    @Autowired
     GameProvider gameProvider;
 
     @Override

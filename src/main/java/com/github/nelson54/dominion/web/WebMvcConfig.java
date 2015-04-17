@@ -11,8 +11,10 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
 import javax.inject.Inject;
@@ -30,7 +32,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/signout");
     }
 
-    @Bean
+/*    @Bean
     public ViewResolver viewResolver(SpringTemplateEngine templateEngine) {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine);
@@ -48,13 +50,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public TemplateResolver templateResolver() {
         TemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-        templateResolver.setPrefix("/templates/");
+        templateResolver.setPrefix("/views/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML5");
-        return templateResolver;
-    }
+        templateResolver.setCacheable(false);
 
-    private @Inject
-    UsersConnectionRepository usersConnectionRepository;
+        return templateResolver;
+    }*/
+
+    private @Inject UsersConnectionRepository usersConnectionRepository;
 
 }

@@ -13,10 +13,7 @@ import org.apache.catalina.realm.JNDIRealm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.social.config.support.InMemoryConnectionRepositoryConfigSupport;
 import org.springframework.social.connect.ConnectionFactoryLocator;
@@ -36,13 +33,8 @@ import javax.inject.Inject;
 
 @EnableAutoConfiguration
 @ComponentScan("com.github.nelson54.dominion.web")
+@PropertySource("classpath:application.properties")
 public class Application extends WebMvcConfigurerAdapter {
-
-    @Inject
-    EtagHandlerInterceptorAdapter etagHandlerInterceptorAdapter;
-
-    @Inject
-    private Environment environment;
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
@@ -69,42 +61,5 @@ public class Application extends WebMvcConfigurerAdapter {
         objectMapper.registerModule(new GuavaModule());
 
         return objectMapper;
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(etagHandlerInterceptorAdapter);
-    }
-
-    @Bean
-    public ConnectionFactoryLocator connectionFactoryLocator() {
-        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-        registry.addConnectionFactory(new FacebookConnectionFactory(environment.getProperty("facebook.clientId"),
-                environment.getProperty("facebook.clientSecret")));
-        return registry;
-    }
-
-    @Bean
-    public UsersConnectionRepository usersConnectionRepository() {
-        return new InMemoryUsersConnectionRepository(connectionFactoryLocator());
-    }
-
-
-    @Bean
-    @Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)
-    public ConnectionRepository connectionRepository() {
-        User user = SecurityContext.getCurrentUser();
-        return usersConnectionRepository().createConnectionRepository(user.getId());
-    }
-
-    @Bean
-    @Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)
-    public Facebook facebook() {
-        return connectionRepository().getPrimaryConnection(Facebook.class).getApi();
-    }
-
-    @Bean
-    public ProviderSignInController providerSignInController(ConnectionFactoryLocator connectionFactoryLocator, UsersConnectionRepository usersConnectionRepository) {
-        return new ProviderSignInController(connectionFactoryLocator, usersConnectionRepository, new SimpleSignInAdapter());
     }
 }
