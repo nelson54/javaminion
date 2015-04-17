@@ -104,7 +104,7 @@ common: &default_settings
 
   # Provides the ability to configure the attributes sent to New Relic. These
   # attributes can be found in transaction traces, traced errors, Insight's 
-  # transaction events, and Insight's page views.
+  # transaction events, and Insight's page templates.
   attributes:
   
     # When true, attributes will be sent to New Relic. The default is true.

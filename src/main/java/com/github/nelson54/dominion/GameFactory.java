@@ -91,6 +91,7 @@ public class GameFactory {
                 player = createHumanPlayer(game, game.getPlayers(), game.getKingdom());
             } else {
                 player = createAiPlayer(game, game.getPlayers(), game.getKingdom());
+                player.setName("Jimmie");
             }
 
             game.getPlayers().put(player.getId().toString(), player);
@@ -101,6 +102,7 @@ public class GameFactory {
     Player createHumanPlayer(Game game, Map<String, Player> players, Kingdom kingdom) {
         Player player = new Player();
         player.setGame(game);
+        player.setName("You");
         addStartingCardsToPlayer(player, kingdom, game);
 
         game.getTurnOrder().add(player);

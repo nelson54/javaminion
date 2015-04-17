@@ -18,7 +18,7 @@ body {
   font-weight:700;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
+/* Everything but the jumbotron gets side spacing for mobile first templates */
 .header,
 .marketing,
 .footer {
@@ -102,6 +102,8 @@ body {
 
 .game-space {
   width: 1024px;
+  position: relative;
+  left: 35px;
 }
 
 .btn-choice {
@@ -116,19 +118,33 @@ body {
   }
 
   .controls-container {
-    float: right;
-    text-align: right;
-    padding: 10px 15px;
-    background-color: white;
-    border: #572E00 solid 1px;
-    border-radius: 4px;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    display: block;
-    bottom: 128px;
-    position: relative;
+    float: left;
+    width: 69px;
+    position: absolute;
+    top: 620px;
+    height: 186px;
+    font-size: 8pt;
+    padding-left: 0px;
+    padding-right: 8px;
+    color: white;
+    background-color: transparent;
+    border: 0pt;
+    z-index:100;
   }
 
+  .display-container {
+    width: 70px;
+    font-size: 10px;
+    color: white;
+    font-weight: bold;
+    height: 840px;
+    float: left;
+    background-color: rgb(47, 47, 47);
+    padding-top: 30px;
+    position: relative;
+    top: -30px;
+    border-right: 1px solid #989898;
+  }
 
   .hand-container, .common-container, .kingdom-container {
 
@@ -176,12 +192,20 @@ body {
       padding:0;
     }
   }
+  .player-area {
+    width:100%;
+    position: relative;
+  }
 
   .player-space {
     width: 100%;
     background-image: url("/images/wildtextures-Seamless-Dark-Marble-Tiles-Texture1-900x360.jpg");
     background-size: 35%;
-    border: 2px solid #272727;
+    border-top: 2px solid #9D9D9D;
+  }
+
+  .log {
+    color: white;
   }
   .play-container {
 

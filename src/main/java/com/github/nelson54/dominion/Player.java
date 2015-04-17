@@ -15,6 +15,7 @@ public class Player {
     @JsonProperty
     UUID id;
 
+    @JsonProperty
     String name;
 
     @JsonProperty
@@ -239,6 +240,8 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
+
+    
 
     @Override
     public boolean equals(Object o) {
