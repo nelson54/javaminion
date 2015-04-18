@@ -6,9 +6,10 @@
       </div>
       <p>
         <label>Cards</label><br>
-        <select ng-model="cardSet">
+        <select ng-model="cards" ng-change="setCards(cards)">
           <option ng-repeat="cardSet in recommendedCards">{{cardSet.name}}</option>
         </select>
+        {{cards}}
       </p>
       <p>
         <label>Number of players</label><br>

@@ -14,10 +14,15 @@ angular.module('dominionFrontendApp')
 
     $scope.games = [];
 
+    $scope.cards = 'First Game';
     $scope.newGame = false;
     $scope.playerNumbers = [2,3,4];
     $scope.recommendedCards = recommendedCards;
     $scope.players = [{id:0, ai:true}, {id:1, ai:true}];
+
+    $scope.setCards = function(cards) {
+      $scope.cards = cards;
+    };
 
     $scope.getGames = function(){
       return $http.get(baseUrl+'/dominion/')
@@ -27,7 +32,8 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.createGame = function(){
-      var game = new Game({cardSet: $scope.cardSet});
+
+      var game = new Game({cardSet: $scope.cards});
       game.$save(game, $route.reload);
     };
 
