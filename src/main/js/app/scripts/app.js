@@ -27,7 +27,7 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'templates/main.html',
+        templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         resolve : {
           baseUrl: function() {
@@ -44,7 +44,7 @@ angular
         }
       })
       .when('/games/:game', {
-        templateUrl: 'templates/game.html',
+        templateUrl: 'views/game.html',
         controller: 'GameCtrl',
         resolve: {
           game : function($route, $resource, $q){
@@ -64,7 +64,7 @@ angular
         }
       })
       .when('/games/:game/players/:player', {
-        templateUrl: 'templates/game.html',
+        templateUrl: 'views/game.html',
         controller: 'GameCtrl',
         resolve: {
           game : function($route, $resource, $q){
