@@ -35,9 +35,9 @@ public class GameController {
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.OPTIONS})
     Game createGame(
-            @RequestParam String cardSet
+            @RequestBody com.github.nelson54.dominion.web.gamebuilder.Game game
     ) throws InstantiationException, IllegalAccessException {
-        return gameProvider.createAiGameBySet(cardSet);
+        return gameProvider.createAiGameBySet(game.getCardSet(), game.getCount());
     }
 
     @RequestMapping(value = "/{gameId}/next-phase", method = RequestMethod.POST)

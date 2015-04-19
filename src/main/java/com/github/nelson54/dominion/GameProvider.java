@@ -31,19 +31,19 @@ public class GameProvider {
         return gamesById.get(uuid);
     }
 
-    public Game createGameBySet(String cardSet) throws IllegalAccessException, InstantiationException {
+    public Game createGameBySet(String cardSet, int count) throws IllegalAccessException, InstantiationException {
         RecommendedCards rc = RecommendedCards.ofName(cardSet);
 
-        Game game = gameFactory.createGame(rc.getCards(), 2);
+        Game game = gameFactory.createGame(rc.getCards(), count);
         games.add(game.getId().toString());
         gamesById.put(game.getId().toString(), game);
         return game;
     }
 
-    public Game createAiGameBySet(String cardSet) throws IllegalAccessException, InstantiationException {
+    public Game createAiGameBySet(String cardSet, int count) throws IllegalAccessException, InstantiationException {
         RecommendedCards rc = RecommendedCards.ofName(cardSet);
 
-        Game game = gameFactory.createAiGame(rc.getCards(), 2);
+        Game game = gameFactory.createAiGame(rc.getCards(), count);
         games.add(game.getId().toString());
         gamesById.put(game.getId().toString(), game);
         return game;
