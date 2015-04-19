@@ -32,8 +32,11 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.createGame = function(){
-
-      var game = new Game({cardSet: $scope.cards});
+      var game = new Game({
+        cardSet: $scope.cards,
+        players: $scope.players,
+        count: $scope.players.length + 1
+      });
       game.$save(game, $route.reload);
     };
 
