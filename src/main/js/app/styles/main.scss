@@ -98,7 +98,13 @@ body {
   background-image:url( "/images/wood_floor_pattern_seamless.jpg" );
 }
 
+.cards-container>div {
+  display: inline-block;
+}
 
+.opponent span {
+  margin: 5px;
+}
 
 .game-space {
   width: 1024px;
@@ -181,7 +187,7 @@ body {
     float: left;
 
     img {
-      height: 50px;
+      height: 39px;
     }
 
     span {

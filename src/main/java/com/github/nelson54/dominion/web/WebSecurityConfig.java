@@ -15,7 +15,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                .anyRequest().anonymous()
                 .and()
                 .formLogin()
                 .loginPage("/login")
