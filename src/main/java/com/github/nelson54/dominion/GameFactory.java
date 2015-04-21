@@ -47,8 +47,8 @@ public class GameFactory {
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new HashSet<>());
 
-        Player p1 = createAiPlayer(game, game.getPlayers(), ai1, game.getKingdom());
-        Player p2 = createAiPlayer(game, game.getPlayers(), ai2, game.getKingdom());
+        Player p1 = createAiPlayer(game, game.getPlayers(), ai1, game.getKingdom(), ai1.getClass().toString());
+        Player p2 = createAiPlayer(game, game.getPlayers(), ai2, game.getKingdom(), ai2.getClass().toString());
 
         p1.setName("p1");
         p2.setName("p2");
@@ -76,7 +76,7 @@ public class GameFactory {
 
     void addPlayers(int players, Game game) {
         for (; players > 0; players--) {
-            Player player = createHumanPlayer(game, game.getPlayers(), game.getKingdom());
+            Player player = createHumanPlayer(game, game.getPlayers(), game.getKingdom(), "You");
 
             game.getPlayers().put(player.getId().toString(), player);
 
@@ -89,10 +89,9 @@ public class GameFactory {
         for (; players > 0; players--) {
             Player player;
             if(players == 1) {
-                player = createHumanPlayer(game, game.getPlayers(), game.getKingdom());
+                player = createHumanPlayer(game, game.getPlayers(), game.getKingdom(), "You");
             } else {
-                player = createAiPlayer(game, game.getPlayers(), game.getKingdom());
-                player.setName(aiNames.next().toString());
+                player = createAiPlayer(game, game.getPlayers(), game.getKingdom(), aiNames.next().toString());
             }
 
             game.getPlayers().put(player.getId().toString(), player);
@@ -100,10 +99,11 @@ public class GameFactory {
         }
     }
 
-    Player createHumanPlayer(Game game, Map<String, Player> players, Kingdom kingdom) {
+    Player createHumanPlayer(Game game, Map<String, Player> players, Kingdom kingdom, String name) {
         Player player = new Player();
         player.setGame(game);
-        player.setName("You");
+        player.setName(name);
+
         addStartingCardsToPlayer(player, kingdom, game);
 
         game.getTurnOrder().add(player);
@@ -113,12 +113,13 @@ public class GameFactory {
         return player;
     }
 
-    Player createAiPlayer(Game game, Map<String, Player> players, Kingdom kingdom) {
-        return createAiPlayer(game, players, AiStrategies.random(), kingdom);
+    Player createAiPlayer(Game game, Map<String, Player> players, Kingdom kingdom, String name) {
+        return createAiPlayer(game, players, AiStrategies.random(), kingdom, name);
     }
 
-    Player createAiPlayer(Game game, Map<String, Player> players, AiStrategy aiStrategy, Kingdom kingdom) {
+    Player createAiPlayer(Game game, Map<String, Player> players, AiStrategy aiStrategy, Kingdom kingdom, String name) {
         AiPlayer player = new AiPlayer();
+        player.setName(name);
         player.setAiStrategy(aiStrategy);
         player.setGame(game);
         addStartingCardsToPlayer(player, kingdom, game);

@@ -251,12 +251,16 @@ public class Player {
         Player player = (Player) o;
 
         return id.toString().equals(player.id.toString());
-
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + hand.hashCode();
+        result = 31 * result + deck.hashCode();
+        result = 31 * result + discard.hashCode();
+        result = 31 * result + choices.hashCode();
+        return result;
     }
-
 }

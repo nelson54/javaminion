@@ -226,6 +226,7 @@ public class Game {
         return trash;
     }
 
+    @JsonProperty
     @Override
     public int hashCode() {
         int result = (id.hashCode() ^ (id.hashCode() >>> 0));
@@ -234,10 +235,9 @@ public class Game {
         result = 31 * result + allCards.hashCode();
         result = 31 * result + pastTurns.hashCode();
         result = 31 * result + trash.hashCode();
-        result = 31 * result + turnerator.hashCode();
         result = 31 * result + players.hashCode();
         result = 31 * result + (gameOver ? 1 : 0);
-        result = 31 * result + turn.hashCode();
+        result = 31 * result + turn.getPhase().hashCode();
         return result;
     }
 

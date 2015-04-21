@@ -30,6 +30,7 @@ angular.module('dominionFrontendApp')
     };
 
     var updateData = function(game){
+      $scope.game = game;
       players = $scope.players = game.players;
       logs = $scope.logs = game.logs;
       if(playerId) {
@@ -232,7 +233,9 @@ angular.module('dominionFrontendApp')
       var Game = $resource(baseUrl+'/dominion/:gameId');
       GameData.find(gameId, { bypassCache: true })
         .then(function(response){
-          updateData(response, playerId)
+          if($scope.game.hashCode != response.hashCode) {
+            updateData(response, playerId)
+          }
         });
       /*Game.get({gameId : gameId}, function(response){
         updateData(response, playerId);

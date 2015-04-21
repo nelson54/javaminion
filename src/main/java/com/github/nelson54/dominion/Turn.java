@@ -269,7 +269,6 @@ public class Turn {
     @Override
     public int hashCode() {
         int result = phase.hashCode();
-        result = 31 * result + game.hashCode();
         result = 31 * result + player.hashCode();
         result = 31 * result + resolvedChoices.hashCode();
         result = 31 * result + play.hashCode();
