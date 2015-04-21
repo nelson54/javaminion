@@ -11,7 +11,12 @@ public enum AiName {
     Susan,
     Ross,
     James,
-    Tanisha;
+    Tanisha,
+    Cane,
+    Abel,
+    Krishna,
+    Saanvi,
+    Prishna;
 
     public static Set<AiName> random(int number){
         List<AiName> aiNames = Arrays.asList(AiName.values());
