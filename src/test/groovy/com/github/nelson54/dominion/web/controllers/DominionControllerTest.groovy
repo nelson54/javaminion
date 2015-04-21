@@ -21,7 +21,12 @@ class DominionControllerTest extends DominionTestCase {
     @Before
     void setUp() {
         super.setUp()
-        game = gameController.createGame(RecommendedCards.FIRST_GAME.getName());
+        com.github.nelson54.dominion.web.gamebuilder.Game build = new com.github.nelson54.dominion.web.gamebuilder.Game();
+
+        build.setCardSet(RecommendedCards.FIRST_GAME.getName())
+        build.setCount(2)
+
+        game = gameController.createGame(build);
     }
 
     @Test

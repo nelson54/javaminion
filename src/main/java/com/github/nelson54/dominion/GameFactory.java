@@ -1,13 +1,12 @@
 package com.github.nelson54.dominion;
 
+import com.github.nelson54.dominion.ai.AiName;
 import com.github.nelson54.dominion.ai.AiPlayer;
 import com.github.nelson54.dominion.ai.AiStrategies;
 import com.github.nelson54.dominion.ai.AiStrategy;
 import com.github.nelson54.dominion.cards.Card;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 
 public class GameFactory {
@@ -85,13 +84,15 @@ public class GameFactory {
     }
 
     void addSomeAiPlayers(int players, Game game) {
+        Iterator<AiName> aiNames = AiName.random(players).iterator();
+
         for (; players > 0; players--) {
             Player player;
             if(players == 1) {
                 player = createHumanPlayer(game, game.getPlayers(), game.getKingdom());
             } else {
                 player = createAiPlayer(game, game.getPlayers(), game.getKingdom());
-                player.setName("Jimmie");
+                player.setName(aiNames.next().toString());
             }
 
             game.getPlayers().put(player.getId().toString(), player);

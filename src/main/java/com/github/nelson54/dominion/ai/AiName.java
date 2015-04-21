@@ -1,0 +1,24 @@
+package com.github.nelson54.dominion.ai;
+
+import com.google.common.collect.Lists;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public enum AiName {
+    Monique,
+    Jamal,
+    Susan,
+    Ross,
+    James,
+    Tanisha;
+
+    public static Set<AiName> random(int number){
+        List<AiName> aiNames = Arrays.asList(AiName.values());
+        Collections.shuffle(aiNames);
+
+        return aiNames.stream()
+                .limit(number)
+                .collect(Collectors.toSet());
+    }
+}
