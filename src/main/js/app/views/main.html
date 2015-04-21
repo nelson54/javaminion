@@ -9,18 +9,16 @@
         <select ng-model="cards" ng-change="setCards(cards)">
           <option ng-repeat="cardSet in recommendedCards">{{cardSet.name}}</option>
         </select>
-        {{cards}}
       </p>
       <p>
         <label>Number of players</label><br>
         <select ng-model="playerCount" ng-change="updatePlayerCount(playerCount)">
           <option ng-repeat="number in playerNumbers">{{number}}</option>
         </select>
-        {{playerCount}}
       </p>
       <p>
       <div ng-repeat="player in players">
-        <input type="checkbox" ng-model="player.ai" ><label>AI</label></input>
+        <input type="checkbox" ng-model="player.ai" disabled ><label>AI</label></input>
       </div>
       </p>
       <div class="modal-footer">
@@ -30,11 +28,10 @@
     </div>
   </div>
 </div>
-<button ng-click="newGame = true">New</button>
+<button ng-click="getGames()">Refresh</button><button ng-click="newGame = true">New</button>
 
 <ul>
   <li ng-repeat="id in games">
     <a href="#/games/{{id}}">{{id}}</a>
   </li>
 </ul>
-<button ng-click="getGames()">Refresh</button>
