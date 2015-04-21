@@ -211,8 +211,15 @@ body {
   }
 
   .log {
-    color: white;
+    color: #444;
+    background-color: #d3d3d3;
+    height: 100%;
   }
+
+.log > p {
+  clear: left;
+}
+
   .play-container {
 
     ul {

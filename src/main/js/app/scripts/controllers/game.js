@@ -32,7 +32,7 @@ angular.module('dominionFrontendApp')
     var updateData = function(game){
       $scope.game = game;
       players = $scope.players = game.players;
-      logs = $scope.logs = game.logs;
+      logs = $scope.logs = game.logs.reverse();
       if(playerId) {
         player = $scope.player = game.players[playerId];
 
@@ -237,9 +237,6 @@ angular.module('dominionFrontendApp')
             updateData(response, playerId)
           }
         });
-      /*Game.get({gameId : gameId}, function(response){
-        updateData(response, playerId);
-      });*/
     };
 
     updateData(game);

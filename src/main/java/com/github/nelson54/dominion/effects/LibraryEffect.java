@@ -37,7 +37,8 @@ public class LibraryEffect extends Effect {
             return true;
         }
 
-        return false;
+        return target.getDeck().size() + target.getDiscard().size() == 0;
+
     }
 
 }

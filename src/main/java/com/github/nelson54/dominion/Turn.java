@@ -3,10 +3,7 @@ package com.github.nelson54.dominion;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.nelson54.dominion.cards.ActionCard;
-import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.cards.Cost;
-import com.github.nelson54.dominion.cards.TreasureCard;
+import com.github.nelson54.dominion.cards.*;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.exceptions.*;
 import com.google.common.collect.ArrayListMultimap;
@@ -88,9 +85,9 @@ public class Turn {
         }
     }
 
-    public void playCard(ActionCard card, Player player, Game game) {
+    public Card playCard(ActionCard card, Player player, Game game) {
 
-        game.log("Player  "+player.getId()+" played card " + card.getName());
+        game.log("Player  "+player.getName()+" played card " + card.getName());
 
         if (phase != ACTION || !player.getId().equals(this.player.getId())) {
             throw new IncorrectPhaseException();
@@ -109,15 +106,19 @@ public class Turn {
         getPlay().add(card);
         card.apply(player, game);
 
-        if(player.getCurrentTurn().getPhase().equals(ACTION)){
+        if(actionPool == 0 || Cards.cardsOfType(player.getHand(), ActionCard.class).size() == 0) {
+            endPhase();
+        } else {
             player.onActionPhase();
         }
+
+        return card;
     }
 
     public Card purchaseCardForPlayer(Card card, Player player)
             throws IncorrectPhaseException, InsufficientFundsException {
 
-        game.log("Player  "+player.getId()+" purchased card " + card.getName());
+        game.log("Player  "+player.getName()+" purchased card " + card.getName());
 
         if (!phase.equals(Phase.BUY) || !player.getId().equals(this.player.getId())) {
             throw new IncorrectPhaseException();
@@ -134,7 +135,13 @@ public class Turn {
         spendMoney(card.getCost().getMoney());
         buyPool--;
         Card bought = getGame().giveCardToPlayer(card.getName(), player);
-        player.onBuyPhase();
+
+        if(buyPool == 0){
+            endPhase();
+        } else {
+            player.onBuyPhase();
+        }
+
         return bought;
     }
 
