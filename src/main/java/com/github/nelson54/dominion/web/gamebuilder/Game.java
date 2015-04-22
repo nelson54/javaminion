@@ -37,4 +37,12 @@ public class Game {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
+
+    public int numberOfAiPlayers(){
+        return (int) players.stream().filter(Player::isAi).count();
+    }
+
+    public int numberOfHumanPlayers(){
+        return 1 + players.size() - numberOfAiPlayers();
+    }
 }

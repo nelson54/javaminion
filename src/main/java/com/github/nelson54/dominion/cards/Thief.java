@@ -10,9 +10,7 @@ import com.github.nelson54.dominion.effects.ThiefEffect;
 
 import java.util.Set;
 
-public class Thief extends SymmetricActionAttackCard {
-
-    String message1 = "Choose a card to trash.";
+public class Thief extends ComplexActionAttackCard {
 
     public Thief() {
         super();
@@ -44,8 +42,8 @@ public class Thief extends SymmetricActionAttackCard {
             Set<Card> revealed = target.revealCards(2);
 
             if(revealed.stream().filter(c->c instanceof TreasureCard).count() > 0) {
-                choice.setCardOptions(revealed);
-                choice.setMessage(message1);
+
+                choice.setMessage("Choose a card to trash from " + target.getName() + ".");
                 choice.setTarget(this.getOwner());
                 choice.setCardOptions(revealed);
                 choice.setExpectedAnswerType(OptionType.CARD);

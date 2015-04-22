@@ -18,7 +18,7 @@
       </p>
       <p>
       <div ng-repeat="player in players">
-        <input type="checkbox" ng-model="player.ai" disabled ><label>AI</label></input>
+        <input type="checkbox" ng-model="player.ai" ><label>AI</label></input>
       </div>
       </p>
       <div class="modal-footer">
@@ -28,10 +28,13 @@
     </div>
   </div>
 </div>
-<button ng-click="getGames()">Refresh</button><button ng-click="newGame = true">New</button>
 
-<ul>
-  <li ng-repeat="id in games">
-    <a href="#/games/{{id}}">{{id}}</a>
-  </li>
-</ul>
+<div class="game-list-container">
+  <button ng-click="getGames()">Refresh</button><button ng-click="newGame = true">New</button>
+
+  <ul class="game-list">
+    <li ng-repeat="id in games">
+      <a href="#/games/{{id}}">{{id}}</a>
+    </li>
+  </ul>
+</div>

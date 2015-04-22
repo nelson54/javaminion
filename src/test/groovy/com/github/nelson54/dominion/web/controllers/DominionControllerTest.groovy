@@ -3,6 +3,8 @@ package com.github.nelson54.dominion.web.controllers
 import com.github.nelson54.dominion.Phase
 import com.github.nelson54.dominion.cards.RecommendedCards
 import com.github.nelson54.dominion.web.Application
+import com.github.nelson54.dominion.web.gamebuilder.Game
+import com.github.nelson54.dominion.web.gamebuilder.Player
 import org.junit.Test
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
@@ -21,7 +23,19 @@ class DominionControllerTest extends DominionTestCase {
     @Before
     void setUp() {
         super.setUp()
-        com.github.nelson54.dominion.web.gamebuilder.Game build = new com.github.nelson54.dominion.web.gamebuilder.Game();
+        Game build = new Game()
+        Player p1 = new Player()
+        p1.setAi(true)
+
+        Player p2 = new Player()
+        p2.setAi(true)
+
+        List<Player> players = new ArrayList<>()
+
+        players.add(p1)
+        players.add(p2)
+
+        build.setPlayers(players)
 
         build.setCardSet(RecommendedCards.FIRST_GAME.getName())
         build.setCount(2)

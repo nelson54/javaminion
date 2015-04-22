@@ -98,6 +98,31 @@ body {
   background-image:url( "/images/wood_floor_pattern_seamless.jpg" );
 }
 
+.game-list-container {
+  width:500px;
+  margin-left: 50px;
+}
+
+.game-list-container > button:nth-child(1) {
+  margin-left: 10px;
+}
+
+.game-list {
+  background-color: white;
+  padding-left: 0;
+
+  li {
+    list-style: none;
+    line-height: 4;
+    width: 100%;
+    text-align: center;
+  }
+
+  li:nth-child(even) {
+    background-color: #efefef;
+  }
+}
+
 .cards-container>div {
   display: inline-block;
 }

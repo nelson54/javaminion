@@ -1,5 +1,7 @@
 package com.github.nelson54.dominion;
 
+import com.github.nelson54.dominion.*;
+import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.ai.AiName;
 import com.github.nelson54.dominion.ai.AiPlayer;
 import com.github.nelson54.dominion.ai.AiStrategies;
@@ -16,7 +18,7 @@ public class GameFactory {
     public Game createGame(Class<? extends Card>[] cards, int players) throws InstantiationException, IllegalAccessException {
         Game game = new Game();
 
-        game.setKingdom(kingdomFactory.getKingdomFromCards(cards));
+        game.setKingdom(kingdomFactory.getKingdomFromCards(cards, players));
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new HashSet<>());
 
@@ -26,14 +28,16 @@ public class GameFactory {
         return game;
     }
 
-    public Game createAiGame(Class<? extends Card>[] cards, int players) throws InstantiationException, IllegalAccessException {
+    public Game createAiGame(Class<? extends Card>[] cards, int ai, int humans) throws InstantiationException, IllegalAccessException {
         Game game = new Game();
 
-        game.setKingdom(kingdomFactory.getKingdomFromCards(cards));
+        game.setKingdom(kingdomFactory.getKingdomFromCards(cards, ai + humans));
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new HashSet<>());
 
-        addSomeAiPlayers(players, game);
+        addAiPlayers(ai, game);
+        addPlayers(humans, game);
+
         game.nextPlayer();
 
         return game;
@@ -43,7 +47,7 @@ public class GameFactory {
 
         Game game = new Game();
 
-        game.setKingdom(kingdomFactory.getKingdomFromCards(cards));
+        game.setKingdom(kingdomFactory.getKingdomFromCards(cards, 2));
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new HashSet<>());
 
@@ -76,26 +80,19 @@ public class GameFactory {
 
     void addPlayers(int players, Game game) {
         for (; players > 0; players--) {
-            Player player = createHumanPlayer(game, game.getPlayers(), game.getKingdom(), "You");
+            Player player = createHumanPlayer(game, game.getPlayers(), game.getKingdom(), "Human " + String.valueOf(players));
 
             game.getPlayers().put(player.getId().toString(), player);
-
         }
     }
 
-    void addSomeAiPlayers(int players, Game game) {
+    void addAiPlayers(int players, Game game) {
         Iterator<AiName> aiNames = AiName.random(players).iterator();
 
         for (; players > 0; players--) {
             Player player;
-            if(players == 1) {
-                player = createHumanPlayer(game, game.getPlayers(), game.getKingdom(), "You");
-            } else {
-                player = createAiPlayer(game, game.getPlayers(), game.getKingdom(), aiNames.next().toString());
-            }
-
+            player = createAiPlayer(game, game.getPlayers(), game.getKingdom(), aiNames.next().toString());
             game.getPlayers().put(player.getId().toString(), player);
-
         }
     }
 
