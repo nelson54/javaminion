@@ -39,10 +39,9 @@ public class Thief extends ComplexActionAttackCard {
         Choice parent = choice.getParentChoice();
 
         if(choice.getState().equals(CardState.TRASHING_CARD)){
-            Set<Card> revealed = target.revealCards(2);
+            Set<Card> revealed = Cards.cardsOfType(target.revealCards(2), TreasureCard.class);
 
-            if(revealed.stream().filter(c->c instanceof TreasureCard).count() > 0) {
-
+            if(revealed.size() > 0) {
                 choice.setMessage("Choose a card to trash from " + target.getName() + ".");
                 choice.setTarget(this.getOwner());
                 choice.setCardOptions(revealed);
