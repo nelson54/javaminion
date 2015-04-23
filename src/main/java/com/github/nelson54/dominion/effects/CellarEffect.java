@@ -24,6 +24,7 @@ public class CellarEffect extends Effect {
             target.discard(toDiscard);
             return true;
         } else {
+            target.getHand().remove(response.getCard());
             toDiscard.add(response.getCard());
         }
 
