@@ -8,3 +8,4 @@
 - [ ] Thief reveals non-treasure cards.
 - [ ] Cellar should remove the cards from your hand after you mark them for being discarded.
 - [ ] Animations.
+- [ ] End turn if no additional actions in pool or cards in hand after playing ComplexActionCard's
