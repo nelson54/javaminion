@@ -9,10 +9,7 @@ import com.github.nelson54.dominion.exceptions.*;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.github.nelson54.dominion.Phase.ACTION;
 import static com.github.nelson54.dominion.Phase.BUY;
@@ -36,6 +33,8 @@ public class Turn {
     List<Card> play;
 
     Multimap<String, Card> revealed;
+    Set<Card> gained;
+    Set<Card> bought;
 
     long actionPool;
     long moneyPool;
@@ -45,7 +44,6 @@ public class Turn {
 
     public Turn() {
         revealed = ArrayListMultimap.create();
-
         resolvedChoices = new HashSet<>();
     }
 
@@ -57,7 +55,7 @@ public class Turn {
         turn.setActionPool(1);
         turn.setMoneyPool(0);
         turn.setPhase(WAITING_FOR_OPPONENT);
-        turn.setPlay(new ArrayList<>());
+        turn.setPlay(new LinkedList<>());
         turn.setPlayer(player);
 
         return turn;

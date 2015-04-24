@@ -30,8 +30,8 @@ public class Game {
     @JsonIgnore
     Map<String, Card> allCards;
 
-    @JsonIgnore
-    List<Turn> pastTurns;
+    @JsonProperty
+    Set<Turn> pastTurns;
 
     @JsonProperty
     Set<Card> trash;
@@ -50,7 +50,7 @@ public class Game {
 
     public Game() {
         id = UUID.randomUUID();
-        pastTurns = new ArrayList<>();
+        pastTurns = new LinkedHashSet<>();
         allCards = new HashMap<>();
         trash = new HashSet<>();
         logs = new ArrayList<>();

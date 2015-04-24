@@ -12,13 +12,16 @@ angular.module('dominionFrontendApp')
       turn,
       play,
       discard,
-      choice;
+      choice,
+      playBack = false;
 
     $scope.test = false;
     $scope.game = game;
 
     var repeat = function() {
-      if (player &&
+      if (
+        !playBack &&
+        player &&
         (player.currentTurn.phase === 'WAITING_FOR_OPPONENT' ||
         player.currentTurn.phase === 'WAITING_FOR_CHOICE')
       ) {
@@ -46,6 +49,47 @@ angular.module('dominionFrontendApp')
           choice = $scope.choice = game.players[playerId].choices[0];
         }
       }
+
+      $scope.playBackGame = function(){
+        playBack = true;
+        console.log("Play back game");
+        console.dir(game);
+        var turns = game.pastTurns;
+        var time = 0;
+        $scope.play = [];
+        var playBackDo = [];
+
+        for(var i in turns ){
+          console.dir(turns[i]);
+
+          if(turns[i] && turns[i].play.length > 0) {
+            time += 2000
+            playBackDo.push($scope.playTurn(turns[i], time));
+
+          }
+        }
+        Promise.all(playBackDo);
+      };
+
+      $scope.playTurn = function(t, time) {
+        var defer = Promise.defer();
+        var thisTurn = [];
+        var inPlay = t.play;
+        for(var i in inPlay){
+          console.dir(inPlay[i])
+          console.log(inPlay[i]);
+          thisTurn.push(inPlay[i]);
+        }
+
+
+
+        return defer.promise.then(
+          function(plays){
+            console.dir(plays);
+            $scope.play = plays;
+          }
+        ).then(function(){return $timeout(console.log, time)});
+      };
 
       $scope.commonComparator = function(c1, c2){
         if(c1.kingdomSortOrder == c2.kingdomSortOrder){
@@ -228,12 +272,11 @@ angular.module('dominionFrontendApp')
       return choice && choice.options && choice.options.indexOf(id) >= 0
     };
 
-
     var reload = function(){
       var Game = $resource(baseUrl+'/dominion/:gameId');
       GameData.find(gameId, { bypassCache: true })
         .then(function(response){
-          if($scope.game.hashCode != response.hashCode) {
+          if(!playBack && $scope.game.hashCode != response.hashCode) {
             updateData(response, playerId)
           }
         });

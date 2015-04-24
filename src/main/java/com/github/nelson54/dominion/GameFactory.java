@@ -20,7 +20,7 @@ public class GameFactory {
 
         game.setKingdom(kingdomFactory.getKingdomFromCards(cards, players));
         game.setPlayers(new HashMap<>());
-        game.setTurnOrder(new HashSet<>());
+        game.setTurnOrder(new LinkedHashSet<>());
 
         addPlayers(players, game);
         game.nextPlayer();
@@ -33,7 +33,7 @@ public class GameFactory {
 
         game.setKingdom(kingdomFactory.getKingdomFromCards(cards, ai + humans));
         game.setPlayers(new HashMap<>());
-        game.setTurnOrder(new HashSet<>());
+        game.setTurnOrder(new LinkedHashSet<>());
 
         addAiPlayers(ai, game);
         addPlayers(humans, game);
@@ -49,7 +49,7 @@ public class GameFactory {
 
         game.setKingdom(kingdomFactory.getKingdomFromCards(cards, 2));
         game.setPlayers(new HashMap<>());
-        game.setTurnOrder(new HashSet<>());
+        game.setTurnOrder(new LinkedHashSet<>());
 
         Player p1 = createAiPlayer(game, game.getPlayers(), ai1, game.getKingdom(), ai1.getClass().toString());
         Player p2 = createAiPlayer(game, game.getPlayers(), ai2, game.getKingdom(), ai2.getClass().toString());
@@ -70,7 +70,7 @@ public class GameFactory {
 
         game.setKingdom(kingdomFactory.getKingdomAllCards());
         game.setPlayers(new HashMap<>());
-        game.setTurnOrder(new HashSet<>());
+        game.setTurnOrder(new LinkedHashSet<>());
 
         addPlayers(players, game);
         game.nextPlayer();
