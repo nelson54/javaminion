@@ -5,9 +5,7 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
-import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.cards.CardState;
-import com.github.nelson54.dominion.cards.ComplexActionCard;
+import com.github.nelson54.dominion.cards.*;
 import com.github.nelson54.dominion.effects.Effect;
 
 import java.util.HashSet;
@@ -108,9 +106,15 @@ public class Choice {
         if (isComplete) {
             choices.remove(this);
             resolved.add(this);
-            if (choices.size() == 0) {
+
+            if(turn.getActionPool() == 0 || Cards.cardsOfType(turn.getPlayer().getHand(), ActionCard.class).size() == 0) {
+                turn.endPhase();
+            } else if (choices.size() == 0) {
+                turn.getPlayer().onActionPhase();
                 game.getTurn().setPhase(Phase.ACTION);
             }
+
+
         }
     }
 
