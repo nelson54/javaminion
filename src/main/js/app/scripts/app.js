@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-var baseUrl = "http://localhost:8080";
+var baseUrl = "http://localhost:9001";
 //var baseUrl = "";
 
 angular

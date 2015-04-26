@@ -140,15 +140,17 @@
     <span>Actions: {{turn.actionPool}}</span><br>
     <span>Buys: {{turn.buyPool}}</span><br>
     <span>Money: {{turn.money}}</span><br>
+    <span>Turn: {{playBackTurn}}</span><br>
     <span ng-if="test">Victory Points: {{player.victoryPoints}}</span><br>
+
     <p ng-if="test">
-      <button ng-click="shuffle()">Shuffle</button>
+      <button type="button" class="btn btn-default" ng-click="shuffle()">Shuffle</button>
     </p>
     <p ng-if="test">
-      <button ng-click="drawHand()">Draw Hand</button>
+      <button type="button" class="btn btn-default" ng-click="drawHand()">Draw Hand</button>
     </p>
     <p ng-if="test">
-      <button ng-click="discardHand()">Discard Hand</button>
+      <button type="button" class="btn btn-default" ng-click="discardHand()">Discard Hand</button>
     </p>
     <p>
       <button ng-if="turn.phase != 'BUY' && turn.phase != 'WAITING_FOR_OPPONENT' && turn.phase != 'WAITING_FOR_CHOICE'" type="button" class="btn btn-default" ng-disable="turn.phase != 'ACTION'" ng-click="nextPhase()">Next</button>

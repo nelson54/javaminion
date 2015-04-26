@@ -13,23 +13,36 @@ angular.module('dominionFrontendApp')
       play,
       discard,
       choice,
-      playBack = false;
+      playBack = false,
+      playBackTurn = 0,
+      playBackPointer = 0;
 
-    $scope.test = false;
+
+    $scope.playBackTurn = playBackTurn;
+    $scope.test = true;
     $scope.game = game;
 
     var repeat = function() {
-      if (
-        !playBack &&
-        player &&
-        (player.currentTurn.phase === 'WAITING_FOR_OPPONENT' ||
-        player.currentTurn.phase === 'WAITING_FOR_CHOICE')
-      ) {
+      $timeout(function () {
+        reload(gameId);//gameId);
+      }, 1000);
+    };
 
-        $timeout(function () {
-          reload(gameId);//gameId);
-        }, 1000);
+    $scope.playBackGame = function(){
+      playBack = true;
+    };
+
+    $scope.playTurn = function(t, i) {
+      var playTurn = $scope.game.pastTurns[t];
+
+
+      if(!playTurn || playTurn.play && playTurn.play.length < i){
+        playBackTurn++;
+        playBackPointer = 0;
+      } else if(playTurn.play && playTurn.play.length) {
+        $scope.play.append(playTurn.play[i]);
       }
+
     };
 
     var updateData = function(game){
@@ -49,47 +62,6 @@ angular.module('dominionFrontendApp')
           choice = $scope.choice = game.players[playerId].choices[0];
         }
       }
-
-      $scope.playBackGame = function(){
-        playBack = true;
-        console.log("Play back game");
-        console.dir(game);
-        var turns = game.pastTurns;
-        var time = 0;
-        $scope.play = [];
-        var playBackDo = [];
-
-        for(var i in turns ){
-          console.dir(turns[i]);
-
-          if(turns[i] && turns[i].play.length > 0) {
-            time += 2000
-            playBackDo.push($scope.playTurn(turns[i], time));
-
-          }
-        }
-        Promise.all(playBackDo);
-      };
-
-      $scope.playTurn = function(t, time) {
-        var defer = Promise.defer();
-        var thisTurn = [];
-        var inPlay = t.play;
-        for(var i in inPlay){
-          console.dir(inPlay[i])
-          console.log(inPlay[i]);
-          thisTurn.push(inPlay[i]);
-        }
-
-
-
-        return defer.promise.then(
-          function(plays){
-            console.dir(plays);
-            $scope.play = plays;
-          }
-        ).then(function(){return $timeout(console.log, time)});
-      };
 
       $scope.commonComparator = function(c1, c2){
         if(c1.kingdomSortOrder == c2.kingdomSortOrder){
@@ -276,9 +248,18 @@ angular.module('dominionFrontendApp')
       var Game = $resource(baseUrl+'/dominion/:gameId');
       GameData.find(gameId, { bypassCache: true })
         .then(function(response){
-          if(!playBack && $scope.game.hashCode != response.hashCode) {
-            updateData(response, playerId)
+          if(!playBack &&
+            player &&
+            (player.currentTurn.phase === 'WAITING_FOR_OPPONENT' ||
+            player.currentTurn.phase === 'WAITING_FOR_CHOICE') &&
+            !playBack && $scope.game.hashCode != response.hashCode) {
+            updateData(response, playerId);
+            return;
+          } else if(playBack) {
+            $scope.playTurn(playBackTurn, playBackPointer);
+            playBackPointer++;
           }
+          repeat();
         });
     };
 
