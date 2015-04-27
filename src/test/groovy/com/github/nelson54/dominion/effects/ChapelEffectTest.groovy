@@ -44,7 +44,6 @@ class ChapelEffectTest extends DominionTestCase {
         cr.setDone(true)
 
         choice.apply(cr, turn)
-        assertEquals "Phase is ACTION ", Phase.ACTION, turn.getPhase()
     }
 
     Choice getChoice(){

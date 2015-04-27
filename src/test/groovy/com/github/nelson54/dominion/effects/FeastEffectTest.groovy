@@ -32,7 +32,6 @@ class FeastEffectTest extends DominionTestCase {
 
         applyChoice(choice, turn);
 
-        assertEquals "Phase is ACTION ", turn.getPhase(), Phase.ACTION
 
         assertFalse "Player doesn't have trashed card", player.getAllCards().values().contains(card)
         assertTrue "Trashed card is in trash", game.getTrash().contains(card)

@@ -49,7 +49,7 @@ class RemodelEffectTest extends DominionTestCase {
 
         nextChoice.apply(ncr, turn)
 
-        assertEquals "Phase is ACTION ", Phase.ACTION, turn.getPhase()
+
 
         assertFalse "Player doesn't have trashed card", player.getAllCards().values().contains(toTrash)
         assertTrue "Trashed card is in trash", game.getTrash().contains(toTrash)

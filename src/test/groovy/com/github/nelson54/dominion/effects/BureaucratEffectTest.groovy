@@ -47,11 +47,11 @@ class BureaucratEffectTest extends DominionTestCase {
 
         applyChoice(getChoice(), turn);
 
-        assertEquals "Phase is ACTION ", Phase.ACTION, turn.getPhase()
-
         turn.actionPool++;
 
         hand.clear()
+
+        turn.setPhase(Phase.ACTION)
 
         for (int i = 0; i < 5; i++) {
             Card card = game.giveCardToPlayer("Copper", player)
@@ -60,7 +60,7 @@ class BureaucratEffectTest extends DominionTestCase {
 
         turn.playCard(bureaucrat, player, game)
         turn.getPlay().clear();
-        //assertEquals "Phase is ACTION ", Phase.ACTION, turn.getPhase()
+
 
     }
 
