@@ -43,6 +43,23 @@ angular
           }
         }
       })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl',
+        resolve : {
+          baseUrl: function() {
+            return baseUrl;
+          },
+          recommendedCards: function($q, $http){
+            var defer = $q.defer();
+            $http.get(baseUrl+'/dominion/recommended')
+              .success(function(response){
+                defer.resolve(response);
+              });
+            return defer.promise;
+          }
+        }
+      })
       .when('/games/:game', {
         templateUrl: 'views/game.html',
         controller: 'GameCtrl',
