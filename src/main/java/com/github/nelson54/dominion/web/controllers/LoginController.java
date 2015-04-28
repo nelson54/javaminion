@@ -22,7 +22,7 @@ public class LoginController {
     }
 
     @RequestMapping(value="/login", method=RequestMethod.POST)
-    void submit(
+    void login(
             @RequestParam
             String username
     ) {
