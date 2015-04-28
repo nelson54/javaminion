@@ -1,6 +1,8 @@
 package com.github.nelson54.dominion.web.users;
 
 
+import com.github.nelson54.dominion.User;
+
 public final class SecurityContext {
 
     private static final ThreadLocal<User> currentUser = new ThreadLocal<User>();

@@ -1,5 +1,6 @@
 package com.github.nelson54.dominion.web.users;
 
+import com.github.nelson54.dominion.User;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
