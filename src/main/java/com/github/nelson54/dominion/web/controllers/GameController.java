@@ -37,6 +37,7 @@ public class GameController {
     Game createGame(
             @RequestBody com.github.nelson54.dominion.web.gamebuilder.Game game
     ) throws InstantiationException, IllegalAccessException {
+        gameProvider.getMatching().add(game);
         return gameProvider.createAiGameBySet(game.getCardSet(), game.numberOfAiPlayers(), game.numberOfHumanPlayers());
     }
 

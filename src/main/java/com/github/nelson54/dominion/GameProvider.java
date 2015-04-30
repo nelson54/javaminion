@@ -1,14 +1,10 @@
 package com.github.nelson54.dominion;
 
 import com.github.nelson54.dominion.cards.RecommendedCards;
-import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class GameProvider {
@@ -16,11 +12,12 @@ public class GameProvider {
     @Autowired
     GameFactory gameFactory;
 
-    private Multimap<String, String> tokenToIds;
+    private List<com.github.nelson54.dominion.web.gamebuilder.Game> matching;
     private Map<String, Game> gamesById;
     private Set<String> games;
 
     public GameProvider() {
+        matching = new ArrayList<>();
         gamesById = new HashMap<>();
         games = new LinkedHashSet<>();
     }
@@ -45,6 +42,14 @@ public class GameProvider {
         games.add(game.getId().toString());
         gamesById.put(game.getId().toString(), game);
         return game;
+    }
+
+    public List<com.github.nelson54.dominion.web.gamebuilder.Game> getMatching() {
+        return matching;
+    }
+
+    public void setMatching(List<com.github.nelson54.dominion.web.gamebuilder.Game> matching) {
+        this.matching = matching;
     }
 
     public Set<String> listGames() {

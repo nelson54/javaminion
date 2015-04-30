@@ -57,38 +57,13 @@
   </ul>
 </div>
 
-<!--<div class="controls-container" ng-if="hasCurrentPlayer()">
-  <p>Phase: {{turn.phase}}</p>
-  <span ng-if="test">Id: {{player.id}}</span><br>
-  <span>Actions: {{turn.actionPool}}</span><br>
-  <span>Buys: {{turn.buyPool}}</span><br>
-  <span>Money: {{turn.money}}</span><br>
-  <span ng-if="test">Victory Points: {{player.victoryPoints}}</span><br>
-  <p ng-if="test">
-    <button ng-click="shuffle()">Shuffle</button>
-  </p>
-  <p ng-if="test">
-    <button ng-click="drawHand()">Draw Hand</button>
-  </p>
-  <p ng-if="test">
-    <button ng-click="discardHand()">Discard Hand</button>
-  </p>
-  <p>
-    <button ng-if="turn.phase != 'BUY' && turn.phase != 'WAITING_FOR_OPPONENT' && turn.phase != 'WAITING_FOR_CHOICE'" type="button" class="btn btn-default" ng-disable="turn.phase != 'ACTION'" ng-click="nextPhase()">Next Phase</button>
-    <button ng-if="turn.phase == 'BUY'" ng-click="nextPhase()" type="button" class="btn btn-default">End Turn</button>
-    <button ng-if="choice && !choice.dialog" ng-enable="!choice.required" type="button" class="btn btn-default" ng-click="chooseDone(game, player, choice)">
-      Done
-    </button>
-  </p>
-</div>-->
-
 <div class="modal choice-box" ng-if="choice && hasCurrentPlayer() && choice.dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-title">Choice<a class="anchorjs-link" href="#modal-title"><span class="anchorjs-icon"></span></a></h4>
       </div>
-      <p ng-if="choice.message">{{choice.message}}</p>
+      <p ng-if="awchoice.message">{{choice.message}}</p>
       <ul>
         <li ng-repeat="card in choice.cardOptions">
           <button ng-disabled="" ng-click="choose(game, player, choice, card)">{{card.name}}</button>
