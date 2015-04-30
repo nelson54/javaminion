@@ -38,6 +38,7 @@ public class GameFactory {
         addAiPlayers(ai, game);
         addPlayers(humans, game);
 
+        if(humans > 0)
         game.nextPlayer();
 
         return game;

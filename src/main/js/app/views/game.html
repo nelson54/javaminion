@@ -63,7 +63,7 @@
       <div class="modal-header">
         <h4 class="modal-title" id="modal-title">Choice<a class="anchorjs-link" href="#modal-title"><span class="anchorjs-icon"></span></a></h4>
       </div>
-      <p ng-if="choice.message">{{choice.message}}</p>
+      <p ng-if="awchoice.message">{{choice.message}}</p>
       <ul>
         <li ng-repeat="card in choice.cardOptions">
           <button ng-disabled="" ng-click="choose(game, player, choice, card)">{{card.name}}</button>

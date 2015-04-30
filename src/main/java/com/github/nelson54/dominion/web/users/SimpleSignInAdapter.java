@@ -1,11 +1,9 @@
 package com.github.nelson54.dominion.web.users;
 
-import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.User;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Derek on 4/16/2015.

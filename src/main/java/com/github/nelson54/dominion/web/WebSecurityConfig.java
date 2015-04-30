@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
 
 @Configuration
 @EnableWebMvcSecurity
@@ -15,11 +16,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                //.antMatchers("").hasAnyRole("USER")
+                .antMatchers("/test").hasAnyRole("USER")
                 .anyRequest().anonymous()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
                 .and()
                 .logout()
                 .permitAll();
@@ -32,8 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
+/*        auth
                 .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+                .withUser("user").password("password").roles("USER");*/
     }
 }
