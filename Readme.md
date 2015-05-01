@@ -5,6 +5,10 @@
 ## Todo
 - [ ] Authentication.
 - [ ] Matchmaking.
+    - [ ] Create game page
+    - [ ] Display open games
+    - [ ] Join game
+    - [ ] Create game
 - [x] Thief reveals non-treasure cards.
 - [x] Cellar should remove the cards from your hand after you mark them for being discarded.
 - [ ] Animations.
