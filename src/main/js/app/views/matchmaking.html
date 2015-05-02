@@ -1,0 +1,9 @@
+<div class="game-list-container">
+  <button ng-click="getGames()">Refresh</button><button ng-click="newGame = true">New</button>
+
+  <ul class="game-list">
+    <li ng-repeat="id in games">
+      <a href="#/games/{{id}}">{{id}}</a>
+    </li>
+  </ul>
+</div>

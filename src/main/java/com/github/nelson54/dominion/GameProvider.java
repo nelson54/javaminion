@@ -44,7 +44,7 @@ public class GameProvider {
         return game;
     }
 
-    public List<com.github.nelson54.dominion.web.gamebuilder.Game> getMatching() {
+    public List<com.github.nelson54.dominion.web.gamebuilder.Game> getMatches() {
         return matching;
     }
 

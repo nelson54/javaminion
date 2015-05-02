@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class Game {
 
+    String id;
     String cardSet;
     int count;
     List<Player> players;

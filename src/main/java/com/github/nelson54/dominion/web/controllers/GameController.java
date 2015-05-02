@@ -1,9 +1,11 @@
 package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.cards.RecommendedCards;
 import com.github.nelson54.dominion.GameProvider;
+import com.github.nelson54.dominion.cards.RecommendedCards;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -37,7 +39,7 @@ public class GameController {
     Game createGame(
             @RequestBody com.github.nelson54.dominion.web.gamebuilder.Game game
     ) throws InstantiationException, IllegalAccessException {
-        gameProvider.getMatching().add(game);
+        gameProvider.getMatches().add(game);
         return gameProvider.createAiGameBySet(game.getCardSet(), game.numberOfAiPlayers(), game.numberOfHumanPlayers());
     }
 
@@ -50,5 +52,10 @@ public class GameController {
         game.getTurn().endPhase();
 
         return game;
+    }
+
+    @RequestMapping("/matches")
+    Page<com.github.nelson54.dominion.web.gamebuilder.Game> matches(){
+        return new PageImpl<>(gameProvider.getMatches());
     }
 }
