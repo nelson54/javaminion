@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/dominion")
@@ -57,5 +58,12 @@ public class GameController {
     @RequestMapping("/matches")
     Page<com.github.nelson54.dominion.web.gamebuilder.Game> matches(){
         return new PageImpl<>(gameProvider.getMatches());
+    }
+
+    @RequestMapping(value = "/matches", method = RequestMethod.POST)
+    void createMatch(com.github.nelson54.dominion.web.gamebuilder.Game game){
+        game.setId(UUID.randomUUID().toString());
+
+        gameProvider.getMatches().add(game);
     }
 }
