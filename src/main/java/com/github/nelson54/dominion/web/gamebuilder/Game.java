@@ -54,4 +54,15 @@ public class Game {
     public int numberOfHumanPlayers(){
         return 1 + players.size() - numberOfAiPlayers();
     }
+
+    public Player getUnsetPlayer(){
+        //TODO write unset human player function
+        return null;
+    }
+
+    public Boolean hasRemainingPlayers(){
+        //TODO implement function
+
+        return null;
+    }
 }

@@ -6,6 +6,8 @@ import com.github.nelson54.dominion.cards.RecommendedCards;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -40,7 +42,7 @@ public class GameController {
     Game createGame(
             @RequestBody com.github.nelson54.dominion.web.gamebuilder.Game game
     ) throws InstantiationException, IllegalAccessException {
-        gameProvider.getMatches().add(game);
+        gameProvider.getMatching().put(game.getId(), game);
         return gameProvider.createAiGameBySet(game.getCardSet(), game.numberOfAiPlayers(), game.numberOfHumanPlayers());
     }
 
@@ -57,13 +59,24 @@ public class GameController {
 
     @RequestMapping("/matches")
     Page<com.github.nelson54.dominion.web.gamebuilder.Game> matches(){
-        return new PageImpl<>(gameProvider.getMatches());
+        //return new PageImpl<>(gameProvider.getMatching());
+
+        return null;
+    }
+
+    void join(String gameId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        com.github.nelson54.dominion.web.gamebuilder.Game game =gameProvider.getMatching().get(gameId);
+
+        game.getUnsetPlayer().setId(authentication.getName());
     }
 
     @RequestMapping(value = "/matches", method = RequestMethod.POST)
     void createMatch(com.github.nelson54.dominion.web.gamebuilder.Game game){
         game.setId(UUID.randomUUID().toString());
+        gameProvider.getMatching().put(game.getId(), game);
 
-        gameProvider.getMatches().add(game);
+
     }
 }

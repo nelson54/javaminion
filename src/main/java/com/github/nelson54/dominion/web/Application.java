@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.KingdomFactory;
+import com.github.nelson54.dominion.UsersProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.*;
@@ -27,6 +28,11 @@ public class Application extends WebMvcConfigurerAdapter {
         KingdomFactory kingdomFactory = new KingdomFactory();
         gameFactory.setKingdomFactory(kingdomFactory);
         return gameFactory;
+    }
+
+    @Bean
+    UsersProvider getUsersProvider(){
+        return new UsersProvider();
     }
 
     @Bean

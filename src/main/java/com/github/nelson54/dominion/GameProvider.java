@@ -12,12 +12,12 @@ public class GameProvider {
     @Autowired
     GameFactory gameFactory;
 
-    private List<com.github.nelson54.dominion.web.gamebuilder.Game> matching;
+    private HashMap<String, com.github.nelson54.dominion.web.gamebuilder.Game> matching;
     private Map<String, Game> gamesById;
     private Set<String> games;
 
     public GameProvider() {
-        matching = new ArrayList<>();
+        matching = new HashMap<>();
         gamesById = new HashMap<>();
         games = new LinkedHashSet<>();
     }
@@ -44,12 +44,8 @@ public class GameProvider {
         return game;
     }
 
-    public List<com.github.nelson54.dominion.web.gamebuilder.Game> getMatches() {
+    public HashMap<String, com.github.nelson54.dominion.web.gamebuilder.Game> getMatching() {
         return matching;
-    }
-
-    public void setMatching(List<com.github.nelson54.dominion.web.gamebuilder.Game> matching) {
-        this.matching = matching;
     }
 
     public Set<String> listGames() {
