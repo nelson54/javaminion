@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.web.gamebuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Derek on 4/18/2015.
@@ -55,14 +56,14 @@ public class Game {
         return 1 + players.size() - numberOfAiPlayers();
     }
 
-    public Player getUnsetPlayer(){
-        //TODO write unset human player function
-        return null;
+    public Optional<Player> findUnsetPlayer(){
+        return players.stream()
+                .filter(p -> p.getId() != null)
+                .findFirst();
     }
 
     public Boolean hasRemainingPlayers(){
-        //TODO implement function
 
-        return null;
+        return findUnsetPlayer().isPresent();
     }
 }

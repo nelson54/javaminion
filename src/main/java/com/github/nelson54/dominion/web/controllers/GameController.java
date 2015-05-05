@@ -64,12 +64,16 @@ public class GameController {
         return null;
     }
 
-    void join(String gameId){
+    void join(String gameId) throws InstantiationException, IllegalAccessException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         com.github.nelson54.dominion.web.gamebuilder.Game game =gameProvider.getMatching().get(gameId);
 
-        game.getUnsetPlayer().setId(authentication.getName());
+        if(game.hasRemainingPlayers()){
+            game.findUnsetPlayer().ifPresent(p -> p.setId(authentication.getName()));
+        } else {
+            gameProvider.createAiGameBySet(game.getCardSet(), game.numberOfAiPlayers(), game.numberOfHumanPlayers());
+        }
     }
 
     @RequestMapping(value = "/matches", method = RequestMethod.POST)
