@@ -13,7 +13,7 @@ import static com.github.nelson54.dominion.Phase.WAITING_FOR_OPPONENT;
 
 public class Player {
     @JsonProperty
-    UUID id;
+    String id;
 
     @JsonProperty
     String name;
@@ -37,7 +37,7 @@ public class Player {
     Set<Choice> choices;
 
     public Player() {
-        id = UUID.randomUUID();
+        id = UUID.randomUUID().toString();
         hand = new HashSet<>();
         deck = new LinkedHashSet<>();
         discard = new HashSet<>();
@@ -177,11 +177,11 @@ public class Player {
 
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    void setId(UUID id) {
+    protected void setId(String id) {
         this.id = id;
     }
 

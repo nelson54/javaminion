@@ -99,6 +99,7 @@ public class GameFactory {
 
     Player createHumanPlayer(Game game, Map<String, Player> players, Kingdom kingdom, String name) {
         Player player = new Player();
+        player.setId(UUID.randomUUID().toString());
         player.setGame(game);
         player.setName(name);
 
@@ -117,6 +118,7 @@ public class GameFactory {
 
     Player createAiPlayer(Game game, Map<String, Player> players, AiStrategy aiStrategy, Kingdom kingdom, String name) {
         AiPlayer player = new AiPlayer();
+        player.setId(UUID.randomUUID().toString());
         player.setName(name);
         player.setAiStrategy(aiStrategy);
         player.setGame(game);
