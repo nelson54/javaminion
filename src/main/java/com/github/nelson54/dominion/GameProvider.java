@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion;
 
 import com.github.nelson54.dominion.cards.RecommendedCards;
+import com.github.nelson54.dominion.web.gamebuilder.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,10 +27,10 @@ public class GameProvider {
         return gamesById.get(uuid);
     }
 
-    public Game createGameBySet(String cardSet, int count) throws IllegalAccessException, InstantiationException {
+    public Game createGameBySet(String cardSet, Set<com.github.nelson54.dominion.web.gamebuilder.Player> players) throws IllegalAccessException, InstantiationException {
         RecommendedCards rc = RecommendedCards.ofName(cardSet);
 
-        Game game = gameFactory.createGame(rc.getCards(), count);
+        Game game = gameFactory.createGame(rc.getCards(), players);
         games.add(game.getId().toString());
         gamesById.put(game.getId().toString(), game);
         return game;

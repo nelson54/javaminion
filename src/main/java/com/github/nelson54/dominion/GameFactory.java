@@ -15,10 +15,10 @@ public class GameFactory {
 
     private KingdomFactory kingdomFactory;
 
-    public Game createGame(Class<? extends Card>[] cards, int players) throws InstantiationException, IllegalAccessException {
+    public Game createGame(Class<? extends Card>[] cards, Set<com.github.nelson54.dominion.web.gamebuilder.Player> players) throws InstantiationException, IllegalAccessException {
         Game game = new Game();
 
-        game.setKingdom(kingdomFactory.getKingdomFromCards(cards, players));
+        game.setKingdom(kingdomFactory.getKingdomFromCards(cards, players.size()));
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new LinkedHashSet<>());
 
@@ -34,9 +34,6 @@ public class GameFactory {
         game.setKingdom(kingdomFactory.getKingdomFromCards(cards, ai + humans));
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new LinkedHashSet<>());
-
-        addAiPlayers(ai, game);
-        addPlayers(humans, game);
 
         if(humans > 0)
         game.nextPlayer();
@@ -73,17 +70,22 @@ public class GameFactory {
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new LinkedHashSet<>());
 
-        addPlayers(players, game);
+        //addPlayers(players, game);
         game.nextPlayer();
 
         return game;
     }
 
-    void addPlayers(int players, Game game) {
-        for (; players > 0; players--) {
-            Player player = createHumanPlayer(game, game.getPlayers(), game.getKingdom(), "Human " + String.valueOf(players));
+    void addPlayers(Set<com.github.nelson54.dominion.web.gamebuilder.Player> players, Game game) {
+        for(com.github.nelson54.dominion.web.gamebuilder.Player player : players){
+            Player p;
+            if(player.isAi()){
+                p = createHumanPlayer(game, game.getPlayers(), game.getKingdom(), "Human ");
+            } else {
+                p = createAiPlayer(game, game.getPlayers(), game.getKingdom(), "Human ");
+            }
 
-            game.getPlayers().put(player.getId().toString(), player);
+            game.getPlayers().put(p.getId(), p);
         }
     }
 
