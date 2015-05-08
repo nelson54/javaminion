@@ -49,6 +49,10 @@ public class GameProvider {
         return matching;
     }
 
+    public Set<Game> getGamesForPlayer() {
+        return null;
+    }
+
     public Set<String> listGames() {
         return games;
     }
