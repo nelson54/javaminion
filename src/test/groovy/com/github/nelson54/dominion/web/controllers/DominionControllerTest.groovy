@@ -23,24 +23,8 @@ class DominionControllerTest extends DominionTestCase {
     @Before
     void setUp() {
         super.setUp()
-        Game build = new Game()
-        Player p1 = new Player()
-        p1.setAi(true)
 
-        Player p2 = new Player()
-        p2.setAi(true)
-
-        List<Player> players = new ArrayList<>()
-
-        players.add(p1)
-        players.add(p2)
-
-        build.setPlayers(players)
-
-        build.setCardSet(RecommendedCards.FIRST_GAME.getName())
-        build.setCount(2)
-
-        game = gameController.createGame(build);
+        game = gameController.createGame(gameModel());
     }
 
     @Test
@@ -52,14 +36,5 @@ class DominionControllerTest extends DominionTestCase {
     @Test
     void testGetGame() {
         game = gameController.getGame(game.getId().toString())
-    }
-
-    @Test
-    void testEndPhase() {
-        game.getTurn().setPhase(Phase.ACTION)
-        Phase pastPhase = game.getTurn().getPhase()
-        gameController.endPhase(game.getId().toString())
-
-        assert game.getTurn().getPhase() != pastPhase, "phase ended"
     }
 }

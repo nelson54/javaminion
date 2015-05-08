@@ -150,4 +150,15 @@ public class PlayerController {
 
         return game;
     }
+
+    @RequestMapping(value = "/next-phase", method = RequestMethod.POST)
+    Game endPhase(
+            @PathVariable("gameId")
+            String id
+    ) {
+        Game game = gameProvider.getGameByUuid(id);
+        game.getTurn().endPhase();
+
+        return game;
+    }
 }

@@ -9,6 +9,7 @@ import com.github.nelson54.dominion.ai.AiStrategy;
 import com.github.nelson54.dominion.cards.Card;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class GameFactory {
@@ -18,9 +19,10 @@ public class GameFactory {
     public Game createGame(Class<? extends Card>[] cards, Set<com.github.nelson54.dominion.web.gamebuilder.Player> players) throws InstantiationException, IllegalAccessException {
         Game game = new Game();
 
-        game.setKingdom(kingdomFactory.getKingdomFromCards(cards, players.size()));
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new LinkedHashSet<>());
+
+        game.setKingdom(kingdomFactory.getKingdomFromCards(cards, players.size()));
 
         addPlayers(players, game);
         game.nextPlayer();
@@ -28,15 +30,20 @@ public class GameFactory {
         return game;
     }
 
-    public Game createAiGame(Class<? extends Card>[] cards, int ai, int humans) throws InstantiationException, IllegalAccessException {
+    public Game createAiGame(Class<? extends Card>[] cards, com.github.nelson54.dominion.web.gamebuilder.Game gameModel) throws InstantiationException, IllegalAccessException {
         Game game = new Game();
 
-        game.setKingdom(kingdomFactory.getKingdomFromCards(cards, ai + humans));
         game.setPlayers(new HashMap<>());
-        game.setTurnOrder(new LinkedHashSet<>());
+        game.setTurnOrder(new HashSet<>());
 
-        if(humans > 0)
-        game.nextPlayer();
+        game.setKingdom(kingdomFactory.getKingdomFromCards(cards, gameModel.getPlayers().size()));
+
+        addPlayers(gameModel.getPlayers(), game);
+
+
+        if(gameModel.numberOfHumanPlayers() > 0) {
+            game.nextPlayer();
+        }
 
         return game;
     }
@@ -55,22 +62,22 @@ public class GameFactory {
         p1.setName("p1");
         p2.setName("p2");
 
-        game.getPlayers().put(p1.getId().toString(), p1);
-        game.getPlayers().put(p2.getId().toString(), p2);
+        game.getPlayers().put(p1.getId(), p1);
+        game.getPlayers().put(p2.getId(), p2);
 
         game.nextPlayer();
 
         return game;
     }
 
-    public Game createGameAllCards(int players) throws InstantiationException, IllegalAccessException {
+    public Game createGameAllCards(com.github.nelson54.dominion.web.gamebuilder.Game g) throws InstantiationException, IllegalAccessException {
         Game game = new Game();
 
         game.setKingdom(kingdomFactory.getKingdomAllCards());
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new LinkedHashSet<>());
 
-        //addPlayers(players, game);
+        addPlayers(g.getPlayers(), game);
         game.nextPlayer();
 
         return game;
@@ -80,9 +87,9 @@ public class GameFactory {
         for(com.github.nelson54.dominion.web.gamebuilder.Player player : players){
             Player p;
             if(player.isAi()){
-                p = createHumanPlayer(game, game.getPlayers(), game.getKingdom(), "Human ");
-            } else {
                 p = createAiPlayer(game, game.getPlayers(), game.getKingdom(), "Human ");
+            } else {
+                p = createHumanPlayer(game, game.getPlayers(), game.getKingdom(), "Human ");
             }
 
             game.getPlayers().put(p.getId(), p);

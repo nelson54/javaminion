@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.web.gamebuilder;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by Derek on 4/18/2015.
@@ -11,7 +12,7 @@ public class Game {
     String id;
     String cardSet;
     int count;
-    List<Player> players;
+    Set<Player> players;
 
     public Game() {
     }
@@ -40,11 +41,11 @@ public class Game {
         this.count = count;
     }
 
-    public List<Player> getPlayers() {
+    public Set<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(Set<Player> players) {
         this.players = players;
     }
 

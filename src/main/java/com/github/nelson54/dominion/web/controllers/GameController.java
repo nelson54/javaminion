@@ -10,8 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/dominion")
@@ -43,44 +46,18 @@ public class GameController {
             @RequestBody com.github.nelson54.dominion.web.gamebuilder.Game game
     ) throws InstantiationException, IllegalAccessException {
         gameProvider.getMatching().put(game.getId(), game);
-        return gameProvider.createAiGameBySet(game.getCardSet(), game.numberOfAiPlayers(), game.numberOfHumanPlayers());
+        return gameProvider.createAiGameBySet(game.getCardSet(), game);
     }
 
-    @RequestMapping(value = "/{gameId}/next-phase", method = RequestMethod.POST)
-    Game endPhase(
-            @PathVariable("gameId")
-            String id
-    ) {
-        Game game = gameProvider.getGameByUuid(id);
-        game.getTurn().endPhase();
-
-        return game;
-    }
-
-    @RequestMapping("/matches")
-    Page<com.github.nelson54.dominion.web.gamebuilder.Game> matches(){
-        //return new PageImpl<>(gameProvider.getMatching());
-
-        return null;
-    }
-
-    void join(String gameId) throws InstantiationException, IllegalAccessException {
+    @RequestMapping("/games")
+    Page<String> games(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        com.github.nelson54.dominion.web.gamebuilder.Game game =gameProvider.getMatching().get(gameId);
+        List<String> gameIds = gameProvider.getGamesForPlayer(authentication.getName()).stream()
+                .map(Game::getId)
+                .map(UUID::toString)
+                .collect(Collectors.toList());
 
-        if(game.hasRemainingPlayers()){
-            game.findUnsetPlayer().ifPresent(p -> p.setId(authentication.getName()));
-        } else {
-            gameProvider.createAiGameBySet(game.getCardSet(), game.numberOfAiPlayers(), game.numberOfHumanPlayers());
-        }
-    }
-
-    @RequestMapping(value = "/matches", method = RequestMethod.POST)
-    void createMatch(com.github.nelson54.dominion.web.gamebuilder.Game game){
-        game.setId(UUID.randomUUID().toString());
-        gameProvider.getMatching().put(game.getId(), game);
-
-
+        return new PageImpl<>(gameIds);
     }
 }
