@@ -16,15 +16,15 @@ public class GameFactory {
 
     private KingdomFactory kingdomFactory;
 
-    public Game createGame(Class<? extends Card>[] cards, Set<com.github.nelson54.dominion.web.gamebuilder.Player> players) throws InstantiationException, IllegalAccessException {
+    public Game createGame(Class<? extends Card>[] cards, com.github.nelson54.dominion.web.gamebuilder.Game gameModel) throws InstantiationException, IllegalAccessException {
         Game game = new Game();
 
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new LinkedHashSet<>());
 
-        game.setKingdom(kingdomFactory.getKingdomFromCards(cards, players.size()));
+        game.setKingdom(kingdomFactory.getKingdomFromCards(cards, gameModel.getPlayers().size()));
 
-        addPlayers(players, game);
+        addPlayers(gameModel.getPlayers(), game);
         game.nextPlayer();
 
         return game;
