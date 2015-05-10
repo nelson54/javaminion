@@ -34,9 +34,9 @@ public class GameProvider {
         return gamesById.get(uuid);
     }
 
-    public Game createGameBySet(String cardSet, Set<com.github.nelson54.dominion.web.gamebuilder.Player> players) throws IllegalAccessException, InstantiationException {
+    public Game createGameBySet(String cardSet, com.github.nelson54.dominion.web.gamebuilder.Game gameModel) throws IllegalAccessException, InstantiationException {
         RecommendedCards rc = RecommendedCards.ofName(cardSet);
-        Game game = gameFactory.createGame(rc.getCards(), players);
+        Game game = gameFactory.createGame(rc.getCards(), gameModel);
         addPlayersToGamesByPlayerId(game);
         return game;
     }
