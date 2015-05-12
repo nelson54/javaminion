@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-var baseUrl = "http://localhost:9001";
+var baseUrl = "http://localhost:8080";
 //var baseUrl = "";
 
 angular
@@ -40,9 +40,6 @@ angular
                 defer.resolve(response);
               });
             return defer.promise;
-          },
-          user: function(userService){
-            return userService.get();
           }
         }
       })
@@ -113,8 +110,8 @@ angular
   .factory('GameData', function(DS){
     return DS.defineResource('dominion');
   })
-  .factory('userService', function(DS){
-    return DS.defineResource('user');
+  .factory('UserService', function($resource){
+    return $resource(baseUrl+'/user');
   })
   .config(function (DSProvider) {
     DSProvider.defaults.basePath = baseUrl; // etc.

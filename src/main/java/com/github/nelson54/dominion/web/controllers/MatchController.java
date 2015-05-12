@@ -41,9 +41,17 @@ public class MatchController {
     }
 
     @RequestMapping(value = "/matches", method = RequestMethod.POST)
-    void createMatch(com.github.nelson54.dominion.web.gamebuilder.Game game){
+    void createMatch(com.github.nelson54.dominion.web.gamebuilder.Game game) throws InstantiationException, IllegalAccessException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         game.setId(UUID.randomUUID().toString());
         gameProvider.getMatching().put(game.getId(), game);
+
+        if(game.hasRemainingPlayers()){
+            game.findUnsetPlayer().ifPresent(p -> p.setId(authentication.getName()));
+        } else {
+            gameProvider.createGameBySet(game.getCardSet(), game);
+        }
     }
 
     @RequestMapping(value="/matches", method=RequestMethod.PATCH)
@@ -54,8 +62,9 @@ public class MatchController {
 
         if(game.hasRemainingPlayers()){
             game.findUnsetPlayer().ifPresent(p -> p.setId(authentication.getName()));
-        } else {
-            gameProvider.createAiGameBySet(game.getCardSet(), game);
         }
+
+        Game g = gameProvider.createGameBySet(game.getCardSet(), game);
+
     }
 }

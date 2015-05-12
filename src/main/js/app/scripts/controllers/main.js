@@ -10,6 +10,7 @@
 angular.module('dominionFrontendApp')
   .controller('MainCtrl', function ($scope, $http, $resource, $route, baseUrl, recommendedCards) {
 
+    var Match = $resource(baseUrl+'/dominion/matches/');
     var Game = $resource(baseUrl+'/dominion/');
 
     $scope.games = [];
@@ -25,14 +26,13 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.getGames = function(){
-      return $http.get(baseUrl+'/dominion/')
-        .success(function(response){
-          $scope.games = response;
+      return Match.get(function(response){
+          $scope.games = response.content;
         });
     };
 
     $scope.createGame = function(){
-      var game = new Game({
+      var game = new Match({
         cardSet: $scope.cards,
         players: $scope.players,
         count: $scope.players.length + 1

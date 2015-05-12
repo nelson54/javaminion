@@ -48,7 +48,7 @@ angular.module('dominionFrontendApp')
     var updateData = function(game){
       $scope.game = game;
       players = $scope.players = game.players;
-      logs = $scope.logs = game.logs.reverse();
+      logs = $scope.logs = game.logs;
       if(playerId) {
         player = $scope.player = game.players[playerId];
 
