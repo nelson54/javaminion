@@ -40,6 +40,9 @@ angular
                 defer.resolve(response);
               });
             return defer.promise;
+          },
+          user: function(userService){
+            return userService.get();
           }
         }
       })
@@ -109,6 +112,9 @@ angular
   })
   .factory('GameData', function(DS){
     return DS.defineResource('dominion');
+  })
+  .factory('userService', function(DS){
+    return DS.defineResource('user');
   })
   .config(function (DSProvider) {
     DSProvider.defaults.basePath = baseUrl; // etc.

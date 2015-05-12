@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
@@ -21,7 +23,7 @@ import java.util.UUID;
 @Controller
 public class LoginController {
 
-    @Autowired
+    @Inject
     UsersProvider usersProvider;
 
     @RequestMapping(value="/test", method=RequestMethod.GET)
@@ -32,6 +34,16 @@ public class LoginController {
 
         return "hello";
     }
+
+    @ResponseBody
+    @RequestMapping(value="/user", method=RequestMethod.GET, produces="application/json")
+    User user() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return usersProvider.getUserById(authentication.getName());
+    }
+
+
 
     @RequestMapping(value="/login", method=RequestMethod.GET)
     String login() {
