@@ -60,4 +60,16 @@ public class GameController {
 
         return new PageImpl<>(gameIds);
     }
+
+    @RequestMapping(value = "/{gameId}/next-phase", method = RequestMethod.POST)
+    String endPhase(
+            @PathVariable("gameId")
+            String id
+    ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Game game = gameProvider.getGameByUuid(id);
+        game.getTurn().endPhase();
+        return "redirect: /dominion/"+id+"/"+authentication.getName()+"/next-phase";
+    }
 }
