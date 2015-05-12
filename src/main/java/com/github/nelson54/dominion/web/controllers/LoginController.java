@@ -27,8 +27,8 @@ public class LoginController {
     @RequestMapping(value="/test", method=RequestMethod.GET)
     String hello(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        model.addAttribute("username", authentication.getName());
+        User user = usersProvider.getUserById(authentication.getName());
+        model.addAttribute("username", user.getName());
 
         return "hello";
     }

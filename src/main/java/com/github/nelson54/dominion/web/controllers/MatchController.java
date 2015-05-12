@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.GameProvider;
+import com.github.nelson54.dominion.UsersProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,6 +20,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/dominion")
 public class MatchController {
+
+    @Autowired
+    UsersProvider usersProvider;
 
     @Autowired
     GameProvider gameProvider;
@@ -46,7 +50,7 @@ public class MatchController {
     void join(String gameId) throws InstantiationException, IllegalAccessException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        com.github.nelson54.dominion.web.gamebuilder.Game game =gameProvider.getMatching().get(gameId);
+        com.github.nelson54.dominion.web.gamebuilder.Game game = gameProvider.getMatching().get(gameId);
 
         if(game.hasRemainingPlayers()){
             game.findUnsetPlayer().ifPresent(p -> p.setId(authentication.getName()));
