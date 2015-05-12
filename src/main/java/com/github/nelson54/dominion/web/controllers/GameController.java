@@ -2,6 +2,8 @@ package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.GameProvider;
+import com.github.nelson54.dominion.User;
+import com.github.nelson54.dominion.UsersProvider;
 import com.github.nelson54.dominion.cards.RecommendedCards;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,15 +25,18 @@ public class GameController {
     @Autowired
     GameProvider gameProvider;
 
+    @Autowired
+    UsersProvider usersProvider;
+
     @RequestMapping(value = "/recommended", method = RequestMethod.GET)
     RecommendedCards[] getRecomendedCards(){
         return RecommendedCards.values();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    /*@RequestMapping(method = RequestMethod.GET)
     Set<String> getGames() throws InstantiationException, IllegalAccessException {
         return gameProvider.listGames();
-    }
+    }*/
 
     @RequestMapping(value = "/{gameId}", method = {RequestMethod.GET, RequestMethod.OPTIONS})
     Game getGame(
@@ -41,21 +46,14 @@ public class GameController {
         return gameProvider.getGameByUuid(id);
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.OPTIONS})
-    Game createGame(
-            @RequestBody com.github.nelson54.dominion.web.gamebuilder.Game game
-    ) throws InstantiationException, IllegalAccessException {
-        gameProvider.getMatching().put(game.getId(), game);
-        return gameProvider.createAiGameBySet(game.getCardSet(), game);
-    }
-
-    @RequestMapping("/games")
+    @RequestMapping("/")
     Page<String> games(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        List<String> gameIds = gameProvider.getGamesForPlayer(authentication.getName()).stream()
-                .map(Game::getId)
-                .map(UUID::toString)
+        User user = usersProvider.getUserById(authentication.getName());
+
+        List<String> gameIds = user.getGames()
+                .stream()
                 .collect(Collectors.toList());
 
         return new PageImpl<>(gameIds);
@@ -72,4 +70,8 @@ public class GameController {
         game.getTurn().endPhase();
         return "redirect: /dominion/"+id+"/"+authentication.getName()+"/next-phase";
     }
+
+    //void join
+
+
 }

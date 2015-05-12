@@ -57,14 +57,13 @@ public class Game {
         return 1 + players.size() - numberOfAiPlayers();
     }
 
-    public Optional<Player> findUnsetPlayer(){
+    public Optional<Player> findUnsetHumanPlayer(){
         return players.stream()
-                .filter(p -> p.getId() != null)
+                .filter(p -> p.getId() != null && !p.isAi())
                 .findFirst();
     }
 
     public Boolean hasRemainingPlayers(){
-
-        return findUnsetPlayer().isPresent();
+        return findUnsetHumanPlayer().isPresent();
     }
 }

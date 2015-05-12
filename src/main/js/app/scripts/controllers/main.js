@@ -26,18 +26,18 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.getGames = function(){
-      return Match.get(function(response){
+      return Game.get(function(response){
           $scope.games = response.content;
         });
     };
 
     $scope.createGame = function(){
-      var game = new Match({
+      var match = new Match({
         cardSet: $scope.cards,
         players: $scope.players,
         count: $scope.players.length + 1
       });
-      game.$save(game, $route.reload);
+      match.$save($route.reload);
     };
 
     $scope.updatePlayerCount = function(count){

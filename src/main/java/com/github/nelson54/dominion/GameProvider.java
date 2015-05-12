@@ -1,11 +1,8 @@
 package com.github.nelson54.dominion;
 
 import com.github.nelson54.dominion.cards.RecommendedCards;
-import com.github.nelson54.dominion.web.gamebuilder.*;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multiset;
-import com.google.common.collect.SetMultimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,13 +17,12 @@ public class GameProvider {
     private HashMap<String, com.github.nelson54.dominion.web.gamebuilder.Game> matching;
     private Map<String, Game> gamesById;
     private Multimap<String, Game> gamesByPlayerId;
-    private Set<String> games;
+    //private Set<String> games;
 
 
     public GameProvider() {
         matching = new HashMap<>();
         gamesById = new HashMap<>();
-        games = new LinkedHashSet<>();
         gamesByPlayerId = ArrayListMultimap.create();
     }
 
@@ -34,10 +30,10 @@ public class GameProvider {
         return gamesById.get(uuid);
     }
 
-    public Game createGameBySet(String cardSet, com.github.nelson54.dominion.web.gamebuilder.Game gameModel) throws IllegalAccessException, InstantiationException {
-        RecommendedCards rc = RecommendedCards.ofName(cardSet);
+    public Game createGameBySet(com.github.nelson54.dominion.web.gamebuilder.Game gameModel) throws IllegalAccessException, InstantiationException {
+        RecommendedCards rc = RecommendedCards.ofName(gameModel.getCardSet());
         Game game = gameFactory.createGame(rc.getCards(), gameModel);
-        addPlayersToGamesByPlayerId(game);
+        updateGameLookups(game);
         return game;
     }
 
@@ -45,7 +41,7 @@ public class GameProvider {
         RecommendedCards rc = RecommendedCards.ofName(cardSet);
 
         Game game = gameFactory.createAiGame(rc.getCards(), gameModel);
-        games.add(game.getId().toString());
+        //games.add(game.getId().toString());
         gamesById.put(game.getId().toString(), game);
 
         return game;
@@ -59,12 +55,12 @@ public class GameProvider {
         return gamesByPlayerId.get(id);
     }
 
-    public Set<String> listGames() {
-        return games;
-    }
+    //public Set<String> listGames() {
+    //    return games;
+    //}
 
-    private void addPlayersToGamesByPlayerId (Game game){
-        games.add(game.getId().toString());
+    private void updateGameLookups(Game game){
+        //games.add(game.getId().toString());
         gamesById.put(game.getId().toString(), game);
 
         game.getPlayers().values().forEach(p -> {

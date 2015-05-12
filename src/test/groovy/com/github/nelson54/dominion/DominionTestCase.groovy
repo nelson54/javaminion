@@ -50,10 +50,12 @@ class DominionTestCase extends GroovyTestCase {
 
         com.github.nelson54.dominion.web.gamebuilder.Player p1 = new com.github.nelson54.dominion.web.gamebuilder.Player();
         p1.setId(UUID.randomUUID().toString())
+        p1.setName("p1")
         p1.setAi(false);
 
         com.github.nelson54.dominion.web.gamebuilder.Player p2 = new com.github.nelson54.dominion.web.gamebuilder.Player();
         p2.setId(UUID.randomUUID().toString())
+        p2.setName("p2")
         p2.setAi(false);
 
         players.add(p1)

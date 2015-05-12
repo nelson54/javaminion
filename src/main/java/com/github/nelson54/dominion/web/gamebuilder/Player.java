@@ -8,6 +8,9 @@ public class Player {
     String name;
     boolean ai;
 
+    public Player() {
+    }
+
     public Player(String id) {
         this.id = id;
     }

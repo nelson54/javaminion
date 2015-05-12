@@ -1,18 +1,17 @@
 package com.github.nelson54.dominion.web.controllers;
 
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Kingdom;
-import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.Turn;
+import com.github.nelson54.dominion.*;
 import com.github.nelson54.dominion.cards.ActionCard;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.GameProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,10 +20,15 @@ import java.util.stream.Collectors;
 public class PlayerController {
 
     @Autowired
+    UsersProvider usersProvider;
+
+    @Autowired
     GameProvider gameProvider;
 
     @RequestMapping("/shuffle")
     Game shuffle(
+            @ModelAttribute
+            Optional<User> user,
             @PathVariable("gameId")
             String gameId,
             @PathVariable("playerId")
@@ -40,6 +44,8 @@ public class PlayerController {
 
     @RequestMapping("/draw")
     Game drawHand(
+            @ModelAttribute
+            Optional<User> user,
             @PathVariable("gameId")
             String gameId,
             @PathVariable("playerId")
@@ -55,6 +61,8 @@ public class PlayerController {
 
     @RequestMapping("/discard")
     Game discardHand(
+            @ModelAttribute
+            Optional<User> user,
             @PathVariable("gameId")
             String gameId,
             @PathVariable("playerId")
@@ -70,6 +78,8 @@ public class PlayerController {
 
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
     Game purchase(
+            @ModelAttribute
+            Optional<User> user,
             @PathVariable("gameId")
             String gameId,
             @PathVariable("playerId")
@@ -87,6 +97,8 @@ public class PlayerController {
 
     @RequestMapping(value = "/play", method = RequestMethod.POST)
     Game play(
+            @ModelAttribute
+            Optional<User> user,
             @PathVariable("gameId")
             String gameId,
             @PathVariable("playerId")
@@ -114,6 +126,8 @@ public class PlayerController {
 
     @RequestMapping(value = "/choice", method = RequestMethod.POST)
     Game chooseCard(
+            @ModelAttribute
+            Optional<User> user,
             @PathVariable("gameId")
             String gameId,
             @PathVariable("playerId")
@@ -153,6 +167,8 @@ public class PlayerController {
 
     @RequestMapping(value = "/next-phase", method = RequestMethod.POST)
     Game endPhase(
+            @ModelAttribute
+            Optional<User> user,
             @PathVariable("gameId")
             String id
     ) {
@@ -160,5 +176,12 @@ public class PlayerController {
         game.getTurn().endPhase();
 
         return game;
+    }
+
+    @ModelAttribute("authentication")
+    Optional<User> user(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return Optional.of(usersProvider.getUserById(authentication.getName()));
     }
 }
