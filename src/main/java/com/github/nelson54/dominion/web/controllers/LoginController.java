@@ -2,12 +2,10 @@ package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.User;
 import com.github.nelson54.dominion.UsersProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +49,7 @@ public class LoginController {
     }
 
     @RequestMapping(value="/login", method=RequestMethod.POST)
-    void login(
+    String login(
             @RequestParam
             String username
     ) {
@@ -62,6 +60,7 @@ public class LoginController {
 
         Authentication auth = new UsernamePasswordAuthenticationToken(user.getId(), null, getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
+        return "redirect:/";
     }
 
     @RequestMapping(value="/logout", method=RequestMethod.GET)

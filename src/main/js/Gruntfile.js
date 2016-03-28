@@ -18,7 +18,8 @@ module.exports = function (grunt) {
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
-    dist: 'dist'
+    dist: 'dist',
+    resources: '../resources/public'
   };
 
   // Define the configuration for all the tasks
@@ -46,7 +47,7 @@ module.exports = function (grunt) {
       },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
+        tasks: ['compass:server', 'autoprefixer', 'dist']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -62,7 +63,20 @@ module.exports = function (grunt) {
         ]
       }
     },
-
+    sass: {                              // Task
+      dist: {                            // Target
+        options: {                       // Target options
+          style: 'expanded'
+        },
+        files: [{
+          expand: true,
+          cwd: 'styles',
+          src: ['app/styles/*.scss'],
+          dest: 'dist/styles/',
+          ext: '.css'
+        }]
+      }
+    },
     // The actual grunt server settings
     connect: {
       options: {
@@ -383,11 +397,6 @@ module.exports = function (grunt) {
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/images',
           src: ['generated/*']
-        }, {
-          expand: true,
-          cwd: '.',
-          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
-          dest: '<%= yeoman.dist %>'
         }]
       },
       styles: {
@@ -395,6 +404,12 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      resources: {
+        expand: true,
+        cwd: '.',
+        src: 'dist/*',
+        dest: '<%= yeoman.resources %>'
       }
     },
 
@@ -407,7 +422,7 @@ module.exports = function (grunt) {
         'compass'
       ],
       dist: [
-        'compass:dist',
+        'sass:dist',
         'imagemin',
         'svgmin'
       ]
