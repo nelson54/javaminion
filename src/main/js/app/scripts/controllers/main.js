@@ -40,6 +40,10 @@ angular.module('dominionFrontendApp')
       match.$save($route.reload);
     };
 
+    $scope.cancel = function(){
+      $scope.newGame = false;
+    };
+
     $scope.updatePlayerCount = function(count){
       $scope.players = [];
       for(count; count != 1; count--){

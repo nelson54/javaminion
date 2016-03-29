@@ -37,6 +37,10 @@ angular.module('dominionFrontendApp')
 
     };
 
+    $scope.cancel = function(){
+    
+    };
+
     $scope.updatePlayerCount = function (count) {
       $scope.players = [];
       for (count; count != 1; count--) {
