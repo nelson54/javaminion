@@ -180,9 +180,6 @@ angular.module('dominionFrontendApp')
           choice.yes = response;
           break;
       }
-      if(choose.expectedAnswerType == 'CARD') {
-
-      }
 
       choice.$save({gameId : game.id, playerId:player.id},updateData);
     };
@@ -203,7 +200,7 @@ angular.module('dominionFrontendApp')
 
     $scope.isActivePlayer = function(player) {
       return playerId === player.id;
-    }
+    };
 
     $scope.hasCurrentPlayer = function(){
       return game && game.players && game.players.hasOwnProperty(playerId);

@@ -3,6 +3,7 @@ package com.github.nelson54.dominion.web.gamebuilder;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by Derek on 4/18/2015.
@@ -15,6 +16,7 @@ public class Game {
     Set<Player> players;
 
     public Game() {
+        setId(UUID.randomUUID().toString());
     }
 
     public String getId() {
