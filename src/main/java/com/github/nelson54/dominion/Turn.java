@@ -21,24 +21,24 @@ public class Turn {
     Phase phase;
 
     @JsonBackReference
-    Game game;
+    private Game game;
 
     @JsonIgnore
-    Player player;
+    private Player player;
 
     @JsonIgnore
-    Set<Choice> resolvedChoices;
+    private Set<Choice> resolvedChoices;
 
     @JsonProperty
-    List<Card> play;
+    private List<Card> play;
 
-    Multimap<String, Card> revealed;
+    private Multimap<String, Card> revealed;
     Set<Card> gained;
     Set<Card> bought;
 
-    long actionPool;
-    long moneyPool;
-    long buyPool;
+    private long actionPool;
+    private long moneyPool;
+    private long buyPool;
 
     private String playerId;
 

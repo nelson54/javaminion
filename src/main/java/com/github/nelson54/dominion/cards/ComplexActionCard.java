@@ -73,7 +73,7 @@ public abstract class ComplexActionCard extends ActionCard {
         choice.resolveIfComplete(turn);
     }
 
-    Choice findParentChoice(Game game, Player player) {
+    private Choice findParentChoice(Game game, Player player) {
         Turn turn = game.getTurn();
 
         for (Choice choice : player.getChoices()) {

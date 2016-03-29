@@ -108,7 +108,8 @@ public class Choice {
             resolved.add(this);
 
             if(turn.getActionPool() == 0 || Cards.cardsOfType(turn.getPlayer().getHand(), ActionCard.class).size() == 0) {
-                turn.endPhase();
+                turn.getPlayer().onBuyPhase();
+                game.getTurn().setPhase(Phase.BUY);
             } else if (choices.size() == 0) {
                 turn.getPlayer().onActionPhase();
                 game.getTurn().setPhase(Phase.ACTION);
