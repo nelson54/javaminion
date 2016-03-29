@@ -9,7 +9,9 @@ import com.github.nelson54.dominion.KingdomFactory;
 import com.github.nelson54.dominion.UsersProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 
