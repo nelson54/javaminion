@@ -45,10 +45,10 @@ module.exports = function (grunt) {
         files: ['test/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'karma']
       },
-      compass: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+      /*compass: {
+        files: ['<%= yeoman.app %>/styles/{,*!/}*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer', 'dist']
-      },
+      },*/
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -85,6 +85,16 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
+      proxies: [
+        {
+          context: '/',
+          host: 'localhost',
+          port: 8080,
+          https: false,
+          xforward: false,
+          hideHeaders: ['x-removed-header']
+        }
+      ],
       livereload: {
         options: {
           open: true,
@@ -416,7 +426,7 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'compass:server'
+        //'compass:server'
       ],
       test: [
         'compass'
@@ -439,10 +449,10 @@ module.exports = function (grunt) {
 
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
-    if (target === 'dist') {
+    /*if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
-
+*/
     grunt.task.run([
       'clean:server',
       'wiredep',
