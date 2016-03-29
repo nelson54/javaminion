@@ -7,6 +7,7 @@ import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.KingdomFactory;
 import com.github.nelson54.dominion.UsersProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -42,10 +43,8 @@ public class Application extends WebMvcConfigurerAdapter {
         return new GameProvider();
     }
 
-    @Bean
-    public ObjectMapper getObjectMapper() {
-
-        ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    public ObjectMapper configureObjectMapper(ObjectMapper objectMapper) {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new GuavaModule());
 

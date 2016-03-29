@@ -34,7 +34,7 @@ public class Kingdom {
         return cardMarket;
     }
 
-    public void setCardMarket(Multimap<String, Card> cardMarket) {
+    void setCardMarket(Multimap<String, Card> cardMarket) {
         this.cardMarket = cardMarket;
     }
 
@@ -42,11 +42,11 @@ public class Kingdom {
         return allCards;
     }
 
-    public void setAllCards(Map<String, Card> allCards) {
+    void setAllCards(Map<String, Card> allCards) {
         this.allCards = allCards;
     }
 
-    Set<Card> getCardOfEachType() {
+    private Set<Card> getCardOfEachType() {
         Set<Card> cardsOfEachType = new HashSet<>();
 
         cardMarket.keySet().stream()

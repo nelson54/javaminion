@@ -11,5 +11,6 @@
     - [ ] Create game
 - [x] Thief reveals non-treasure cards.
 - [x] Cellar should remove the cards from your hand after you mark them for being discarded.
+- [ ] Remodel and Mine are both broken.
 - [ ] Animations.
 - [x] End turn if no additional actions in pool or cards in hand after playing ComplexActionCard's
