@@ -55,7 +55,7 @@ class RemodelEffectTest extends DominionTestCase {
         assertTrue "Trashed card is in trash", game.getTrash().contains(toTrash)
 
         assertTrue "Player has gained card", player.getAllCards().values().contains(toGain)
-
+        assertNotSame "Phase is not WAITING_FOR_CHOICE ", Phase.WAITING_FOR_CHOICE, turn.getPhase()
     }
 
     Choice getChoice(){
