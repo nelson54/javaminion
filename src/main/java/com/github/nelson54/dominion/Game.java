@@ -49,6 +49,7 @@ public class Game {
     Turn turn;
 
     public Game() {
+        id = UUID.randomUUID();
         pastTurns = new LinkedHashSet<>();
         allCards = new HashMap<>();
         trash = new HashSet<>();

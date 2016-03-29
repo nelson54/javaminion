@@ -33,11 +33,6 @@ public class GameController {
         return RecommendedCards.values();
     }
 
-    /*@RequestMapping(method = RequestMethod.GET)
-    Set<String> getGames() throws InstantiationException, IllegalAccessException {
-        return gameProvider.listGames();
-    }*/
-
     @RequestMapping(value = "/{gameId}", method = {RequestMethod.GET, RequestMethod.OPTIONS})
     Game getGame(
             @PathVariable("gameId")
@@ -52,8 +47,9 @@ public class GameController {
 
         User user = usersProvider.getUserById(authentication.getName());
 
-        List<String> gameIds = user.getGames()
+        List<String> gameIds = gameProvider.getGamesForPlayer(user.getId())
                 .stream()
+                .map((game)->game.getId().toString())
                 .collect(Collectors.toList());
 
         return new PageImpl<>(gameIds);

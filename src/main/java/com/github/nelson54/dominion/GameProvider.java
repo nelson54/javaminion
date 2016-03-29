@@ -55,16 +55,9 @@ public class GameProvider {
         return gamesByPlayerId.get(id);
     }
 
-    //public Set<String> listGames() {
-    //    return games;
-    //}
-
     private void updateGameLookups(Game game){
-        //games.add(game.getId().toString());
         gamesById.put(game.getId().toString(), game);
 
-        game.getPlayers().values().forEach(p -> {
-            gamesByPlayerId.put(p.getId(), game);
-        });
+        game.getPlayers().values().forEach(p -> gamesByPlayerId.put(p.getId(), game));
     }
 }
