@@ -112,9 +112,6 @@ public class Choice {
 
             if (choices.size() > 0){
                choices.stream().findFirst().ifPresent((choice)-> choice.getTarget().onChoice());
-            } else if(turn.getActionPool() == 0 || Cards.cardsOfType(turn.getPlayer().getHand(), ActionCard.class).size() == 0) {
-                game.getTurn().setPhase(Phase.BUY);
-                getOwner().onBuyPhase();
             } else {
                 game.getTurn().setPhase(Phase.ACTION);
                 getOwner().onActionPhase();

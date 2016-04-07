@@ -49,7 +49,7 @@ public class Turn {
 
     static Turn create(Player player){
         Turn turn = new Turn();
-        turn.setPlayerId(player.getId().toString());
+        turn.setPlayerId(player.getId());
         turn.setGame(player.getGame());
         turn.setBuyPool(1);
         turn.setActionPool(1);
@@ -186,7 +186,7 @@ public class Turn {
         return player;
     }
 
-    public void setPlayer(Player player) {
+    private void setPlayer(Player player) {
         this.player = player;
     }
 

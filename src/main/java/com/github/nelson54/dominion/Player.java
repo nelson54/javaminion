@@ -77,7 +77,7 @@ public class Player {
 
     public void discard(Set<Card> cards){
         String list = cards.stream()
-                .map(Card::getName)
+                .map(Card::getId)
                 .collect(Collectors.joining(", "));
 
         hand.removeAll(cards);

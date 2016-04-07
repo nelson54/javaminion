@@ -47,7 +47,7 @@ public abstract class ComplexActionCard extends ActionCard {
         Turn turn = game.getTurn();
 
         Choice choice = new Choice(player, this);
-        choice.setOwner(player);
+        choice.setOwner(getOwner());
         choice.setComplete(false);
         choice.setParentChoice(parent);
         choice.setGame(game);
