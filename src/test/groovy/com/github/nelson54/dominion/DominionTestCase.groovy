@@ -1,7 +1,5 @@
 package com.github.nelson54.dominion
 
-import com.github.nelson54.dominion.cards.RecommendedCards
-import org.junit.Before
 import org.junit.Test
 
 /**
@@ -17,8 +15,6 @@ class DominionTestCase extends GroovyTestCase {
     Player player
     Turn turn
 
-
-    @Before
     void setUp() {
         gameFactory = new GameFactory()
         kingdomFactory = new KingdomFactory()

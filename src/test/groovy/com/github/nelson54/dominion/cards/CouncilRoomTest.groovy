@@ -40,15 +40,15 @@ class CouncilRoomTest extends EasyMockSupport {
     @Test
     void testApply() {
         Map players = new HashMap<String, Player>()
-        players.put("2", player)
+        players.put("1", player)
         players.put("2", player2)
 
         EasyMock.expect(player.getCurrentTurn()).andReturn(turn)
         EasyMock.expect(player.drawXCards(4)).andVoid()
         EasyMock.expect(game.getPlayers()).andReturn(players)
         EasyMock.expect(player2.drawXCards(1)).andVoid()
-        EasyMock.expect(player.getId()).andReturn("1")
-        EasyMock.expect(player2.getId()).andReturn("2")
+        EasyMock.expect(player.getId()).andStubReturn("1")
+        EasyMock.expect(player2.getId()).andStubReturn("2")
 
         EasyMock.replay(game)
         EasyMock.replay(player)
