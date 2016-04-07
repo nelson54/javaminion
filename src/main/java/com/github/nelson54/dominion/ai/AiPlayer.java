@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.ai;
 
 import com.github.nelson54.dominion.Player;
+import org.springframework.util.Assert;
 
 public class AiPlayer extends Player {
 
@@ -17,6 +18,7 @@ public class AiPlayer extends Player {
 
     @Override
     public void onBuyPhase() {
+        Assert.isTrue(this.getGame().getTurn().getPlayerId().equals(getId()));
         aiStrategy.buyPhase(new AiGameFacade(getGame(), getCurrentTurn(), this));
     }
 

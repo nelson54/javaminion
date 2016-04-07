@@ -4,6 +4,7 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.choices.Choice;
+import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.effects.Effect;
 import com.github.nelson54.dominion.exceptions.NoValidChoiceException;
 
@@ -38,14 +39,15 @@ public abstract class ComplexActionCard extends ActionCard {
         play(player, game);
 
         for (Player target : getTargets(player, game)) {
-            addChoice(target, game);
+            addChoice(target, game, null, null);
         }
     }
 
-    public void addChoice(Player player, Game game) {
+    public void addChoice(Player player, Game game, ChoiceResponse response, Choice parent) {
         Turn turn = game.getTurn();
-        Choice parent = findParentChoice(game, player);
+
         Choice choice = new Choice(player, this);
+        choice.setOwner(player);
         choice.setComplete(false);
         choice.setParentChoice(parent);
         choice.setGame(game);
@@ -68,7 +70,18 @@ public abstract class ComplexActionCard extends ActionCard {
             choice.setComplete(true);
         }
 
-        game.addChoice(choice);
+        if(parent != null && parent.getChoices() != null)
+            choice.getChoices().addAll(parent.getChoices());
+
+        if(response != null && response.getChoices() != null)
+            choice.getChoices().addAll(response.getChoices());
+
+        if(choice != null && choice.getChoices() != null)
+            choice.getOptions().removeAll(choice.getChoices());
+
+
+        if(!choice.isComplete())
+            game.addChoice(choice);
 
         choice.resolveIfComplete(turn);
     }

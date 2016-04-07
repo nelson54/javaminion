@@ -5,6 +5,7 @@ import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.effects.Effect;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -30,7 +31,12 @@ public class ChoiceResponse {
     private String choice;
     private Set<String> choices;
 
+
     private int choiceStringNumber;
+
+    public ChoiceResponse() {
+        choices = new HashSet<>();
+    }
 
     public Player getSource() {
         return source;

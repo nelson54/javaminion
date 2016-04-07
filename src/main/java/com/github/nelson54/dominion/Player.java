@@ -9,8 +9,6 @@ import com.github.nelson54.dominion.choices.Choice;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.github.nelson54.dominion.Phase.WAITING_FOR_OPPONENT;
-
 public class Player {
     @JsonProperty
     String id;
@@ -78,9 +76,15 @@ public class Player {
     }
 
     public void discard(Set<Card> cards){
+        String list = cards.stream()
+                .map(Card::getName)
+                .collect(Collectors.joining(", "));
+
         hand.removeAll(cards);
         deck.removeAll(cards);
         discard.addAll(cards);
+
+        game.log(getName() + " discarded: " + list);
     }
 
     public void putOnTopOfDeck(Card card){

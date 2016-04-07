@@ -20,13 +20,12 @@ class FeastEffectTest extends DominionTestCase {
 
         turn.setPhase(Phase.ACTION)
         turn.playCard(feast, player, game)
-        //bureaucrat.apply(player, game)
 
         choice = getChoice();
     }
 
     void testEffect() {
-        Card toGain = choice.getCardOptions().first();
+        String toGain = choice.getOptions().first();
 
         assertEquals "Phase is WAITING_FOR_CHOICE ", turn.getPhase(), Phase.WAITING_FOR_CHOICE
 
@@ -36,7 +35,7 @@ class FeastEffectTest extends DominionTestCase {
         assertFalse "Player doesn't have trashed card", player.getAllCards().values().contains(card)
         assertTrue "Trashed card is in trash", game.getTrash().contains(card)
 
-        assertTrue "Player has gained card", player.getAllCards().values().contains(toGain)
+        assertTrue "Player has gained card", player.getAllCards().keySet().contains(toGain)
 
     }
 

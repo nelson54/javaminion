@@ -29,5 +29,10 @@ public class Cards {
                 .collect(Collectors.toSet());
     }
 
+    public static Card ofId(String id){
+        return new CardReference(id);
+
+    }
+
     //public static Set<Card> matches(Predicate<>)
 }

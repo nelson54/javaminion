@@ -3,17 +3,13 @@ package com.github.nelson54.dominion.ai;
 import com.github.nelson54.dominion.ai.decisions.AiDecisionBuilder;
 import com.github.nelson54.dominion.cards.ActionCard;
 import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.choices.ChoiceResponse;
 
 import java.util.Optional;
 
 import static com.github.nelson54.dominion.ai.AiUtils.gainsToEndGame;
 import static com.github.nelson54.dominion.ai.AiUtils.numberOfCardsByName;
-import static com.github.nelson54.dominion.choices.OptionType.CARD;
-import static com.github.nelson54.dominion.choices.OptionType.YES_OR_NO;
 
-public class BigSmithyAi extends AiStrategy {
+public class BigSmithyAi extends DoNothingAi {
     @Override
     public void actionPhase(AiGameFacade game) {
         Optional<ActionCard> smithy = game.getHand().stream()
@@ -53,6 +49,8 @@ public class BigSmithyAi extends AiStrategy {
         }
     }
 
+
+
     @Override
     public void choice(AiGameFacade game) {
         game.getChoice().ifPresent(
@@ -60,20 +58,4 @@ public class BigSmithyAi extends AiStrategy {
             );
     }
 
-    private void handleChoice(AiGameFacade game, Choice choice) {
-        ChoiceResponse choiceResponse = new ChoiceResponse();
-        choiceResponse.setChoice(choice.getId().toString());
-        choiceResponse.setSource(choice.getTarget());
-
-        if(!choice.isRequired()){
-            choiceResponse.setDone(true);
-        } else if (choice.getExpectedAnswerType().equals(YES_OR_NO)){
-            choiceResponse.setYes(false);
-        } else if (choice.getExpectedAnswerType().equals(CARD)){
-            Card firstCard = choice.getCardOptions().stream().findFirst().get();
-            choiceResponse.setCard(firstCard);
-        }
-
-        game.respond(choiceResponse);
-    }
 }

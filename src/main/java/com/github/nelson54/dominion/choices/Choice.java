@@ -14,39 +14,42 @@ import java.util.UUID;
 
 public class Choice {
 
-    UUID id;
-    CardState state;
+    private UUID id;
+    private CardState state;
     @JsonIgnore
-    Player target;
+    private Player target;
     @JsonIgnore
-    Player owner;
+    private Player owner;
     @JsonIgnore
-    Game game;
-    Card source;
-    Card displayCard;
-    String message;
+    private Game game;
+    private Card source;
+    private Card displayCard;
+    private String message;
 
-    Set<String> options;
+    private Set<String> options;
 
-    boolean isComplete;
-    boolean isRequired;
-    boolean isDialog;
+    private boolean isComplete;
+    private boolean isRequired;
+    private boolean isDialog;
 
-    Set<String> textOptions;
-    Set<Card> cardOptions;
+    private Set<String> textOptions;
+    private Set<Card> cardOptions;
 
-    OptionType expectedAnswerType;
+    private Set<String> currentlySelected;
 
-    @JsonIgnore
-    Choice parentChoice;
-    @JsonIgnore
-    ChoiceResponse response;
-
-    byte number;
-    Range range;
+    private OptionType expectedAnswerType;
 
     @JsonIgnore
-    Effect effect;
+    private Choice parentChoice;
+    @JsonIgnore
+    private ChoiceResponse response;
+
+    private byte number;
+    private Range range;
+
+    @JsonIgnore
+    private Effect effect;
+    private Set<String> choices;
 
     public Choice(Player target, Card source) {
 
@@ -57,6 +60,7 @@ public class Choice {
         this.options = new HashSet<>();
         //TODO isDialog should not be true
         this.setIsDialog(true);
+        this.choices = new HashSet<>();
     }
 
     public void setIsDialog(boolean isDialog) {
@@ -87,9 +91,8 @@ public class Choice {
             Game game = player.getGame();
             ComplexActionCard complexCard = (ComplexActionCard) source;
 
-            complexCard.addChoice(player, game);
             player.getChoices().remove(this);
-            player.onChoice();
+            complexCard.addChoice(player, game, choiceResponse, this);
         }
 
         resolveIfComplete(turn);
@@ -107,12 +110,14 @@ public class Choice {
             choices.remove(this);
             resolved.add(this);
 
-            if(turn.getActionPool() == 0 || Cards.cardsOfType(turn.getPlayer().getHand(), ActionCard.class).size() == 0) {
-                turn.getPlayer().onBuyPhase();
+            if (choices.size() > 0){
+               choices.stream().findFirst().ifPresent((choice)-> choice.getTarget().onChoice());
+            } else if(turn.getActionPool() == 0 || Cards.cardsOfType(turn.getPlayer().getHand(), ActionCard.class).size() == 0) {
                 game.getTurn().setPhase(Phase.BUY);
-            } else if (choices.size() == 0) {
-                turn.getPlayer().onActionPhase();
+                getOwner().onBuyPhase();
+            } else {
                 game.getTurn().setPhase(Phase.ACTION);
+                getOwner().onActionPhase();
             }
 
 
@@ -271,5 +276,13 @@ public class Choice {
 
     public boolean isDialog() {
         return isDialog;
+    }
+
+    public void setChoices(Set<String> choices) {
+        this.choices = choices;
+    }
+
+    public Set<String> getChoices() {
+        return choices;
     }
 }

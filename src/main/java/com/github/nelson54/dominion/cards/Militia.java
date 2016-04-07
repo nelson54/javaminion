@@ -10,6 +10,7 @@ import com.github.nelson54.dominion.effects.MilitiaEffect;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class Militia extends ComplexActionAttackCard {
@@ -30,10 +31,9 @@ public class Militia extends ComplexActionAttackCard {
         Choice parent = choice.getParentChoice();
         choice.setMessage("Choose 3 cards to keep in your hand.");
 
-        Set<Card> options;
+        Set<Card> options = new HashSet<>();;
 
         if(parent == null){
-            options = new HashSet<>();
             options.addAll(target.getHand());
 
             choice.getOptions().addAll(
@@ -41,14 +41,19 @@ public class Militia extends ComplexActionAttackCard {
             );
 
         } else {
-            options = parent.getCardOptions();
+            options.addAll(
+                target
+                        .getHand()
+                        .stream()
+                        .collect(Collectors.toSet())
+            );
 
             if(parent.getResponse() != null && parent.getResponse().getCard() != null){
                 options.remove(parent.getResponse().getCard());
             }
         }
 
-        choice.setCardOptions(options);
+        choice.setOptions(Cards.getIds(options));
 
         choice.setExpectedAnswerType(OptionType.CARD);
         choice.setIsDialog(false);
