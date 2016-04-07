@@ -74,7 +74,16 @@ angular
             });
             return defer.promise
           },
-          playerId : function(){return null},
+          playerId : function($route, UserService, $q){
+            var defer = $q.defer();
+            var game = $route.current.params['game'];
+
+            UserService.get(function(response){
+              defer.resolve(response.id);
+            });
+
+            return defer.promise;
+          },
           baseUrl: function() {
             return baseUrl;
           }

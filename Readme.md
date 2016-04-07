@@ -1,6 +1,7 @@
 # Meh
 
 [![Build Status](https://travis-ci.org/nelson54/javaminion.svg?branch=master)](https://travis-ci.org/nelson54/javaminion)
+[![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
 ## Todo
 - [ ] Authentication.

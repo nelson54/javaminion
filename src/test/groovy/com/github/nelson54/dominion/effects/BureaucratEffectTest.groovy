@@ -30,11 +30,6 @@ class BureaucratEffectTest extends DominionTestCase {
 
         Set<Card> hand = new HashSet<>()
 
-        for (int i = 0; i < 5; i++) {
-            Card card = game.giveCardToPlayer("Estate", player)
-            hand.add(card)
-        }
-
         for(Player p : game.getPlayers().values()){
             game.giveCardToPlayer("Estate", p);
         }
