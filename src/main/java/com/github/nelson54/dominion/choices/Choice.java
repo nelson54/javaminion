@@ -114,7 +114,7 @@ public class Choice {
                choices.stream().findFirst().ifPresent((choice)-> choice.getTarget().onChoice());
             } else {
                 game.getTurn().setPhase(Phase.ACTION);
-                getOwner().onActionPhase();
+                game.getTurn().getPlayer().onActionPhase();
             }
 
 
