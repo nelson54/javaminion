@@ -10,12 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -47,12 +48,18 @@ public class GameController {
 
         User user = usersProvider.getUserById(authentication.getName());
 
-        List<String> gameIds = gameProvider.getGamesForPlayer(user.getId())
-                .stream()
-                .map((game)->game.getId().toString())
-                .collect(Collectors.toList());
+        Page<String> page = new PageImpl<>(new ArrayList<>());
 
-        return new PageImpl<>(gameIds);
+        if(user != null && user.getId() != null) {
+            List<String> gameIds = gameProvider.getGamesForPlayer(user.getId())
+                    .stream()
+                    .map((game) -> game.getId().toString())
+                    .collect(Collectors.toList());
+
+            page = new PageImpl<>(gameIds);
+        }
+
+        return page;
     }
 
     @RequestMapping(value = "/{gameId}/next-phase", method = RequestMethod.POST)
