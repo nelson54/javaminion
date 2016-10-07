@@ -16,37 +16,37 @@ import static com.github.nelson54.dominion.Phase.*;
 public class Game {
 
     @JsonProperty
-    List<String> logs;
+    private List<String> logs;
 
     @JsonProperty
-    UUID id;
+    private UUID id;
 
     @JsonProperty
-    Kingdom kingdom;
+    private Kingdom kingdom;
 
     @JsonIgnore
-    Set<Player> turnOrder;
+    private Set<Player> turnOrder;
 
     @JsonIgnore
-    Map<String, Card> allCards;
+    private Map<String, Card> allCards;
 
     @JsonProperty
-    Set<Turn> pastTurns;
+    private Set<Turn> pastTurns;
 
     @JsonProperty
-    Set<Card> trash;
+    private Set<Card> trash;
 
     @JsonIgnore
-    Iterator<Player> turnerator;
+    private Iterator<Player> turnerator;
 
     @JsonProperty
-    Map<String, Player> players;
+    private Map<String, Player> players;
 
     @JsonProperty
-    boolean gameOver;
+    private boolean gameOver;
 
     @JsonProperty
-    Turn turn;
+    private Turn turn;
 
     public Game() {
         id = UUID.randomUUID();
@@ -54,6 +54,7 @@ public class Game {
         allCards = new HashMap<>();
         trash = new HashSet<>();
         logs = new ArrayList<>();
+
     }
 
     Player nextPlayer() {
@@ -86,7 +87,7 @@ public class Game {
         return nextPlayer;
     }
 
-    void clearAllChoices() {
+    private void clearAllChoices() {
         for (Player player : players.values()) {
             turn.getResolvedChoices().addAll(player.getChoices());
             player.getChoices().clear();
@@ -139,11 +140,11 @@ public class Game {
 
     public void addChoice(Choice choice) {
         turn.phase = Phase.WAITING_FOR_CHOICE;
-        choice.getTarget().getChoices().add(choice);
+        choice.getTarget().addChoice(choice);
         choice.getTarget().onChoice();
     }
 
-    public void endGame() {
+    void endGame() {
         players.values().stream()
                 .map(Player::getCurrentTurn)
                 .forEach(turn -> turn.setPhase(END_OF_GAME));
@@ -214,6 +215,14 @@ public class Game {
         logs.add(DateTime.now().toString() + ": " + string);
     }
 
+    public void revealCardFromHand(Player player, Card card){
+        boolean isCardInHand = player.getHand().contains(card);
+        String fromLocation = (isCardInHand ? " from hand." : " from deck.");
+
+
+        logs.add(player.getName()+ " revealed card " + card.getName() + fromLocation);
+    }
+
     public Map<String, Card> getAllCards() {
         return allCards;
     }
@@ -237,7 +246,9 @@ public class Game {
         result = 31 * result + trash.hashCode();
         result = 31 * result + players.hashCode();
         result = 31 * result + (gameOver ? 1 : 0);
-        result = 31 * result + turn.getPhase().hashCode();
+        if(turn != null && turn.getPhase() != null) {
+            result = 31 * result + turn.getPhase().hashCode();
+        }
         return result;
     }
 

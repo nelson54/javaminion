@@ -2,7 +2,11 @@ package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.choices.Choice;
+import com.github.nelson54.dominion.choices.OptionType;
+import com.github.nelson54.dominion.choices.Reaction;
 import com.github.nelson54.dominion.effects.Effect;
+import com.github.nelson54.dominion.effects.MoatRevealEffect;
 
 public class Moat extends ActionReactionCard {
 
@@ -28,7 +32,39 @@ public class Moat extends ActionReactionCard {
     }
 
     @Override
-    public void onEnterHand() {
+    public void onCardPlayed(Card card) {
 
     }
+
+    @Override
+    public void onCardTrashed(Card card) {
+
+    }
+
+    @Override
+    public void onChoice(Choice choice) {
+        Effect effect = choice.getEffect();
+        if (Cards.isAttackCard(effect.getSource())) {
+            effect.getTarget().getChoices().add(getRevealChoice(effect));
+        }
+    }
+
+    private Choice getRevealChoice (Effect effect) {
+        Choice choice = new Choice(effect.getTarget(), effect.getSource(), Reaction.from(effect));
+        choice.setMessage(
+                "Would you like to reveal Moat to prevent the effect of "
+                + effect.getSource().getName()
+                + " by player "
+                + effect.getOwner().getName()
+                + ".");
+        choice.setIsDialog(true);
+        choice.setExpectedAnswerType(OptionType.YES_OR_NO);
+
+        MoatRevealEffect revealEffect = MoatRevealEffect.create(this, choice);
+        choice.setEffect(revealEffect);
+
+        return choice;
+    }
+
+
 }

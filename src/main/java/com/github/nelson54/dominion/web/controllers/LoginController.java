@@ -54,7 +54,7 @@ public class LoginController {
         return "redirect:/";
     }
 
-    public Collection<GrantedAuthority> getAuthorities() {
+    private Collection<GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         GrantedAuthority grantedAuthority = () -> "ROLE_USER";
         grantedAuthorities.add(grantedAuthority);

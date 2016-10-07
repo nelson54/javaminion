@@ -8,26 +8,28 @@ import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
+import com.github.nelson54.dominion.exceptions.MissingCardException;
+import com.github.nelson54.dominion.exceptions.MissingEffectException;
 
 public abstract class Effect {
 
     @JsonIgnore
     private boolean noValidTarget;
 
-    @JsonBackReference
+    @JsonBackReference(value="owner")
     private
     Player owner;
-    @JsonBackReference
+    @JsonBackReference(value="target")
     private
     Player target;
 
-    @JsonBackReference
+    @JsonBackReference(value="source")
     private
     Card source;
 
     private boolean cancelled;
 
-    @JsonBackReference
+    @JsonBackReference(value="choice")
     private
     Choice choice;
 
@@ -48,7 +50,8 @@ public abstract class Effect {
         }
     }
 
-    abstract boolean effect(ChoiceResponse response, Player target, Turn turn, Game game);
+    abstract boolean effect(ChoiceResponse response, Player target, Turn turn, Game game)
+            throws MissingCardException, MissingEffectException;
 
     void onNoValidTarget(Choice choice, Player target, Turn turn, Game game) {}
 
@@ -60,7 +63,7 @@ public abstract class Effect {
         this.owner = owner;
     }
 
-    Player getTarget() {
+    public Player getTarget() {
         return target;
     }
 

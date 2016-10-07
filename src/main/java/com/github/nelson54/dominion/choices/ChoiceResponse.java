@@ -30,6 +30,7 @@ public class ChoiceResponse {
     private Set<Card> cards;
     private String choice;
     private Set<String> choices;
+    private Reaction reaction;
 
 
     private int choiceStringNumber;
@@ -136,5 +137,9 @@ public class ChoiceResponse {
 
     public void setChoiceStringNumber(int choiceStringNumber) {
         this.choiceStringNumber = choiceStringNumber;
+    }
+
+    public Reaction getReaction() {
+        return reaction;
     }
 }

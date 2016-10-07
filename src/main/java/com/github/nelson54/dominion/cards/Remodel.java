@@ -41,16 +41,12 @@ public class Remodel extends ComplexActionCard {
         choice.setExpectedAnswerType(OptionType.CARD);
 
         if (choice.getState() == CardState.TRASHING_CARD) {
-            choice.setCardOptions(target.getHand());
-
             choice.setOptions(Cards.getIds(target.getHand()));
         } else if (choice.getState() == CardState.GAINING_CARD) {
             Card lastChoice = parent.getResponse().getCard();
-            choice.setCardOptions(
-                    getGainOptions(game, lastChoice.getCost().getMoney())
+            choice.setOptions(
+                    Cards.getIds(getGainOptions(game, lastChoice.getCost().getMoney()))
             );
-
-            choice.setOptions(Cards.getIds(choice.getCardOptions()));
         }
 
         return choice;

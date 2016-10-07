@@ -152,7 +152,7 @@ angular.module('dominionFrontendApp')
 
       var endPhase = new EndPhase(card);
 
-      endPhase.$save({gameId : game.id},updateData);
+      endPhase.$save({gameId : game.id}, updateData);
     };
 
     $scope.selectCard = function(card){

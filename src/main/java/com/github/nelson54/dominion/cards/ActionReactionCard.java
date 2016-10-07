@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.effects.Effect;
 
 import java.util.Map;
@@ -29,9 +30,15 @@ public abstract class ActionReactionCard extends ActionCard {
                 .map(players::get)
                 .filter(p -> !p.getId().equals(player.getId()))
                 .collect(Collectors.toSet());
+
     }
 
-    @Override
-    public abstract void onEnterHand();
+    public abstract void onCardPlayed(Card card);
+
+    public abstract void onCardTrashed(Card card);
+
+    public abstract void onChoice(Choice choice);
+
+
 
 }

@@ -3,6 +3,8 @@ package com.github.nelson54.dominion.cards;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.choices.Choice;
+import com.github.nelson54.dominion.effects.Effect;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -75,11 +77,15 @@ public class Card {
         this.cardTypes = cardTypes;
     }
 
-    public void onEnterHand() {
+    public void onCardPlayed(Card card) {
 
     }
 
-    public void onLeaveHand() {
+    public void onCardTrashed(Card card) {
+
+    }
+
+    public void onChoice(Choice choice) {
 
     }
 

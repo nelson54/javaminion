@@ -147,11 +147,11 @@ public class PlayerController {
         OptionType expectedType = choice.getExpectedAnswerType();
 
         if (!choiceResponse.isDone()) {
-            if (expectedType.equals(OptionType.CARD)) {
-                choiceResponse.setCard(kingdom.getAllCards().get(choiceResponse.getCard().getId().toString()));
-            } else if (expectedType.equals(OptionType.LIST_OF_CARDS)) {
+            if (expectedType.equals(OptionType.CARD))
+                choiceResponse.setCard(kingdom.getAllCards().get(choiceResponse.getCard().getId()));
+            else if (expectedType.equals(OptionType.LIST_OF_CARDS)) {
                 Set<Card> choices = choiceResponse.getCards().stream()
-                        .map(card -> card.getId().toString())
+                        .map(card -> card.getId())
                         .map(id -> kingdom.getAllCards().get(id))
                         .collect(Collectors.toSet());
 

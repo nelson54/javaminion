@@ -34,5 +34,7 @@ public class Cards {
 
     }
 
-    //public static Set<Card> matches(Predicate<>)
+    public static boolean isAttackCard (Card card) {
+        return card.getClass().isAssignableFrom(ActionAttackCard.class);
+    }
 }

@@ -432,8 +432,8 @@ module.exports = function (grunt) {
         'compass'
       ],
       dist: [
-        'sass:dist',
-        'imagemin',
+        //'sass:dist',
+        //'imagemin',
         'svgmin'
       ]
     },
@@ -487,7 +487,7 @@ module.exports = function (grunt) {
     'ngAnnotate',
     'copy:dist',
     'cdnify',
-    'cssmin',
+    //'cssmin',
     'uglify',
     'filerev',
     'usemin',

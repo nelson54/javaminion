@@ -63,7 +63,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/{gameId}/next-phase", method = RequestMethod.POST)
-    String endPhase(
+    Game endPhase(
             @PathVariable("gameId")
             String id
     ) {
@@ -71,10 +71,6 @@ public class GameController {
 
         Game game = gameProvider.getGameByUuid(id);
         game.getTurn().endPhase();
-        return "redirect: /dominion/"+id+"/"+authentication.getName()+"/next-phase";
+        return game;
     }
-
-    //void join
-
-
 }

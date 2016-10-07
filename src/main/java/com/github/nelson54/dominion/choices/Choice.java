@@ -8,6 +8,7 @@ import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.*;
 import com.github.nelson54.dominion.effects.Effect;
 
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -31,6 +32,8 @@ public class Choice {
     private boolean isComplete;
     private boolean isRequired;
     private boolean isDialog;
+
+    private Reaction reaction;
 
     private Set<String> textOptions;
     private Set<Card> cardOptions;
@@ -61,6 +64,19 @@ public class Choice {
         //TODO isDialog should not be true
         this.setIsDialog(true);
         this.choices = new HashSet<>();
+    }
+
+    public Choice(Player target, Card source, Reaction reaction) {
+
+        this.id = UUID.randomUUID();
+        this.target = target;
+        this.source = source;
+        this.owner = source.getOwner();
+        this.options = new HashSet<>();
+        //TODO isDialog should not be true
+        this.setIsDialog(true);
+        this.choices = new HashSet<>();
+        this.reaction = reaction;
     }
 
     public void setIsDialog(boolean isDialog) {
@@ -103,7 +119,7 @@ public class Choice {
     }
 
     public void resolveIfComplete(Turn turn) {
-        Set<Choice> choices = target.getChoices();
+        Deque<Choice> choices = target.getChoices();
         Set<Choice> resolved = turn.getResolvedChoices();
 
         if (isComplete) {
@@ -281,5 +297,9 @@ public class Choice {
 
     public Set<String> getChoices() {
         return choices;
+    }
+
+    public Reaction getReaction() {
+        return reaction;
     }
 }

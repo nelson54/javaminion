@@ -11,39 +11,39 @@ import java.util.stream.Collectors;
 
 public class Player {
     @JsonProperty
-    String id;
+    private String id;
 
     @JsonProperty
-    String name;
+    private String name;
 
     @JsonProperty
-    Set<Card> hand;
+    private Set<Card> hand;
 
     @JsonProperty
-    Set<Card> deck;
+    private Set<Card> deck;
 
     @JsonProperty
-    Set<Card> discard;
+    private Set<Card> discard;
 
     @JsonIgnore
-    Game game;
+    private Game game;
 
     @JsonProperty
-    Turn currentTurn;
+    private Turn currentTurn;
 
     @JsonProperty
-    Set<Choice> choices;
+    private Deque<Choice> choices;
 
     public Player() {
         id = UUID.randomUUID().toString();
         hand = new HashSet<>();
         deck = new LinkedHashSet<>();
         discard = new HashSet<>();
-        choices = new LinkedHashSet<>();
+        choices = new LinkedList<>();
     }
 
     @JsonProperty
-    public long getVictoryPoints() {
+    long getVictoryPoints() {
         return getAllCards()
                 .values().stream()
                 .filter(card -> card instanceof VictoryCard)
@@ -57,7 +57,7 @@ public class Player {
         return false;
     }
 
-    public void resetForNextTurn(Turn turn) {
+    protected void resetForNextTurn(Turn turn) {
         if(turn != null){
             hand.addAll(turn.getPlay());
         }
@@ -155,12 +155,16 @@ public class Player {
                 .collect(Collectors.toSet());
     }
 
+    public void revealCardFromHand(Card card) {
+        game.revealCardFromHand(this, card);
+    }
+
     public Map<String, Card> getAllCards() {
         Map<String, Card> allCards = new HashMap<>();
 
-        hand.stream().forEach(card -> allCards.put(card.getId().toString(), card));
-        deck.stream().forEach(card -> allCards.put(card.getId().toString(), card));
-        discard.stream().forEach(card -> allCards.put(card.getId().toString(), card));
+        hand.forEach(card -> allCards.put(card.getId(), card));
+        deck.forEach(card -> allCards.put(card.getId(), card));
+        discard.forEach(card -> allCards.put(card.getId(), card));
 
         return allCards;
     }
@@ -229,12 +233,16 @@ public class Player {
         this.currentTurn = currentTurn;
     }
 
-    public Set<Choice> getChoices() {
+    public Deque<Choice> getChoices() {
         return choices;
     }
 
-    public void setChoices(Set<Choice> choices) {
+    public void setChoices(Deque<Choice> choices) {
         this.choices = choices;
+    }
+
+    void addChoice(Choice choice) {
+        choices.addFirst(choice);
     }
 
     public String getName() {
@@ -254,17 +262,18 @@ public class Player {
 
         Player player = (Player) o;
 
-        return id.toString().equals(player.id.toString());
+        return id.equals(player.id);
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + hand.hashCode();
-        result = 31 * result + deck.hashCode();
-        result = 31 * result + discard.hashCode();
-        result = 31 * result + choices.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (hand != null ? hand.hashCode() : 0);
+        result = 31 * result + (deck != null ? deck.hashCode() : 0);
+        result = 31 * result + (discard != null ? discard.hashCode() : 0);
+        result = 31 * result + (currentTurn != null ? currentTurn.hashCode() : 0);
+        result = 31 * result + (choices != null ? choices.hashCode() : 0);
         return result;
     }
 }
