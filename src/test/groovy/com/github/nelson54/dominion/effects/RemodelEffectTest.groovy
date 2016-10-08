@@ -1,5 +1,6 @@
 package com.github.nelson54.dominion.effects
 import com.github.nelson54.dominion.DominionTestCase
+import com.github.nelson54.dominion.Kingdom
 import com.github.nelson54.dominion.Phase
 import com.github.nelson54.dominion.Turn
 import com.github.nelson54.dominion.cards.Card
@@ -26,8 +27,8 @@ class RemodelEffectTest extends DominionTestCase {
 
     void testEffect() {
         Turn turn = game.getTurn()
-
-        Card toTrash = choice.getCardOptions().first();
+        Kingdom kingdom = game.getKingdom()
+        Card toTrash = kingdom.getAllCards().get(choice.getOptions().first());
 
         assertEquals "Phase is WAITING_FOR_CHOICE ", Phase.WAITING_FOR_CHOICE, turn.getPhase()
 
@@ -42,7 +43,7 @@ class RemodelEffectTest extends DominionTestCase {
         Choice nextChoice = getChoice()
 
         ChoiceResponse ncr = new ChoiceResponse();
-        Card toGain = nextChoice.getCardOptions().first()
+        Card toGain = kingdom.getAllCards().get(nextChoice.getOptions().first());
 
         ncr.setCard(toGain)
         ncr.setSource(player)
