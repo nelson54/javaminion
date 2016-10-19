@@ -51,7 +51,7 @@ public class GameController {
         Page<String> page = new PageImpl<>(new ArrayList<>());
 
         if(user != null && user.getId() != null) {
-            List<String> gameIds = gameProvider.getGamesForPlayer(user.getId())
+            List<String> gameIds = gameProvider.getMatches(user.getId())
                     .stream()
                     .map((game) -> game.getId().toString())
                     .collect(Collectors.toList());

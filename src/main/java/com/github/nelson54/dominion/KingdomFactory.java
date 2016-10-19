@@ -1,9 +1,12 @@
 package com.github.nelson54.dominion;
 
-import com.github.nelson54.dominion.cards.*;
+import com.github.nelson54.dominion.cards.sets.baseSet.*;
+import com.github.nelson54.dominion.cards.base.*;
+import com.github.nelson54.dominion.cards.types.Card;
 import com.google.common.collect.ArrayListMultimap;
 
 import java.util.HashMap;
+import java.util.Set;
 
 
 public class KingdomFactory {
@@ -20,7 +23,7 @@ public class KingdomFactory {
         return kingdom;
     }
 
-
+    @Deprecated
     Kingdom getKingdomFromCards(Class<? extends Card>[] cards, int players) throws IllegalAccessException, InstantiationException {
         Kingdom kingdom = new Kingdom();
         kingdom.setAllCards(new HashMap<>());
@@ -32,6 +35,27 @@ public class KingdomFactory {
         for(Class<? extends Card> clazz: cards){
             addXCardsOfType(10, clazz, kingdom);
         }
+
+        return kingdom;
+    }
+
+    Kingdom getKingdomFromCards(Set<Class<? extends Card>> cards, int players) throws IllegalAccessException, InstantiationException {
+        Kingdom kingdom = new Kingdom();
+        kingdom.setAllCards(new HashMap<>());
+        kingdom.setCardMarket(ArrayListMultimap.create());
+
+        addTreasureCards(kingdom);
+        addVictoryCards(kingdom, players);
+
+        cards.forEach(clazz -> {
+            try {
+                addXCardsOfType(10, clazz, kingdom);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+        });
 
         return kingdom;
     }

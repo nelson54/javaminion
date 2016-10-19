@@ -1,7 +1,7 @@
 package com.github.nelson54.dominion.ai;
 
 import com.github.nelson54.dominion.ai.decisions.AiDecisionBuilder;
-import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.types.Card;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
 package com.github.nelson54.dominion.choices;
 
-import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.effects.Effect;
 
 public class Reaction {

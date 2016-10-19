@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.*;
+import com.github.nelson54.dominion.cards.types.ActionCard;
+import com.github.nelson54.dominion.cards.types.Card;
+import com.github.nelson54.dominion.cards.types.TreasureCard;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.exceptions.*;
 import com.google.common.collect.ArrayListMultimap;
@@ -104,7 +107,7 @@ public class Turn {
         getPlay().add(card);
         card.apply(player, game);
 
-        if(actionPool == 0 || Cards.cardsOfType(player.getHand(), ActionCard.class).size() == 0) {
+        if(actionPool == 0 || Cards.ofType(player.getHand(), ActionCard.class).size() == 0) {
             endPhase();
         } else {
             player.onActionPhase();

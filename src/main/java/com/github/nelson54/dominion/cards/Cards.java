@@ -1,6 +1,8 @@
 package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.cards.types.ActionAttackCard;
+import com.github.nelson54.dominion.cards.types.Card;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -9,9 +11,15 @@ import java.util.stream.Collectors;
 
 public class Cards {
 
-    public static Set<Card> cardsOfType(Set<Card> cards, Class<? extends Card> clazz) {
+    public static Set<Card> ofType(Collection<Card> cards, Class<? extends Card> clazz) {
         return cards.stream()
                 .filter(clazz::isInstance)
+                .collect(Collectors.toSet());
+    }
+
+    public static Set<Card> ofType(Collection<Card> cards, CardType cardType) {
+        return cards.stream()
+                .filter(card -> card.isType(cardType))
                 .collect(Collectors.toSet());
     }
 
@@ -30,8 +38,7 @@ public class Cards {
     }
 
     public static Card ofId(String id){
-        return new CardReference(id);
-
+        return new LocalCardReference(id);
     }
 
     public static boolean isAttackCard (Card card) {

@@ -2,8 +2,8 @@ package com.github.nelson54.dominion;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.cards.VictoryCard;
+import com.github.nelson54.dominion.cards.types.Card;
+import com.github.nelson54.dominion.cards.types.VictoryCard;
 import com.github.nelson54.dominion.choices.Choice;
 
 import java.util.*;
@@ -11,10 +11,7 @@ import java.util.stream.Collectors;
 
 public class Player {
     @JsonProperty
-    private String id;
-
-    @JsonProperty
-    private String name;
+    User user;
 
     @JsonProperty
     private Set<Card> hand;
@@ -34,12 +31,22 @@ public class Player {
     @JsonProperty
     private Deque<Choice> choices;
 
-    public Player() {
-        id = UUID.randomUUID().toString();
+    public Player(User user) {
+        this.user = user;
         hand = new HashSet<>();
         deck = new LinkedHashSet<>();
         discard = new HashSet<>();
         choices = new LinkedList<>();
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return user.getId();
+    }
+
+    @JsonProperty("name")
+    public String getName() {
+        return user.getName();
     }
 
     @JsonProperty
@@ -156,7 +163,7 @@ public class Player {
     }
 
     public void revealCardFromHand(Card card) {
-        game.revealCardFromHand(this, card);
+        game.revealCard(this, card);
     }
 
     public Map<String, Card> getAllCards() {
@@ -183,14 +190,6 @@ public class Player {
 
     public void onEndOfTurn(){
 
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    protected void setId(String id) {
-        this.id = id;
     }
 
     public Set<Card> getHand() {
@@ -245,14 +244,6 @@ public class Player {
         choices.addFirst(choice);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     
 
     @Override
@@ -262,13 +253,13 @@ public class Player {
 
         Player player = (Player) o;
 
-        return id.equals(player.id);
+        return getId().equals(player.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = getId().hashCode();
+        result = 31 * result + getName().hashCode();
         result = 31 * result + (hand != null ? hand.hashCode() : 0);
         result = 31 * result + (deck != null ? deck.hashCode() : 0);
         result = 31 * result + (discard != null ? discard.hashCode() : 0);

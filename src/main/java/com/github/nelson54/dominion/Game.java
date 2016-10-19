@@ -2,7 +2,7 @@ package com.github.nelson54.dominion;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.google.common.collect.Multimap;
 import org.joda.time.DateTime;
@@ -215,12 +215,18 @@ public class Game {
         logs.add(DateTime.now().toString() + ": " + string);
     }
 
-    public void revealCardFromHand(Player player, Card card){
+    public void revealCard(Player player, Card card){
         boolean isCardInHand = player.getHand().contains(card);
         String fromLocation = (isCardInHand ? " from hand." : " from deck.");
 
 
         logs.add(player.getName()+ " revealed card " + card.getName() + fromLocation);
+    }
+
+    public void revealCardsFromHand (Player player, Set<Card> cards) {
+        StringJoiner sj = new StringJoiner(", ");
+        cards.forEach(card -> sj.add(card.getName()));
+        logs.add(player.getName()+ " revealed cards " + sj.toString() + " from hand.");
     }
 
     public Map<String, Card> getAllCards() {

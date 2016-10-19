@@ -1,0 +1,36 @@
+package com.github.nelson54.dominion.cards.base;
+
+
+import com.github.nelson54.dominion.cards.types.Card;
+import com.github.nelson54.dominion.cards.CardType;
+import com.github.nelson54.dominion.cards.Cost;
+
+public class CurseCard extends Card {
+
+    byte moneyCost = 0;
+    private byte victoryPoints = -1;
+
+    public CurseCard() {
+        super();
+        getCardTypes().add(CardType.CURSE);
+
+        byte moneyCost = 0;
+
+        Cost cost = new Cost();
+        cost.setMoney(moneyCost);
+        setCost(cost);
+        setVictoryPoints(victoryPoints);
+
+        setKingdomSortOrder(100);
+
+        setName("Curse");
+    }
+
+    public byte getVictoryPoints() {
+        return victoryPoints;
+    }
+
+    void setVictoryPoints(byte victoryPoints) {
+        this.victoryPoints = victoryPoints;
+    }
+}

@@ -2,8 +2,8 @@ package com.github.nelson54.dominion;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.nelson54.dominion.cards.Card;
-import com.github.nelson54.dominion.cards.TreasureCard;
+import com.github.nelson54.dominion.cards.types.Card;
+import com.github.nelson54.dominion.cards.types.TreasureCard;
 import com.google.common.collect.Multimap;
 
 import java.util.*;

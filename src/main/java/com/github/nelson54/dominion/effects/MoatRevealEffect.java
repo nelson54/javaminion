@@ -3,7 +3,7 @@ package com.github.nelson54.dominion.effects;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
-import com.github.nelson54.dominion.cards.Moat;
+import com.github.nelson54.dominion.cards.sets.baseSet.Moat;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.choices.Reaction;

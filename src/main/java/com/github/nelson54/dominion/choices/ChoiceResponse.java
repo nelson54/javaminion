@@ -2,7 +2,7 @@ package com.github.nelson54.dominion.choices;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.effects.Effect;
 
 import java.util.HashSet;

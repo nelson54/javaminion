@@ -1,8 +1,8 @@
 package com.github.nelson54.dominion.ai;
 
 import com.github.nelson54.dominion.*;
-import com.github.nelson54.dominion.cards.ActionCard;
-import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.types.ActionCard;
+import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
@@ -20,7 +20,7 @@ public class AiGameFacade {
     private Player player;
     private Turn turn;
 
-    AiGameFacade (Game game, Turn turn, Player player){
+    public AiGameFacade (Game game, Turn turn, Player player){
         this.game = game;
         this.player = player;
         this.turn = turn;
@@ -59,7 +59,7 @@ public class AiGameFacade {
     }
 
     Set<Card> getAllMyCards(){
-        return new HashSet(player.getAllCards().values());
+        return new HashSet<>(player.getAllCards().values());
     }
 
     public void play(ActionCard card){

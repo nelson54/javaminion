@@ -1,9 +1,9 @@
 package com.github.nelson54.dominion;
 
-import com.github.nelson54.dominion.ai.AiPlayer;
 import com.github.nelson54.dominion.ai.AiStrategies;
 import com.github.nelson54.dominion.ai.AiStrategy;
-import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.types.Card;
+import com.github.nelson54.dominion.match.Match;
 
 import java.util.*;
 
@@ -22,6 +22,20 @@ public class GameFactory {
         game.setKingdom(kingdomFactory.getKingdomFromCards(cards, gameModel.getPlayers().size()));
 
         addPlayers(gameModel.getPlayers(), game);
+        game.nextPlayer();
+
+        return game;
+    }
+
+    public Game createGame(Match match) throws InstantiationException, IllegalAccessException {
+        Game game = new Game();
+
+        game.setPlayers(new HashMap<>());
+        game.setTurnOrder(new LinkedHashSet<>());
+
+        game.setKingdom(kingdomFactory.getKingdomFromCards(match.getCards().getCardClasses(), match.getPlayerCount()));
+
+        addPlayers(match.getUsers(), game);
         game.nextPlayer();
 
         return game;
@@ -58,11 +72,11 @@ public class GameFactory {
         com.github.nelson54.dominion.web.gamebuilder.Player playerModel2 = new com.github.nelson54.dominion.web.gamebuilder.Player(UUID.randomUUID().toString());
         playerModel2.setName(ai2.getClass().toString());
 
-        Player p1 = createAiPlayer(game, playerModel1, ai1, game.getKingdom());
-        Player p2 = createAiPlayer(game, playerModel2, ai2, game.getKingdom());
+        User user1 = new User(playerModel1.getId(), "p1");
+        User user2 = new User(playerModel2.getId(), "p2");
 
-        p1.setName("p1");
-        p2.setName("p2");
+        Player p1 = createAiPlayer(game, user1, ai1, game.getKingdom());
+        Player p2 = createAiPlayer(game, user2, ai2, game.getKingdom());
 
         game.getPlayers().put(p1.getId(), p1);
         game.getPlayers().put(p2.getId(), p2);
@@ -86,13 +100,15 @@ public class GameFactory {
         return game;
     }
 
+    @Deprecated
     void addPlayers(Set<com.github.nelson54.dominion.web.gamebuilder.Player> players, Game game) {
 
         for(com.github.nelson54.dominion.web.gamebuilder.Player player : players){
             Player p;
+            User user = new User(player.getId(), player.getName());
 
             if(player.isAi()){
-                p = createAiPlayer(game, player, game.getKingdom());
+                p = createAiPlayer(game, user, game.getKingdom());
             } else {
                 p = createHumanPlayer(game, player, game.getKingdom());
             }
@@ -101,11 +117,28 @@ public class GameFactory {
         }
     }
 
-    Player createHumanPlayer(Game game, com.github.nelson54.dominion.web.gamebuilder.Player playerModel, Kingdom kingdom) {
-        Player player = new Player();
-        player.setId(playerModel.getId());
+    void addPlayers(Collection<User> players, Game game) {
+
+        for(User player : players){
+            Player p;
+            User user = new User(player.getId(), player.getName());
+
+            if(player.isAi()){
+                p = createAiPlayer(game, user, game.getKingdom());
+            } else {
+                p = createHumanPlayer(game, player, game.getKingdom());
+            }
+
+            game.getPlayers().put(p.getId(), p);
+        }
+    }
+
+    @Deprecated
+    private Player createHumanPlayer(Game game, com.github.nelson54.dominion.web.gamebuilder.Player playerModel, Kingdom kingdom) {
+        User user = new User(playerModel.getId(), playerModel.getName());
+
+        Player player = new Player(user);
         player.setGame(game);
-        player.setName(playerModel.getName());
 
         addStartingCardsToPlayer(player, game);
 
@@ -116,15 +149,30 @@ public class GameFactory {
         return player;
     }
 
-    Player createAiPlayer(Game game, com.github.nelson54.dominion.web.gamebuilder.Player player, Kingdom kingdom) {
+    private Player createHumanPlayer(Game game, User playerModel, Kingdom kingdom) {
+        User user = new User(playerModel.getId(), playerModel.getName());
+
+        Player player = new Player(user);
+        player.setGame(game);
+
+        addStartingCardsToPlayer(player, game);
+
+        game.getTurnOrder().add(player);
+
+        player.resetForNextTurn(null);
+
+        return player;
+    }
+
+    private Player createAiPlayer(Game game, User player, Kingdom kingdom) {
 
         return createAiPlayer(game, player, AiStrategies.random(), kingdom);
     }
 
-    Player createAiPlayer(Game game, com.github.nelson54.dominion.web.gamebuilder.Player p, AiStrategy aiStrategy, Kingdom kingdom) {
-        AiPlayer player = new AiPlayer();
-        player.setId(p.getId());
-        player.setName(p.getName());
+    private Player createAiPlayer(Game game, User user, AiStrategy aiStrategy, Kingdom kingdom) {
+
+        AiPlayer player = new AiPlayer(user);
+
         player.setAiStrategy(aiStrategy);
         player.setGame(game);
         addStartingCardsToPlayer(player, game);
@@ -136,7 +184,7 @@ public class GameFactory {
         return player;
     }
 
-    void addStartingCardsToPlayer(Player player, Game game) {
+    private void addStartingCardsToPlayer(Player player, Game game) {
 
         game.giveCardToPlayer("Estate", player);
         game.giveCardToPlayer("Estate", player);

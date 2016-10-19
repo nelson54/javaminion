@@ -51,7 +51,7 @@ public class GameProvider {
         return matching;
     }
 
-    public Collection<Game> getGamesForPlayer(String id) {
+    public Collection<Game> getMatches(String id) {
         return gamesByPlayerId.get(id);
     }
 

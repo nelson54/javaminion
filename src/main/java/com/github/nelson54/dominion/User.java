@@ -7,10 +7,16 @@ public final class User {
     private Set<String> games;
     private final String id;
     private String name;
+    private boolean ai;
 
     public User(String id) {
         games = new HashSet<>();
         this.id = id;
+    }
+
+    public User(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public String getId() {
@@ -31,5 +37,14 @@ public final class User {
 
     public void setGames(Set<String> games) {
         this.games = games;
+    }
+
+
+    public boolean isAi() {
+        return ai;
+    }
+
+    public void setAi(boolean ai) {
+        this.ai = ai;
     }
 }

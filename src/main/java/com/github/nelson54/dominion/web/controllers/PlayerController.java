@@ -1,8 +1,8 @@
 package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.*;
-import com.github.nelson54.dominion.cards.ActionCard;
-import com.github.nelson54.dominion.cards.Card;
+import com.github.nelson54.dominion.cards.types.ActionCard;
+import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.choices.OptionType;
