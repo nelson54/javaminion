@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.cards
 
 import com.github.nelson54.dominion.DominionTestCase
+import com.github.nelson54.dominion.cards.types.ActionCard
 import org.junit.Before
 import org.junit.Test
 

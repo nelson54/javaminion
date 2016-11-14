@@ -11,13 +11,14 @@ import java.util.List;
 
 public class AiSimulator {
 
-    GameFactory gameFactory;
+    private GameFactory gameFactory;
 
-    int timeout = 60*60*5;
-    int timesToRun = 1000;
-    int completed = 0;
-    int p1Wins = 0;
-    int p2Wins = 0;
+    private final int timeout = 60*60*5;
+    private final int timesToRun = 1000;
+
+    private int completed = 0;
+    private int p1Wins = 0;
+    private int p2Wins = 0;
 
     public static void main(String[] args) throws InstantiationException, IllegalAccessException {
         AiSimulator aiSimulator = new AiSimulator();
@@ -27,7 +28,7 @@ public class AiSimulator {
         aiSimulator.exec(aiStrategy1, aiStrategy2);
     }
 
-    AiSimulator(){
+    private AiSimulator(){
         gameFactory = getGameFactory();
     }
 
@@ -71,7 +72,7 @@ public class AiSimulator {
         System.out.println( ai2.getClass().toString() + " finished with " + p2Wins +"/"+timesToRun+ " wins.");
     }
 
-    GameFactory getGameFactory() {
+    private GameFactory getGameFactory() {
         GameFactory gameFactory = new GameFactory();
         KingdomFactory kingdomFactory = new KingdomFactory();
         gameFactory.setKingdomFactory(kingdomFactory);

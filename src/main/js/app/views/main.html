@@ -32,11 +32,21 @@
 </div>
 
 <div class="game-list-container">
-  <button ng-click="getGames()">Refresh</button><button ng-click="newGame = true">New</button>
+  <button ng-click="update()">Refresh</button><button ng-click="newGame = true">New</button>
 
+  <h2>Games</h2>
   <ul class="game-list">
-    <li ng-repeat="id in games">
-      <a href="#/games/{{id}}">{{id}}</a>
+    <li ng-repeat="game in games">
+      <a href="#/games/{{game.id}}">{{game.id}}</a>
+    </li>
+  </ul>
+</div>
+
+<div class="game-list-container">
+  <h2>Matches</h2>
+  <ul class="game-list">
+    <li ng-repeat="match in matches">
+      <button ng-click="join(match.id)">{{match.id}}</button>
     </li>
   </ul>
 </div>

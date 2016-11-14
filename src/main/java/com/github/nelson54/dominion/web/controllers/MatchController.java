@@ -1,26 +1,27 @@
 package com.github.nelson54.dominion.web.controllers;
 
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.GameProvider;
-import com.github.nelson54.dominion.User;
-import com.github.nelson54.dominion.UsersProvider;
+import com.github.nelson54.dominion.*;
 import com.github.nelson54.dominion.ai.AiName;
+import com.github.nelson54.dominion.cards.GameCardSet;
+import com.github.nelson54.dominion.cards.GameCards;
+import com.github.nelson54.dominion.exceptions.InvalidCardSetName;
+import com.github.nelson54.dominion.match.Match;
+import com.github.nelson54.dominion.match.MatchParticipant;
+import com.github.nelson54.dominion.match.MatchProvider;
 import com.github.nelson54.dominion.web.gamebuilder.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static sun.audio.AudioPlayer.player;
 
 @RestController
 @RequestMapping("/dominion")
@@ -32,77 +33,86 @@ public class MatchController {
     @Autowired
     GameProvider gameProvider;
 
+    @Autowired
+    MatchProvider matchProvider;
+
+    @Autowired
+    GameFactory gameFactory;
+
+    public MatchController() {
+
+    }
+
     @RequestMapping(value="/matches", method= RequestMethod.GET)
-    Page<String> matches(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String playerId = authentication.getName();
-
-        List<String> gameIds = gameProvider.getMatching().values().stream()
-                .filter(game -> game.getPlayers().stream().noneMatch(p -> p.getId().equals(playerId)))
-                .map(com.github.nelson54.dominion.web.gamebuilder.Game::getId)
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(gameIds);
+    Page<Match> matches() {
+        User user = getUser();
+        return new PageImpl<>(matchProvider.getJoinableMatchesForUser(user));
     }
 
     @RequestMapping(value = "/matches", method = RequestMethod.POST)
     void createMatch(
-            @RequestBody
-            com.github.nelson54.dominion.web.gamebuilder.Game game
+            @RequestParam
+            byte numberOfHumanPlayers,
+            @RequestParam
+            byte numberOfAiPlayers,
+            @RequestParam
+            String cards
     ) throws InstantiationException, IllegalAccessException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = usersProvider.getUserById(authentication.getName());
 
-        Player player = new Player(user.getId());
-        player.setName(user.getName());
-        player.setAi(false);
+        byte totalPlayers = (byte)(numberOfAiPlayers + numberOfHumanPlayers);
 
-        game.getPlayers().add(player);
-
-        game.setId(UUID.randomUUID().toString());
-        gameProvider.getMatching().put(game.getId(), game);
-
-        fillInAiPlayers(game);
-
-        join(game, user);
-    }
-
-    private void fillInAiPlayers(com.github.nelson54.dominion.web.gamebuilder.Game game) {
-        Iterator<AiName> names = AiName.random(game.numberOfAiPlayers()).iterator();
-
-        for(Player player : game.getPlayers()){
-            if(player.isAi()){
-                AiName name = names.next();
-                player.setId(UUID.randomUUID().toString());
-                player.setName(name.toString());
-            }
+        GameCardSet gameCardSet;
+        GameCards gameCards = GameCards.ofName(cards);
+        if(gameCards != null) {
+            gameCardSet = gameCards.getGameCardSet();
+        } else {
+            throw new InvalidCardSetName();
         }
+
+        Match match = new Match(totalPlayers, gameCardSet);
+
+        User user = getUser();
+
+        match.addParticipant(new MatchParticipant(user));
+        match.addAiParticipants(numberOfAiPlayers);
+
+        addMatch(match);
     }
 
     @RequestMapping(value="/matches", method=RequestMethod.PATCH)
-    void join(String gameId) throws InstantiationException, IllegalAccessException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = usersProvider.getUserById(authentication.getName());
-
-        com.github.nelson54.dominion.web.gamebuilder.Game game = gameProvider.getMatching().get(gameId);
-
-        join(game, user);
-
+    private void join(
+            @RequestParam
+            String matchId
+    ) throws InstantiationException, IllegalAccessException {
+        Match match = matchProvider.getMatchById(matchId);
+        User user = getUser();
+        match.addParticipant(new MatchParticipant(user));
+        createGameIfReady(match);
     }
 
-    void join(com.github.nelson54.dominion.web.gamebuilder.Game game, User user) throws InstantiationException, IllegalAccessException {
-
-        if(game.hasRemainingPlayers()){
-            user.getGames().add(game.getId());
-            game.findUnsetHumanPlayer().ifPresent(p -> {
-                p.setId(user.getId());
-                p.setName(user.getName());
-            });
+    private void addMatch (Match match) throws IllegalAccessException, InstantiationException {
+        if(match.isReady()) {
+            createGame(match);
+        } else {
+            matchProvider.addMatch(match);
         }
+    }
 
+    private void createGameIfReady(Match match) throws IllegalAccessException, InstantiationException {
+        if(match.isReady()) {
+            createGame(match);
+        }
+    }
 
-        gameProvider.createGameBySet(game);
+    private void createGame(Match match) throws IllegalAccessException, InstantiationException {
+        Game game = gameFactory.createGame(match);
+        gameProvider.addGame(game);
+        matchProvider.remove(match);
+    }
 
+    private User getUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        return usersProvider.getUserById(authentication.getName());
     }
 }

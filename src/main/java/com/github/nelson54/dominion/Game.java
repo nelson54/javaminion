@@ -19,7 +19,7 @@ public class Game {
     private List<String> logs;
 
     @JsonProperty
-    private UUID id;
+    private String id;
 
     @JsonProperty
     private Kingdom kingdom;
@@ -49,7 +49,7 @@ public class Game {
     private Turn turn;
 
     public Game() {
-        id = UUID.randomUUID();
+        id = UUID.randomUUID().toString();
         pastTurns = new LinkedHashSet<>();
         allCards = new HashMap<>();
         trash = new HashSet<>();
@@ -150,12 +150,8 @@ public class Game {
                 .forEach(turn -> turn.setPhase(END_OF_GAME));
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public Map<String, Player> getPlayers() {
@@ -215,7 +211,7 @@ public class Game {
         logs.add(DateTime.now().toString() + ": " + string);
     }
 
-    public void revealCard(Player player, Card card){
+    void revealCard(Player player, Card card){
         boolean isCardInHand = player.getHand().contains(card);
         String fromLocation = (isCardInHand ? " from hand." : " from deck.");
 

@@ -7,6 +7,7 @@ import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.KingdomFactory;
 import com.github.nelson54.dominion.UsersProvider;
+import com.github.nelson54.dominion.match.MatchProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -41,6 +42,11 @@ public class Application extends WebMvcConfigurerAdapter {
     @Bean
     GameProvider getGameProvider() {
         return new GameProvider();
+    }
+
+    @Bean
+    MatchProvider getMatchProvider() {
+        return new MatchProvider();
     }
 
     @Autowired

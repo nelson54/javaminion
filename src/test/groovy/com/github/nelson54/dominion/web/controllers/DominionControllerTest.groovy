@@ -1,17 +1,13 @@
 package com.github.nelson54.dominion.web.controllers
 
-import com.github.nelson54.dominion.Phase
-import com.github.nelson54.dominion.cards.RecommendedCards
-import com.github.nelson54.dominion.web.Application
-import com.github.nelson54.dominion.web.gamebuilder.Game
-import com.github.nelson54.dominion.web.gamebuilder.Player
-import org.junit.Test
-import org.springframework.boot.test.SpringApplicationConfiguration
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import com.github.nelson54.dominion.DominionTestCase
+import com.github.nelson54.dominion.web.Application
 import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.SpringApplicationConfiguration
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)

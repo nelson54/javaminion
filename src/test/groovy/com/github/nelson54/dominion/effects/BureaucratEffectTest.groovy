@@ -6,6 +6,8 @@ import com.github.nelson54.dominion.Player
 import com.github.nelson54.dominion.Turn
 import com.github.nelson54.dominion.cards.Card
 import com.github.nelson54.dominion.cards.ComplexActionCard
+import com.github.nelson54.dominion.cards.types.Card
+import com.github.nelson54.dominion.cards.types.ComplexActionCard
 import com.github.nelson54.dominion.choices.Choice
 import com.github.nelson54.dominion.choices.ChoiceResponse
 

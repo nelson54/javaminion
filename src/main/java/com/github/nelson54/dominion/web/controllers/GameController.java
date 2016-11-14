@@ -5,6 +5,7 @@ import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.User;
 import com.github.nelson54.dominion.UsersProvider;
 import com.github.nelson54.dominion.cards.RecommendedCards;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -42,21 +43,16 @@ public class GameController {
         return gameProvider.getGameByUuid(id);
     }
 
-    @RequestMapping("/")
-    Page<String> games(){
+    @RequestMapping("/games")
+    Page<Game> games(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         User user = usersProvider.getUserById(authentication.getName());
 
-        Page<String> page = new PageImpl<>(new ArrayList<>());
+        Page<Game> page = new PageImpl<>(new ArrayList<>());
 
         if(user != null && user.getId() != null) {
-            List<String> gameIds = gameProvider.getMatches(user.getId())
-                    .stream()
-                    .map((game) -> game.getId().toString())
-                    .collect(Collectors.toList());
-
-            page = new PageImpl<>(gameIds);
+            page = new PageImpl<>(new ArrayList<>(gameProvider.all()));
         }
 
         return page;

@@ -10,9 +10,10 @@
 angular.module('dominionFrontendApp')
   .controller('MainCtrl', function ($scope, $http, $resource, $route, baseUrl, recommendedCards) {
 
-    var Match = $resource(baseUrl+'/dominion/matches/');
-    var Game = $resource(baseUrl+'/dominion/');
+    var Match = $resource(baseUrl+'/dominion/matches/', null, {'update': { method:'PATCH' }});
+    var Game = $resource(baseUrl+'/dominion/games/');
 
+    $scope.matches = [];
     $scope.games = [];
 
     $scope.cards = 'First Game';
@@ -31,13 +32,23 @@ angular.module('dominionFrontendApp')
         });
     };
 
-    $scope.createGame = function(){
-      var match = new Match({
-        cardSet: $scope.cards,
-        players: $scope.players,
-        count: $scope.players.length + 1
+    $scope.getMatches = function(){
+      return Match.get(function(response){
+        $scope.matches = response.content;
       });
-      match.$save($route.reload);
+    };
+
+    $scope.createGame = function(){
+      var match = new Match();
+      match.$save({
+        cards: $scope.cards,
+        numberOfHumanPlayers: getNumberOfHumanPlayers(),
+        numberOfAiPlayers: getNumberOfAiPlayers()
+      }, $route.reload);
+    };
+
+    $scope.join = function(id){
+      Match.update({matchId: id}, {matchId: id}, $scope.update)
     };
 
     $scope.cancel = function(){
@@ -51,5 +62,20 @@ angular.module('dominionFrontendApp')
       }
     };
 
-    $scope.getGames();
-  });
+    function getNumberOfAiPlayers() {
+      return $scope.players.filter(function(player){
+        return player.ai;
+      }).length
+    }
+
+    function getNumberOfHumanPlayers() {
+      return $scope.players.length + 1 - getNumberOfAiPlayers();
+    }
+
+    $scope.update = function () {
+      $scope.getGames();
+      $scope.getMatches();
+    };
+
+    $scope.update();
+});

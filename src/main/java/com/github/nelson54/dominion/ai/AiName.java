@@ -26,4 +26,11 @@ public enum AiName {
                 .limit(number)
                 .collect(Collectors.toSet());
     }
+
+    public static AiName random(){
+        List<AiName> aiNames = Arrays.asList(AiName.values());
+        Collections.shuffle(aiNames);
+
+        return aiNames.stream().findFirst().get();
+    }
 }
