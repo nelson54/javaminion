@@ -1,4 +1,4 @@
-package com.github.nelson54.dominion.effects;
+package com.github.nelson54.dominion.cards.sets.baseSet.effects;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
@@ -19,7 +19,7 @@ public class BureaucratEffect extends Effect {
     @Override
     void onNoValidTarget(Choice choice, Player target, Turn turn, Game game) {
         Multimap<String, Card> revealed = turn.getRevealed();
-        revealed.putAll(target.getId().toString(), target.getHand());
+        revealed.putAll(target.getId(), target.getHand());
         target.getHand();
     }
 

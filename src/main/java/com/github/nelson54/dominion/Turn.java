@@ -107,7 +107,9 @@ public class Turn {
         getPlay().add(card);
         card.apply(player, game);
 
-        if(actionPool == 0 || Cards.ofType(player.getHand(), ActionCard.class).size() == 0) {
+        if (game.getChoices().size() > 0) {
+            game.getChoices().forEach(choice -> choice.getTarget().onChoice());
+        } else if(actionPool == 0 || Cards.ofType(player.getHand(), ActionCard.class).size() == 0 ) {
             endPhase();
         } else {
             player.onActionPhase();

@@ -7,8 +7,8 @@ import com.github.nelson54.dominion.cards.types.ComplexActionCard;
 import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.effects.Effect;
-import com.github.nelson54.dominion.effects.LibraryEffect;
+import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
+import com.github.nelson54.dominion.cards.sets.baseSet.effects.LibraryEffect;
 
 import java.util.HashSet;
 import java.util.Set;

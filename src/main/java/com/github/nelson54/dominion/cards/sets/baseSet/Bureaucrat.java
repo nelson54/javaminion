@@ -2,14 +2,15 @@ package com.github.nelson54.dominion.cards.sets.baseSet;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.cards.Cards;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.types.ComplexActionAttackCard;
 import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.cards.types.VictoryCard;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.effects.BureaucratEffect;
-import com.github.nelson54.dominion.effects.Effect;
+import com.github.nelson54.dominion.cards.sets.baseSet.effects.BureaucratEffect;
+import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
 import com.github.nelson54.dominion.exceptions.NoValidChoiceException;
 
 import java.util.Set;
@@ -40,7 +41,7 @@ public class Bureaucrat extends ComplexActionAttackCard {
 
         if(victoryCardsInHand.size() > 0) {
 
-            choice.setCardOptions(victoryCardsInHand);
+            choice.setOptions(Cards.getIds(victoryCardsInHand));
 
             choice.setExpectedAnswerType(OptionType.CARD);
             choice.setRequired(true);

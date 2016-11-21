@@ -8,20 +8,20 @@ import java.util.stream.Collectors;
 
 
 public class GameCardSet {
-    private Set<GenericCardReference> cards;
+    private Set<CardTypeReference> cards;
 
-    private GameCardSet(Set<GenericCardReference> cards) {
+    private GameCardSet(Set<CardTypeReference> cards) {
         this.cards = cards;
     }
 
-    public static GameCardSet of(GenericCardReference ... refs) {
+    public static GameCardSet of(CardTypeReference... refs) {
         return new GameCardSet(Arrays.stream(refs).collect(Collectors.toSet()));
     }
 
     public Set<Class<? extends Card>> getCardClasses() {
         return cards
                 .stream()
-                .map(GenericCardReference::getCardClass)
+                .map(CardTypeReference::getCardClass)
                 .collect(Collectors.toSet());
     }
 }

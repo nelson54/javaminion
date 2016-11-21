@@ -1,4 +1,4 @@
-package com.github.nelson54.dominion.effects;
+package com.github.nelson54.dominion.cards.sets.baseSet.effects;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;

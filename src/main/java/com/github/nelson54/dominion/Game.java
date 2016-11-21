@@ -37,7 +37,7 @@ public class Game {
     private Set<Card> trash;
 
     @JsonIgnore
-    private Iterator<Player> turnerator;
+    Iterator<Player> turnerator;
 
     @JsonProperty
     private Map<String, Player> players;
@@ -108,9 +108,9 @@ public class Game {
 
         if (cards != null) {
             purchasedCard = cards.stream().filter(card -> card.getOwner() == null).findFirst();
-            cards.remove(purchasedCard.get());
+            purchasedCard.ifPresent(cards::remove);
             purchasedCard.ifPresent(card -> card.setOwner(player));
-            player.getDiscard().add(purchasedCard.get());
+            purchasedCard.ifPresent(card -> player.getDiscard().add(card));
             purchasedCard.ifPresent(card -> card.setOwner(player));
             return purchasedCard.get();
         } else {

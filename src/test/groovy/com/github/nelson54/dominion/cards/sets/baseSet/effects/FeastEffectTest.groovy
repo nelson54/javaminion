@@ -1,9 +1,8 @@
-package com.github.nelson54.dominion.effects
+package com.github.nelson54.dominion.cards.sets.baseSet.effects
 import com.github.nelson54.dominion.DominionTestCase
 import com.github.nelson54.dominion.Phase
 import com.github.nelson54.dominion.Turn
-import com.github.nelson54.dominion.cards.Card
-import com.github.nelson54.dominion.cards.ComplexActionCard
+import com.github.nelson54.dominion.cards.CardReference
 import com.github.nelson54.dominion.cards.types.Card
 import com.github.nelson54.dominion.cards.types.ComplexActionCard
 import com.github.nelson54.dominion.choices.Choice
@@ -48,7 +47,7 @@ class FeastEffectTest extends DominionTestCase {
     }
 
     void applyChoice(Choice choice, Turn turn){
-        Card toTrash = choice.getCardOptions().first();
+        Card toTrash = new CardReference(choice.getOptions().first());
 
         ChoiceResponse cr = new ChoiceResponse();
         cr.setCard(toTrash)

@@ -1,4 +1,4 @@
-package com.github.nelson54.dominion.effects;
+package com.github.nelson54.dominion.cards.sets.baseSet.effects;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
@@ -6,20 +6,20 @@ import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 
-public class FeastEffect extends Effect {
+public class ChapelEffect extends Effect {
 
+    private int trashed = 0;
 
     @Override
     boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
-
-        Card option = game.getAllCards().get(response.getCard().getId().toString());
+        Card option = response.getCard();
 
         if (getChoice().getCardOptions().contains(option)) {
-            game.giveCardToPlayer(option.getName(), getTarget());
-            return true;
+            game.trashCard(option);
+            trashed++;
         }
 
-        return false;
+        return trashed == 4 || response.isDone();
     }
 
 }

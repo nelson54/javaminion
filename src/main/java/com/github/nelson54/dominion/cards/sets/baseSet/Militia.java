@@ -9,8 +9,8 @@ import com.github.nelson54.dominion.cards.types.ComplexActionAttackCard;
 import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.effects.Effect;
-import com.github.nelson54.dominion.effects.MilitiaEffect;
+import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
+import com.github.nelson54.dominion.cards.sets.baseSet.effects.MilitiaEffect;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,7 +35,7 @@ public class Militia extends ComplexActionAttackCard {
         Choice parent = choice.getParentChoice();
         choice.setMessage("Choose 3 cards to keep in your hand.");
 
-        Set<Card> options = new HashSet<>();;
+        Set<Card> options = new HashSet<>();
 
         if(parent == null){
             options.addAll(target.getHand());

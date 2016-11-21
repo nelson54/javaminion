@@ -38,7 +38,7 @@ public class Cards {
     }
 
     public static Card ofId(String id){
-        return new LocalCardReference(id);
+        return new CardReference(id);
     }
 
     public static boolean isAttackCard (Card card) {

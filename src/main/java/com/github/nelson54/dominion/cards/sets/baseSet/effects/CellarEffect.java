@@ -1,4 +1,4 @@
-package com.github.nelson54.dominion.effects;
+package com.github.nelson54.dominion.cards.sets.baseSet.effects;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;

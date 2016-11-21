@@ -1,11 +1,10 @@
-package com.github.nelson54.dominion.effects
+package com.github.nelson54.dominion.cards.sets.baseSet.effects
 
 import com.github.nelson54.dominion.DominionTestCase
 import com.github.nelson54.dominion.Phase
 import com.github.nelson54.dominion.Player
 import com.github.nelson54.dominion.Turn
-import com.github.nelson54.dominion.cards.Card
-import com.github.nelson54.dominion.cards.ComplexActionCard
+import com.github.nelson54.dominion.cards.CardReference
 import com.github.nelson54.dominion.cards.types.Card
 import com.github.nelson54.dominion.cards.types.ComplexActionCard
 import com.github.nelson54.dominion.choices.Choice
@@ -17,14 +16,12 @@ import com.github.nelson54.dominion.choices.ChoiceResponse
 class BureaucratEffectTest extends DominionTestCase {
     Card card
     ComplexActionCard bureaucrat
-    Choice choice
 
     void setUp() {
         super.setUp()
-        Turn turn = game.getTurn()
         player = getCurrentPlayer()
-        card = game.giveCardToPlayer("Bureaucrat", player)
-        bureaucrat = (ComplexActionCard) card
+        bureaucrat = (ComplexActionCard)game.giveCardToPlayer("Bureaucrat", player)
+
     }
 
     void testEffect() {
@@ -33,20 +30,21 @@ class BureaucratEffectTest extends DominionTestCase {
         Set<Card> hand = new HashSet<>()
 
         for(Player p : game.getPlayers().values()){
-            game.giveCardToPlayer("Estate", p);
+            p.drawXCards(5)
         }
 
-        player.setHand(hand)
+        hand.add(bureaucrat);
+        assertEquals "Phase is ACTION ", Phase.ACTION, turn.getPhase()
 
         turn.playCard(bureaucrat, player, game)
-        turn.getPlay().clear();
+
         assertEquals "Phase is WAITING_FOR_CHOICE ", Phase.WAITING_FOR_CHOICE, turn.getPhase()
 
         applyChoice(getChoice(), turn);
 
         turn.actionPool++;
-
-        hand.clear()
+        turn.getPlay().clear();
+        hand.add(bureaucrat);
 
         turn.setPhase(Phase.ACTION)
 
@@ -57,18 +55,21 @@ class BureaucratEffectTest extends DominionTestCase {
 
         turn.playCard(bureaucrat, player, game)
         turn.getPlay().clear();
+        turn.endPhase()
+
 
 
     }
 
     Choice getChoice(){
         return game.getChoices().stream()
-                .filter( { ch -> ch.getSource().equals(card) } )
-                .findFirst().get();
+                .filter( { ch -> (ch.getSource() == bureaucrat) } )
+                .findFirst()
+                .get();
     }
 
     void applyChoice(Choice choice, Turn turn){
-        Card toTrash = choice.getCardOptions().first();
+        Card toTrash = new CardReference(choice.getOptions().first());
 
         ChoiceResponse cr = new ChoiceResponse();
         cr.setCard(toTrash)

@@ -9,8 +9,8 @@ import com.github.nelson54.dominion.cards.types.ComplexActionCard;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.choices.Range;
-import com.github.nelson54.dominion.effects.Effect;
-import com.github.nelson54.dominion.effects.ThroneRoomEffect;
+import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
+import com.github.nelson54.dominion.cards.sets.baseSet.effects.ThroneRoomEffect;
 import com.github.nelson54.dominion.exceptions.NoValidChoiceException;
 
 import java.util.Set;

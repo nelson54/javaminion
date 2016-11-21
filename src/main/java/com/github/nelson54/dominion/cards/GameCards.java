@@ -9,76 +9,106 @@ public enum GameCards {
     FIRST_GAME(
             "First Game",
             GameCardSet.of(
-                GenericCardReference.of("Cellar", Cellar.class),
-                GenericCardReference.of("Market", Market.class),
-                GenericCardReference.of("Militia", Militia.class),
-                GenericCardReference.of("Mine", Mine.class),
-                GenericCardReference.of("Moat", Moat.class),
-                GenericCardReference.of("Remodel", Remodel.class),
-                GenericCardReference.of("Smithy", Smithy.class),
-                GenericCardReference.of("Village", Village.class),
-                GenericCardReference.of("Woodcutter", Woodcutter.class),
-                GenericCardReference.of("Workshop", Workshop.class)
+                CardTypeReference.of("Cellar", Cellar.class),
+                CardTypeReference.of("Market", Market.class),
+                CardTypeReference.of("Militia", Militia.class),
+                CardTypeReference.of("Mine", Mine.class),
+                CardTypeReference.of("Moat", Moat.class),
+                CardTypeReference.of("Remodel", Remodel.class),
+                CardTypeReference.of("Smithy", Smithy.class),
+                CardTypeReference.of("Village", Village.class),
+                CardTypeReference.of("Woodcutter", Woodcutter.class),
+                CardTypeReference.of("Workshop", Workshop.class)
             )
     ),
     VILLAGE_SQUARE (
             "Village Square",
             GameCardSet.of(
-                GenericCardReference.of("Bureaucrat", Bureaucrat.class),
-                GenericCardReference.of("Cellar", Cellar.class),
-                GenericCardReference.of("Festival", Festival.class),
-                GenericCardReference.of("Library", Library.class),
-                GenericCardReference.of("Market", Market.class),
-                GenericCardReference.of("Remodel", Remodel.class),
-                GenericCardReference.of("Smithy", Smithy.class),
-                GenericCardReference.of("Throne Room", ThroneRoom.class),
-                GenericCardReference.of("Woodcutter", Woodcutter.class),
-                GenericCardReference.of("Village", Village.class)
+                CardTypeReference.of("Bureaucrat", Bureaucrat.class),
+                CardTypeReference.of("Cellar", Cellar.class),
+                CardTypeReference.of("Festival", Festival.class),
+                CardTypeReference.of("Library", Library.class),
+                CardTypeReference.of("Market", Market.class),
+                CardTypeReference.of("Remodel", Remodel.class),
+                CardTypeReference.of("Smithy", Smithy.class),
+                CardTypeReference.of("Throne Room", ThroneRoom.class),
+                CardTypeReference.of("Woodcutter", Woodcutter.class),
+                CardTypeReference.of("Village", Village.class)
             )
     ),
     BIG_MONEY (
             "Big Money",
             GameCardSet.of(
-                GenericCardReference.of("Adventurer", Adventurer.class),
-                GenericCardReference.of("Bureaucrat", Bureaucrat.class),
-                GenericCardReference.of("Chancellor", Chancellor.class),
-                GenericCardReference.of("Chapel", Chapel.class),
-                GenericCardReference.of("Feast", Feast.class),
-                GenericCardReference.of("Laboratory", Laboratory.class),
-                GenericCardReference.of("Market", Market.class),
-                GenericCardReference.of("Mine", Mine.class),
-                GenericCardReference.of("Moneylender", Moneylender.class),
-                GenericCardReference.of("Throne Room", ThroneRoom.class)
+                CardTypeReference.of("Adventurer", Adventurer.class),
+                CardTypeReference.of("Bureaucrat", Bureaucrat.class),
+                CardTypeReference.of("Chancellor", Chancellor.class),
+                CardTypeReference.of("Chapel", Chapel.class),
+                CardTypeReference.of("Feast", Feast.class),
+                CardTypeReference.of("Laboratory", Laboratory.class),
+                CardTypeReference.of("Market", Market.class),
+                CardTypeReference.of("Mine", Mine.class),
+                CardTypeReference.of("Moneylender", Moneylender.class),
+                CardTypeReference.of("Throne Room", ThroneRoom.class)
             )
     ),
     INTERACTION (
             "Interaction",
             GameCardSet.of(
-                GenericCardReference.of("Bureaucrat", Bureaucrat.class),
-                GenericCardReference.of("Chancellor", Chancellor.class),
-                GenericCardReference.of("Council Room", CouncilRoom.class),
-                GenericCardReference.of("Festival", Festival.class),
-                GenericCardReference.of("Library", Library.class),
-                GenericCardReference.of("Militia", Militia.class),
-                GenericCardReference.of("Moat", Moat.class),
-                GenericCardReference.of("Spy", Spy.class),
-                GenericCardReference.of("Thief", Thief.class),
-                GenericCardReference.of("Village", Village.class)
+                CardTypeReference.of("Bureaucrat", Bureaucrat.class),
+                CardTypeReference.of("Chancellor", Chancellor.class),
+                CardTypeReference.of("Council Room", CouncilRoom.class),
+                CardTypeReference.of("Festival", Festival.class),
+                CardTypeReference.of("Library", Library.class),
+                CardTypeReference.of("Militia", Militia.class),
+                CardTypeReference.of("Moat", Moat.class),
+                CardTypeReference.of("Spy", Spy.class),
+                CardTypeReference.of("Thief", Thief.class),
+                CardTypeReference.of("Village", Village.class)
             )
     ),
     SIZE_DISTORTION (
             "Size Distortion",
             GameCardSet.of(
-                GenericCardReference.of("Cellar", Cellar.class),
-                GenericCardReference.of("Chapel", Chapel.class),
-                GenericCardReference.of("Feast", Feast.class),
-                GenericCardReference.of("Gardens", Gardens.class),
-                GenericCardReference.of("Laboratory", Laboratory.class),
-                GenericCardReference.of("Thief", Thief.class),
-                GenericCardReference.of("Village", Village.class),
-                GenericCardReference.of("Witch", Witch.class),
-                GenericCardReference.of("Woodcutter", Woodcutter.class),
-                GenericCardReference.of("Workshop", Workshop.class)
+                CardTypeReference.of("Cellar", Cellar.class),
+                CardTypeReference.of("Chapel", Chapel.class),
+                CardTypeReference.of("Feast", Feast.class),
+                CardTypeReference.of("Gardens", Gardens.class),
+                CardTypeReference.of("Laboratory", Laboratory.class),
+                CardTypeReference.of("Thief", Thief.class),
+                CardTypeReference.of("Village", Village.class),
+                CardTypeReference.of("Witch", Witch.class),
+                CardTypeReference.of("Woodcutter", Woodcutter.class),
+                CardTypeReference.of("Workshop", Workshop.class)
+            )
+    ),
+    ALL_CARDS (
+            "All Cards",
+            GameCardSet.of(
+                    CardTypeReference.of("Cellar", Cellar.class),
+                    CardTypeReference.of("Chapel", Chapel.class),
+                    CardTypeReference.of("Moat", Moat.class),
+                    CardTypeReference.of("Chancellor", Chancellor.class),
+                    CardTypeReference.of("Woodcutter", Woodcutter.class),
+                    CardTypeReference.of("Village", Village.class),
+                    CardTypeReference.of("Workshop", Workshop.class),
+                    CardTypeReference.of("Bureaucrat", Bureaucrat.class),
+                    CardTypeReference.of("Gardens", Gardens.class),
+                    CardTypeReference.of("Militia", Militia.class),
+                    CardTypeReference.of("Moneylender", Moneylender.class),
+                    CardTypeReference.of("Feast", Feast.class),
+                    CardTypeReference.of("Spy", Spy.class),
+                    CardTypeReference.of("Thief", Thief.class),
+                    CardTypeReference.of("Remodel", Remodel.class),
+                    CardTypeReference.of("Smithy", Smithy.class),
+                    CardTypeReference.of("Throne Room", ThroneRoom.class),
+                    CardTypeReference.of("Council Room", CouncilRoom.class),
+                    CardTypeReference.of("Festival", Festival.class),
+                    CardTypeReference.of("Laboratory", Laboratory.class),
+                    CardTypeReference.of("Library", Library.class),
+                    CardTypeReference.of("Market", Market.class),
+                    CardTypeReference.of("Mine", Mine.class),
+                    CardTypeReference.of("Witch", Witch.class),
+                    CardTypeReference.of("Adventurer", Adventurer.class)
             )
     );
 

@@ -1,5 +1,6 @@
 package com.github.nelson54.dominion.web;
 
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
@@ -51,6 +52,7 @@ public class Application extends WebMvcConfigurerAdapter {
 
     @Autowired
     public ObjectMapper configureObjectMapper(ObjectMapper objectMapper) {
+
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new GuavaModule());
 

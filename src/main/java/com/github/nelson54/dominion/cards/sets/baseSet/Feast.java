@@ -9,8 +9,8 @@ import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.choices.Range;
-import com.github.nelson54.dominion.effects.Effect;
-import com.github.nelson54.dominion.effects.FeastEffect;
+import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
+import com.github.nelson54.dominion.cards.sets.baseSet.effects.FeastEffect;
 import com.google.common.collect.Multimap;
 
 import java.util.Optional;
