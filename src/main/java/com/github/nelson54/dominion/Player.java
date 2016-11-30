@@ -267,4 +267,8 @@ public class Player {
         result = 31 * result + (choices != null ? choices.hashCode() : 0);
         return result;
     }
+
+    public User getUser() {
+        return user;
+    }
 }

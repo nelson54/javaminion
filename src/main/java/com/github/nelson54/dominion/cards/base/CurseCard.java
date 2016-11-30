@@ -1,11 +1,18 @@
 package com.github.nelson54.dominion.cards.base;
 
 
+import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.CardType;
 import com.github.nelson54.dominion.cards.Cost;
 
 public class CurseCard extends Card {
+
+    public CurseCard(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
 
     byte moneyCost = 0;
     private byte victoryPoints = -1;

@@ -20,6 +20,12 @@ public class Laboratory extends ActionCard {
         setName("Laboratory");
     }
 
+    public Laboratory(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public void apply(Player player, Game game) {
         Turn turn = game.getTurn();

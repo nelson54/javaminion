@@ -21,6 +21,12 @@ public class Gardens extends VictoryCard {
         setName("Gardens");
     }
 
+    public Gardens(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public byte getVictoryPoints() {
         Player owner = getOwner();

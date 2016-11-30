@@ -30,6 +30,12 @@ public class Militia extends ComplexActionAttackCard {
         setName("Militia");
     }
 
+    public Militia(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();

@@ -29,6 +29,12 @@ public class Mine extends ComplexActionCard {
         setName("Mine");
     }
 
+    public Mine(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public CardState getState(Choice choice){
         if(choice.getParentChoice() == null){

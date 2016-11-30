@@ -48,6 +48,15 @@ public class Game {
     @JsonProperty
     private Turn turn;
 
+    public Game(String id) {
+        this.id = id;
+        players = new HashMap<>();
+        pastTurns = new LinkedHashSet<>();
+        allCards = new HashMap<>();
+        trash = new HashSet<>();
+        logs = new ArrayList<>();
+    }
+
     public Game() {
         id = UUID.randomUUID().toString();
         pastTurns = new LinkedHashSet<>();
@@ -273,5 +282,9 @@ public class Game {
         if (!turnerator.equals(game.turnerator)) return false;
 
         return true;
+    }
+
+    public boolean getGameOver() {
+        return gameOver;
     }
 }

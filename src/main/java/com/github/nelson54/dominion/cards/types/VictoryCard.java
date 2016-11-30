@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.cards.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.CardType;
 
 
@@ -13,6 +14,10 @@ public abstract class VictoryCard extends Card {
         super();
         isKingdom = false;
         cardTypes.add(CardType.VICTORY);
+    }
+
+    public VictoryCard(String id, Player player) {
+        super(id, player);
     }
 
     @JsonIgnore

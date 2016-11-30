@@ -1,5 +1,6 @@
 package com.github.nelson54.dominion.cards.base;
 
+import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.cards.types.VictoryCard;
 
@@ -19,5 +20,11 @@ public class Duchy extends VictoryCard {
         setKingdomSortOrder(1);
 
         setName("Duchy");
+    }
+
+    public Duchy(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
     }
 }

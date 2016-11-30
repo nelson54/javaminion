@@ -28,6 +28,12 @@ public class Remodel extends ComplexActionCard {
         setName("Remodel");
     }
 
+    public Remodel(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public CardState getState(Choice choice){
         if(choice.getParentChoice() == null){

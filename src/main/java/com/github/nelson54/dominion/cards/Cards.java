@@ -1,9 +1,13 @@
 package com.github.nelson54.dominion.cards;
 
+import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.types.ActionAttackCard;
 import com.github.nelson54.dominion.cards.types.Card;
+import com.github.nelson54.dominion.exceptions.InvalidCardClassException;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,11 +41,33 @@ public class Cards {
                 .collect(Collectors.toSet());
     }
 
-    public static Card ofId(String id){
+    public static Card ofId(Game game, String id){
         return new CardReference(id);
     }
 
     public static boolean isAttackCard (Card card) {
         return card.getClass().isAssignableFrom(ActionAttackCard.class);
+    }
+
+    public static Card createInstance(String className, String id) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class<?> clazz = Class.forName(className);
+
+        if( Card.class.isAssignableFrom(clazz)) {
+            Constructor<?> ctor = clazz.getConstructor(String.class);
+            return (Card) ctor.newInstance(id);
+        } else {
+            throw new InvalidCardClassException();
+        }
+    }
+
+    public static Card createInstance(String className, String id, Player player) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Class<?> clazz = Class.forName(className);
+
+        if( Card.class.isAssignableFrom(clazz)) {
+            Constructor<?> ctor = clazz.getConstructor(String.class, Player.class);
+            return (Card) ctor.newInstance(id, player);
+        } else {
+            throw new InvalidCardClassException();
+        }
     }
 }

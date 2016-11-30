@@ -9,18 +9,28 @@ import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.KingdomFactory;
 import com.github.nelson54.dominion.UsersProvider;
 import com.github.nelson54.dominion.match.MatchProvider;
+import com.github.nelson54.dominion.persistence.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import javax.sql.DataSource;
 
 
 @EnableAutoConfiguration
-@ComponentScan("com.github.nelson54.dominion.web")
+@ComponentScan({"com.github.nelson54.dominion.web"})
+@EntityScan("com.github.nelson54.dominion.persistence.entities")
 @PropertySource("classpath:application.properties")
+@EnableJpaRepositories("com.github.nelson54.dominion.persistence")
+//@EnableJpaRepositories
 public class Application extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) throws Exception {

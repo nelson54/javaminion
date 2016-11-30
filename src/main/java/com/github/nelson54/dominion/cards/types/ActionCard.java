@@ -14,6 +14,10 @@ public abstract class ActionCard extends Card {
         cardTypes.add(CardType.ACTION);
     }
 
+    public ActionCard(String id, Player player) {
+        super(id, player);
+    }
+
     public abstract void apply(Player player, Game game);
 
     Set<Player> getOtherPlayers(Player player, Game game) {

@@ -8,6 +8,14 @@ import java.util.Set;
 
 public abstract class SymmetricActionAttackCard extends ComplexActionAttackCard {
 
+    public SymmetricActionAttackCard() {
+        super();
+    }
+
+    public SymmetricActionAttackCard(String id, Player player) {
+        super(id, player);
+    }
+
     @Override
     public Set<Player> getTargets(Player player, Game game) {
         Set<Player> players = new HashSet<>();

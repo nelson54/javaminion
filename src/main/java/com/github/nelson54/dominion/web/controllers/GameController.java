@@ -5,7 +5,7 @@ import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.User;
 import com.github.nelson54.dominion.UsersProvider;
 import com.github.nelson54.dominion.cards.RecommendedCards;
-import com.google.common.collect.Lists;
+import com.github.nelson54.dominion.persistence.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/dominion")
 public class GameController {
+
+    @Autowired
+    GameRepository gameRepository;
 
     @Autowired
     GameProvider gameProvider;

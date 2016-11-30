@@ -30,6 +30,12 @@ public class Bureaucrat extends ComplexActionAttackCard {
         setName("Bureaucrat");
     }
 
+    public Bureaucrat(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException {
         Choice parent = choice.getParentChoice();

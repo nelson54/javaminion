@@ -50,7 +50,7 @@ class MilitiaEffectTest extends DominionTestCase {
     }
 
     void applyChoice(Choice choice, Turn turn){
-        Card toTrash = Cards.ofId(choice.getOptions().first());
+        Card toTrash = Cards.ofId(null, choice.getOptions().stream().findFirst().get());
 
         ChoiceResponse cr = new ChoiceResponse();
         cr.setCard(toTrash)

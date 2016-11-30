@@ -25,6 +25,12 @@ public class Moat extends ActionReactionCard {
         setName("Moat");
     }
 
+    public Moat(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public void apply(Player player, Game game) {
         player.drawXCards(2);

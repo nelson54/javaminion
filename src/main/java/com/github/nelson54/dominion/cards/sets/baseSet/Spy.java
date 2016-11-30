@@ -31,6 +31,12 @@ public class Spy extends SymmetricActionAttackCard {
         setName("Spy");
     }
 
+    public Spy(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public CardState getState(Choice choice) {
         if (choice.getParentChoice() == null) {

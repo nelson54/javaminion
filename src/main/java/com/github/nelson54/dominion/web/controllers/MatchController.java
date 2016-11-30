@@ -1,46 +1,49 @@
 package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.*;
-import com.github.nelson54.dominion.ai.AiName;
 import com.github.nelson54.dominion.cards.GameCardSet;
 import com.github.nelson54.dominion.cards.GameCards;
 import com.github.nelson54.dominion.exceptions.InvalidCardSetName;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.match.MatchProvider;
-import com.github.nelson54.dominion.web.gamebuilder.Player;
+import com.github.nelson54.dominion.persistence.GameRepository;
+import com.github.nelson54.dominion.persistence.entities.GameEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import static sun.audio.AudioPlayer.player;
+import javax.inject.Inject;
+import java.lang.reflect.InvocationTargetException;
 
 @RestController
 @RequestMapping("/dominion")
 public class MatchController {
 
     @Autowired
-    UsersProvider usersProvider;
+    GameRepository gameRepository;
 
-    @Autowired
-    GameProvider gameProvider;
+    private final UsersProvider usersProvider;
 
-    @Autowired
-    MatchProvider matchProvider;
+    private final GameProvider gameProvider;
 
-    @Autowired
-    GameFactory gameFactory;
+    private final MatchProvider matchProvider;
 
-    public MatchController() {
+    private final GameFactory gameFactory;
 
+    @Inject
+    public MatchController(GameProvider gameProvider, UsersProvider usersProvider, GameFactory gameFactory, MatchProvider matchProvider) {
+
+        this.gameProvider = gameProvider;
+        this.usersProvider = usersProvider;
+        this.gameFactory = gameFactory;
+        this.matchProvider = matchProvider;
     }
 
     @RequestMapping(value="/matches", method= RequestMethod.GET)
@@ -108,6 +111,23 @@ public class MatchController {
         Game game = gameFactory.createGame(match);
         gameProvider.addGame(game);
         matchProvider.remove(match);
+
+        GameEntity gameEntity = GameEntity.ofGame(game);
+        gameRepository.save(gameEntity);
+
+        GameEntity gameEntity1 = gameRepository.findOne(game.getId());
+
+        System.out.println(gameEntity1.toString());
+
+        try {
+            gameEntity1.asGame();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     private User getUser(){

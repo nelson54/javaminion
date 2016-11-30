@@ -1,11 +1,16 @@
 package com.github.nelson54.dominion.cards.types;
 
+import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.CardType;
 
 public abstract class TreasureCard extends Card {
 
     private byte moneyCost;
     private byte moneyValue;
+
+    public TreasureCard(String id, Player player) {
+        super(id, player);
+    }
 
     public TreasureCard() {
         super();

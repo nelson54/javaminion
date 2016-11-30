@@ -19,7 +19,7 @@ public class MilitiaEffect extends Effect {
     boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
 
         if(response != null && response.getChoices() != null && target.getHand().size() > 3) {
-            Set<Card> cards = response.getChoices().stream().map(Cards::ofId).collect(Collectors.toSet());
+            Set<Card> cards = response.getChoices().stream().map(id -> Cards.ofId(game, id)).collect(Collectors.toSet());
             target.discard(cards);
         }
 

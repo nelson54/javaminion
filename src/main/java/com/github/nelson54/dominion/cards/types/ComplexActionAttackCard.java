@@ -11,6 +11,14 @@ import java.util.stream.Collectors;
  */
 public abstract class ComplexActionAttackCard extends ComplexActionCard {
 
+    public ComplexActionAttackCard() {
+        super();
+    }
+
+    public ComplexActionAttackCard(String id, Player player) {
+        super(id, player);
+    }
+
     @Override
     public Set<Player> getTargets(Player player, Game game) {
         return game.getPlayers().values().stream()

@@ -20,6 +20,12 @@ public class Festival extends ActionCard {
         setName("Festival");
     }
 
+    public Festival(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public void apply(Player player, Game game) {
         Turn turn = game.getTurn();

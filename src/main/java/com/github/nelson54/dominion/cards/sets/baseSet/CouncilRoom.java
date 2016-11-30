@@ -22,6 +22,12 @@ public class CouncilRoom extends ActionCard {
         setName("Council Room");
     }
 
+    public CouncilRoom(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public void apply(Player player, Game game) {
         Turn turn = player.getCurrentTurn();

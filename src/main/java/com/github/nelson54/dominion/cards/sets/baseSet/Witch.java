@@ -19,6 +19,12 @@ public class Witch extends ActionAttackCard {
         setName("Witch");
     }
 
+    public Witch(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public void attack(Player player, Game game) {
         game.giveCardToPlayer("Curse", player);

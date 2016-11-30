@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.cards.base;
 
 
+import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.cards.types.VictoryCard;
 
@@ -17,5 +18,11 @@ public class Province extends VictoryCard {
         setVictoryPoints(victoryPoints);
         setKingdomSortOrder(2);
         setName("Province");
+    }
+
+    public Province(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
     }
 }

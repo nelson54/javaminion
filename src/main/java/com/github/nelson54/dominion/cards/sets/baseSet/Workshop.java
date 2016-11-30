@@ -29,6 +29,12 @@ public class Workshop extends ComplexActionCard {
         setName("Workshop");
     }
 
+    public Workshop(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();

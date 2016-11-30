@@ -21,6 +21,10 @@ public abstract class ComplexActionCard extends ActionCard {
         cardTypes.add(CardType.ACTION);
     }
 
+    public ComplexActionCard(String id, Player player) {
+        super(id, player);
+    }
+
     public abstract Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException ;
 
     public abstract Effect getEffect(Player player, Game game);

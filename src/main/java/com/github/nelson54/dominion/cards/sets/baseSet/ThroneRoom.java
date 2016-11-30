@@ -29,6 +29,12 @@ public class ThroneRoom extends ComplexActionCard {
         setName("Throne Room");
     }
 
+    public ThroneRoom(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException {
 

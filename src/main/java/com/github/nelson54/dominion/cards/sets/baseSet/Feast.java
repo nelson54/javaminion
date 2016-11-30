@@ -30,6 +30,12 @@ public class Feast extends ComplexActionCard {
         setName("Feast");
     }
 
+    public Feast(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     public @Override
     Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();

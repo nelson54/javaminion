@@ -20,6 +20,12 @@ public class Village extends ActionCard {
         setName("Village");
     }
 
+    public Village(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public void apply(Player player, Game game) {
         Turn turn = game.getTurn();

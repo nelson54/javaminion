@@ -38,6 +38,13 @@ public class Card {
         cardTypes = new HashSet<>();
     }
 
+
+
+    public Card(String id, Player owner) {
+        this.id = id;
+        this.owner = owner;
+    }
+
     public String getId() {
         return id;
     }

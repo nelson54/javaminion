@@ -23,6 +23,12 @@ public class Adventurer extends ActionCard {
         setName("Adventurer");
     }
 
+    public Adventurer(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public void apply(Player player, Game game) {
         Set<Card> treasures = new HashSet<>();

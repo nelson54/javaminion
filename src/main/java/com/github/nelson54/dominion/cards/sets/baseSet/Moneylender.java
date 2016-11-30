@@ -23,6 +23,12 @@ public class Moneylender extends ActionCard {
         setName("Moneylender");
     }
 
+    public Moneylender(String id, Player player) {
+        this();
+        super.setId(id);
+        super.setOwner(player);
+    }
+
     @Override
     public void apply(Player player, Game game) {
         Turn turn = game.getTurn();
