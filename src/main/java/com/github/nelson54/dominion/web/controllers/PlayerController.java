@@ -6,11 +6,14 @@ import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.choices.OptionType;
+import com.github.nelson54.dominion.persistence.GameRepository;
+import com.github.nelson54.dominion.persistence.entities.GameEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,6 +21,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/dominion/{gameId}/{playerId}")
 public class PlayerController {
+
+    @Autowired
+    GameRepository gameRepository;
 
     @Autowired
     UsersProvider usersProvider;
@@ -33,11 +39,14 @@ public class PlayerController {
             String gameId,
             @PathVariable("playerId")
             String playerId
-    ) {
-        Game game = gameProvider.getGameByUuid(gameId);
+    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        Game game = gameRepository.findOne(gameId).asGame();
         Player player = game.getPlayers().get(playerId);
 
         player.shuffle();
+
+        gameProvider.addGame(game);
+        gameRepository.save(GameEntity.ofGame(game));
 
         return game;
     }
@@ -50,12 +59,14 @@ public class PlayerController {
             String gameId,
             @PathVariable("playerId")
             String playerId
-    ) {
-        Game game = gameProvider.getGameByUuid(gameId);
+    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        Game game = gameRepository.findOne(gameId).asGame();
         Player player = game.getPlayers().get(playerId);
 
         player.drawHand();
 
+        gameProvider.addGame(game);
+        gameRepository.save(GameEntity.ofGame(game));
         return game;
     }
 
@@ -67,12 +78,15 @@ public class PlayerController {
             String gameId,
             @PathVariable("playerId")
             String playerId
-    ) {
-        Game game = gameProvider.getGameByUuid(gameId);
+    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        Game game = gameRepository.findOne(gameId).asGame();
         Player player = game.getPlayers().get(playerId);
 
         player.discardHand();
 
+
+        gameProvider.addGame(game);
+        gameRepository.save(GameEntity.ofGame(game));
         return game;
     }
 
@@ -86,11 +100,15 @@ public class PlayerController {
             String playerId,
             @RequestBody
             Card card
-    ) {
-        Game game = gameProvider.getGameByUuid(gameId);
+    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        Game game = gameRepository.findOne(gameId).asGame();
         Player player = game.getPlayers().get(playerId);
 
         game.getTurn().purchaseCardForPlayer(card, player);
+
+
+        gameProvider.addGame(game);
+        gameRepository.save(GameEntity.ofGame(game));
 
         return game;
     }
@@ -105,8 +123,8 @@ public class PlayerController {
             String playerId,
             @RequestBody
             Card card
-    ) {
-        Game game = gameProvider.getGameByUuid(gameId);
+    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        Game game = gameRepository.findOne(gameId).asGame();
         Player player = game.getPlayers().get(playerId);
 
         Card playing = player.getHand()
@@ -121,6 +139,9 @@ public class PlayerController {
             throw new IllegalStateException();
         }
 
+        gameProvider.addGame(game);
+        gameRepository.save(GameEntity.ofGame(game));
+
         return game;
     }
 
@@ -134,8 +155,8 @@ public class PlayerController {
             String playerId,
             @RequestBody
             ChoiceResponse choiceResponse
-    ) {
-        Game game = gameProvider.getGameByUuid(gameId);
+    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        Game game = gameRepository.findOne(gameId).asGame();
         Kingdom kingdom = game.getKingdom();
         Player player = game.getPlayers().get(playerId);
         Turn turn = player.getCurrentTurn();
@@ -162,6 +183,9 @@ public class PlayerController {
 
         choice.apply(choiceResponse, turn);
 
+        gameProvider.addGame(game);
+        gameRepository.save(GameEntity.ofGame(game));
+
         return game;
     }
 
@@ -171,8 +195,8 @@ public class PlayerController {
             Optional<User> user,
             @PathVariable("gameId")
             String id
-    ) {
-        Game game = gameProvider.getGameByUuid(id);
+    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        Game game = gameRepository.findOne(id).asGame();
         game.getTurn().endPhase();
 
         return game;

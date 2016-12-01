@@ -53,8 +53,8 @@ public class Cards {
         Class<?> clazz = Class.forName(className);
 
         if( Card.class.isAssignableFrom(clazz)) {
-            Constructor<?> ctor = clazz.getConstructor(String.class);
-            return (Card) ctor.newInstance(id);
+            Constructor<?> ctor = clazz.getConstructor(String.class, Player.class);
+            return (Card) ctor.newInstance(id, null);
         } else {
             throw new InvalidCardClassException();
         }

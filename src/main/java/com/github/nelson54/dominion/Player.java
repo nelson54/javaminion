@@ -49,6 +49,8 @@ public class Player {
         return user.getName();
     }
 
+    public byte order;
+
     @JsonProperty
     long getVictoryPoints() {
         return getAllCards()
@@ -244,7 +246,13 @@ public class Player {
         choices.addFirst(choice);
     }
 
-    
+    public void setOrder(byte order) {
+        this.order = order;
+    }
+
+    public byte getOrder() {
+        return order;
+    }
 
     @Override
     public boolean equals(Object o) {

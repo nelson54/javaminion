@@ -41,7 +41,7 @@ public class CardEntity {
         return Cards.createInstance(clazz, id, player);
     }
 
-    public static Set<Card> asCards(Collection<CardEntity> cards) {
+    public static Collection<Card> asCards(Collection<CardEntity> cards) {
         return cards.stream().map(cardEntity -> {
             try {
                 return cardEntity.asCard();

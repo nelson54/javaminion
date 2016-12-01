@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class Kingdom {
 
     @JsonProperty
-    private
+    public
     Multimap<String, Card> cardMarket;
 
     private Map<String, Card> allCards;
@@ -34,7 +34,7 @@ public class Kingdom {
         return cardMarket;
     }
 
-    void setCardMarket(Multimap<String, Card> cardMarket) {
+    public void setCardMarket(Multimap<String, Card> cardMarket) {
         this.cardMarket = cardMarket;
     }
 
@@ -42,7 +42,7 @@ public class Kingdom {
         return allCards;
     }
 
-    void setAllCards(Map<String, Card> allCards) {
+    public void setAllCards(Map<String, Card> allCards) {
         this.allCards = allCards;
     }
 

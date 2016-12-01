@@ -1,17 +1,22 @@
 package com.github.nelson54.dominion;
 
-import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.User;
 import com.github.nelson54.dominion.ai.AiGameFacade;
 import com.github.nelson54.dominion.ai.AiStrategy;
 
 
 public class AiPlayer extends Player {
 
-    AiStrategy aiStrategy;
+    private AiStrategy aiStrategy;
 
     public AiPlayer(User user) {
         super(user);
+        user.setAi(true);
+    }
+
+    public AiPlayer(User user, AiStrategy aiStrategy) {
+        super(user);
+        user.setAi(true);
+        this.aiStrategy = aiStrategy;
     }
 
     @Override

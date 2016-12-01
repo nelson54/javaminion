@@ -5,9 +5,6 @@ import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.CardType;
 import com.github.nelson54.dominion.cards.Cards;
 import com.github.nelson54.dominion.cards.types.ActionCard;
-import com.github.nelson54.dominion.cards.types.Card;
-
-import java.util.Set;
 
 public class ShantyTown extends ActionCard {
 

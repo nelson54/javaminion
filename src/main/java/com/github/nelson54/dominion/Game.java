@@ -192,7 +192,7 @@ public class Game {
         return turnOrder;
     }
 
-    void setTurnOrder(Set<Player> turnOrder) {
+    public void setTurnOrder(Set<Player> turnOrder) {
         this.turnOrder = turnOrder;
     }
 
@@ -246,12 +246,16 @@ public class Game {
         return trash;
     }
 
+    public void setTurnerator(Iterator<Player> turnerator) {
+        this.turnerator = turnerator;
+    }
+
     @JsonProperty
     @Override
     public int hashCode() {
         int result = (id.hashCode() ^ (id.hashCode() >>> 0));
         result = 31 * result + kingdom.hashCode();
-        result = 31 * result + turnOrder.hashCode();
+        //result = 31 * result + turnOrder.hashCode();
         result = 31 * result + allCards.hashCode();
         result = 31 * result + pastTurns.hashCode();
         result = 31 * result + trash.hashCode();
@@ -277,11 +281,8 @@ public class Game {
         if (!pastTurns.equals(game.pastTurns)) return false;
         if (!players.equals(game.players)) return false;
         if (!trash.equals(game.trash)) return false;
-        if (!turn.equals(game.turn)) return false;
-        if (!turnOrder.equals(game.turnOrder)) return false;
-        if (!turnerator.equals(game.turnerator)) return false;
+        return turn.equals(game.turn);
 
-        return true;
     }
 
     public boolean getGameOver() {

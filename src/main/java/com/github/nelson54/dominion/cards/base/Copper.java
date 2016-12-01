@@ -8,7 +8,9 @@ import com.github.nelson54.dominion.cards.types.TreasureCard;
 public class Copper extends TreasureCard {
 
     public Copper(String id, Player player) {
-        super(id, player);
+        this();
+        super.setId(id);
+        super.setOwner(player);
     }
 
     public Copper() {

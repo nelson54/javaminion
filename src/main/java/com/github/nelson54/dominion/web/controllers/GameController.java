@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 @RestController
@@ -40,8 +41,8 @@ public class GameController {
     Game getGame(
             @PathVariable("gameId")
             String id
-    ) {
-        return gameProvider.getGameByUuid(id);
+    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        return gameRepository.findOne(id).asGame();
     }
 
     @RequestMapping("/games")

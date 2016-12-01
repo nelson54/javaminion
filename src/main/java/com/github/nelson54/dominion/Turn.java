@@ -20,6 +20,8 @@ import static com.github.nelson54.dominion.Phase.WAITING_FOR_OPPONENT;
 
 public class Turn {
 
+    String id;
+
     @JsonProperty
     Phase phase;
 
@@ -163,12 +165,12 @@ public class Turn {
     }
 
     @JsonProperty("money")
-    long getMoney() {
-        return player.getHand().stream()
-                .filter(card -> card instanceof TreasureCard)
+    Integer getMoney() {
+        return (int) Cards.ofType(player.getHand(), TreasureCard.class)
+                .stream()
                 .map(card -> (TreasureCard) card)
                 .mapToLong(card -> (int) card.getMoneyValue())
-                .sum() + moneyPool;
+                .sum() + (int) moneyPool;
     }
 
     public long addToMoneyPool(long money) {
@@ -191,7 +193,7 @@ public class Turn {
         return player;
     }
 
-    private void setPlayer(Player player) {
+    public void setPlayer(Player player) {
         this.player = player;
     }
 

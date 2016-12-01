@@ -1,12 +1,14 @@
 package com.github.nelson54.dominion;
 
-import com.github.nelson54.dominion.ai.AiName;
 import com.github.nelson54.dominion.ai.AiStrategies;
 import com.github.nelson54.dominion.ai.AiStrategy;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 
 
@@ -24,6 +26,13 @@ public class GameFactory {
 
         addPlayers(match.getParticipants(), game);
         game.nextPlayer();
+        Iterator<Player> turnerator =  game.getTurnOrder().iterator();
+
+        byte i = 0;
+
+        while(turnerator.hasNext()) {
+            turnerator.next().setOrder(i++);
+        }
 
         return game;
     }
