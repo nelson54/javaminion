@@ -47,7 +47,7 @@ dependencies {
     compile 'org.springframework.security:spring-security-crypto:4.2.1.RELEASE'
     //compile 'org.springframework.social:spring-social-core:1.1.0.RELEASE'
     //compile 'org.springframework.social:spring-social-facebook:1.1.1.RELEASE'
-    compile group: 'org.springframework.data', name: 'spring-data-commons-core', version: '1.10.0.RELEASE'
+    compile group: 'org.springframework.data', name: 'spring-data-commons', version: '1.10.0.RELEASE'
 
     compile 'com.google.guava:guava:17.0'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-guava', version: '2.4.6' 
