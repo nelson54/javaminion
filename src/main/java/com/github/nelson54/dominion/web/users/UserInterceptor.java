@@ -2,7 +2,6 @@ package com.github.nelson54.dominion.web.users;
 
 import com.github.nelson54.dominion.User;
 import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.facebook.api.Facebook;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -48,11 +47,7 @@ public final class UserInterceptor extends HandlerInterceptorAdapter {
     }
 
     private void handleSignOut(HttpServletRequest request, HttpServletResponse response) {
-        if (SecurityContext.userSignedIn() && request.getServletPath().startsWith("/signout")) {
-            connectionRepository.createConnectionRepository(SecurityContext.getCurrentUser().getId()).removeConnections("facebook");
-            userCookieGenerator.removeCookie(response);
-            SecurityContext.remove();
-        }
+
     }
 
     private boolean requestForSignIn(HttpServletRequest request) {
@@ -66,7 +61,7 @@ public final class UserInterceptor extends HandlerInterceptorAdapter {
 
     private boolean userNotFound(String userId) {
         // doesn't bother checking a local user database: simply checks if the userId is connected to Facebook
-        return connectionRepository.createConnectionRepository(userId).findPrimaryConnection(Facebook.class) != null;
+        return false;
     }
 
 }
