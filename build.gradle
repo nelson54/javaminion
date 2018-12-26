@@ -39,11 +39,11 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-web:1.5.10.RELEASE'
-    compile 'org.springframework.boot:spring-boot-starter-thymeleaf:1.5.10.RELEASE'
-    compile 'org.springframework.boot:spring-boot-configuration-processor:1.5.10.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.5.10.RELEASE'
-    compile 'org.springframework.boot:spring-boot-starter-security:1.5.10.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-web:2.1.0.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf:2.1.0.RELEASE'
+    compile 'org.springframework.boot:spring-boot-configuration-processor:2.1.0.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.0.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-security:2.1.0.RELEASE'
     compile 'org.springframework.security:spring-security-crypto:4.2.1.RELEASE'
     //compile 'org.springframework.social:spring-social-core:1.1.0.RELEASE'
     //compile 'org.springframework.social:spring-social-facebook:1.1.1.RELEASE'
@@ -57,7 +57,7 @@ dependencies {
     compile 'joda-time:joda-time:2.7'
     compile group: 'com.google.inject', name: 'guice', version: '4.0'
     runtime 'org.hsqldb:hsqldb:2.3.3'
-    testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.10.RELEASE'
+    testCompile 'org.springframework.boot:spring-boot-starter-test:2.1.0.RELEASE'
     testCompile 'org.codehaus.groovy:groovy-all:2.4.1'
     testCompile 'org.easymock:easymock:3.4'
     compileOnly 'com.newrelic.agent.java:newrelic-agent:3.14.0'
