@@ -15,3 +15,16 @@
 - [ ] Remodel and Mine are both broken.
 - [ ] Animations.
 - [x] End turn if no additional actions in pool or cards in hand after playing ComplexActionCard's
+
+
+```bash
+# Builds
+docker build -t javaminion .
+
+# Runs
+docker run javaminion
+
+# Enter bash
+docker run -it javaminion bash
+
+```

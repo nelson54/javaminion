@@ -2,5 +2,5 @@
 .idea/
 *.iml
 *.iws
-
+.gradle
 target
