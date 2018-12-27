@@ -26,7 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 @RequestMapping("/dominion")
 public class MatchController {
 
-    @Autowired
+    @Inject
     GameRepository gameRepository;
 
     private final UsersProvider usersProvider;

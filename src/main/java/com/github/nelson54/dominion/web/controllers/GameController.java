@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
@@ -23,13 +24,13 @@ import java.util.ArrayList;
 @RequestMapping("/dominion")
 public class GameController {
 
-    @Autowired
+    @Inject
     GameRepository gameRepository;
 
-    @Autowired
+    @Inject
     GameProvider gameProvider;
 
-    @Autowired
+    @Inject
     UsersProvider usersProvider;
 
     @RequestMapping(value = "/recommended", method = RequestMethod.GET)
