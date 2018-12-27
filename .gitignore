@@ -4,4 +4,4 @@
 *.iws
 .gradle
 target
-doc/
+build
