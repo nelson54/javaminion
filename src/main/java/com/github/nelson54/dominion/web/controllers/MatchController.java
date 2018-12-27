@@ -26,8 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 @RequestMapping("/dominion")
 public class MatchController {
 
-    @Inject
-    GameRepository gameRepository;
+    private GameRepository gameRepository;
 
     private final UsersProvider usersProvider;
 
@@ -37,7 +36,6 @@ public class MatchController {
 
     private final GameFactory gameFactory;
 
-    @Inject
     public MatchController(GameProvider gameProvider, UsersProvider usersProvider, GameFactory gameFactory, MatchProvider matchProvider) {
 
         this.gameProvider = gameProvider;
@@ -83,7 +81,7 @@ public class MatchController {
     }
 
     @RequestMapping(value="/matches", method=RequestMethod.PATCH)
-    private void join(
+    void join(
             @RequestParam
             String matchId
     ) throws InstantiationException, IllegalAccessException {
@@ -91,6 +89,10 @@ public class MatchController {
         User user = getUser();
         match.addParticipant(new MatchParticipant(user));
         createGameIfReady(match);
+    }
+
+    public void setGameRepository(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
     }
 
     private void addMatch (Match match) throws IllegalAccessException, InstantiationException {

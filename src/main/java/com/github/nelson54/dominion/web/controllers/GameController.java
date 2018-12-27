@@ -6,7 +6,6 @@ import com.github.nelson54.dominion.User;
 import com.github.nelson54.dominion.UsersProvider;
 import com.github.nelson54.dominion.cards.RecommendedCards;
 import com.github.nelson54.dominion.persistence.GameRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.Authentication;
@@ -24,14 +23,9 @@ import java.util.ArrayList;
 @RequestMapping("/dominion")
 public class GameController {
 
-    @Inject
-    GameRepository gameRepository;
-
-    @Inject
-    GameProvider gameProvider;
-
-    @Inject
-    UsersProvider usersProvider;
+    private GameProvider gameProvider;
+    private UsersProvider usersProvider;
+    private GameRepository gameRepository;
 
     @RequestMapping(value = "/recommended", method = RequestMethod.GET)
     RecommendedCards[] getRecomendedCards(){
@@ -71,5 +65,17 @@ public class GameController {
         Game game = gameProvider.getGameByUuid(id);
         game.getTurn().endPhase();
         return game;
+    }
+
+    public void setGameRepository(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
+
+    public void setGameProvider(GameProvider gameProvider) {
+        this.gameProvider = gameProvider;
+    }
+
+    public void setUsersProvider(UsersProvider usersProvider) {
+        this.usersProvider = usersProvider;
     }
 }

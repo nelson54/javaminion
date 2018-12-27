@@ -23,14 +23,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/dominion/{gameId}/{playerId}")
 public class PlayerController {
 
-    @Inject
-    GameRepository gameRepository;
-
-    @Inject
-    UsersProvider usersProvider;
-
-    @Inject
-    GameProvider gameProvider;
+    private GameRepository gameRepository;
+    private UsersProvider usersProvider;
+    private GameProvider gameProvider;
 
     @RequestMapping("/shuffle")
     Game shuffle(
@@ -208,5 +203,17 @@ public class PlayerController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         return Optional.of(usersProvider.getUserById(authentication.getName()));
+    }
+
+    public void setGameRepository(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
+
+    public void setUsersProvider(UsersProvider usersProvider) {
+        this.usersProvider = usersProvider;
+    }
+
+    public void setGameProvider(GameProvider gameProvider) {
+        this.gameProvider = gameProvider;
     }
 }

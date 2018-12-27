@@ -20,8 +20,7 @@ import java.util.UUID;
 @Controller
 public class LoginController {
 
-    @Inject
-    UsersProvider usersProvider;
+    private UsersProvider usersProvider;
 
     @ResponseBody
     @RequestMapping(value="/user", method=RequestMethod.GET, produces="application/json")
@@ -61,4 +60,7 @@ public class LoginController {
         return grantedAuthorities;
     }
 
+    public void setUsersProvider(UsersProvider usersProvider) {
+        this.usersProvider = usersProvider;
+    }
 }
