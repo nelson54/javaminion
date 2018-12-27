@@ -41,12 +41,16 @@ targetCompatibility = 1.8
 dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.0.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version:'2.1.0.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.0.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.0.RELEASE', {
+        exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
+        exclude group: 'org.hibernate', module: 'hibernate-core'
+    }
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.10.Final'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.0.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.1.0.RELEASE'
 
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
-    
+
     compile 'org.springframework.security:spring-security-crypto:4.2.1.RELEASE'
     //compile 'org.springframework.social:spring-social-core:1.1.0.RELEASE'
     //compile 'org.springframework.social:spring-social-facebook:1.1.1.RELEASE'
