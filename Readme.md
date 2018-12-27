@@ -18,6 +18,9 @@
 
 
 ```bash
+# Clean
+docker system purge -q
+
 # Builds
 docker build -t javaminion .
 
