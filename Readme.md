@@ -30,4 +30,7 @@ docker run javaminion
 # Enter bash
 docker run -it javaminion bash
 
+# Run from bash
+./gradlew build && java -Xmx512m -jar ./build/libs/gs-spring-boot-docker-0.1.0.jar
+
 ```
