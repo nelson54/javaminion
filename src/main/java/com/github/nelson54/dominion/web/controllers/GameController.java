@@ -8,8 +8,6 @@ import com.github.nelson54.dominion.cards.RecommendedCards;
 import com.github.nelson54.dominion.persistence.GameRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,9 +40,9 @@ public class GameController {
 
     @RequestMapping("/games")
     Page<Game> games(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        User user = usersProvider.getUserById(authentication.getName());
+        User user = null;// usersProvider.getUserById(authentication.getName());
 
         Page<Game> page = new PageImpl<>(new ArrayList<>());
 
@@ -60,7 +58,7 @@ public class GameController {
             @PathVariable("gameId")
             String id
     ) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Game game = gameProvider.getGameByUuid(id);
         game.getTurn().endPhase();
