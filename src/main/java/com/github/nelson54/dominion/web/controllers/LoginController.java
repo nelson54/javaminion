@@ -20,7 +20,7 @@ public class LoginController {
     private UsersProvider usersProvider;
 
     @ResponseBody
-    @RequestMapping(value="/user/${id}", method=RequestMethod.GET, produces="application/json")
+    @RequestMapping(value="/user/{id}", method=RequestMethod.GET, produces="application/json")
     User user(@PathVariable String id) {
         //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
