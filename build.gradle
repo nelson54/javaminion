@@ -39,15 +39,15 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.0.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version:'2.1.0.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.0.RELEASE', {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version:'2.1.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.1.RELEASE', {
         exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
         exclude group: 'org.hibernate', module: 'hibernate-core'
     }
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.10.Final'
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.0.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.1.0.RELEASE'
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.1.1.RELEASE'
 
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     compile group: 'javax.activation', name: 'javax.activation-api', version: '1.2.0'
@@ -65,7 +65,7 @@ dependencies {
     compile group: 'com.google.inject', name: 'guice', version: '4.0'
     runtime group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
     runtime group: 'com.h2database', name: 'h2', version: '1.4.197'
-    testCompile 'org.springframework.boot:spring-boot-starter-test:2.1.0.RELEASE'
+    testCompile 'org.springframework.boot:spring-boot-starter-test:2.1.1.RELEASE'
     testCompile 'org.codehaus.groovy:groovy-all:2.4.1'
     testCompile 'org.easymock:easymock:3.4'
     compileOnly 'com.newrelic.agent.java:newrelic-agent:3.14.0'
