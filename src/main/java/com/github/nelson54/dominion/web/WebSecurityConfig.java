@@ -9,19 +9,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
 
-//@Configuration
-//@EnableWebSecurity
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().permitAll();
+        //http.authorizeRequests().anyRequest().permitAll();
 
-        http
+        /*http
                 .headers()
                 .cacheControl()
                 .disable();
 
-        /*http
+        http
                 .csrf().disable()
                 .authorizeRequests()
                 //.antMatchers("/").hasAnyRole("USER")
