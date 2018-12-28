@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //http.authorizeRequests().anyRequest().permitAll();
 
-        /*http
+        http
                 .headers()
                 .cacheControl()
                 .disable();
@@ -35,13 +35,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .headers()
                 .cacheControl()
-                .disable();*/
+                .disable();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        /*auth
+        auth
                 .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");*/
+                .withUser("user").password("password").roles("USER");
     }
 }
