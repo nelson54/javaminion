@@ -46,13 +46,13 @@ dependencies {
         exclude group: 'org.hibernate', module: 'hibernate-core'
     }
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.10.Final'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.0.RELEASE'
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.0.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.1.0.RELEASE'
 
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     compile group: 'javax.activation', name: 'javax.activation-api', version: '1.2.0'
     
-    compile 'org.springframework.security:spring-security-crypto:4.2.1.RELEASE'
+    //compile 'org.springframework.security:spring-security-crypto:4.2.1.RELEASE'
     //compile 'org.springframework.social:spring-social-core:1.1.0.RELEASE'
     //compile 'org.springframework.social:spring-social-facebook:1.1.1.RELEASE'
 
