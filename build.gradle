@@ -50,7 +50,7 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.1.0.RELEASE'
 
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
-    compile group: 'com.sun.activation', name: 'all', version: '1.2.1', ext: 'pom'   
+    compile group: 'javax.activation', name: 'javax.activation-api', version: '1.2.0'
     
     compile 'org.springframework.security:spring-security-crypto:4.2.1.RELEASE'
     //compile 'org.springframework.social:spring-social-core:1.1.0.RELEASE'
