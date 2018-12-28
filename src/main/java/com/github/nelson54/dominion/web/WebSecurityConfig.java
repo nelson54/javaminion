@@ -14,7 +14,14 @@ import org.springframework.security.web.util.matcher.AndRequestMatcher;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().anyRequest().permitAll();
+
         http
+                .headers()
+                .cacheControl()
+                .disable();
+
+        /*http
                 .csrf().disable()
                 .authorizeRequests()
                 //.antMatchers("/").hasAnyRole("USER")
@@ -28,13 +35,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .headers()
                 .cacheControl()
-                .disable();
+                .disable();*/
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
+        /*auth
                 .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+                .withUser("user").password("password").roles("USER");*/
     }
 }
