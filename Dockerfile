@@ -93,4 +93,6 @@ RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
 # https://docs.oracle.com/javase/10/tools/jshell.htm
 # https://en.wikipedia.org/wiki/JShell
-CMD bash $APP_HOME/gradlew build && java -Xmx512m -jar $APP_HOME/build/libs/gs-spring-boot-docker-0.1.0.jar
+CMD bash $APP_HOME/gradlew build && bash
+
+#&& java -Xmx512m -jar $APP_HOME/build/libs/gs-spring-boot-docker-0.1.0.jar
