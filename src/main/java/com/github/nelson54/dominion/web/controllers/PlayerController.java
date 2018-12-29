@@ -32,7 +32,7 @@ public class PlayerController {
             @PathVariable("playerId")
             String playerId
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Player player = game.getPlayers().get(playerId);
 
         player.shuffle();
@@ -52,7 +52,7 @@ public class PlayerController {
             @PathVariable("playerId")
             String playerId
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Player player = game.getPlayers().get(playerId);
 
         player.drawHand();
@@ -71,7 +71,7 @@ public class PlayerController {
             @PathVariable("playerId")
             String playerId
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Player player = game.getPlayers().get(playerId);
 
         player.discardHand();
@@ -93,7 +93,7 @@ public class PlayerController {
             @RequestBody
             Card card
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Player player = game.getPlayers().get(playerId);
 
         game.getTurn().purchaseCardForPlayer(card, player);
@@ -116,7 +116,7 @@ public class PlayerController {
             @RequestBody
             Card card
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Player player = game.getPlayers().get(playerId);
 
         Card playing = player.getHand()
@@ -148,7 +148,7 @@ public class PlayerController {
             @RequestBody
             ChoiceResponse choiceResponse
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Kingdom kingdom = game.getKingdom();
         Player player = game.getPlayers().get(playerId);
         Turn turn = player.getCurrentTurn();
@@ -188,7 +188,7 @@ public class PlayerController {
             @PathVariable("gameId")
             String id
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(id).asGame();
+        Game game = gameRepository.findById(id).get().asGame();
         game.getTurn().endPhase();
 
         return game;

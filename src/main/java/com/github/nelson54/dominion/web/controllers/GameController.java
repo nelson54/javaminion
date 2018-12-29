@@ -35,7 +35,7 @@ public class GameController {
             @PathVariable("gameId")
             String id
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        return gameRepository.findOne(id).asGame();
+        return gameRepository.findById(id).get().asGame();
     }
 
     @RequestMapping("/games")

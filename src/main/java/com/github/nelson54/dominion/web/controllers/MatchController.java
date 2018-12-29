@@ -114,7 +114,7 @@ public class MatchController {
         GameEntity gameEntity = GameEntity.ofGame(game);
         gameRepository.save(gameEntity);
 
-        GameEntity gameEntity1 = gameRepository.findOne(game.getId());
+        GameEntity gameEntity1 = gameRepository.findById(game.getId()).get();
 
         System.out.println(gameEntity1.toString());
 

@@ -19,7 +19,7 @@ public class NotFoundHandler {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<String> renderDefaultPage() {
         try {
-            File indexFile = ResourceUtils.getFile("classpath:/resources/public/index.html");
+            File indexFile = ResourceUtils.getFile("classpath:/public/index.html");
             FileInputStream inputStream = new FileInputStream(indexFile);
             String body = StreamUtils.copyToString(inputStream, Charset.defaultCharset());
             return ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(body);

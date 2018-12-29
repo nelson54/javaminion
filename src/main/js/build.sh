@@ -12,4 +12,6 @@ cp -R ./app/images ./dist/images;
 rm -Rf ../resources/public
 mkdir ../resources/public
 
-cp -R ./dist ../resources/public
+cd ./dist
+cp -R * ../../resources/public
+

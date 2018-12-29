@@ -83,7 +83,7 @@ ADD . $APP_HOME
 WORKDIR $APP_HOME
 
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
-RUN apt-get install -y nodejs git vim
+RUN apt-get install -y nodejs git vim tmux
 RUN npm install -g sass bower
 
 RUN cd src/main/js/ && npm install && bower install --allow-root && bash ./build.sh
