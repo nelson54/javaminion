@@ -21,24 +21,14 @@ public class NotFoundHandler {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<String> renderDefaultPage() {
         try {
-            File indexFile = ResourceUtils.getFile("classpath:/public/index.html");
+            File indexFile = ResourceUtils.getFile("classpath*:public/index.html");
             FileInputStream inputStream = new FileInputStream(indexFile);
             String body = StreamUtils.copyToString(inputStream, Charset.defaultCharset());
             return ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(body);
         } catch (IOException e) {
             e.printStackTrace();
-            printFiles();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was an error completing the action.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was an error completing the action." + String.join(e.getStackTrace(), "\n"));
         }
     }
 
-    private void printFiles() {
-        ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-        URL[] urls = ((URLClassLoader)cl).getURLs();
-
-        for(URL url: urls){
-            System.out.println(url.getFile());
-        }
-    }
 }
