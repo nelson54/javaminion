@@ -12,6 +12,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.charset.Charset;
 
 @ControllerAdvice
@@ -25,7 +27,18 @@ public class NotFoundHandler {
             return ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(body);
         } catch (IOException e) {
             e.printStackTrace();
+            printFiles();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was an error completing the action.");
+        }
+    }
+
+    private void printFiles() {
+        ClassLoader cl = ClassLoader.getSystemClassLoader();
+
+        URL[] urls = ((URLClassLoader)cl).getURLs();
+
+        for(URL url: urls){
+            System.out.println(url.getFile());
         }
     }
 }
