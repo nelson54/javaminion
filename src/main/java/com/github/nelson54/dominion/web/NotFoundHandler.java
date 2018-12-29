@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.Charset;
+import java.util.Collections;
 
 @ControllerAdvice
 public class NotFoundHandler {
@@ -27,7 +28,7 @@ public class NotFoundHandler {
             return ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(body);
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was an error completing the action." + String.join(e.getStackTrace(), "\n"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was an error completing the action." + e.getLocalizedMessage());
         }
     }
 
