@@ -60,6 +60,15 @@ angular
           }
         }
       })
+      .when('/signup', {
+        templateUrl: 'views/signup.html',
+        controller: 'SignupCtrl',
+        resolve : {
+          baseUrl: function() {
+            return baseUrl;
+          }
+        }
+      })
       .when('/games/:game', {
         templateUrl: 'views/game.html',
         controller: 'GameCtrl',
