@@ -1,13 +1,16 @@
 package com.github.nelson54.dominion.match;
 
+import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.GameFactory;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -34,11 +37,11 @@ public class MatchProvider {
         match.getParticipants().forEach(p -> gamesByAccount.put(p.getAccount().getId(), match));
     }
 
-    public List<Match> getJoinableMatchesForUser(User user) {
+    public List<Match> getJoinableMatchesForAccount(Account account) {
         return matchesById
                 .values()
                 .stream()
-                .filter((match) -> !match.hasUser(user) )
+                .filter((match) -> !match.hasAccount(account) )
                 .collect(Collectors.toList());
     }
 

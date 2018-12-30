@@ -1,8 +1,8 @@
 package com.github.nelson54.dominion.match;
 
+import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.ai.AiName;
 import com.github.nelson54.dominion.cards.GameCardSet;
-import org.springframework.security.core.userdetails.User;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -61,7 +61,7 @@ public class Match {
         });
     }
 
-    boolean hasUser(User user) {
-        return participants.containsKey(user.getUsername());
+    boolean hasAccount(Account account) {
+        return participants.containsKey(account.getId());
     }
 }

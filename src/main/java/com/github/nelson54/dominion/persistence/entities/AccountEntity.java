@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 @Entity(name="account")
 public class AccountEntity {
 
+    public AccountEntity() {}
+
     @Id
     @Column(name="account_id")
     @GeneratedValue(strategy=GenerationType.AUTO)

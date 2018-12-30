@@ -42,6 +42,6 @@ public class AccountController {
     @GetMapping("/account")
     public Account getUser() {
         return accountService.getAuthorizedAccount()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
     }
 }

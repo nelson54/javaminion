@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dominionFrontendApp')
-  .controller('SignupCtrl', function ($scope, $http, $resource, $route, baseUrl) {
+  .controller('SignupCtrl', function ($scope, $http, $resource, $route, $location, baseUrl) {
     let self = $scope;
 
     self.signup = function() {
@@ -20,5 +20,7 @@ angular.module('dominionFrontendApp')
       user.$save().then(function() {
         console.log(`Saved! {${JSON.stringify(user)}}`)
       });
+
+      $location.path('/login');
     }
   });

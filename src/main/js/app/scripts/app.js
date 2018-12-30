@@ -26,22 +26,15 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
+        templateUrl: 'views/matchmaking.html',
+        controller: 'MatchesCtrl',
         resolve : {
           baseUrl: function() {
             return baseUrl;
           },
-          UserService: function(UserServiceFactory) {
-            return UserServiceFactory()
-          },
-          recommendedCards: function($q, $http){
-            var defer = $q.defer();
-            $http.get(baseUrl+'/dominion/recommended')
-              .success(function(response){
-                defer.resolve(response);
-              });
-            return defer.promise;
+          recommendedCards: function($http){
+            return $http.get(baseUrl+'/dominion/recommended')
+              .then((response)=> response.data);
           }
         }
       })

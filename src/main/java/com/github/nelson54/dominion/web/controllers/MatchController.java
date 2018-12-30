@@ -12,22 +12,19 @@ import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.match.MatchProvider;
 import com.github.nelson54.dominion.persistence.AccountRepository;
 import com.github.nelson54.dominion.persistence.GameRepository;
-import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 import com.github.nelson54.dominion.persistence.entities.GameEntity;
+import com.github.nelson54.dominion.services.AccountService;
+import com.github.nelson54.dominion.web.dto.MatchDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
-@RestController
+@RestController()
 @RequestMapping("/dominion")
 public class MatchController {
 
@@ -41,33 +38,30 @@ public class MatchController {
 
     private final GameFactory gameFactory;
 
-    public MatchController(AccountRepository accountRepository, GameProvider gameProvider, GameFactory gameFactory, MatchProvider matchProvider) {
+    private final AccountService accountService;
+
+    public MatchController(AccountService accountService, AccountRepository accountRepository, GameProvider gameProvider, GameFactory gameFactory, MatchProvider matchProvider) {
+        this.accountService = accountService;
         this.accountRepository = accountRepository;
         this.gameProvider = gameProvider;
         this.gameFactory = gameFactory;
         this.matchProvider = matchProvider;
     }
 
-    @RequestMapping(value="/matches", method= RequestMethod.GET)
+    @GetMapping(value="/matches")
     Page<Match> matches() {
-        User user = getUser();
-        return new PageImpl<>(matchProvider.getJoinableMatchesForUser(user));
+        Account account = accountService.getAuthorizedAccount()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+        return new PageImpl<>(matchProvider.getJoinableMatchesForAccount(account));
     }
 
-    @RequestMapping(value = "/matches", method = RequestMethod.POST)
-    void createMatch(
-            @RequestParam
-            byte numberOfHumanPlayers,
-            @RequestParam
-            byte numberOfAiPlayers,
-            @RequestParam
-            String cards
-    ) throws InstantiationException, IllegalAccessException {
+    @PostMapping(value = "/matches")
+    void createMatch(@RequestBody MatchDto matchDto) throws InstantiationException, IllegalAccessException {
 
-        byte totalPlayers = (byte)(numberOfAiPlayers + numberOfHumanPlayers);
+        byte totalPlayers = (byte)(matchDto.getNumberOfAiPlayers() + matchDto.getNumberOfHumanPlayers());
 
         GameCardSet gameCardSet;
-        GameCards gameCards = GameCards.ofName(cards);
+        GameCards gameCards = GameCards.ofName(matchDto.getCards());
         if(gameCards != null) {
             gameCardSet = gameCards.getGameCardSet();
         } else {
@@ -75,22 +69,27 @@ public class MatchController {
         }
 
         Match match = new Match(totalPlayers, gameCardSet);
+        Account account = getAccount()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
-        getAccount().ifPresent((account)->{
-            match.addParticipant(new MatchParticipant(account));
-            match.addAiParticipants(numberOfAiPlayers);
-        });
+        match.addParticipant(new MatchParticipant(account));
+        match.addAiParticipants(matchDto.getNumberOfAiPlayers());
 
         addMatch(match);
     }
 
-    @RequestMapping(value="/matches", method=RequestMethod.PATCH)
+    @PatchMapping(value="/matches")
     void join(
             @RequestParam
             Long matchId
     ) throws InstantiationException, IllegalAccessException {
         Match match = matchProvider.getMatchById(matchId);
-        getAccount().ifPresent(account -> match.addParticipant(new MatchParticipant(account)));
+
+        Account account = getAccount()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
+        match.addParticipant(new MatchParticipant(account));
+
         createGameIfReady(match);
     }
 
@@ -136,13 +135,6 @@ public class MatchController {
     }
 
     private Optional<Account> getAccount(){
-        Optional<AccountEntity> accountEntityOptional = accountRepository.findByUserUsername(getUser().getUsername());
-        return accountEntityOptional.map(AccountEntity::asAccount);
-    }
-
-    private User getUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        return (User) authentication.getPrincipal();
+        return accountService.getAuthorizedAccount();
     }
 }

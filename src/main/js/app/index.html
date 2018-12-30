@@ -37,11 +37,11 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
-              <li ng-show="user.name">
-                <a href="/">{{user.name}}</a>
-                <a href="/logout" ng-show="user.name">Logout</a>
+              <li ng-show="user.username">
+                <a href="/">{{user.username}}</a>
+                <a href="/logout" ng-show="user.username">Logout</a>
               </li>
-              <li ng-hide="user.name">
+              <li ng-hide="user.username">
                 <form class="navbar-form pull-right" action="/login" method="post">
                   <label> User Name : <input type="text" name="username"/> </label>
                   <input type="submit" value="Sign In"/>
@@ -99,6 +99,7 @@
         <script src="scripts/controllers/user.js"></script>
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/controllers/signup.js"></script>
+        <script src="scripts/controllers/matchmaking.js"></script>
         <!-- endbuild -->
 </body>
 </html>
