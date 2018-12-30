@@ -9,6 +9,7 @@ import com.github.nelson54.dominion.web.dto.AccountCredentialsDto;
 import com.github.nelson54.dominion.web.dto.AuthenticationDto;
 import com.github.nelson54.dominion.web.dto.UserDto;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 @Resource(name="accountService")
@@ -70,5 +72,11 @@ public class AccountService {
         accountRepository.save(accountEntity);
 
         return accountEntity.asAccount();
+    }
+
+    public Optional<Account> getAuthorizedAccount() {
+        return accountRepository
+                .findByUserUsername((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                .map(AccountEntity::asAccount);
     }
 }

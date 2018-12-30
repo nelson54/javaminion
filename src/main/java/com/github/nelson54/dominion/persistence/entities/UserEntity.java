@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -75,7 +76,7 @@ public class UserEntity {
     }
 
     public User asUser() {
-        return new User(username, null, null);
+        return new User(username, "", new ArrayList());
     }
 
     public UserEntity fromUser(User user) {

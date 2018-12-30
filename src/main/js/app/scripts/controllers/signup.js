@@ -2,7 +2,7 @@
 
 angular.module('dominionFrontendApp')
   .controller('SignupCtrl', function ($scope, $http, $resource, $route, baseUrl) {
-    let self = $sope;
+    let self = $scope;
 
     self.signup = function() {
       let obj = {
@@ -13,5 +13,12 @@ angular.module('dominionFrontendApp')
       };
 
       console.log(JSON.stringify(obj));
+      var User = $resource(baseUrl+'/api/register');
+
+      let user = new User(obj);
+
+      user.$save().then(function() {
+        console.log(`Saved! {${JSON.stringify(user)}}`)
+      });
     }
   });

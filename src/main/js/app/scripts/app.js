@@ -21,8 +21,7 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch',
-    'js-data'
+    'ngTouch'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -32,6 +31,9 @@ angular
         resolve : {
           baseUrl: function() {
             return baseUrl;
+          },
+          UserService: function(UserServiceFactory) {
+            return UserServiceFactory()
           },
           recommendedCards: function($q, $http){
             var defer = $q.defer();
@@ -49,14 +51,6 @@ angular
         resolve : {
           baseUrl: function() {
             return baseUrl;
-          },
-          recommendedCards: function($q, $http){
-            var defer = $q.defer();
-            $http.get(baseUrl+'/dominion/recommended')
-              .success(function(response){
-                defer.resolve(response);
-              });
-            return defer.promise;
           }
         }
       })
@@ -125,15 +119,42 @@ angular
         redirectTo: '/'
       });
   })
-  .factory('GameData', function(DS){
-    return DS.defineResource('dominion');
+  .factory('GameData', function(){
+    return {}.defineResource('dominion');
   })
-  .factory('UserService', function($resource){
-    return $resource(baseUrl+'/user');
+  .factory('jwtService', function(){
+    return {
+      setToken(token) {
+        localStorage.setItem('jwtToken', token);
+      },
+      getBearer() {
+        let token = localStorage.getItem('jwtToken');
+        if(token) {
+          return `Bearer ${token}`;
+        }
+        return null;
+        
+      }
+    }
+
+
   })
-  .config(function (DSProvider) {
-    DSProvider.defaults.basePath = baseUrl; // etc.
-  })
+
+  .factory('UserServiceFactory', ["$resource", "jwtService", function($resource, jwtService){
+    return function() {
+      return $resource(baseUrl + '/api/account', {}, {
+        get: {
+          headers: {'Authorization': jwtService.getBearer()}
+        },
+        post: {
+          headers: {'Authorization': jwtService.getBearer()}
+        },
+        patch: {
+          headers: {'Authorization': jwtService.getBearer()}
+        }
+      });
+    };
+  }])
   .config(['$resourceProvider', function($resourceProvider) {
     // Don't strip trailing slashes from calculated URLs
     $resourceProvider.defaults.stripTrailingSlashes = false;
