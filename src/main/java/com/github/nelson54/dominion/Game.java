@@ -19,7 +19,10 @@ public class Game {
     private List<String> logs;
 
     @JsonProperty
-    private String id;
+    private Long id;
+
+    @JsonIgnore
+    RandomSeed seed;
 
     @JsonProperty
     private Kingdom kingdom;
@@ -48,8 +51,9 @@ public class Game {
     @JsonProperty
     private Turn turn;
 
-    public Game(String id) {
+    public Game(Long id, Long seed) {
         this.id = id;
+        this.seed = RandomSeed.create(seed);
         players = new HashMap<>();
         pastTurns = new LinkedHashSet<>();
         allCards = new HashMap<>();
@@ -57,13 +61,12 @@ public class Game {
         logs = new ArrayList<>();
     }
 
-    public Game() {
-        id = UUID.randomUUID().toString();
+    public Game(Long seed) {
+        this.seed = RandomSeed.create(seed);
         pastTurns = new LinkedHashSet<>();
         allCards = new HashMap<>();
         trash = new HashSet<>();
         logs = new ArrayList<>();
-
     }
 
     Player nextPlayer() {
@@ -159,7 +162,7 @@ public class Game {
                 .forEach(turn -> turn.setPhase(END_OF_GAME));
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -183,7 +186,7 @@ public class Game {
                 .forEach(allCards::addAll);
 
         allCards.stream()
-                .forEach(card -> this.allCards.put(card.getId().toString(), card));
+                .forEach(card -> this.allCards.put(card.getId(), card));
 
         this.kingdom = kingdom;
     }
@@ -253,7 +256,7 @@ public class Game {
     @JsonProperty
     @Override
     public int hashCode() {
-        int result = (id.hashCode() ^ (id.hashCode() >>> 0));
+        int result = (id.hashCode() ^ (id.hashCode()));
         result = 31 * result + kingdom.hashCode();
         //result = 31 * result + turnOrder.hashCode();
         result = 31 * result + allCards.hashCode();

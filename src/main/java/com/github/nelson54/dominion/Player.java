@@ -114,7 +114,7 @@ public class Player {
         discard.clear();
         deck.clear();
 
-        Collections.shuffle(shuffledDeck);
+        Collections.shuffle(shuffledDeck, this.game.seed.random());
 
         deck.addAll(shuffledDeck);
     }

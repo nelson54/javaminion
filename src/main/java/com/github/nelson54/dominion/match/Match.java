@@ -9,19 +9,21 @@ import java.util.stream.IntStream;
 
 public class Match {
     private Long id;
+    private Long seed;
     private byte playerCount;
     private Map<Long, MatchParticipant> participants;
     private GameCardSet cards;
 
     public Match(byte playerCount, GameCardSet cards) {
-
+        this.seed = new Random().nextLong();
         this.participants = new HashMap<>();
         this.playerCount = playerCount;
         this.cards = cards;
     }
 
-    public Match(Long id, byte playerCount, GameCardSet cards) {
-
+    public Match(Long id, Long seed, byte playerCount, GameCardSet cards) {
+        this.id = id;
+        this.seed = seed;
         this.participants = new HashMap<>();
         this.playerCount = playerCount;
         this.cards = cards;
@@ -29,6 +31,10 @@ public class Match {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getSeed() {
+        return seed;
     }
 
     public Set<MatchParticipant> getParticipants() {

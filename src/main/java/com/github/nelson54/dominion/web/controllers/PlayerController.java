@@ -8,9 +8,7 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.persistence.GameRepository;
 import com.github.nelson54.dominion.persistence.entities.GameEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import com.github.nelson54.dominion.services.AccountService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -25,13 +23,14 @@ public class PlayerController {
 
     private GameRepository gameRepository;
     private GameProvider gameProvider;
+    private AccountService accountService;
 
     @RequestMapping("/shuffle")
     Game shuffle(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
@@ -49,9 +48,9 @@ public class PlayerController {
     @RequestMapping("/draw")
     Game drawHand(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
@@ -68,9 +67,9 @@ public class PlayerController {
     @RequestMapping("/discard")
     Game discardHand(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
@@ -88,9 +87,9 @@ public class PlayerController {
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
     Game purchase(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId,
             @RequestBody
@@ -111,9 +110,9 @@ public class PlayerController {
     @RequestMapping(value = "/play", method = RequestMethod.POST)
     Game play(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId,
             @RequestBody
@@ -143,9 +142,9 @@ public class PlayerController {
     @RequestMapping(value = "/choice", method = RequestMethod.POST)
     Game chooseCard(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId,
             @RequestBody
@@ -187,9 +186,9 @@ public class PlayerController {
     @RequestMapping(value = "/next-phase", method = RequestMethod.POST)
     Game endPhase(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String id
+            Long id
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Game game = gameRepository.findById(id).get().asGame();
         game.getTurn().endPhase();
@@ -198,12 +197,8 @@ public class PlayerController {
     }
 
     @ModelAttribute("authentication")
-    Optional<User> user(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        //return Optional.of(usersProvider.getUserById(authentication.getName()));
-
-        return Optional.empty();
+    Optional<Account> getAccount(){
+        return accountService.getAuthorizedAccount();
     }
 
     @Inject
@@ -214,5 +209,10 @@ public class PlayerController {
     @Inject
     public void setGameProvider(GameProvider gameProvider) {
         this.gameProvider = gameProvider;
+    }
+
+    @Inject
+    public void setAccountService(AccountService accountService) {
+        this.accountService = accountService;
     }
 }

@@ -17,7 +17,7 @@ public class GameFactory {
     private KingdomFactory kingdomFactory;
 
     public Game createGame(Match match) throws InstantiationException, IllegalAccessException {
-        Game game = new Game();
+        Game game = new Game(match.getSeed());
 
         game.setPlayers(new HashMap<>());
         game.setTurnOrder(new LinkedHashSet<>());

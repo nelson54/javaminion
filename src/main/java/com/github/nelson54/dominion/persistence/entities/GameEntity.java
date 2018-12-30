@@ -3,6 +3,7 @@ package com.github.nelson54.dominion.persistence.entities;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.RandomSeed;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.PeekingIterator;
 
@@ -16,7 +17,8 @@ public class GameEntity {
 
     @Id
     @Column(name="game_id")
-    private String id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn
@@ -63,7 +65,7 @@ public class GameEntity {
         return gameEntity;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -77,7 +79,8 @@ public class GameEntity {
 
 
     public Game asGame() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        Game game = new Game(id);
+
+        Game game = new Game(id, id);
 
         for (PlayerEntity playerEntity : players) {
             Player player = playerEntity.asPlayer(game);
