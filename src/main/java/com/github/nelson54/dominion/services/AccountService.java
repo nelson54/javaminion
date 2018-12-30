@@ -4,20 +4,21 @@ import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.persistence.AccountRepository;
 import com.github.nelson54.dominion.persistence.UserRepository;
 import com.github.nelson54.dominion.persistence.entities.AccountEntity;
-import com.github.nelson54.dominion.persistence.entities.PlayerEntity;
 import com.github.nelson54.dominion.persistence.entities.UserEntity;
 import com.github.nelson54.dominion.web.dto.AccountCredentialsDto;
 import com.github.nelson54.dominion.web.dto.AuthenticationDto;
 import com.github.nelson54.dominion.web.dto.UserDto;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import javax.naming.AuthenticationException;
 import java.util.ArrayList;
 
 @Service
+@Resource(name="accountService")
 public class AccountService {
 
     BCryptPasswordEncoder passwordEncoder;
@@ -38,7 +39,7 @@ public class AccountService {
                 .orElseThrow(() -> new RuntimeException("Incorrect username"));
 
         if (!passwordEncoder.matches(accountCredentials.getPassword(), userEntity.getPassword())) {
-            throw new RuntimeException("Incorrect password");
+            throw new AuthenticationException("Incorrect password");
         }
 
         User user = new User(

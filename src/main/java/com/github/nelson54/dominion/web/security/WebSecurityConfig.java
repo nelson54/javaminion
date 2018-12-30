@@ -17,7 +17,6 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     private UserEntityDetailsService userDetailsService;
 
     private BCryptPasswordEncoder passwordEncoder;
@@ -55,5 +54,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         return jdbcUserDetailsManager;
     }
-
 }

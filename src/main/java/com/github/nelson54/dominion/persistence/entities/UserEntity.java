@@ -2,8 +2,6 @@ package com.github.nelson54.dominion.persistence.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.userdetails.User;
 
@@ -14,7 +12,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class UserEntity {
 
     @Id
