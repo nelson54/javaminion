@@ -51,7 +51,8 @@ public class PlayerEntity {
 
     public static PlayerEntity ofPlayer(Player player) {
         PlayerEntity playerEntity = new PlayerEntity();
-        //playerEntity.user = UserEntity.ofUser(player.getUser());
+
+        playerEntity.accountEntity = AccountEntity.ofAccount(player.getAccount());
 
         putCardEntitiesInPlace(player.getHand(), playerEntity.hand);
         putCardEntitiesInPlace(player.getDeck(), playerEntity.deck);

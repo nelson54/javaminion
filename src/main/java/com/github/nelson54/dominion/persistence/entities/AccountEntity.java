@@ -32,6 +32,12 @@ public class AccountEntity {
         this.user = user;
     }
 
+    public static AccountEntity ofAccount(Account account) {
+        AccountEntity accountEntity = new AccountEntity(account.getAi(), account.getFirstname(), null);
+        accountEntity.id = account.getId();
+        return accountEntity;
+    }
+
     public Long getId() {
         return id;
     }
@@ -47,5 +53,4 @@ public class AccountEntity {
     public Account asAccount() {
         return new Account(id, user.asUser(), firstname, ai);
     }
-
 }

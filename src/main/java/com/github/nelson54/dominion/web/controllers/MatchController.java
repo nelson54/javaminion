@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
@@ -93,10 +94,6 @@ public class MatchController {
         createGameIfReady(match);
     }
 
-    public void setGameRepository(GameRepository gameRepository) {
-        this.gameRepository = gameRepository;
-    }
-
     private void addMatch (Match match) throws IllegalAccessException, InstantiationException {
         if(match.isReady()) {
             createGame(match);
@@ -132,6 +129,11 @@ public class MatchController {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+    }
+
+    @Inject
+    public void setGameRepository(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
     }
 
     private Optional<Account> getAccount(){
