@@ -11,24 +11,36 @@ buildscript {
     }
 }
 
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.palantir.docker'
+apply plugin: 'com.palantir.docker-run'
 
-group = 'springio'
+
+
+group = 'nelson54'
 
 jar {
     baseName = 'gs-spring-boot-docker'
     version =  '0.1.0'
 }
 
+
 docker {
-    name "${project.group}/${jar.baseName}"
+    name "${project.group}/${project.name}"
+    dockerfile file("Dockerfile")
     files jar.archivePath
-    buildArgs(['JAR_FILE': "${jar.archiveName}"])
+    buildArgs(['JAR_FILE': "${jar.baseName}"])
+}
+
+dockerRun {
+    name "${project.group}/${project.name}"
+    ports '8080:8080'
+    daemonize true
 }
 
 repositories {
@@ -38,20 +50,28 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+ext{
+    spring = '2.1.1.RELEASE'
+}
+
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.1.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version:'2.1.1.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.1.RELEASE', {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$spring"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: "$spring"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "$spring", {
         exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
         exclude group: 'org.hibernate', module: 'hibernate-core'
     }
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "$spring"
+    compile group: 'org.springframework.boot',name: 'spring-boot-devtools', version: "$spring"
+    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: "$spring"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "$spring"
+
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.10.Final'
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.1.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.1.1.RELEASE'
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: springVersion
 
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     compile group: 'javax.activation', name: 'javax.activation-api', version: '1.2.0'
-    
+    compile group: 'io.jsonwebtoken', name:'jjwt', version: '0.7.0'
     //compile 'org.springframework.security:spring-security-crypto:4.2.1.RELEASE'
     //compile 'org.springframework.social:spring-social-core:1.1.0.RELEASE'
     //compile 'org.springframework.social:spring-social-facebook:1.1.1.RELEASE'

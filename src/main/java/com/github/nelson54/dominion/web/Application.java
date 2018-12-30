@@ -6,24 +6,19 @@ import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.KingdomFactory;
-import com.github.nelson54.dominion.UsersProvider;
 import com.github.nelson54.dominion.match.MatchProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@EnableAutoConfiguration
-@ComponentScan({"com.github.nelson54.dominion.web"})
+@SpringBootApplication
 @EntityScan("com.github.nelson54.dominion.persistence.entities")
-@PropertySource("classpath:application.properties")
 @EnableJpaRepositories
-public class Application extends WebMvcConfigurerAdapter {
+public class Application {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
@@ -35,11 +30,6 @@ public class Application extends WebMvcConfigurerAdapter {
         KingdomFactory kingdomFactory = new KingdomFactory();
         gameFactory.setKingdomFactory(kingdomFactory);
         return gameFactory;
-    }
-
-    @Bean
-    UsersProvider getUsersProvider(){
-        return new UsersProvider();
     }
 
     @Bean
@@ -59,5 +49,10 @@ public class Application extends WebMvcConfigurerAdapter {
         objectMapper.registerModule(new GuavaModule());
 
         return objectMapper;
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

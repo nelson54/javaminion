@@ -80,7 +80,7 @@ public class TurnEntity {
         this.player = player;
     }
 
-    public String getUserId() {
-        return player.getUserId();
+    public Long getUserId() {
+        return player.getId();
     }
 }

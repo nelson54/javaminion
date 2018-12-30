@@ -43,19 +43,23 @@ public class GameFactory {
             Player p;
 
             if(player.isAi()){
-                p = createAiPlayer(game, player.getUser(), game.getKingdom());
+                p = createAiPlayer(game, player.getAccount(), game.getKingdom());
             } else {
-                p = createHumanPlayer(game, player.getUser(), game.getKingdom());
+                p = createHumanPlayer(game, player.getAccount(), game.getKingdom());
             }
 
             game.getPlayers().put(p.getId(), p);
         }
     }
 
-    private Player createHumanPlayer(Game game, User playerModel, Kingdom kingdom) {
-        User user = new User(playerModel.getId(), playerModel.getName());
+    private Player createHumanPlayer(Game game, Account account, Kingdom kingdom) {
 
-        Player player = new Player(user);
+
+        Player player = new Player(account);
+        return getPlayer(game, player);
+    }
+
+    private Player getPlayer(Game game, Player player) {
         player.setGame(game);
 
         addStartingCardsToPlayer(player, game);
@@ -67,24 +71,16 @@ public class GameFactory {
         return player;
     }
 
-    private Player createAiPlayer(Game game, User player, Kingdom kingdom) {
+    private Player createAiPlayer(Game game, Account account, Kingdom kingdom) {
 
-        return createAiPlayer(game, player, AiStrategies.random(), kingdom);
+        return createAiPlayer(game, account, AiStrategies.random(), kingdom);
     }
 
-    private Player createAiPlayer(Game game, User user, AiStrategy aiStrategy, Kingdom kingdom) {
+    private Player createAiPlayer(Game game, Account account, AiStrategy aiStrategy, Kingdom kingdom) {
 
-        AiPlayer player = new AiPlayer(user);
-
+        AiPlayer player = new AiPlayer(account);
         player.setAiStrategy(aiStrategy);
-        player.setGame(game);
-        addStartingCardsToPlayer(player, game);
-
-        game.getTurnOrder().add(player);
-
-        player.resetForNextTurn(null);
-
-        return player;
+        return getPlayer(game, player);
     }
 
     private void addStartingCardsToPlayer(Player player, Game game) {

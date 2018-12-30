@@ -8,8 +8,12 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.persistence.GameRepository;
 import com.github.nelson54.dominion.persistence.entities.GameEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 import java.util.Set;
@@ -20,7 +24,6 @@ import java.util.stream.Collectors;
 public class PlayerController {
 
     private GameRepository gameRepository;
-    private UsersProvider usersProvider;
     private GameProvider gameProvider;
 
     @RequestMapping("/shuffle")
@@ -196,21 +199,19 @@ public class PlayerController {
 
     @ModelAttribute("authentication")
     Optional<User> user(){
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         //return Optional.of(usersProvider.getUserById(authentication.getName()));
 
         return Optional.empty();
     }
 
+    @Inject
     public void setGameRepository(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
 
-    public void setUsersProvider(UsersProvider usersProvider) {
-        this.usersProvider = usersProvider;
-    }
-
+    @Inject
     public void setGameProvider(GameProvider gameProvider) {
         this.gameProvider = gameProvider;
     }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class Player {
     @JsonProperty
-    User user;
+    private Account account;
 
     @JsonProperty
     private Set<Card> hand;
@@ -31,8 +31,8 @@ public class Player {
     @JsonProperty
     private Deque<Choice> choices;
 
-    public Player(User user) {
-        this.user = user;
+    public Player(Account account) {
+        this.account = account;
         hand = new HashSet<>();
         deck = new LinkedHashSet<>();
         discard = new HashSet<>();
@@ -41,15 +41,19 @@ public class Player {
 
     @JsonProperty("id")
     public String getId() {
-        return user.getId();
+        return account.getId().toString();
     }
 
     @JsonProperty("name")
     public String getName() {
-        return user.getName();
+        return account.getFirstname();
     }
 
     public byte order;
+
+
+
+
 
     @JsonProperty
     long getVictoryPoints() {
@@ -276,7 +280,7 @@ public class Player {
         return result;
     }
 
-    public User getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 }

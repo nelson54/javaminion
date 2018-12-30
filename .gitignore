@@ -1,7 +1,9 @@
 # Intellij
-.idea/
+.idea
 *.iml
 *.iws
 .gradle
 target
 build
+out
+

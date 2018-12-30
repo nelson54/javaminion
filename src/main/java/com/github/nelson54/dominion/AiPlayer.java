@@ -8,14 +8,12 @@ public class AiPlayer extends Player {
 
     private AiStrategy aiStrategy;
 
-    public AiPlayer(User user) {
-        super(user);
-        user.setAi(true);
+    public AiPlayer(Account account) {
+        super(account);
     }
 
-    public AiPlayer(User user, AiStrategy aiStrategy) {
-        super(user);
-        user.setAi(true);
+    public AiPlayer(Account account, AiStrategy aiStrategy) {
+        super(account);
         this.aiStrategy = aiStrategy;
     }
 

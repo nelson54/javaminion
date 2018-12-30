@@ -48,7 +48,7 @@ public class GameEntity {
 
         game.getPlayers().values().forEach( (player -> {
             PlayerEntity playerEntity = PlayerEntity.ofPlayer(player);
-            if(playerEntity.getUserId().equals(game.getTurn().getPlayerId())) {
+            if(playerEntity.getId().equals(game.getTurn().getPlayerId())) {
                 gameEntity.turn = playerEntity.getTurn();
             }
             gameEntity.players.add(playerEntity);
@@ -121,7 +121,7 @@ public class GameEntity {
 
     public PlayerEntity getPlayerById(String id){
         for (PlayerEntity player : players) {
-            if(player.getUserId().equals(id)) {
+            if(player.getId().equals(id)) {
                 return player;
             }
         }

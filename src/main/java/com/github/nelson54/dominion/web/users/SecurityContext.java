@@ -1,7 +1,7 @@
 package com.github.nelson54.dominion.web.users;
 
 
-import com.github.nelson54.dominion.User;
+import org.springframework.security.core.userdetails.User;
 
 public final class SecurityContext {
 

@@ -1,31 +1,38 @@
 package com.github.nelson54.dominion.match;
 
-import com.github.nelson54.dominion.User;
 import com.github.nelson54.dominion.ai.AiName;
 import com.github.nelson54.dominion.cards.GameCardSet;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
 public class Match {
-    private String id;
+    private Long id;
     private byte playerCount;
-    private Map<String, MatchParticipant> participants;
+    private Map<Long, MatchParticipant> participants;
     private GameCardSet cards;
 
     public Match(byte playerCount, GameCardSet cards) {
-        this.id = UUID.randomUUID().toString();
+
         this.participants = new HashMap<>();
         this.playerCount = playerCount;
         this.cards = cards;
     }
 
-    public String getId() {
+    public Match(Long id, byte playerCount, GameCardSet cards) {
+
+        this.participants = new HashMap<>();
+        this.playerCount = playerCount;
+        this.cards = cards;
+    }
+
+    public Long getId() {
         return id;
     }
 
     public Set<MatchParticipant> getParticipants() {
-        return new HashSet<MatchParticipant>(participants.values());
+        return new HashSet<>(participants.values());
     }
 
     public GameCardSet getCards() {
@@ -33,7 +40,7 @@ public class Match {
     }
 
     public void addParticipant (MatchParticipant participant) {
-        participants.put(participant.getUser().getId(), participant);
+        participants.put(participant.getAccount().getId(), participant);
     }
 
     public byte getPlayerCount() {
@@ -48,13 +55,13 @@ public class Match {
         Collection<AiName> names = AiName.random(n);
         Iterator<AiName> nameIterator = names.iterator();
         IntStream.rangeClosed(1, n).forEach( (i) -> {
-            MatchParticipant participant = new MatchParticipant();
-            participant.getUser().setName(nameIterator.next().toString());
+            MatchParticipant participant = MatchParticipant.createAi();
+            participant.getAccount().setFirstname(nameIterator.next().toString());
             this.addParticipant(participant);
         });
     }
 
     boolean hasUser(User user) {
-        return participants.containsKey(user.getId());
+        return participants.containsKey(user.getUsername());
     }
 }

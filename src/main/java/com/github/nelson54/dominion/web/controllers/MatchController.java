@@ -1,23 +1,31 @@
 package com.github.nelson54.dominion.web.controllers;
 
-import com.github.nelson54.dominion.*;
+import com.github.nelson54.dominion.Account;
+import com.github.nelson54.dominion.Game;
+import com.github.nelson54.dominion.GameFactory;
+import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.cards.GameCardSet;
 import com.github.nelson54.dominion.cards.GameCards;
 import com.github.nelson54.dominion.exceptions.InvalidCardSetName;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.match.MatchProvider;
+import com.github.nelson54.dominion.persistence.AccountRepository;
 import com.github.nelson54.dominion.persistence.GameRepository;
+import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 import com.github.nelson54.dominion.persistence.entities.GameEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/dominion")
@@ -25,7 +33,7 @@ public class MatchController {
 
     private GameRepository gameRepository;
 
-    private final UsersProvider usersProvider;
+    private final AccountRepository accountRepository;
 
     private final GameProvider gameProvider;
 
@@ -33,10 +41,9 @@ public class MatchController {
 
     private final GameFactory gameFactory;
 
-    public MatchController(GameProvider gameProvider, UsersProvider usersProvider, GameFactory gameFactory, MatchProvider matchProvider) {
-
+    public MatchController(AccountRepository accountRepository, GameProvider gameProvider, GameFactory gameFactory, MatchProvider matchProvider) {
+        this.accountRepository = accountRepository;
         this.gameProvider = gameProvider;
-        this.usersProvider = usersProvider;
         this.gameFactory = gameFactory;
         this.matchProvider = matchProvider;
     }
@@ -69,10 +76,10 @@ public class MatchController {
 
         Match match = new Match(totalPlayers, gameCardSet);
 
-        User user = getUser();
-
-        match.addParticipant(new MatchParticipant(user));
-        match.addAiParticipants(numberOfAiPlayers);
+        getAccount().ifPresent((account)->{
+            match.addParticipant(new MatchParticipant(account));
+            match.addAiParticipants(numberOfAiPlayers);
+        });
 
         addMatch(match);
     }
@@ -80,11 +87,10 @@ public class MatchController {
     @RequestMapping(value="/matches", method=RequestMethod.PATCH)
     void join(
             @RequestParam
-            String matchId
+            Long matchId
     ) throws InstantiationException, IllegalAccessException {
         Match match = matchProvider.getMatchById(matchId);
-        User user = getUser();
-        match.addParticipant(new MatchParticipant(user));
+        getAccount().ifPresent(account -> match.addParticipant(new MatchParticipant(account)));
         createGameIfReady(match);
     }
 
@@ -129,10 +135,14 @@ public class MatchController {
         }
     }
 
-    private User getUser(){
-        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    private Optional<Account> getAccount(){
+        Optional<AccountEntity> accountEntityOptional = accountRepository.findByUserUsername(getUser().getUsername());
+        return accountEntityOptional.map(AccountEntity::asAccount);
+    }
 
-        return usersProvider.getUserById(authentication.getName());*/
-        return null;
+    private User getUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        return (User) authentication.getPrincipal();
     }
 }

@@ -2,12 +2,12 @@ package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.GameProvider;
-import com.github.nelson54.dominion.User;
-import com.github.nelson54.dominion.UsersProvider;
 import com.github.nelson54.dominion.cards.RecommendedCards;
-import com.github.nelson54.dominion.persistence.GameRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,8 +22,6 @@ import java.util.ArrayList;
 public class GameController {
 
     private GameProvider gameProvider;
-    private UsersProvider usersProvider;
-    private GameRepository gameRepository;
 
     @RequestMapping(value = "/recommended", method = RequestMethod.GET)
     RecommendedCards[] getRecomendedCards(){
@@ -35,18 +33,18 @@ public class GameController {
             @PathVariable("gameId")
             String id
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        return gameRepository.findById(id).get().asGame();
+        return gameProvider.getGameByUuid(id);
     }
 
     @RequestMapping("/games")
     Page<Game> games(){
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        User user = null;// usersProvider.getUserById(authentication.getName());
+        User user = (User)authentication.getPrincipal();
 
         Page<Game> page = new PageImpl<>(new ArrayList<>());
 
-        if(user != null && user.getId() != null) {
+        if(user != null && user.getUsername() != null) {
             page = new PageImpl<>(new ArrayList<>(gameProvider.all()));
         }
 
@@ -58,22 +56,16 @@ public class GameController {
             @PathVariable("gameId")
             String id
     ) {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Game game = gameProvider.getGameByUuid(id);
         game.getTurn().endPhase();
         return game;
     }
 
-    public void setGameRepository(GameRepository gameRepository) {
-        this.gameRepository = gameRepository;
-    }
-
+    @Inject
     public void setGameProvider(GameProvider gameProvider) {
         this.gameProvider = gameProvider;
     }
 
-    public void setUsersProvider(UsersProvider usersProvider) {
-        this.usersProvider = usersProvider;
-    }
 }
