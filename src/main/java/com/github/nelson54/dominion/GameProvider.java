@@ -1,13 +1,13 @@
 package com.github.nelson54.dominion;
 
-import com.github.nelson54.dominion.cards.RecommendedCards;
-import com.github.nelson54.dominion.match.Match;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class GameProvider {
@@ -15,7 +15,7 @@ public class GameProvider {
     @Autowired
     GameFactory gameFactory;
 
-    private Map<String, Game> gamesById;
+    private Map<Long, Game> gamesById;
     private Multimap<String, Game> gamesByPlayerId;
     //private Set<String> games;
 

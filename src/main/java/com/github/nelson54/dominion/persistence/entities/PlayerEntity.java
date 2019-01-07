@@ -22,7 +22,7 @@ public class PlayerEntity {
 
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn
-    private UserEntity user;
+    private AccountEntity accountEntity;
 
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn
@@ -51,7 +51,8 @@ public class PlayerEntity {
 
     public static PlayerEntity ofPlayer(Player player) {
         PlayerEntity playerEntity = new PlayerEntity();
-        playerEntity.user = UserEntity.ofUser(player.getUser());
+
+        playerEntity.accountEntity = AccountEntity.ofAccount(player.getAccount());
 
         putCardEntitiesInPlace(player.getHand(), playerEntity.hand);
         putCardEntitiesInPlace(player.getDeck(), playerEntity.deck);
@@ -68,10 +69,10 @@ public class PlayerEntity {
 
     public Player asPlayer(Game game) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Player player;
-        if(user.isAi()) {
-            player = new AiPlayer(user.asUser(), AiStrategies.random());
+        if(accountEntity.isAi()) {
+            player = new AiPlayer(null, AiStrategies.random());
         } else {
-            player = new Player(user.asUser());
+            player = new Player(accountEntity.asAccount());
         }
 
         player.setOrder((byte) playOrder.intValue());
@@ -86,8 +87,8 @@ public class PlayerEntity {
         return player;
     }
 
-    public String getUserId() {
-        return user.getId();
+    public Long getId() {
+        return accountEntity.getId();
     }
 
     private static void putCardsInPlace(Player player, Collection<CardEntity> entities, Collection<Card> place) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {

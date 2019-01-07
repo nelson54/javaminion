@@ -1,25 +1,26 @@
 package com.github.nelson54.dominion.match;
 
-import com.github.nelson54.dominion.User;
 
-import java.util.UUID;
+import com.github.nelson54.dominion.Account;
+import com.github.nelson54.dominion.ai.AiUtils;
 
 public class MatchParticipant {
-    private User user;
+    private Account account;
     private boolean ai;
 
-    public MatchParticipant(User user) {
+    public MatchParticipant(Account account) {
         this.ai = false;
-        this.user = user;
+        this.account = account;
     }
 
-    MatchParticipant() {
-        this.user = new User(UUID.randomUUID().toString());
-        this.ai = true;
+    public static MatchParticipant createAi() {
+        MatchParticipant ai = new MatchParticipant(AiUtils.randomPlayer().getAccount());
+        ai.ai = true;
+        return ai;
     }
 
-    public User getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 
     public boolean isAi() {

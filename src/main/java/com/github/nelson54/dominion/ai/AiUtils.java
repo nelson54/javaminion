@@ -1,5 +1,7 @@
 package com.github.nelson54.dominion.ai;
 
+import com.github.nelson54.dominion.Account;
+import com.github.nelson54.dominion.AiPlayer;
 import com.github.nelson54.dominion.Kingdom;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.types.TreasureCard;
@@ -31,6 +33,11 @@ public class AiUtils {
         return (int) cards.stream()
                 .filter(c -> c.getName().equals(name))
                 .count();
+    }
+
+    public static AiPlayer randomPlayer() {
+        Account account = new Account(Long.valueOf("10"),  null, "ai@example.com", AiName.random().toString(), true);
+        return new AiPlayer(account);
     }
 
 

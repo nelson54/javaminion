@@ -1,31 +1,61 @@
 package com.github.nelson54.dominion.match;
 
-import com.github.nelson54.dominion.User;
+import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.ai.AiName;
 import com.github.nelson54.dominion.cards.GameCardSet;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Match {
-    private String id;
-    private byte playerCount;
-    private Map<String, MatchParticipant> participants;
+    private Long id;
+    private Long seed;
+    private Integer playerCount;
+    private List <MatchParticipant> participants;
+    private MatchState matchState;
     private GameCardSet cards;
 
-    public Match(byte playerCount, GameCardSet cards) {
-        this.id = UUID.randomUUID().toString();
-        this.participants = new HashMap<>();
+    public Match(Integer playerCount, GameCardSet cards) {
+        this.seed = new Random().nextLong();
+        this.participants = new ArrayList<>();
         this.playerCount = playerCount;
         this.cards = cards;
     }
 
-    public String getId() {
+    public Match(Long id, Long seed, MatchState matchState, Integer playerCount, GameCardSet cards) {
+        this.id = id;
+        this.seed = seed;
+        this.matchState = matchState;
+        this.participants = new ArrayList<>();
+        this.playerCount = playerCount;
+        this.cards = cards;
+    }
+
+    public Long getId() {
         return id;
     }
 
+    public Long getSeed() {
+        return seed;
+    }
+
+
+
     public Set<MatchParticipant> getParticipants() {
-        return new HashSet<MatchParticipant>(participants.values());
+        return new HashSet<>(this.participants);
+    }
+
+    public List<Long> getTurnOrder(){
+        return this.participants.stream()
+                .map((participant)->participant.getAccount().getId())
+                .collect(Collectors.toList());
+    }
+
+    public List<Long> shuffleTurnOrder() {
+        Collections.shuffle(this.participants, new Random(this.seed));
+
+        return getTurnOrder();
     }
 
     public GameCardSet getCards() {
@@ -33,28 +63,36 @@ public class Match {
     }
 
     public void addParticipant (MatchParticipant participant) {
-        participants.put(participant.getUser().getId(), participant);
+        participants.add(participant);
     }
 
-    public byte getPlayerCount() {
+    public Integer getPlayerCount() {
         return playerCount;
     }
 
     public boolean isReady() {
-        return participants.size() >= playerCount;
+        return participants.size()== playerCount;
     }
 
-    public void addAiParticipants(byte n) {
+    public void addAiParticipants(Integer n) {
         Collection<AiName> names = AiName.random(n);
         Iterator<AiName> nameIterator = names.iterator();
         IntStream.rangeClosed(1, n).forEach( (i) -> {
-            MatchParticipant participant = new MatchParticipant();
-            participant.getUser().setName(nameIterator.next().toString());
+            MatchParticipant participant = MatchParticipant.createAi();
+            participant.getAccount().setFirstname(nameIterator.next().toString());
             this.addParticipant(participant);
         });
     }
 
-    boolean hasUser(User user) {
-        return participants.containsKey(user.getId());
+    public MatchState getMatchState() {
+        return matchState;
+    }
+
+    public void setMatchState(MatchState matchState) {
+        this.matchState = matchState;
+    }
+
+    boolean hasAccount(Account account) {
+        return getTurnOrder().contains(account.getId());
     }
 }

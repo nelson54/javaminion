@@ -1,10 +1,12 @@
 {
   "name": "dominionfrontend",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "grunt-cli": "^1.3.2"
+  },
   "repository": {},
   "devDependencies": {
-    "bower": "^1.7.7",
+    "bower": "^1.8.4",
     "chalk": "^1.1.3",
     "compass": "^0.1.1",
     "grunt": "^0.4.5",
@@ -44,6 +46,8 @@
     "node": ">=0.10.0"
   },
   "scripts": {
+    "bower-install": "bower install",
+    "build": "bash ./build.sh",
     "test": "grunt test"
   }
 }

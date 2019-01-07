@@ -15,3 +15,22 @@
 - [ ] Remodel and Mine are both broken.
 - [ ] Animations.
 - [x] End turn if no additional actions in pool or cards in hand after playing ComplexActionCard's
+
+
+```bash
+# Clean
+docker system purge -q
+
+# Builds
+docker build -t javaminion .
+
+# Runs
+docker run javaminion
+
+# Enter bash
+docker run -it javaminion bash
+
+# Run from bash
+./gradlew build && java -Xmx512m -jar ./build/libs/gs-spring-boot-docker-0.1.0.jar
+
+```

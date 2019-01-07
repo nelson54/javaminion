@@ -8,11 +8,10 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.persistence.GameRepository;
 import com.github.nelson54.dominion.persistence.entities.GameEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.github.nelson54.dominion.services.AccountService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 import java.util.Set;
@@ -22,25 +21,20 @@ import java.util.stream.Collectors;
 @RequestMapping("/dominion/{gameId}/{playerId}")
 public class PlayerController {
 
-    @Autowired
-    GameRepository gameRepository;
-
-    @Autowired
-    UsersProvider usersProvider;
-
-    @Autowired
-    GameProvider gameProvider;
+    private GameRepository gameRepository;
+    private GameProvider gameProvider;
+    private AccountService accountService;
 
     @RequestMapping("/shuffle")
     Game shuffle(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Player player = game.getPlayers().get(playerId);
 
         player.shuffle();
@@ -54,13 +48,13 @@ public class PlayerController {
     @RequestMapping("/draw")
     Game drawHand(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Player player = game.getPlayers().get(playerId);
 
         player.drawHand();
@@ -73,13 +67,13 @@ public class PlayerController {
     @RequestMapping("/discard")
     Game discardHand(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Player player = game.getPlayers().get(playerId);
 
         player.discardHand();
@@ -93,15 +87,15 @@ public class PlayerController {
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
     Game purchase(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId,
             @RequestBody
             Card card
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Player player = game.getPlayers().get(playerId);
 
         game.getTurn().purchaseCardForPlayer(card, player);
@@ -116,15 +110,15 @@ public class PlayerController {
     @RequestMapping(value = "/play", method = RequestMethod.POST)
     Game play(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId,
             @RequestBody
             Card card
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Player player = game.getPlayers().get(playerId);
 
         Card playing = player.getHand()
@@ -148,15 +142,15 @@ public class PlayerController {
     @RequestMapping(value = "/choice", method = RequestMethod.POST)
     Game chooseCard(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String gameId,
+            Long gameId,
             @PathVariable("playerId")
             String playerId,
             @RequestBody
             ChoiceResponse choiceResponse
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(gameId).asGame();
+        Game game = gameRepository.findById(gameId).get().asGame();
         Kingdom kingdom = game.getKingdom();
         Player player = game.getPlayers().get(playerId);
         Turn turn = player.getCurrentTurn();
@@ -192,20 +186,33 @@ public class PlayerController {
     @RequestMapping(value = "/next-phase", method = RequestMethod.POST)
     Game endPhase(
             @ModelAttribute
-            Optional<User> user,
+            Optional<Account> account,
             @PathVariable("gameId")
-            String id
+            Long id
     ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findOne(id).asGame();
+        Game game = gameRepository.findById(id).get().asGame();
         game.getTurn().endPhase();
 
         return game;
     }
 
     @ModelAttribute("authentication")
-    Optional<User> user(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    Optional<Account> getAccount(){
+        return accountService.getAuthorizedAccount();
+    }
 
-        return Optional.of(usersProvider.getUserById(authentication.getName()));
+    @Inject
+    public void setGameRepository(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
+
+    @Inject
+    public void setGameProvider(GameProvider gameProvider) {
+        this.gameProvider = gameProvider;
+    }
+
+    @Inject
+    public void setAccountService(AccountService accountService) {
+        this.accountService = accountService;
     }
 }

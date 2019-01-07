@@ -5,18 +5,19 @@ import com.github.nelson54.dominion.cards.Cards;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.exceptions.UnableToBuildCardsException;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 
-@Entity(name="card")
+@Entity
+@Table(name="account")
 public class CardEntity {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private String id;
 
     private String clazz;

@@ -1,9 +1,36 @@
 'use strict';
 
 angular.module('dominionFrontendApp')
-  .controller('MatchesCtrl', function ($scope, $http, $resource, $route, baseUrl, recommendedCards) {
+  .controller('MatchesCtrl', function ($scope, $http, $resource, $route, baseUrl, recommendedCards, jwtService) {
 
-    var Game = $resource(baseUrl + '/dominion/');
+    $http.defaults.headers.common['Authorization'] = jwtService.getBearer();
+
+    let matchHttpConfig = {
+      headers: {'Authorization': jwtService.getBearer()}
+    };
+
+    let Match = $resource(baseUrl + '/dominion/matches',
+      {
+      },
+      {
+        get: matchHttpConfig,
+        save: {
+          method: 'post',
+          headers: matchHttpConfig.headers
+        },
+        put: matchHttpConfig,
+        post: matchHttpConfig,
+        query: {
+          method: 'get',
+          headers: matchHttpConfig.headers
+        },
+        join: {
+          url: '/dominion/matches/:matchId',
+          action: 'join',
+          method: 'patch',
+          headers: matchHttpConfig.headers,
+        }
+    });
 
     $scope.games = [];
 
@@ -18,23 +45,31 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.getMatches = function () {
-      return $http.get(baseUrl + '/dominion/matches')
-        .success(function (response) {
-          $scope.games = response;
+      return Match.query()
+        .$promise
+        .then(function (response) {
+          $scope.games = response.content;
         });
     };
 
     $scope.createGame = function () {
-      var game = new Game({
-        cardSet: $scope.cards,
-        players: $scope.players,
+      let count = $scope.players.length,
+      numberOfAiPlayers = $scope.players.filter((player)=> player.ai).length;
+
+      let match = new Match({
+        cards: $scope.cards,
+        numberOfHumanPlayers: count - numberOfAiPlayers,
+        numberOfAiPlayers: numberOfAiPlayers,
         count: $scope.players.length + 1
       });
-      game.$save(game, $route.reload);
+
+      match.$save()
+        .then($route.reload, $route.reload);
     };
 
-    $scope.joinGame = function() {
-
+    $scope.joinGame = function(matchObj) {
+      let match = new Match();
+      match.$join({matchId: matchObj.id})
     };
 
     $scope.cancel = function(){

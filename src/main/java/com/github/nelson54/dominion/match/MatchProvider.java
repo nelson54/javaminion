@@ -1,15 +1,16 @@
 package com.github.nelson54.dominion.match;
 
-import com.github.nelson54.dominion.Game;
+import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.GameFactory;
-import com.github.nelson54.dominion.User;
-import com.github.nelson54.dominion.cards.RecommendedCards;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,47 +19,43 @@ public class MatchProvider {
     @Autowired
     GameFactory gameFactory;
 
-    private Map<String, Match> matchesById;
-    private Multimap<String, Match> gamesByPlayerId;
-    //private Set<String> games;
-
+    private Map<Long, Match> matchesById;
+    private Multimap<Long, Match> gamesByAccount;
 
     public MatchProvider() {
         matchesById = new HashMap<>();
-        gamesByPlayerId = ArrayListMultimap.create();
+        gamesByAccount = ArrayListMultimap.create();
     }
 
-    public Match getMatchById(String id) {
+    public Match getMatchById(Long id) {
         return matchesById.get(id);
     }
 
     public void addMatch(Match match)  {
         matchesById.put(match.getId(), match);
 
-        match.getParticipants().forEach(p -> gamesByPlayerId.put(p.getUser().getId(), match));
+        match.getParticipants().forEach(p -> gamesByAccount.put(p.getAccount().getId(), match));
     }
 
-    public List<Match> getJoinableMatchesForUser(User user) {
+    public List<Match> getJoinableMatchesForAccount(Account account) {
         return matchesById
                 .values()
                 .stream()
-                .filter((match) -> !match.hasUser(user) )
+                .filter((match) -> !match.hasAccount(account) )
                 .collect(Collectors.toList());
     }
 
     public List<Match> getAllMatches() {
-        return matchesById
-                .values()
-                .stream()
-                .collect(Collectors.toList());
+        return new ArrayList<>(matchesById
+                .values());
     }
 
     public void remove(Match match) {
         matchesById.remove(match.getId());
         match.getParticipants()
                 .forEach(p ->
-                        gamesByPlayerId
-                                .get(p.getUser().getId())
+                        gamesByAccount
+                                .get(p.getAccount().getId())
                                 .remove(match)
                 );
     }

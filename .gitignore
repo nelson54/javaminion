@@ -4,3 +4,11 @@
 *.iws
 out
 target
+
+.gradle
+target
+build
+out
+
+logs/*
+

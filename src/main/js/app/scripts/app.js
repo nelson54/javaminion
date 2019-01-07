@@ -21,25 +21,20 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch',
-    'js-data'
+    'ngTouch'
   ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
+        templateUrl: 'views/matchmaking.html',
+        controller: 'MatchesCtrl',
         resolve : {
           baseUrl: function() {
             return baseUrl;
           },
-          recommendedCards: function($q, $http){
-            var defer = $q.defer();
-            $http.get(baseUrl+'/dominion/recommended')
-              .success(function(response){
-                defer.resolve(response);
-              });
-            return defer.promise;
+          recommendedCards: function($http){
+            return $http.get(baseUrl+'/dominion/recommended')
+              .then((response)=> response.data);
           }
         }
       })
@@ -49,14 +44,15 @@ angular
         resolve : {
           baseUrl: function() {
             return baseUrl;
-          },
-          recommendedCards: function($q, $http){
-            var defer = $q.defer();
-            $http.get(baseUrl+'/dominion/recommended')
-              .success(function(response){
-                defer.resolve(response);
-              });
-            return defer.promise;
+          }
+        }
+      })
+      .when('/signup', {
+        templateUrl: 'views/signup.html',
+        controller: 'SignupCtrl',
+        resolve : {
+          baseUrl: function() {
+            return baseUrl;
           }
         }
       })
@@ -116,15 +112,42 @@ angular
         redirectTo: '/'
       });
   })
-  .factory('GameData', function(DS){
-    return DS.defineResource('dominion');
+  .factory('GameData', function(){
+    return {}.defineResource('dominion');
   })
-  .factory('UserService', function($resource){
-    return $resource(baseUrl+'/user');
+  .factory('jwtService', function(){
+    return {
+      setToken(token) {
+        localStorage.setItem('jwtToken', token);
+      },
+      getBearer() {
+        let token = localStorage.getItem('jwtToken');
+        if(token) {
+          return `Bearer ${token}`;
+        }
+        return null;
+        
+      }
+    }
+
+
   })
-  .config(function (DSProvider) {
-    DSProvider.defaults.basePath = baseUrl; // etc.
-  })
+
+  .factory('UserServiceFactory', ["$resource", "jwtService", function($resource, jwtService){
+    return function() {
+      return $resource(baseUrl + '/api/account', {}, {
+        get: {
+          headers: {'Authorization': jwtService.getBearer()}
+        },
+        post: {
+          headers: {'Authorization': jwtService.getBearer()}
+        },
+        patch: {
+          headers: {'Authorization': jwtService.getBearer()}
+        }
+      });
+    };
+  }])
   .config(['$resourceProvider', function($resourceProvider) {
     // Don't strip trailing slashes from calculated URLs
     $resourceProvider.defaults.stripTrailingSlashes = false;
