@@ -3,11 +3,11 @@ package com.github.nelson54.dominion.web.dto;
 public class AuthenticationDto {
 
     private String token;
-    private UserDto user;
+    private AccountDto account;
 
-    public AuthenticationDto(String token, UserDto user) {
+    public AuthenticationDto(String token, AccountDto account) {
         this.token = token;
-        this.user = user;
+        this.account = account;
     }
 
     public String getToken() {
@@ -18,11 +18,11 @@ public class AuthenticationDto {
         this.token = token;
     }
 
-    public UserDto getUser() {
-        return user;
+    public AccountDto getAccount() {
+        return account;
     }
 
-    public void setUser(UserDto user) {
-        this.user = user;
+    public void setAccount(AccountDto account) {
+        this.account = account;
     }
 }

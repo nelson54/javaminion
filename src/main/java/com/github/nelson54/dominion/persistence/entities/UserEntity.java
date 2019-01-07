@@ -2,7 +2,6 @@ package com.github.nelson54.dominion.persistence.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.*;
@@ -31,9 +30,12 @@ public class UserEntity {
     @Column
     private Boolean enabled;
 
-    @Email
-    @Column(length = 100, unique = true)
-    private String email;
+    public static UserEntity ofUser(User user) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.username = user.getUsername();
+        userEntity.password = user.getPassword();
+        return userEntity;
+    }
 
     public Long getId() {
         return id;
@@ -65,14 +67,6 @@ public class UserEntity {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public User asUser() {
@@ -107,7 +101,6 @@ public class UserEntity {
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", email='" + email + '\'' +
                 "}";
     }
 }

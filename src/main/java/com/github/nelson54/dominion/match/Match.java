@@ -11,19 +11,19 @@ import java.util.stream.IntStream;
 public class Match {
     private Long id;
     private Long seed;
-    private byte playerCount;
+    private Integer playerCount;
     private List <MatchParticipant> participants;
     private MatchState matchState;
     private GameCardSet cards;
 
-    public Match(byte playerCount, GameCardSet cards) {
+    public Match(Integer playerCount, GameCardSet cards) {
         this.seed = new Random().nextLong();
         this.participants = new ArrayList<>();
         this.playerCount = playerCount;
         this.cards = cards;
     }
 
-    public Match(Long id, Long seed, MatchState matchState, byte playerCount, GameCardSet cards) {
+    public Match(Long id, Long seed, MatchState matchState, Integer playerCount, GameCardSet cards) {
         this.id = id;
         this.seed = seed;
         this.matchState = matchState;
@@ -39,6 +39,8 @@ public class Match {
     public Long getSeed() {
         return seed;
     }
+
+
 
     public Set<MatchParticipant> getParticipants() {
         return new HashSet<>(this.participants);
@@ -64,15 +66,15 @@ public class Match {
         participants.add(participant);
     }
 
-    public byte getPlayerCount() {
+    public Integer getPlayerCount() {
         return playerCount;
     }
 
     public boolean isReady() {
-        return participants.size() >= playerCount;
+        return participants.size()== playerCount;
     }
 
-    public void addAiParticipants(byte n) {
+    public void addAiParticipants(Integer n) {
         Collection<AiName> names = AiName.random(n);
         Iterator<AiName> nameIterator = names.iterator();
         IntStream.rangeClosed(1, n).forEach( (i) -> {

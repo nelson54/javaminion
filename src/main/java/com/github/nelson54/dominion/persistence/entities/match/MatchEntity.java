@@ -1,13 +1,18 @@
 package com.github.nelson54.dominion.persistence.entities.match;
 
+import com.github.nelson54.dominion.cards.GameCardSet;
 import com.github.nelson54.dominion.match.Match;
+import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.match.MatchState;
 import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Entity
+@Table(name="match_entity")
 public class MatchEntity {
 
     @Id
@@ -18,14 +23,12 @@ public class MatchEntity {
     private Long seed;
 
     @OneToMany(cascade=CascadeType.ALL)
+    @OrderBy("player_id")
     @JoinColumn
-    private Set<AccountEntity> players;
+    private List<AccountEntity> players;
 
     @Column
     private Integer playerCount;
-
-    @Column
-    private Integer aiPlayerCount;
 
     @Column
     private String turnOrder;
@@ -33,17 +36,43 @@ public class MatchEntity {
     @Column
     private MatchState state;
 
-    @Column
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn
     private Set<PlayerScoreEntity> scores;
+
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn
+    private List<CardTypeReferenceEntity> gameCards;
 
     public MatchEntity() {}
 
-    static MatchEntity ofMatch(Match match) {
+    public Match toMatch() {
+        GameCardSet cardSet = GameCardSet.of(gameCards
+                .stream()
+                .map(CardTypeReferenceEntity::asCardTypeReference)
+                .collect(Collectors.toList()));
+
+        Match match = new Match(id, seed, state, playerCount, cardSet);
+
+        players.stream().map((playerAccount)->{
+            if(playerAccount.isAi()) {
+
+                return MatchParticipant.createAi();
+            }
+            return new MatchParticipant(playerAccount.asAccount());
+        }).forEachOrdered(match::addParticipant);
+
+        return null;
+    }
+
+    public static MatchEntity ofMatch(Match match) {
         MatchEntity matchEntity = new MatchEntity();
 
         if(match.getId() != null) {
             matchEntity.id = match.getId();
         }
+
+        matchEntity.playerCount = match.getPlayerCount();
 
         matchEntity.seed = match.getSeed();
 
@@ -51,12 +80,17 @@ public class MatchEntity {
 
         matchEntity.players = match.getParticipants().stream()
                 .map((participant)->AccountEntity.ofAccount(participant.getAccount()))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
         matchEntity.turnOrder = match.getTurnOrder()
                 .stream()
                 .map(Object::toString)
                 .collect(Collectors.joining(","));
+
+        matchEntity.gameCards = match.getCards().getCards()
+                .stream()
+                .map(CardTypeReferenceEntity::ofCardTypeReference)
+                .collect(Collectors.toList());
 
         return matchEntity;
     }

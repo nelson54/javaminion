@@ -11,7 +11,7 @@ buildscript {
     }
 }
 
-
+apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -83,12 +83,19 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     compile 'joda-time:joda-time:2.7'
     compile group: 'com.google.inject', name: 'guice', version: '4.0'
+    compile 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: "$spring"
     runtime group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
     runtime group: 'com.h2database', name: 'h2', version: '1.4.197'
     testCompile 'org.springframework.boot:spring-boot-starter-test:2.1.1.RELEASE'
     testCompile 'org.codehaus.groovy:groovy-all:2.4.1'
     testCompile 'org.easymock:easymock:3.4'
     compileOnly 'com.newrelic.agent.java:newrelic-agent:3.14.0'
+}
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 }
 
 group = 'dominionweb'
@@ -98,3 +105,5 @@ sourceCompatibility = '1.8'
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
+
+applicationDefaultJvmArgs = ["--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED"]

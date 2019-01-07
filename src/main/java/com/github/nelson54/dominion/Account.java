@@ -7,12 +7,21 @@ public class Account {
     private Long id;
     private User user;
     private String firstname;
+    private String email;
     private Boolean ai;
 
 
-    public Account(Long id, User user, String firstname, Boolean ai) {
+    public Account(Long id, User user, String email, String firstname, Boolean ai) {
         this.id = id;
         this.user = user;
+        this.email = email;
+        this.firstname = firstname;
+        this.ai = ai;
+    }
+
+    public Account(User user, String email, String firstname, Boolean ai) {
+        this.user = user;
+        this.email = email;
         this.firstname = firstname;
         this.ai = ai;
     }
@@ -35,5 +44,9 @@ public class Account {
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 }

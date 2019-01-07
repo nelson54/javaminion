@@ -1,36 +1,36 @@
 package com.github.nelson54.dominion.web.dto;
 
 public class MatchDto {
-    private byte numberOfHumanPlayers;
-    private byte numberOfAiPlayers;
-    private byte count;
+    private Integer numberOfHumanPlayers;
+    private Integer numberOfAiPlayers;
+    private Integer count;
     private String cards;
 
 
     public MatchDto() {
     }
 
-    public byte getNumberOfHumanPlayers() {
+    public Integer getNumberOfHumanPlayers() {
         return numberOfHumanPlayers;
     }
 
-    public void setNumberOfHumanPlayers(byte numberOfHumanPlayers) {
+    public void setNumberOfHumanPlayers(Integer numberOfHumanPlayers) {
         this.numberOfHumanPlayers = numberOfHumanPlayers;
     }
 
-    public byte getNumberOfAiPlayers() {
+    public Integer getNumberOfAiPlayers() {
         return numberOfAiPlayers;
     }
 
-    public void setNumberOfAiPlayers(byte numberOfAiPlayers) {
+    public void setNumberOfAiPlayers(Integer numberOfAiPlayers) {
         this.numberOfAiPlayers = numberOfAiPlayers;
     }
 
-    public byte getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(byte count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 

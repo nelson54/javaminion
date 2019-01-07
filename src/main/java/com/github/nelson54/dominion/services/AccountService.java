@@ -6,8 +6,9 @@ import com.github.nelson54.dominion.persistence.UserRepository;
 import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 import com.github.nelson54.dominion.persistence.entities.UserEntity;
 import com.github.nelson54.dominion.web.dto.AccountCredentialsDto;
+import com.github.nelson54.dominion.web.dto.AccountDto;
 import com.github.nelson54.dominion.web.dto.AuthenticationDto;
-import com.github.nelson54.dominion.web.dto.UserDto;
+import com.github.nelson54.dominion.web.dto.RegistrationDto;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -35,7 +36,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public AuthenticationDto authenticateWithCredentials(AccountCredentialsDto accountCredentials)
+    public Optional<AuthenticationDto> authenticateWithCredentials(AccountCredentialsDto accountCredentials)
             throws AuthenticationException {
         UserEntity userEntity = userRepository.findByUsername(accountCredentials.getUsername())
                 .orElseThrow(() -> new RuntimeException("Incorrect username"));
@@ -54,24 +55,24 @@ public class AccountService {
                 new UsernamePasswordAuthenticationToken(user, null)
         );
 
-        UserDto userDto = UserDto.fromUserEntity(userEntity);
-        return new AuthenticationDto(token, userDto);
+        return accountRepository
+                .findByUserUsername(userEntity.getUsername())
+                .map(AccountEntity::asAccount)
+                .map(AccountDto::fromAccount)
+                .map((accountDto) -> new AuthenticationDto(token, accountDto));
     }
 
-    public Account createAccount(UserDto userDto) {
+    public Optional<Account> createAccount(RegistrationDto registrationDto) {
         UserEntity userEntity = new UserEntity();
-        userEntity.setUsername(userDto.getUsername());
-        userEntity.setEmail(userDto.getEmail());
+        userEntity.setUsername(registrationDto.getUsername());
 
-        String encryptedPassword = passwordEncoder.encode(userDto.getPassword());
+        String encryptedPassword = passwordEncoder.encode(registrationDto.getPassword());
         userEntity.setPassword(encryptedPassword);
 
-        userRepository.save(userEntity);
-
-        AccountEntity accountEntity = new AccountEntity(false, userDto.getFirstname(), userEntity);
+        AccountEntity accountEntity = new AccountEntity(false, registrationDto.getFirstname(), registrationDto.getEmail(), userEntity);
         accountRepository.save(accountEntity);
 
-        return accountEntity.asAccount();
+        return Optional.of(accountEntity.asAccount());
     }
 
     public Optional<Account> getAuthorizedAccount() {

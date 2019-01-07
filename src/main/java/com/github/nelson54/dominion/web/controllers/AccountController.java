@@ -1,11 +1,11 @@
 package com.github.nelson54.dominion.web.controllers;
 
-import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.persistence.AccountRepository;
 import com.github.nelson54.dominion.services.AccountService;
 import com.github.nelson54.dominion.web.dto.AccountCredentialsDto;
+import com.github.nelson54.dominion.web.dto.AccountDto;
 import com.github.nelson54.dominion.web.dto.AuthenticationDto;
-import com.github.nelson54.dominion.web.dto.UserDto;
+import com.github.nelson54.dominion.web.dto.RegistrationDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,20 +28,25 @@ public class AccountController {
     @PostMapping("/authentication")
     public AuthenticationDto authentication(@RequestBody @Valid AccountCredentialsDto accountCredentials) {
         try {
-            return accountService.authenticateWithCredentials(accountCredentials);
+            return accountService.authenticateWithCredentials(accountCredentials)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
         } catch (AuthenticationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
     }
 
     @PostMapping("/register")
-    public Account register(@RequestBody @Valid UserDto userDto) {
-        return accountService.createAccount(userDto);
+    public AccountDto register(@RequestBody @Valid RegistrationDto registrationDto) {
+        return accountService.createAccount(registrationDto).map(AccountDto::fromAccount)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
+
     }
 
     @GetMapping("/account")
-    public Account getUser() {
-        return accountService.getAuthorizedAccount()
+    public AccountDto getUser() {
+        return accountService
+                .getAuthorizedAccount()
+                .map(AccountDto::fromAccount)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
     }
 }

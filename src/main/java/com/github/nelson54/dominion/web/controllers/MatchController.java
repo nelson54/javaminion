@@ -10,10 +10,12 @@ import com.github.nelson54.dominion.exceptions.InvalidCardSetName;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.match.MatchProvider;
+import com.github.nelson54.dominion.match.MatchState;
 import com.github.nelson54.dominion.persistence.AccountRepository;
 import com.github.nelson54.dominion.persistence.GameRepository;
 import com.github.nelson54.dominion.persistence.entities.GameEntity;
 import com.github.nelson54.dominion.services.AccountService;
+import com.github.nelson54.dominion.services.MatchService;
 import com.github.nelson54.dominion.web.dto.MatchDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -40,13 +42,15 @@ public class MatchController {
     private final GameFactory gameFactory;
 
     private final AccountService accountService;
+    private MatchService matchService;
 
-    public MatchController(AccountService accountService, AccountRepository accountRepository, GameProvider gameProvider, GameFactory gameFactory, MatchProvider matchProvider) {
+    public MatchController(MatchService matchService, AccountService accountService, AccountRepository accountRepository, GameProvider gameProvider, GameFactory gameFactory, MatchProvider matchProvider) {
         this.accountService = accountService;
         this.accountRepository = accountRepository;
         this.gameProvider = gameProvider;
         this.gameFactory = gameFactory;
         this.matchProvider = matchProvider;
+        this.matchService = matchService;
     }
 
     @GetMapping(value="/matches")
@@ -59,7 +63,7 @@ public class MatchController {
     @PostMapping(value = "/matches")
     void createMatch(@RequestBody MatchDto matchDto) throws InstantiationException, IllegalAccessException {
 
-        byte totalPlayers = (byte)(matchDto.getNumberOfAiPlayers() + matchDto.getNumberOfHumanPlayers());
+        Integer totalPlayers = (matchDto.getNumberOfAiPlayers() + matchDto.getNumberOfHumanPlayers());
 
         GameCardSet gameCardSet;
         GameCards gameCards = GameCards.ofName(matchDto.getCards());
@@ -76,7 +80,14 @@ public class MatchController {
         match.addParticipant(new MatchParticipant(account));
         match.addAiParticipants(matchDto.getNumberOfAiPlayers());
 
-        addMatch(match);
+
+        if(match.isReady()) {
+            match.setMatchState(MatchState.IN_PROGRESS);
+        } else {
+            match.setMatchState(MatchState.WAITING_FOR_PLAYERS);
+        }
+
+        matchService.createMatch(match);
     }
 
     @PatchMapping(value="/matches")

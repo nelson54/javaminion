@@ -1,14 +1,12 @@
 package com.github.nelson54.dominion.web.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.nelson54.dominion.persistence.entities.UserEntity;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class UserDto {
+public class RegistrationDto {
 
     @NotBlank
     @Size(min = 1, max = 100)
@@ -25,17 +23,9 @@ public class UserDto {
 
     @NotBlank
     @Size(min = 6, max = 60)
-    @JsonIgnore
     private String password;
 
-    public static UserDto fromUserEntity(UserEntity userEntity) {
-        UserDto userDto = new UserDto();
-        userDto.setUsername(userEntity.getUsername());
-        userDto.setEmail(userEntity.getEmail());
-        return userDto;
-    }
 
-    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -63,5 +53,9 @@ public class UserDto {
 
     public String getFirstname() {
         return this.firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 }
