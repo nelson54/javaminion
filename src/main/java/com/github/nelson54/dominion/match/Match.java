@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.match;
 
 import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.ai.AiName;
+import com.github.nelson54.dominion.ai.AiPlayers;
 import com.github.nelson54.dominion.cards.GameCardSet;
 
 import java.util.*;
@@ -75,13 +76,11 @@ public class Match {
     }
 
     public void addAiParticipants(Integer n) {
-        Collection<AiName> names = AiName.random(n);
-        Iterator<AiName> nameIterator = names.iterator();
-        IntStream.rangeClosed(1, n).forEach( (i) -> {
-            MatchParticipant participant = MatchParticipant.createAi();
-            participant.getAccount().setFirstname(nameIterator.next().toString());
-            this.addParticipant(participant);
-        });
+        AiPlayers
+            .random(n)
+            .stream()
+            .map(MatchParticipant::createAi)
+            .forEach(this::addParticipant);
     }
 
     public MatchState getMatchState() {

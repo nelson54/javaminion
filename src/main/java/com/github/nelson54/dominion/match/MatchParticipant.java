@@ -13,6 +13,12 @@ public class MatchParticipant {
         this.account = account;
     }
 
+    public static MatchParticipant createAi(Account account) {
+        MatchParticipant ai = new MatchParticipant(account);
+        ai.ai = true;
+        return ai;
+    }
+
     public static MatchParticipant createAi() {
         MatchParticipant ai = new MatchParticipant(AiUtils.randomPlayer().getAccount());
         ai.ai = true;

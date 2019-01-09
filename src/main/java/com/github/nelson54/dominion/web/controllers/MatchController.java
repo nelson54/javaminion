@@ -91,10 +91,7 @@ public class MatchController {
     }
 
     @PatchMapping(value="/matches")
-    void join(
-            @RequestParam
-            Long matchId
-    ) throws InstantiationException, IllegalAccessException {
+    void join(@RequestParam Long matchId) throws InstantiationException, IllegalAccessException {
         Match match = matchProvider.getMatchById(matchId);
 
         Account account = getAccount()
@@ -133,11 +130,7 @@ public class MatchController {
 
         try {
             gameEntity1.asGame();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
     }

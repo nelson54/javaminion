@@ -8,7 +8,9 @@ import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Entity
@@ -22,7 +24,7 @@ public class MatchEntity {
     @Column
     private Long seed;
 
-    @OneToMany(cascade=CascadeType.DETACH)
+    @OneToMany(cascade=CascadeType.ALL)
     @OrderBy("player_id")
     @JoinColumn
     private List<AccountEntity> players;
@@ -82,8 +84,11 @@ public class MatchEntity {
                 .map((participant)->AccountEntity.ofAccount(participant.getAccount()))
                 .collect(Collectors.toList());
 
+
+
         matchEntity.turnOrder = match.getTurnOrder()
                 .stream()
+                .filter(Objects::nonNull)
                 .map(Object::toString)
                 .collect(Collectors.joining(","));
 
