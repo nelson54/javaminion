@@ -92,7 +92,7 @@ class AccountControllerTest {
     @Test
     void authentication() {
         AccountCredentialsDto accountCredentialsDto = new AccountCredentialsDto();
-        accountCredentialsDto.setUsername("derek");
+        accountCredentialsDto.setUsername("bob");
         accountCredentialsDto.setPassword("testing");
 
         AuthenticationDto auth = accountController.authentication(accountCredentialsDto);

@@ -61,7 +61,7 @@ public class MatchController {
     }
 
     @PostMapping(value = "/matches")
-    void createMatch(@RequestBody MatchDto matchDto) throws InstantiationException, IllegalAccessException {
+    void createMatch(@RequestBody MatchDto matchDto) {
 
         Integer totalPlayers = (matchDto.getNumberOfAiPlayers() + matchDto.getNumberOfHumanPlayers());
 

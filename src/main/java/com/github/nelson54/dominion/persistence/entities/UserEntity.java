@@ -31,10 +31,15 @@ public class UserEntity {
     private Boolean enabled;
 
     public static UserEntity ofUser(User user) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.username = user.getUsername();
-        userEntity.password = user.getPassword();
-        return userEntity;
+
+        if (user != null) {
+            UserEntity userEntity = new UserEntity();
+            userEntity.username = user.getUsername();
+            userEntity.password = user.getPassword();
+            return userEntity;
+        }
+
+        return null;
     }
 
     public Long getId() {

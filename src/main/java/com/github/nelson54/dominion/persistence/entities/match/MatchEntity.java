@@ -22,7 +22,7 @@ public class MatchEntity {
     @Column
     private Long seed;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade=CascadeType.DETACH)
     @OrderBy("player_id")
     @JoinColumn
     private List<AccountEntity> players;

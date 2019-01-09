@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.persistence.entities;
 
 import com.github.nelson54.dominion.Account;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,7 +27,7 @@ public class AccountEntity {
     @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
 
-    @OneToOne(cascade= CascadeType.ALL)
+    @OneToOne(cascade= CascadeType.PERSIST)
     @JoinColumn(name="user_id")
     private UserEntity user;
 

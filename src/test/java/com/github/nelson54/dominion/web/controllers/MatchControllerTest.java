@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
@@ -42,20 +43,29 @@ class MatchControllerTest {
         accountCredentialsDto.setUsername("bob");
         accountCredentialsDto.setPassword("testing");
 
-        AuthenticationDto auth = accountController.authentication(accountCredentialsDto);
+        MvcResult authResult = this.mockMvc.perform(post("/api/authentication")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(mapper.writeValueAsBytes(accountCredentialsDto))
+        ).andReturn();
+
+        byte[] resultBody = authResult.getResponse().getContentAsByteArray();
+
+        AuthenticationDto auth = mapper.readValue(resultBody, AuthenticationDto.class);
 
         MatchDto matchDto = new MatchDto();
 
         matchDto.setCount(2);
-        matchDto.setNumberOfHumanPlayers(0);
-        matchDto.setNumberOfAiPlayers(2);
+        matchDto.setNumberOfHumanPlayers(1);
+        matchDto.setNumberOfAiPlayers(1);
         matchDto.setCards("First Game");
 
         this.mockMvc.perform(post("/dominion/matches")
-                .header("Authorization", "Bearer: " + auth.getToken())
+                .header("Authorization", "Bearer " + auth.getToken())
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsBytes(matchDto))
         ).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"username\":\"bill\"")));
+
+
     }
 }
