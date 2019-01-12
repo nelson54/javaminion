@@ -15,6 +15,7 @@ import com.github.nelson54.dominion.persistence.AccountRepository;
 import com.github.nelson54.dominion.persistence.GameRepository;
 import com.github.nelson54.dominion.persistence.entities.GameEntity;
 import com.github.nelson54.dominion.services.AccountService;
+import com.github.nelson54.dominion.services.AiPlayerService;
 import com.github.nelson54.dominion.services.MatchService;
 import com.github.nelson54.dominion.web.dto.MatchDto;
 import org.springframework.data.domain.Page;
@@ -25,7 +26,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController()
 @RequestMapping("/dominion")
@@ -42,9 +45,11 @@ public class MatchController {
     private final GameFactory gameFactory;
 
     private final AccountService accountService;
+    private final AiPlayerService aiPlayerService;
     private MatchService matchService;
 
-    public MatchController(MatchService matchService, AccountService accountService, AccountRepository accountRepository, GameProvider gameProvider, GameFactory gameFactory, MatchProvider matchProvider) {
+    public MatchController(AiPlayerService aiPlayerService, MatchService matchService, AccountService accountService, AccountRepository accountRepository, GameProvider gameProvider, GameFactory gameFactory, MatchProvider matchProvider) {
+        this.aiPlayerService = aiPlayerService;
         this.accountService = accountService;
         this.accountRepository = accountRepository;
         this.gameProvider = gameProvider;
@@ -61,7 +66,7 @@ public class MatchController {
     }
 
     @PostMapping(value = "/matches")
-    void createMatch(@RequestBody MatchDto matchDto) {
+    Match createMatch(@RequestBody MatchDto matchDto) {
 
         Integer totalPlayers = (matchDto.getNumberOfAiPlayers() + matchDto.getNumberOfHumanPlayers());
 
@@ -78,8 +83,13 @@ public class MatchController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
         match.addParticipant(new MatchParticipant(account));
-        match.addAiParticipants(matchDto.getNumberOfAiPlayers());
 
+        Collection<MatchParticipant> participants = aiPlayerService
+                .random(matchDto.getNumberOfAiPlayers())
+                .stream()
+                .map(MatchParticipant::createAi).collect(Collectors.toList());
+
+        match.addAiParticipants(participants);
 
         if(match.isReady()) {
             match.setMatchState(MatchState.IN_PROGRESS);
@@ -87,7 +97,7 @@ public class MatchController {
             match.setMatchState(MatchState.WAITING_FOR_PLAYERS);
         }
 
-        matchService.createMatch(match);
+        return matchService.createMatch(match);
     }
 
     @PatchMapping(value="/matches")

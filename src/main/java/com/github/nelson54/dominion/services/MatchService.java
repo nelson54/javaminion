@@ -21,9 +21,9 @@ public class MatchService {
         return null;
     }
 
-    public Long createMatch(Match match) {
+    public Match createMatch(Match match) {
         MatchEntity entity = matchRepository.save(MatchEntity.ofMatch(match));
-        return entity.toMatch().getId();
+        return entity.toMatch();
     }
 
     public void addPlayerAccount(Match match, Account account) {

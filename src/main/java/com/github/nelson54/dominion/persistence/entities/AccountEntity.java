@@ -10,8 +10,6 @@ import javax.validation.constraints.NotNull;
 @Table(name="accounts")
 public class AccountEntity {
 
-    public AccountEntity() {}
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,10 +25,11 @@ public class AccountEntity {
     @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
 
-    @OneToOne(cascade= CascadeType.PERSIST)
-    @JoinColumn(name="user_id")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn
     private UserEntity user;
 
+    public AccountEntity() {}
 
     public AccountEntity(Boolean ai, @NotNull String firstname, @NotNull String email, UserEntity user) {
         this.ai = ai;

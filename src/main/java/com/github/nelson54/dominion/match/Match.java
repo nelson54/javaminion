@@ -1,13 +1,11 @@
 package com.github.nelson54.dominion.match;
 
 import com.github.nelson54.dominion.Account;
-import com.github.nelson54.dominion.ai.AiName;
-import com.github.nelson54.dominion.ai.AiPlayers;
+import com.github.nelson54.dominion.services.AiPlayerService;
 import com.github.nelson54.dominion.cards.GameCardSet;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Match {
     private Long id;
@@ -75,12 +73,8 @@ public class Match {
         return participants.size()== playerCount;
     }
 
-    public void addAiParticipants(Integer n) {
-        AiPlayers
-            .random(n)
-            .stream()
-            .map(MatchParticipant::createAi)
-            .forEach(this::addParticipant);
+    public void addAiParticipants(Collection<MatchParticipant> participants) {
+        participants.forEach(this::addParticipant);
     }
 
     public MatchState getMatchState() {

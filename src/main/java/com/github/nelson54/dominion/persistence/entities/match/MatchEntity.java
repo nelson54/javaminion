@@ -13,8 +13,10 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static javax.persistence.CascadeType.REFRESH;
+
 @Entity
-@Table(name="match_entity")
+@Table(name="match")
 public class MatchEntity {
 
     @Id
@@ -24,9 +26,7 @@ public class MatchEntity {
     @Column
     private Long seed;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    @OrderBy("player_id")
-    @JoinColumn
+    @ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
     private List<AccountEntity> players;
 
     @Column
@@ -48,6 +48,10 @@ public class MatchEntity {
 
     public MatchEntity() {}
 
+    public Long getId() {
+        return this.id;
+    }
+
     public Match toMatch() {
         GameCardSet cardSet = GameCardSet.of(gameCards
                 .stream()
@@ -64,7 +68,7 @@ public class MatchEntity {
             return new MatchParticipant(playerAccount.asAccount());
         }).forEachOrdered(match::addParticipant);
 
-        return null;
+        return match;
     }
 
     public static MatchEntity ofMatch(Match match) {

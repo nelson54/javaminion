@@ -3,7 +3,7 @@ package com.github.nelson54.dominion.persistence.entities.match;
 import javax.persistence.*;
 
 @Entity
-@Table(name="match_entity")
+@Table(name="command")
 public class CommandEntity {
 
     @Id
