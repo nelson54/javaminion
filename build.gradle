@@ -120,4 +120,4 @@ wrapper {
     gradleVersion = '5.1'
 }
 
-applicationDefaultJvmArgs = ["--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED"]
+//applicationDefaultJvmArgs = ["--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED"]
