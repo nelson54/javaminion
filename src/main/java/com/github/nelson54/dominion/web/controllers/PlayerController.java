@@ -9,7 +9,10 @@ import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.persistence.GameRepository;
 import com.github.nelson54.dominion.persistence.entities.GameEntity;
 import com.github.nelson54.dominion.services.AccountService;
+import com.github.nelson54.dominion.services.MatchService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
@@ -21,8 +24,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/dominion/{gameId}/{playerId}")
 public class PlayerController {
 
-    private GameRepository gameRepository;
-    private GameProvider gameProvider;
+    private MatchService matchService;
     private AccountService accountService;
 
     @RequestMapping("/shuffle")
@@ -33,14 +35,17 @@ public class PlayerController {
             Long gameId,
             @PathVariable("playerId")
             String playerId
-    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findById(gameId).get().asGame();
+    ) {
+        Game game = matchService.getGame(gameId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+
         Player player = game.getPlayers().get(playerId);
 
         player.shuffle();
 
-        gameProvider.addGame(game);
-        gameRepository.save(GameEntity.ofGame(game));
+        //gameProvider.addGame(game);
+        //gameRepository.save(GameEntity.ofGame(game));
 
         return game;
     }
@@ -53,14 +58,16 @@ public class PlayerController {
             Long gameId,
             @PathVariable("playerId")
             String playerId
-    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findById(gameId).get().asGame();
+    ) {
+        Game game = matchService.getGame(gameId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         Player player = game.getPlayers().get(playerId);
 
         player.drawHand();
 
-        gameProvider.addGame(game);
-        gameRepository.save(GameEntity.ofGame(game));
+        //gameProvider.addGame(game);
+        //gameRepository.save(GameEntity.ofGame(game));
         return game;
     }
 
@@ -72,15 +79,17 @@ public class PlayerController {
             Long gameId,
             @PathVariable("playerId")
             String playerId
-    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findById(gameId).get().asGame();
+    ) {
+        Game game = matchService.getGame(gameId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         Player player = game.getPlayers().get(playerId);
 
         player.discardHand();
 
 
-        gameProvider.addGame(game);
-        gameRepository.save(GameEntity.ofGame(game));
+        //gameProvider.addGame(game);
+        //gameRepository.save(GameEntity.ofGame(game));
         return game;
     }
 
@@ -94,15 +103,17 @@ public class PlayerController {
             String playerId,
             @RequestBody
             Card card
-    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findById(gameId).get().asGame();
+    ) {
+        Game game = matchService.getGame(gameId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         Player player = game.getPlayers().get(playerId);
 
         game.getTurn().purchaseCardForPlayer(card, player);
 
 
-        gameProvider.addGame(game);
-        gameRepository.save(GameEntity.ofGame(game));
+        //gameProvider.addGame(game);
+        //gameRepository.save(GameEntity.ofGame(game));
 
         return game;
     }
@@ -117,8 +128,10 @@ public class PlayerController {
             String playerId,
             @RequestBody
             Card card
-    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findById(gameId).get().asGame();
+    ) {
+        Game game = matchService.getGame(gameId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         Player player = game.getPlayers().get(playerId);
 
         Card playing = player.getHand()
@@ -133,8 +146,8 @@ public class PlayerController {
             throw new IllegalStateException();
         }
 
-        gameProvider.addGame(game);
-        gameRepository.save(GameEntity.ofGame(game));
+        //gameProvider.addGame(game);
+        //gameRepository.save(GameEntity.ofGame(game));
 
         return game;
     }
@@ -149,8 +162,10 @@ public class PlayerController {
             String playerId,
             @RequestBody
             ChoiceResponse choiceResponse
-    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findById(gameId).get().asGame();
+    ) {
+        Game game = matchService.getGame(gameId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         Kingdom kingdom = game.getKingdom();
         Player player = game.getPlayers().get(playerId);
         Turn turn = player.getCurrentTurn();
@@ -177,8 +192,8 @@ public class PlayerController {
 
         choice.apply(choiceResponse, turn);
 
-        gameProvider.addGame(game);
-        gameRepository.save(GameEntity.ofGame(game));
+        //gameProvider.addGame(game);
+        //gameRepository.save(GameEntity.ofGame(game));
 
         return game;
     }
@@ -188,9 +203,11 @@ public class PlayerController {
             @ModelAttribute
             Optional<Account> account,
             @PathVariable("gameId")
-            Long id
-    ) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Game game = gameRepository.findById(id).get().asGame();
+            Long gameId
+    ) {
+        Game game = matchService.getGame(gameId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         game.getTurn().endPhase();
 
         return game;
@@ -202,13 +219,8 @@ public class PlayerController {
     }
 
     @Inject
-    public void setGameRepository(GameRepository gameRepository) {
-        this.gameRepository = gameRepository;
-    }
-
-    @Inject
-    public void setGameProvider(GameProvider gameProvider) {
-        this.gameProvider = gameProvider;
+    public void setMatchService(MatchService matchService) {
+        this.matchService = matchService;
     }
 
     @Inject

@@ -66,6 +66,7 @@ public class MatchController {
     }
 
     @PostMapping(value = "/matches")
+    @ResponseStatus(HttpStatus.CREATED)
     Match createMatch(@RequestBody MatchDto matchDto) {
 
         Integer totalPlayers = (matchDto.getNumberOfAiPlayers() + matchDto.getNumberOfHumanPlayers());

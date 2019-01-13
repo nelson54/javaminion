@@ -59,15 +59,49 @@ class MatchControllerTest {
         matchDto.setNumberOfAiPlayers(1);
         matchDto.setCards("First Game");
 
-        MvcResult result = this.mockMvc.perform(post("/dominion/matches")
+        this.mockMvc.perform(post("/dominion/matches")
                 .header("Authorization", "Bearer " + auth.getToken())
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsBytes(matchDto))
-        ).andDo(print()).andExpect(status().isOk()).andReturn();
+        ).andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(content().string(containsString("\"playerCount\":2")));
 
-        result.getResponse().getContentAsString();
+
                 //.andExpect(content().string(containsString("\"username\":\"bill\"")));
+    }
+
+    @Test
+    void createAndJoinMatch() throws Exception {
+        AccountCredentialsDto accountCredentialsDto = new AccountCredentialsDto();
+        accountCredentialsDto.setUsername("bob");
+        accountCredentialsDto.setPassword("testing");
+
+        MvcResult authResult = this.mockMvc.perform(post("/api/authentication")
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(mapper.writeValueAsBytes(accountCredentialsDto))
+        ).andReturn();
+
+        byte[] resultBody = authResult.getResponse().getContentAsByteArray();
+
+        AuthenticationDto auth = mapper.readValue(resultBody, AuthenticationDto.class);
+
+        MatchDto matchDto = new MatchDto();
+
+        matchDto.setCount(2);
+        matchDto.setNumberOfHumanPlayers(1);
+        matchDto.setNumberOfAiPlayers(1);
+        matchDto.setCards("First Game");
+
+        this.mockMvc.perform(post("/dominion/matches")
+                .header("Authorization", "Bearer " + auth.getToken())
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(mapper.writeValueAsBytes(matchDto))
+        ).andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(content().string(containsString("\"playerCount\":2")));
 
 
+        //.andExpect(content().string(containsString("\"username\":\"bill\"")));
     }
 }

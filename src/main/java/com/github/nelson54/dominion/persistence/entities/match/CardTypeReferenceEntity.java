@@ -4,6 +4,8 @@ import com.github.nelson54.dominion.cards.CardTypeReference;
 import com.github.nelson54.dominion.cards.types.Card;
 
 import javax.persistence.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity
 @Table(name="card_type_reference")
@@ -32,10 +34,18 @@ public class CardTypeReferenceEntity {
 
     public CardTypeReference asCardTypeReference() {
         try {
+            Pattern p = Pattern.compile("class (.*)");
+            Matcher match = p.matcher(clazz);
+            match.find();
+
+            if(match.matches()) {
+                this.clazz = match.group(1);
+            }
+
             Class<Card> clazz = (Class<Card>) Class.forName(this.clazz);
             return CardTypeReference.of(name, clazz);
 
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             // This shouldn't be possible
             e.printStackTrace();
             return null;

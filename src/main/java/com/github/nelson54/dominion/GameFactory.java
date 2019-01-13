@@ -16,24 +16,29 @@ public class GameFactory {
 
     private KingdomFactory kingdomFactory;
 
-    public Game createGame(Match match) throws InstantiationException, IllegalAccessException {
+    public Game createGame(Match match) {
         Game game = new Game(match.getSeed());
+        try {
+            game.setPlayers(new HashMap<>());
+            game.setTurnOrder(new LinkedHashSet<>());
 
-        game.setPlayers(new HashMap<>());
-        game.setTurnOrder(new LinkedHashSet<>());
 
-        game.setKingdom(kingdomFactory.getKingdomFromCards(match.getCards().getCardClasses(), match.getPlayerCount()));
+                game.setKingdom(kingdomFactory.getKingdomFromCards(match.getCards().getCardClasses(), match.getPlayerCount()));
 
-        addPlayers(match.getParticipants(), game);
-        game.nextPlayer();
-        Iterator<Player> turnerator =  game.getTurnOrder().iterator();
 
-        byte i = 0;
+            addPlayers(match.getParticipants(), game);
+            game.nextPlayer();
+            Iterator<Player> turnerator =  game.getTurnOrder().iterator();
 
-        while(turnerator.hasNext()) {
-            turnerator.next().setOrder(i++);
+            byte i = 0;
+
+            while(turnerator.hasNext()) {
+                turnerator.next().setOrder(i++);
+            }
+
+        } catch (IllegalAccessException | InstantiationException e) {
+            throw new RuntimeException(e);
         }
-
         return game;
     }
 
