@@ -39,6 +39,10 @@ docker {
     buildArgs(['JAR_FILE': "${jar.baseName}"])
 }
 
+bootRun {
+    jvmArgs = "-Xms256m -Xmx2048m"
+}
+
 dockerRun {
     name "${project.group}/${project.name}"
     ports '8080:8080'
