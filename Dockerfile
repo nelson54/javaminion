@@ -16,6 +16,9 @@ FROM debian:stretch-slim
 #     For some sample build times, see Debian's buildd logs:
 #       https://buildd.debian.org/status/logs.php?pkg=openjdk-11
 
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		bzip2 \
 		unzip \
@@ -78,23 +81,20 @@ RUN set -ex; \
 #
 #   https://github.com/docker-library/openjdk/issues
 
-ENV APP_HOME /app
-ADD . $APP_HOME
-WORKDIR $APP_HOME
-
 RUN /usr/bin/printf '\xfe\xed\xfe\xed\x00\x00\x00\x02\x00\x00\x00\x00\xe2\x68\x6e\x45\xfb\x43\xdf\xa4\xd9\x92\xdd\x41\xce\xb6\xb2\x1c\x63\x30\xd7\x92' > /etc/ssl/certs/java/cacerts
 RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
+
+RUN curl https://raw.githubusercontent.com/nelson54/snippets/master/.git_profile > ~/.bashrc
+RUN curl https://raw.githubusercontent.com/nelson54/snippets/master/.vimrc > ~/.vimrc
+RUN curl https://raw.githubusercontent.com/nelson54/snippets/master/.tmux.config > ~/.tmux.config
+
 RUN apt-get install -y nodejs git vim tmux
 RUN npm install -g sass bower
 
-
-
-RUN cd src/main/js/ && npm install && bower install --allow-root && bash ./build.sh
-
 # https://docs.oracle.com/javase/10/tools/jshell.htm
 # https://en.wikipedia.org/wiki/JShell
-CMD bash $APP_HOME/gradlew build && bash
+CMD bash $APP_HOME/run-build.sh && bash
 
 #&& java -Xmx512m -jar $APP_HOME/build/libs/gs-spring-boot-docker-0.1.0.jar

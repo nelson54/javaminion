@@ -62,7 +62,8 @@ public class MatchController {
     Page<Match> matches() {
         Account account = accountService.getAuthorizedAccount()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
-        return new PageImpl<>(matchProvider.getJoinableMatchesForAccount(account));
+
+        return new PageImpl<>(matchService.all());
     }
 
     @PostMapping(value = "/matches")

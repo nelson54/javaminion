@@ -10,12 +10,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-@JsonAutoDetect
+
 public class Kingdom {
 
     @JsonProperty
-    public
-    Multimap<String, Card> cardMarket;
+    private Multimap<String, Card> cardMarket;
 
     private Map<String, Card> allCards;
 

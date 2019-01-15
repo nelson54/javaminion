@@ -32,9 +32,20 @@ angular
           baseUrl: function() {
             return baseUrl;
           },
-          recommendedCards: function($http){
-            return $http.get(baseUrl+'/dominion/recommended')
-              .then((response)=> response.data);
+          recommendedCards: function($http, $resource, jwtService){
+
+            $http.defaults.headers.common.Authorization = jwtService.getBearer();
+
+            let RecommendedCards = $resource(baseUrl+'/dominion/recommended',
+              {
+              },
+              {
+                get: {
+                  headers: {'Authorization': jwtService.getBearer()}
+                }
+              });
+
+            return RecommendedCards.query();
           }
         }
       })
@@ -60,21 +71,29 @@ angular
         templateUrl: 'views/game.html',
         controller: 'GameCtrl',
         resolve: {
-          game : function($route, $resource, $q){
-            var defer = $q.defer();
-            var Game = $resource(baseUrl+'/dominion/:gameId');
-            var game = $route.current.params['game'];
+          game : function($route, $http, $resource, $q, jwtService){
+            let defer = $q.defer();
+            let game = $route.current.params.game;
+
+            let Game = $resource(baseUrl+'/dominion/:gameId',
+              {
+              },
+              {
+                get: {
+                  headers: {'Authorization': jwtService.getBearer()}
+                }
+              });
 
             Game.get({gameId : game}, function(response){
               defer.resolve(response);
             });
-            return defer.promise
-          },
-          playerId : function($route, UserService, $q){
-            var defer = $q.defer();
-            var game = $route.current.params['game'];
 
-            UserService.get(function(response){
+            return defer.promise;
+          },
+          playerId : function($route, UserServiceFactory, $q){
+            let defer = $q.defer();
+            let userService = new UserServiceFactory();
+            userService.get(function(response){
               defer.resolve(response.id);
             });
 
@@ -92,16 +111,16 @@ angular
           game : function($route, $resource, $q){
             var defer = $q.defer();
             var Game = $resource(baseUrl+'/dominion/:gameId');
-            var game = $route.current.params['game'];
+            var game = $route.current.params.game;
 
             Game.get({gameId : game}, function(response){
-              defer.resolve(response)
+              defer.resolve(response);
             });
 
-            return defer.promise
+            return defer.promise;
           },
           playerId : function($route) {
-            return $route.current.params['player'];
+            return $route.current.params.player;
           },
           baseUrl : function() {
             return baseUrl;
@@ -112,8 +131,24 @@ angular
         redirectTo: '/'
       });
   })
-  .factory('GameData', function(){
-    return {}.defineResource('dominion');
+  .factory('GameData', function($q, $route, $resource, jwtService){
+    let defer = $q.defer();
+    let game = $route.current.params.game;
+
+    let Game = $resource(baseUrl+'/dominion/:gameId',
+      {
+      },
+      {
+        get: {
+          headers: {'Authorization': jwtService.getBearer()}
+        }
+      });
+
+    Game.get({gameId : game}, function(response){
+      defer.resolve(response);
+    });
+
+    return defer.promise;
   })
   .factory('jwtService', function(){
     return {
@@ -128,12 +163,12 @@ angular
         return null;
         
       }
-    }
+    };
 
 
   })
 
-  .factory('UserServiceFactory', ["$resource", "jwtService", function($resource, jwtService){
+  .factory('UserServiceFactory', ['$resource', 'jwtService', function($resource, jwtService){
     return function() {
       return $resource(baseUrl + '/api/account', {}, {
         get: {

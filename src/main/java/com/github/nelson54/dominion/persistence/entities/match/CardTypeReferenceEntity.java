@@ -27,6 +27,8 @@ public class CardTypeReferenceEntity {
                 cardTypeReference.toString());
     }
 
+    public CardTypeReferenceEntity() {}
+
     private CardTypeReferenceEntity(String clazz, String name) {
         this.clazz = clazz;
         this.name = name;
@@ -34,11 +36,11 @@ public class CardTypeReferenceEntity {
 
     public CardTypeReference asCardTypeReference() {
         try {
-            Pattern p = Pattern.compile("class (.*)");
-            Matcher match = p.matcher(clazz);
-            match.find();
+            Pattern p = Pattern.compile("^class (.*)$");
+            Matcher match = p.matcher(this.clazz);
 
-            if(match.matches()) {
+
+            if(match.find()) {
                 this.clazz = match.group(1);
             }
 

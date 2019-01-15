@@ -29,12 +29,15 @@
   </div>
 </div>
 
-<div class="game-list-container">
+<div1 class="game-list-container">
   <button ng-click="getGames()">Refresh</button><button ng-click="newGame = true">New</button>
 
-  <ul class="game-list">
-    <li ng-repeat="id in games">
-      <a href="#/games/{{id}}">{{id}}</a>
-    </li>
-  </ul>
-</div>
+  <table class="game-list">
+    <tr ng-repeat="game in games">
+      <td><a href="/games/{{game.id}}">{{game.id}}</a></td>
+      <td ng-repeat="participant in game.participants">
+        <a href="/players/{{player.account.id}}"><strong>Player {{$index+1}}:</strong> {{participant.account.email}}</a>
+      </td>
+    </tr>
+  </table>
+</div1>

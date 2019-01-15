@@ -31,14 +31,6 @@ jar {
     version =  '0.1.0'
 }
 
-
-docker {
-    name "${project.group}/${project.name}"
-    dockerfile file("Dockerfile")
-    files jar.archivePath
-    buildArgs(['JAR_FILE': "${jar.baseName}"])
-}
-
 test {
     jvmArgs = ["-Xms256m", "-Xmx2048m", "--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED"]
 }
@@ -48,10 +40,15 @@ bootRun {
     jvmArgs = ["-Xms256m", "-Xmx2048m", "--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED"]
 }
 
+docker {
+    name "${project.group}/${project.name}"
+    dockerfile file("Dockerfile")
+}
+
 dockerRun {
     name "${project.group}/${project.name}"
     ports '8080:8080'
-    daemonize true
+    daemonize false
 }
 
 repositories {
@@ -88,9 +85,9 @@ dependencies {
     //compile 'org.springframework.social:spring-social-core:1.1.0.RELEASE'
     //compile 'org.springframework.social:spring-social-facebook:1.1.1.RELEASE'
 
-    compile 'com.google.guava:guava:17.0'
+    compile 'com.google.guava:guava:27.0.1-jre'
     compile group: 'org.javassist', name: 'javassist', version: '3.23.1-GA'
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-guava', version: '2.4.6' 
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-guava', version: '2.7.3'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.8' 
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.8'    
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'

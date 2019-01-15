@@ -26,11 +26,10 @@ public class MatchService {
         this.gameFactory = gameFactory;
     }
 
-    public Collection<Game> all() {
+    public List<Match> all() {
         return StreamSupport
                 .stream(matchRepository.findAll().spliterator(), false)
                 .map(MatchEntity::toMatch)
-                .map(match -> gameFactory.createGame(match))
                 .collect(Collectors.toList());
     }
 

@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.cards.RecommendedCards;
+import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.services.MatchService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,24 +39,8 @@ public class GameController {
     Game getGame(@PathVariable("gameId") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-
         return game(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
-    @RequestMapping("/games")
-    Page<Game> games(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        User user = (User)authentication.getPrincipal();
-
-        Page<Game> page = new PageImpl<>(new ArrayList<>());
-
-        if(user != null && user.getUsername() != null) {
-            page = new PageImpl<>(new ArrayList<>(matchService.all()));
-        }
-
-        return page;
     }
 
     @RequestMapping(value = "/{gameId}/next-phase", method = RequestMethod.POST)

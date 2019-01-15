@@ -11,13 +11,13 @@ cp -R ./app/images ./dist/images;
 
 cp -R .tmp/concat/scripts ./dist/scripts;
 
-rm -Rf ../resources/public
-mkdir ../resources/public
+rm -Rf /app/src/main/resources/public
+mkdir /app/src/main/resources/public
 
 cd ./dist
-cp -R * ../../resources/public
+cp -R * /app/src/main/resources/public
 
-cd ../../../..;
+#cd /app/
 
-./gradlew build
+#./gradlew -Dskip.tests processResources
 

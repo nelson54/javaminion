@@ -2,9 +2,7 @@
 
 angular.module('dominionFrontendApp')
   .controller('MatchesCtrl', function ($scope, $http, $resource, $route, baseUrl, recommendedCards, jwtService) {
-
-    $http.defaults.headers.common['Authorization'] = jwtService.getBearer();
-
+    $http.defaults.headers.common.Authorization = jwtService.getBearer();
     let matchHttpConfig = {
       headers: {'Authorization': jwtService.getBearer()}
     };
@@ -45,11 +43,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.getMatches = function () {
-      return Match.query()
-        .$promise
-        .then(function (response) {
-          $scope.games = response.content;
-        });
+      return Match.query().$promise;
     };
 
     $scope.createGame = function () {
@@ -57,7 +51,7 @@ angular.module('dominionFrontendApp')
       numberOfAiPlayers = $scope.players.filter((player)=> player.ai).length;
 
       let match = new Match({
-        cards: $scope.cards,
+        cards: $scope.cards.trim(),
         numberOfHumanPlayers: count - numberOfAiPlayers,
         numberOfAiPlayers: numberOfAiPlayers,
         count: $scope.players.length + 1
@@ -69,7 +63,7 @@ angular.module('dominionFrontendApp')
 
     $scope.joinGame = function(matchObj) {
       let match = new Match();
-      match.$join({matchId: matchObj.id})
+      match.$join({matchId: matchObj.id});
     };
 
     $scope.cancel = function(){
@@ -78,11 +72,13 @@ angular.module('dominionFrontendApp')
 
     $scope.updatePlayerCount = function (count) {
       $scope.players = [];
-      for (count; count != 1; count--) {
+      for (count; count !== 1; count--) {
         $scope.players.push({id: count, ai: true});
       }
     };
 
-    $scope.getMatches();
+    $scope.getMatches().then((response)=> {
+      $scope.games = response.content;
+    });
 
   });

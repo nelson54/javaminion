@@ -16,6 +16,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.inject.Inject;
+
 @SpringBootApplication
 @ComponentScan({"com.github.nelson54.dominion.web", "com.github.nelson54.dominion.services"})
 @EntityScan("com.github.nelson54.dominion.persistence.entities")
@@ -44,7 +46,7 @@ public class Application {
         return new MatchProvider();
     }
 
-    @Autowired
+    @Inject
     public ObjectMapper configureObjectMapper(ObjectMapper objectMapper) {
 
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

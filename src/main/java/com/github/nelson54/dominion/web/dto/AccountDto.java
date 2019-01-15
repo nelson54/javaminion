@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 
 public class AccountDto {
 
+    @JsonProperty
     private Long id;
 
     @NotBlank

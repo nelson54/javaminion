@@ -256,7 +256,7 @@ public class Game {
     @JsonProperty
     @Override
     public int hashCode() {
-        int result = (id.hashCode() ^ (id.hashCode()));
+        int result = (0);
         result = 31 * result + kingdom.hashCode();
         //result = 31 * result + turnOrder.hashCode();
         result = 31 * result + allCards.hashCode();

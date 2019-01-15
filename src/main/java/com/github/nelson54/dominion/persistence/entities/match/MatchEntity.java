@@ -88,8 +88,6 @@ public class MatchEntity {
                 .map((participant)->AccountEntity.ofAccount(participant.getAccount()))
                 .collect(Collectors.toList());
 
-
-
         matchEntity.turnOrder = match.getTurnOrder()
                 .stream()
                 .filter(Objects::nonNull)
