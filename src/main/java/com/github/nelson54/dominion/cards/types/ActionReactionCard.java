@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 
 public abstract class ActionReactionCard extends ActionCard {
 
-    public ActionReactionCard() {
-        super();
+    public ActionReactionCard(Long id) {
+        super(id);
         cardTypes.add(CardType.REACTION);
     }
 
-    public ActionReactionCard(String id, Player player) {
+    public ActionReactionCard(Long id, Player player) {
         super(id, player);
     }
 

@@ -38,7 +38,7 @@ public class KingdomEntity {
 
     public Kingdom asKingdom() {
         Kingdom kingdom = new Kingdom();
-        Map<String, Card> all = new HashMap<>();
+        Map<Long, Card> all = new HashMap<>();
         Multimap<String, Card> cardMarket = ArrayListMultimap.create(20, 60);
 
         kingdom.setAllCards(all);

@@ -31,7 +31,7 @@ public class Game {
     private Set<Player> turnOrder;
 
     @JsonIgnore
-    private Map<String, Card> allCards;
+    private Map<Long, Card> allCards;
 
     @JsonProperty
     private Set<Turn> pastTurns;
@@ -237,11 +237,11 @@ public class Game {
         logs.add(player.getName()+ " revealed cards " + sj.toString() + " from hand.");
     }
 
-    public Map<String, Card> getAllCards() {
+    public Map<Long, Card> getAllCards() {
         return allCards;
     }
 
-    public void setAllCards(Map<String, Card> allCards) {
+    public void setAllCards(Map<Long, Card> allCards) {
         this.allCards = allCards;
     }
 

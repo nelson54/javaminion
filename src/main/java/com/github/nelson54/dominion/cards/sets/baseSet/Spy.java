@@ -21,7 +21,7 @@ public class Spy extends SymmetricActionAttackCard {
     private static final String option2 = "Put back on deck.";
 
     public Spy(Long id) {
-        super();
+        super(id);
         byte moneyCost = 4;
 
         Cost cost = new Cost();

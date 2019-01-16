@@ -18,7 +18,7 @@ public class Kingdom {
     private Multimap<String, Card> cardMarket;
 
     @JsonProperty
-    private Map<String, Card> allCards;
+    private Map<Long, Card> allCards;
 
     Collection<Card> getCardsByName(String name) {
         return cardMarket.get(name);
@@ -39,11 +39,11 @@ public class Kingdom {
         this.cardMarket = cardMarket;
     }
 
-    public Map<String, Card> getAllCards() {
+    public Map<Long, Card> getAllCards() {
         return allCards;
     }
 
-    public void setAllCards(Map<String, Card> allCards) {
+    public void setAllCards(Map<Long, Card> allCards) {
         this.allCards = allCards;
     }
 

@@ -37,7 +37,7 @@ class DoNothingAi extends AiStrategy {
         } else if (choice.getExpectedAnswerType().equals(YES_OR_NO)){
             choiceResponse.setYes(false);
         } else if (choice.getExpectedAnswerType().equals(CARD)){
-            Set<String> choices = new HashSet<>();
+            Set<Long> choices = new HashSet<>();
 
             choice.getOptions().stream().findFirst().ifPresent(choices::add);
 

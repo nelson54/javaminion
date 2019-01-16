@@ -176,7 +176,7 @@ public class KingdomFactory {
                 Card card = clazz.getDeclaredConstructor(Long.class).newInstance(random.nextLong());
 
                 kingdom.getCardMarket().put(card.getName(), card);
-                kingdom.getAllCards().put(card.getId().toString(), card);
+                kingdom.getAllCards().put(card.getId(), card);
             }
         } catch (InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();

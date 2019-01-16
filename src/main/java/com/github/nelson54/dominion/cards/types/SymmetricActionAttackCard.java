@@ -8,11 +8,11 @@ import java.util.Set;
 
 public abstract class SymmetricActionAttackCard extends ComplexActionAttackCard {
 
-    public SymmetricActionAttackCard() {
-        super();
+    public SymmetricActionAttackCard(Long id) {
+        super(id);
     }
 
-    public SymmetricActionAttackCard(String id, Player player) {
+    public SymmetricActionAttackCard(Long id, Player player) {
         super(id, player);
     }
 

@@ -54,7 +54,7 @@ public class Choice {
 
     @JsonIgnore
     private Effect effect;
-    private Set<String> choices;
+    private Set<Long> choices;
 
     public Choice(Player target, Card source) {
 
@@ -293,11 +293,11 @@ public class Choice {
         return isDialog;
     }
 
-    public void setChoices(Set<String> choices) {
+    public void setChoices(Set<Long> choices) {
         this.choices = choices;
     }
 
-    public Set<String> getChoices() {
+    public Set<Long> getChoices() {
         return choices;
     }
 

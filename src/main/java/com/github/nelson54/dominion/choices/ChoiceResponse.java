@@ -29,7 +29,7 @@ public class ChoiceResponse {
     private Card card;
     private Set<Card> cards;
     private String choice;
-    private Set<String> choices;
+    private Set<Long> choices;
     private Reaction reaction;
 
 
@@ -83,11 +83,11 @@ public class ChoiceResponse {
         this.choice = choice;
     }
 
-    public Set<String> getChoices() {
+    public Set<Long> getChoices() {
         return choices;
     }
 
-    public void setChoices(Set<String> choiceTexts) {
+    public void setChoices(Set<Long> choiceTexts) {
         this.choices = choiceTexts;
     }
 

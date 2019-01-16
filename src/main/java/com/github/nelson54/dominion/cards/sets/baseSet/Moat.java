@@ -14,8 +14,8 @@ import com.github.nelson54.dominion.cards.sets.baseSet.effects.MoatRevealEffect;
 
 public class Moat extends ActionReactionCard {
 
-    public Moat() {
-        super();
+    public Moat(Long id) {
+        super(id);
         byte moneyCost = 2;
 
         Cost cost = new Cost();
@@ -26,7 +26,7 @@ public class Moat extends ActionReactionCard {
     }
 
     public Moat(Long id, Player player) {
-        this();
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

@@ -18,14 +18,14 @@ public class CardEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     private String clazz;
 
     public CardEntity() {
     }
 
-    private CardEntity(String id, String clazz) {
+    private CardEntity(Long id, String clazz) {
         this.id = id;
         this.clazz = clazz;
     }

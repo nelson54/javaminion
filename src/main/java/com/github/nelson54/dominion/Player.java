@@ -91,6 +91,7 @@ public class Player {
     public void discard(Set<Card> cards){
         String list = cards.stream()
                 .map(Card::getId)
+                .map(Object::toString)
                 .collect(Collectors.joining(", "));
 
         hand.removeAll(cards);
@@ -172,8 +173,8 @@ public class Player {
         game.revealCard(this, card);
     }
 
-    public Map<String, Card> getAllCards() {
-        Map<String, Card> allCards = new HashMap<>();
+    public Map<Long, Card> getAllCards() {
+        Map<Long, Card> allCards = new HashMap<>();
 
         hand.forEach(card -> allCards.put(card.getId(), card));
         deck.forEach(card -> allCards.put(card.getId(), card));
