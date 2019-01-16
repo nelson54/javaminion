@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 
 public class Mine extends ComplexActionCard {
 
-    public Mine() {
-        super();
+    public Mine(Long id) {
+        super(id);
         byte moneyCost = 5;
 
         Cost cost = new Cost();
@@ -29,8 +29,8 @@ public class Mine extends ComplexActionCard {
         setName("Mine");
     }
 
-    public Mine(String id, Player player) {
-        this();
+    public Mine(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

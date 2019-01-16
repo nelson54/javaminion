@@ -16,7 +16,7 @@ public class GameProvider {
     GameFactory gameFactory;
 
     private Map<Long, Game> gamesById;
-    private Multimap<String, Game> gamesByPlayerId;
+    private Multimap<Long, Game> gamesByPlayerId;
     //private Set<String> games;
 
 
@@ -34,7 +34,7 @@ public class GameProvider {
         return gamesById.get(uuid);
     }
 
-    public Collection<Game> getMatches(String id) {
+    public Collection<Game> getMatches(Long id) {
         return gamesByPlayerId.get(id);
     }
 

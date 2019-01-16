@@ -5,11 +5,7 @@ import com.github.nelson54.dominion.ai.AiStrategy;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-
+import java.util.*;
 
 
 public class GameFactory {
@@ -23,7 +19,7 @@ public class GameFactory {
             game.setTurnOrder(new LinkedHashSet<>());
 
 
-                game.setKingdom(kingdomFactory.getKingdomFromCards(match.getCards().getCardClasses(), match.getPlayerCount()));
+                game.setKingdom(kingdomFactory.getKingdomFromCards(new Random(match.getSeed()), match.getCards().getCardClasses(), match.getPlayerCount()));
 
 
             addPlayers(match.getParticipants(), game);

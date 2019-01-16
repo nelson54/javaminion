@@ -18,7 +18,7 @@ public class BureaucratEffect extends Effect {
 
     @Override
     void onNoValidTarget(Choice choice, Player target, Turn turn, Game game) {
-        Multimap<String, Card> revealed = turn.getRevealed();
+        Multimap<Long, Card> revealed = turn.getRevealed();
         revealed.putAll(target.getId(), target.getHand());
         target.getHand();
     }

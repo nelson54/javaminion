@@ -10,8 +10,8 @@ public class Silver extends TreasureCard {
     private byte moneyValue = 2;
     private byte moneyCost = 3;
 
-    public Silver() {
-        super();
+    public Silver(Long id) {
+        super(id);
         byte moneyCost = 3;
         byte moneyValue = 2;
 
@@ -24,8 +24,8 @@ public class Silver extends TreasureCard {
         setName("Silver");
     }
 
-    public Silver(String id, Player player) {
-        this();
+    public Silver(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

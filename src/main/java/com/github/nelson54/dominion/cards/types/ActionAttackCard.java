@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 
 public abstract class ActionAttackCard extends ActionCard {
 
-    public ActionAttackCard() {
-        super();
+    public ActionAttackCard(Long id) {
+        super(id);
         cardTypes.add(CardType.ATTACK);
     }
 
-    public ActionAttackCard(String id, Player player) {
+    public ActionAttackCard(Long id, Player player) {
         super(id, player);
     }
 

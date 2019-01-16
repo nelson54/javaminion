@@ -7,8 +7,8 @@ import com.github.nelson54.dominion.cards.types.TreasureCard;
 
 public class Gold extends TreasureCard {
 
-    public Gold() {
-        super();
+    public Gold(Long id) {
+        super(id);
         byte moneyCost = 6;
         byte moneyValue = 3;
 
@@ -22,8 +22,8 @@ public class Gold extends TreasureCard {
         setName("Gold");
     }
 
-    public Gold(String id, Player player) {
-        this();
+    public Gold(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

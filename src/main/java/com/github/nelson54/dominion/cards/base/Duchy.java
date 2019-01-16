@@ -6,8 +6,8 @@ import com.github.nelson54.dominion.cards.types.VictoryCard;
 
 public class Duchy extends VictoryCard {
 
-    public Duchy() {
-        super();
+    public Duchy(Long id) {
+        super(id);
 
         byte moneyCost = 5;
         byte victoryPoints = 3;
@@ -22,8 +22,8 @@ public class Duchy extends VictoryCard {
         setName("Duchy");
     }
 
-    public Duchy(String id, Player player) {
-        this();
+    public Duchy(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

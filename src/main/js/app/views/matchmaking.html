@@ -34,9 +34,9 @@
 
   <table class="game-list">
     <tr ng-repeat="game in games">
-      <td><a href="/games/{{game.id}}">{{game.id}}</a></td>
+      <td><a ng-href="#!/games/{{game.id}}">{{game.id}}</a></td>
       <td ng-repeat="participant in game.participants">
-        <a href="/players/{{player.account.id}}"><strong>Player {{$index+1}}:</strong> {{participant.account.email}}</a>
+        <a ng-href="#!/players/{{player.account.id}}"><strong>Player {{$index+1}}:</strong> {{participant.account.email}}</a>
       </td>
     </tr>
   </table>

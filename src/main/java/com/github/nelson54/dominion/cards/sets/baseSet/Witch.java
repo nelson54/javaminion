@@ -8,8 +8,8 @@ import com.github.nelson54.dominion.cards.Cost;
 
 public class Witch extends ActionAttackCard {
 
-    public Witch() {
-        super();
+    public Witch(Long id) {
+        super(id);
         byte moneyCost = 5;
 
         Cost cost = new Cost();
@@ -19,8 +19,8 @@ public class Witch extends ActionAttackCard {
         setName("Witch");
     }
 
-    public Witch(String id, Player player) {
-        this();
+    public Witch(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

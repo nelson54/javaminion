@@ -9,8 +9,8 @@ import com.github.nelson54.dominion.cards.Cost;
 
 public class Laboratory extends ActionCard {
 
-    public Laboratory() {
-        super();
+    public Laboratory(Long id) {
+        super(id);
         byte moneyCost = 5;
 
         Cost cost = new Cost();
@@ -20,8 +20,8 @@ public class Laboratory extends ActionCard {
         setName("Laboratory");
     }
 
-    public Laboratory(String id, Player player) {
-        this();
+    public Laboratory(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

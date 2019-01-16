@@ -37,7 +37,7 @@ public class Turn {
     @JsonProperty
     private List<Card> play;
 
-    private Multimap<String, Card> revealed;
+    private Multimap<Long, Card> revealed;
     Set<Card> gained;
     Set<Card> bought;
 
@@ -45,7 +45,7 @@ public class Turn {
     private long moneyPool;
     private long buyPool;
 
-    private String playerId;
+    private Long playerId;
 
     public Turn() {
         revealed = ArrayListMultimap.create();
@@ -245,15 +245,15 @@ public class Turn {
         this.resolvedChoices = resolvedChoices;
     }
 
-    public String getPlayerId() {
+    public Long getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(String playerId) {
+    public void setPlayerId(Long playerId) {
         this.playerId = playerId;
     }
 
-    public Multimap<String, Card> getRevealed() {
+    public Multimap<Long, Card> getRevealed() {
         return revealed;
     }
 

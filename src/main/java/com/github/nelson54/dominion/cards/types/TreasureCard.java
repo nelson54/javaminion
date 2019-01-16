@@ -8,12 +8,12 @@ public abstract class TreasureCard extends Card {
     private byte moneyCost;
     private byte moneyValue;
 
-    public TreasureCard(String id, Player player) {
+    public TreasureCard(Long id, Player player) {
         super(id, player);
     }
 
-    public TreasureCard() {
-        super();
+    public TreasureCard(Long id) {
+        super(id);
         isKingdom = false;
         cardTypes.add(CardType.TREASURE);
     }

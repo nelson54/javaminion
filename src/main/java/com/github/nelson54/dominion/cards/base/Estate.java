@@ -7,8 +7,8 @@ import com.github.nelson54.dominion.cards.types.VictoryCard;
 
 public class Estate extends VictoryCard {
 
-    public Estate() {
-        super();
+    public Estate(Long id) {
+        super(id);
 
         byte moneyCost = 2;
         byte victoryPoints = 1;
@@ -23,8 +23,8 @@ public class Estate extends VictoryCard {
         setName("Estate");
     }
 
-    public Estate(String id, Player player) {
-        this();
+    public Estate(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

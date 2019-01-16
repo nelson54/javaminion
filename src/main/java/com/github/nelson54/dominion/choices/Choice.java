@@ -29,7 +29,7 @@ public class Choice {
     private Card displayCard;
     private String message;
 
-    private Set<String> options;
+    private Set<Long> options;
 
     private boolean isComplete;
     private boolean isRequired;
@@ -281,11 +281,11 @@ public class Choice {
         this.state = state;
     }
 
-    public Set<String> getOptions() {
+    public Set<Long> getOptions() {
         return options;
     }
 
-    public void setOptions(Set<String> options) {
+    public void setOptions(Set<Long> options) {
         this.options = options;
     }
 

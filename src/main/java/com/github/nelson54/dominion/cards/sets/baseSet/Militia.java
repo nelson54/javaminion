@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 public class Militia extends ComplexActionAttackCard {
 
-    public Militia() {
-        super();
+    public Militia(Long id) {
+        super(id);
         byte moneyCost = 4;
 
         Cost cost = new Cost();
@@ -30,8 +30,8 @@ public class Militia extends ComplexActionAttackCard {
         setName("Militia");
     }
 
-    public Militia(String id, Player player) {
-        this();
+    public Militia(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

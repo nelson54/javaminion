@@ -20,7 +20,7 @@ public class Spy extends SymmetricActionAttackCard {
     private static final String option1 = "Discard revealed card.";
     private static final String option2 = "Put back on deck.";
 
-    public Spy() {
+    public Spy(Long id) {
         super();
         byte moneyCost = 4;
 
@@ -31,8 +31,8 @@ public class Spy extends SymmetricActionAttackCard {
         setName("Spy");
     }
 
-    public Spy(String id, Player player) {
-        this();
+    public Spy(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

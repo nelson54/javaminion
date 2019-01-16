@@ -16,8 +16,8 @@ import java.util.Set;
 
 public class Chapel extends ComplexActionCard {
 
-    public Chapel() {
-        super();
+    public Chapel(Long id) {
+        super(id);
         byte moneyCost = 2;
 
         Cost cost = new Cost();
@@ -27,8 +27,8 @@ public class Chapel extends ComplexActionCard {
         setName("Chapel");
     }
 
-    public Chapel(String id, Player player) {
-        this();
+    public Chapel(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

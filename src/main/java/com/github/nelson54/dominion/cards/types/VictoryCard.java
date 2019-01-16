@@ -10,13 +10,13 @@ public abstract class VictoryCard extends Card {
     byte moneyCost;
     private byte victoryPoints;
 
-    public VictoryCard() {
-        super();
+    public VictoryCard(Long id) {
+        super(id);
         isKingdom = false;
         cardTypes.add(CardType.VICTORY);
     }
 
-    public VictoryCard(String id, Player player) {
+    public VictoryCard(Long id, Player player) {
         super(id, player);
     }
 

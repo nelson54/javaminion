@@ -16,12 +16,13 @@ import java.util.stream.Collectors;
 
 public abstract class ComplexActionCard extends ActionCard {
 
-    public ComplexActionCard() {
+    public ComplexActionCard(Long id) {
+        super(id);
         isKingdom = true;
         cardTypes.add(CardType.ACTION);
     }
 
-    public ComplexActionCard(String id, Player player) {
+    public ComplexActionCard(Long id, Player player) {
         super(id, player);
     }
 

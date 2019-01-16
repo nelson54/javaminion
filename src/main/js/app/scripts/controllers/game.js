@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('dominionFrontendApp')
-  .controller('GameCtrl', function ($scope, $http, $resource, $route, $timeout, GameData, game, playerId, baseUrl) {
+  .controller('GameCtrl', function ($scope, $http, $resource, $route, $interval, game, playerId, baseUrl, jwtService) {
 
-    var gameId = game.id,
+    let gameId = $route.current.params.game,
       logs,
       players,
       player,
@@ -22,18 +22,12 @@ angular.module('dominionFrontendApp')
     $scope.test = true;
     $scope.game = game;
 
-    var repeat = function() {
-      $timeout(function () {
-        reload(gameId);//gameId);
-      }, 1000);
-    };
-
     $scope.playBackGame = function(){
       playBack = true;
     };
 
     $scope.playTurn = function(t, i) {
-      var playTurn = $scope.game.pastTurns[t];
+      let playTurn = $scope.game.pastTurns[t];
 
 
       if(!playTurn || playTurn.play && playTurn.play.length < i){
@@ -45,7 +39,7 @@ angular.module('dominionFrontendApp')
 
     };
 
-    var updateData = function(game){
+    let updateData = function(game){
       $scope.game = game;
       players = $scope.players = game.players;
       logs = $scope.logs = game.logs;
@@ -64,7 +58,7 @@ angular.module('dominionFrontendApp')
       }
 
       $scope.commonComparator = function(c1, c2){
-        if(c1.kingdomSortOrder == c2.kingdomSortOrder){
+        if(c1.kingdomSortOrder === c2.kingdomSortOrder){
           return 0;
         } else if (c1.kingdomSortOrder > c2.kingdomSortOrder) {
           return 1;
@@ -75,7 +69,7 @@ angular.module('dominionFrontendApp')
 
       $scope.kingdomComparator = function(c1, c2){
         try {
-          if (c1.cost.money == c2.cost.money) {
+          if (c1.cost.money === c2.cost.money) {
             return 0;
           } else if (c1.cost.money > c2.cost.money) {
             return 1;
@@ -89,9 +83,9 @@ angular.module('dominionFrontendApp')
 
       $scope.commonCards = [];
       Object.keys(game.kingdom.cardMarket)
-          .filter(function(id){return !game.kingdom.cardMarket[id][0].isKingdom})
-          .forEach(function(id){
-          var stack = game.kingdom.cardMarket[id],
+          .filter((id)=> !game.kingdom.cardMarket[id][0].isKingdom )
+          .forEach((id) => {
+          let stack = game.kingdom.cardMarket[id],
             card = stack[0];
           card.remaining = stack.length;
           $scope.commonCards.push(card);
@@ -99,31 +93,30 @@ angular.module('dominionFrontendApp')
 
       $scope.kingdomCards = [];
       Object.keys(game.kingdom.cardMarket)
-          .filter(function(id){return game.kingdom.cardMarket[id][0].isKingdom})
-          .forEach(function(id){
-            var stack = game.kingdom.cardMarket[id],
+          .filter((id) => game.kingdom.cardMarket[id][0].isKingdom)
+          .forEach((id) => {
+            let stack = game.kingdom.cardMarket[id],
               card = stack[0];
             card.remaining = stack.length;
             $scope.kingdomCards.push(card);
           });
       //$scope.$digest();
-      repeat();
     };
 
     $scope.shuffle = function(){
-      var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/shuffle');
+      let Game = $resource(baseUrl+'/dominion/:gameId/:playerId/shuffle');
       Game.get({gameId : game.id, playerId : playerId}, function(game){
         updateData(game);
       });
     };
 
     $scope.drawHand = function(){
-      var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/draw');
+      let Game = $resource(baseUrl+'/dominion/:gameId/:playerId/draw');
       Game.get({gameId : game.id, playerId : playerId}, updateData);
     };
 
     $scope.discardHand = function(){
-      var Game = $resource(baseUrl+'/dominion/:gameId/:playerId/discard');
+      let Game = $resource(baseUrl+'/dominion/:gameId/:playerId/discard');
       Game.get({gameId : game.id, playerId : playerId}, updateData);
     };
 
@@ -132,41 +125,41 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.purchase = function(card){
-      var Purchase = $resource(baseUrl+'/dominion/:gameId/:playerId/purchase');
+      let Purchase = $resource(baseUrl+'/dominion/:gameId/:playerId/purchase');
 
-      var purchase = new Purchase(card);
+      let purchase = new Purchase(card);
 
       purchase.$save({gameId : game.id, playerId : playerId},updateData);
     };
 
     $scope.playCard = function(card){
-      var Play = $resource(baseUrl+'/dominion/:gameId/:playerId/play');
+      let Play = $resource(baseUrl+'/dominion/:gameId/:playerId/play');
 
-      var play = new Play(card);
+      let play = new Play(card);
 
       play.$save({gameId : game.id, playerId : playerId},updateData);
-    }
+    };
 
     $scope.nextPhase = function(card){
-      var EndPhase = $resource(baseUrl+'/dominion/:gameId/next-phase');
+      let EndPhase = $resource(baseUrl+'/dominion/:gameId/next-phase');
 
-      var endPhase = new EndPhase(card);
+      let endPhase = new EndPhase(card);
 
       endPhase.$save({gameId : game.id}, updateData);
     };
 
     $scope.selectCard = function(card){
-      if(turn.phase === "ACTION"){
+      if(turn.phase === 'ACTION'){
         $scope.playCard(card);
-      } else if (turn.phase === "WAITING_FOR_CHOICE"){
+      } else if (turn.phase === 'WAITING_FOR_CHOICE'){
         $scope.choose(game, player, choice, card);
-      } else if (turn.phase === "BUY"){
-        $scope.purchase(card)
+      } else if (turn.phase === 'BUY'){
+        $scope.purchase(card);
       }
     };
 
     $scope.choose = function(game, player, choose, response){
-      var Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice');
+      let Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice');
 
       var choice = new Choice();
 
@@ -185,9 +178,9 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.chooseDone = function(game, player, choose){
-      var Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice');
+      let Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice');
 
-      var choice = new Choice();
+      let choice = new Choice();
       choice.targetChoice = choose.id;
       choice.done = true;
 
@@ -207,8 +200,9 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.getCurrentPlayer = function(){
-      if ($scope.hasCurrentPlayer())
+      if ($scope.hasCurrentPlayer()) {
         return players[playerId];
+      }
     };
 
     $scope.hasCardType = function(type, card){
@@ -229,7 +223,7 @@ angular.module('dominionFrontendApp')
 
     $scope.isCardInPlay = function(card){
       return Object.keys(play)
-          .map(function(i){play[i].id})
+          .map((i)=> play[i].id )
           .indexOf(card.id) < 0;
     };
 
@@ -238,27 +232,31 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.isOption = function(id){
-      return choice && choice.options && choice.options.indexOf(id) >= 0
+      return choice && choice.options && choice.options.indexOf(id) >= 0;
     };
 
-    var reload = function(){
-      var Game = $resource(baseUrl+'/dominion/:gameId');
-      GameData.find(gameId, { bypassCache: true })
+    $interval(() => {
+      let Game = $resource(baseUrl+'/dominion/:gameId', {
+        get: {
+          headers: {'Authorization': jwtService.getBearer()}
+        }
+      });
+
+      Game.get({gameId : gameId}).$promise
         .then(function(response){
           if(!playBack &&
             player &&
             (player.currentTurn.phase === 'WAITING_FOR_OPPONENT' ||
-            player.currentTurn.phase === 'WAITING_FOR_CHOICE') &&
-            !playBack && $scope.game.hashCode != response.hashCode) {
+              player.currentTurn.phase === 'WAITING_FOR_CHOICE') &&
+            !playBack && $scope.game.hashCode !== response.hashCode) {
             updateData(response, playerId);
             return;
           } else if(playBack) {
             $scope.playTurn(playBackTurn, playBackPointer);
             playBackPointer++;
           }
-          repeat();
         });
-    };
+    }, 2000);
 
     updateData(game);
   });

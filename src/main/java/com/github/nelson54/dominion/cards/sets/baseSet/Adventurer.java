@@ -12,8 +12,8 @@ import java.util.Set;
 
 public class Adventurer extends ActionCard {
 
-    public Adventurer() {
-        super();
+    public Adventurer(Long id) {
+        super(id);
         byte moneyCost = 6;
 
         Cost cost = new Cost();
@@ -23,8 +23,8 @@ public class Adventurer extends ActionCard {
         setName("Adventurer");
     }
 
-    public Adventurer(String id, Player player) {
-        this();
+    public Adventurer(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

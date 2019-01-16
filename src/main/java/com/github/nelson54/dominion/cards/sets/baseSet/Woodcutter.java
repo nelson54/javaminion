@@ -9,8 +9,8 @@ import com.github.nelson54.dominion.cards.Cost;
 
 public class Woodcutter extends ActionCard {
 
-    public Woodcutter() {
-        super();
+    public Woodcutter(Long id) {
+        super(id);
         byte moneyCost = 3;
 
         Cost cost = new Cost();
@@ -20,8 +20,8 @@ public class Woodcutter extends ActionCard {
         setName("Woodcutter");
     }
 
-    public Woodcutter(String id, Player player) {
-        this();
+    public Woodcutter(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

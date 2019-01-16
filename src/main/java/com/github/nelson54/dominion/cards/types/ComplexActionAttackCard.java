@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
  */
 public abstract class ComplexActionAttackCard extends ComplexActionCard {
 
-    public ComplexActionAttackCard() {
-        super();
+    public ComplexActionAttackCard(Long id) {
+        super(id);
     }
 
-    public ComplexActionAttackCard(String id, Player player) {
+    public ComplexActionAttackCard(Long id, Player player) {
         super(id, player);
     }
 

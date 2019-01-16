@@ -6,8 +6,8 @@ import com.github.nelson54.dominion.cards.types.VictoryCard;
 
 public class Gardens extends VictoryCard {
 
-    public Gardens() {
-        super();
+    public Gardens(Long id) {
+        super(id);
 
         byte moneyCost = 4;
         byte victoryPoints = 0;
@@ -21,8 +21,8 @@ public class Gardens extends VictoryCard {
         setName("Gardens");
     }
 
-    public Gardens(String id, Player player) {
-        this();
+    public Gardens(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

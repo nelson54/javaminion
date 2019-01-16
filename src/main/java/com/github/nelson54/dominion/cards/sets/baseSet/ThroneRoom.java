@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 
 public class ThroneRoom extends ComplexActionCard {
 
-    public ThroneRoom() {
-        super();
+    public ThroneRoom(Long id) {
+        super(id);
         byte moneyCost = 4;
 
         Cost cost = new Cost();
@@ -29,8 +29,8 @@ public class ThroneRoom extends ComplexActionCard {
         setName("Throne Room");
     }
 
-    public ThroneRoom(String id, Player player) {
-        this();
+    public ThroneRoom(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

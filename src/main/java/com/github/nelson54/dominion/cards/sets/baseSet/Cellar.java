@@ -17,8 +17,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Cellar extends ComplexActionCard {
-    public Cellar(){
-        super();
+    public Cellar(Long id){
+        super(id);
         byte moneyCost = 2;
 
         Cost cost = new Cost();
@@ -28,8 +28,8 @@ public class Cellar extends ComplexActionCard {
         setName("Cellar");
     }
 
-    public Cellar(String id, Player player) {
-        this();
+    public Cellar(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

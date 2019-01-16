@@ -16,8 +16,8 @@ import java.util.Set;
 
 public class Thief extends ComplexActionAttackCard {
 
-    public Thief() {
-        super();
+    public Thief(Long id) {
+        super(id);
         byte moneyCost = 4;
 
         Cost cost = new Cost();
@@ -27,8 +27,8 @@ public class Thief extends ComplexActionAttackCard {
         setName("Thief");
     }
 
-    public Thief(String id, Player player) {
-        this();
+    public Thief(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

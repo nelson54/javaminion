@@ -3,12 +3,12 @@ package com.github.nelson54.dominion.cards;
 import com.github.nelson54.dominion.cards.types.Card;
 
 public class CardReference extends Card {
-    public CardReference(String id){
-        this.setId(id);
+    public CardReference(Long id){
+        super(id);
     }
 
-    CardReference(String id, String name){
-        this.setId(id);
+    CardReference(Long id, String name){
+        super(id);
         this.setName(name);
     }
 }

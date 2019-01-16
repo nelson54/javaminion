@@ -9,8 +9,8 @@ import com.github.nelson54.dominion.cards.Cost;
 
 public class Market extends ActionCard {
 
-    public Market() {
-        super();
+    public Market(Long id) {
+        super(id);
         byte moneyCost = 5;
 
         Cost cost = new Cost();
@@ -20,8 +20,8 @@ public class Market extends ActionCard {
         setName("Market");
     }
 
-    public Market(String id, Player player) {
-        this();
+    public Market(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

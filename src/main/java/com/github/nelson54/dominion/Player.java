@@ -40,8 +40,8 @@ public class Player {
     }
 
     @JsonProperty("id")
-    public String getId() {
-        return account.getId().toString();
+    public Long getId() {
+        return account.getId();
     }
 
     @JsonProperty("name")

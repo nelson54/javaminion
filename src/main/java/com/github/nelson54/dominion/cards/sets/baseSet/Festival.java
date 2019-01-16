@@ -9,8 +9,8 @@ import com.github.nelson54.dominion.cards.Cost;
 
 public class Festival extends ActionCard {
 
-    public Festival() {
-        super();
+    public Festival(Long id) {
+        super(id);
         byte moneyCost = 5;
 
         Cost cost = new Cost();
@@ -20,8 +20,8 @@ public class Festival extends ActionCard {
         setName("Festival");
     }
 
-    public Festival(String id, Player player) {
-        this();
+    public Festival(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

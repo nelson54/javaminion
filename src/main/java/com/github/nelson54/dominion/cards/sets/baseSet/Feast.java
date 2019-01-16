@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 public class Feast extends ComplexActionCard {
 
-    public Feast() {
-        super();
+    public Feast(Long id) {
+        super(id);
         byte moneyCost = 4;
 
         Cost cost = new Cost();
@@ -30,8 +30,8 @@ public class Feast extends ComplexActionCard {
         setName("Feast");
     }
 
-    public Feast(String id, Player player) {
-        this();
+    public Feast(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

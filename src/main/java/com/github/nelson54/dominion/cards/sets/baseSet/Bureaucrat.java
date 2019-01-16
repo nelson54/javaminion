@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 public class Bureaucrat extends ComplexActionAttackCard {
 
-    public Bureaucrat() {
-        super();
+    public Bureaucrat(Long id) {
+        super(id);
         byte moneyCost = 4;
 
         Cost cost = new Cost();
@@ -30,8 +30,8 @@ public class Bureaucrat extends ComplexActionAttackCard {
         setName("Bureaucrat");
     }
 
-    public Bureaucrat(String id, Player player) {
-        this();
+    public Bureaucrat(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

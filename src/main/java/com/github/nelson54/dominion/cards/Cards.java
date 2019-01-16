@@ -35,13 +35,13 @@ public class Cards {
         return cardsInHand;
     }
 
-    public static Set<String> getIds(Collection<Card> cards){
+    public static Set<Long> getIds(Collection<Card> cards){
         return cards.stream()
                 .map(Card::getId)
                 .collect(Collectors.toSet());
     }
 
-    public static Card ofId(Game game, String id){
+    public static Card ofId(Game game, Long id){
         return new CardReference(id);
     }
 
@@ -49,22 +49,22 @@ public class Cards {
         return card.getClass().isAssignableFrom(ActionAttackCard.class);
     }
 
-    public static Card createInstance(String className, String id) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static Card createInstance(String className, Long id) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Class<?> clazz = Class.forName(className);
 
         if( Card.class.isAssignableFrom(clazz)) {
-            Constructor<?> ctor = clazz.getConstructor(String.class, Player.class);
+            Constructor<?> ctor = clazz.getConstructor(Long.class, Player.class);
             return (Card) ctor.newInstance(id, null);
         } else {
             throw new InvalidCardClassException();
         }
     }
 
-    public static Card createInstance(String className, String id, Player player) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static Card createInstance(String className, Long id, Player player) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Class<?> clazz = Class.forName(className);
 
         if( Card.class.isAssignableFrom(clazz)) {
-            Constructor<?> ctor = clazz.getConstructor(String.class, Player.class);
+            Constructor<?> ctor = clazz.getConstructor(Long.class, Player.class);
             return (Card) ctor.newInstance(id, player);
         } else {
             throw new InvalidCardClassException();

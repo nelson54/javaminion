@@ -12,8 +12,8 @@ import java.util.Optional;
 
 public class Moneylender extends ActionCard {
 
-    public Moneylender() {
-        super();
+    public Moneylender(Long id) {
+        super(id);
         byte moneyCost = 4;
 
         Cost cost = new Cost();
@@ -23,8 +23,8 @@ public class Moneylender extends ActionCard {
         setName("Moneylender");
     }
 
-    public Moneylender(String id, Player player) {
-        this();
+    public Moneylender(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

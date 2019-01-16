@@ -9,8 +9,8 @@ import com.github.nelson54.dominion.cards.Cost;
 
 public class Village extends ActionCard {
 
-    public Village() {
-        super();
+    public Village(Long id) {
+        super(id);
         byte moneyCost = 3;
 
         Cost cost = new Cost();
@@ -20,8 +20,8 @@ public class Village extends ActionCard {
         setName("Village");
     }
 
-    public Village(String id, Player player) {
-        this();
+    public Village(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

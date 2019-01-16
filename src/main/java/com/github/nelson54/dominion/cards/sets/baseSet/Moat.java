@@ -25,7 +25,7 @@ public class Moat extends ActionReactionCard {
         setName("Moat");
     }
 
-    public Moat(String id, Player player) {
+    public Moat(Long id, Player player) {
         this();
         super.setId(id);
         super.setOwner(player);

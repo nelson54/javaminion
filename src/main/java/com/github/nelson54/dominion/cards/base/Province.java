@@ -6,8 +6,8 @@ import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.cards.types.VictoryCard;
 
 public class Province extends VictoryCard {
-    public Province() {
-        super();
+    public Province(Long id) {
+        super(id);
 
         byte moneyCost = 8;
         byte victoryPoints = 6;
@@ -20,8 +20,8 @@ public class Province extends VictoryCard {
         setName("Province");
     }
 
-    public Province(String id, Player player) {
-        this();
+    public Province(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

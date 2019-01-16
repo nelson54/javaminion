@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 
 public class Workshop extends ComplexActionCard {
 
-    public Workshop() {
-        super();
+    public Workshop(Long id) {
+        super(id);
         byte moneyCost = 3;
 
         Cost cost = new Cost();
@@ -29,8 +29,8 @@ public class Workshop extends ComplexActionCard {
         setName("Workshop");
     }
 
-    public Workshop(String id, Player player) {
-        this();
+    public Workshop(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

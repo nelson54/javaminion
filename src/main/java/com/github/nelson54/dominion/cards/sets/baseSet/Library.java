@@ -16,8 +16,8 @@ import java.util.Set;
 
 public class Library extends ComplexActionCard {
 
-    public Library() {
-        super();
+    public Library(Long id) {
+        super(id);
         byte moneyCost = 5;
 
         Cost cost = new Cost();
@@ -27,8 +27,8 @@ public class Library extends ComplexActionCard {
         setName("Library");
     }
 
-    public Library(String id, Player player) {
-        this();
+    public Library(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

@@ -9,12 +9,13 @@ import java.util.stream.Collectors;
 
 public abstract class ActionCard extends Card {
 
-    public ActionCard() {
+    public ActionCard(Long id) {
+        super(id);
         isKingdom = true;
         cardTypes.add(CardType.ACTION);
     }
 
-    public ActionCard(String id, Player player) {
+    public ActionCard(Long id, Player player) {
         super(id, player);
     }
 

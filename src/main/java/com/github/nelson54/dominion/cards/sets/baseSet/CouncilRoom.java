@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class CouncilRoom extends ActionCard {
 
-    public CouncilRoom() {
-        super();
+    public CouncilRoom(Long id) {
+        super(id);
         byte moneyCost = 5;
 
         Cost cost = new Cost();
@@ -22,8 +22,8 @@ public class CouncilRoom extends ActionCard {
         setName("Council Room");
     }
 
-    public CouncilRoom(String id, Player player) {
-        this();
+    public CouncilRoom(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }
@@ -33,7 +33,7 @@ public class CouncilRoom extends ActionCard {
         Turn turn = player.getCurrentTurn();
         player.drawXCards(4);
         turn.setBuyPool(turn.getBuyPool() + 1);
-        Map<String, Player> players = game.getPlayers();
+        Map<Long, Player> players = game.getPlayers();
 
         players
                 .keySet()

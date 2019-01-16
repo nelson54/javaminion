@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.types.TreasureCard;
@@ -10,12 +11,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Kingdom {
 
     @JsonProperty
     private Multimap<String, Card> cardMarket;
 
+    @JsonProperty
     private Map<String, Card> allCards;
 
     Collection<Card> getCardsByName(String name) {

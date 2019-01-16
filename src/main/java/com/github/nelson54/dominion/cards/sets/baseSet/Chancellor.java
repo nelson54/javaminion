@@ -11,8 +11,8 @@ import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
 
 public class Chancellor extends ComplexActionCard {
 
-    public Chancellor() {
-        super();
+    public Chancellor(Long id) {
+        super(id);
         byte moneyCost = 3;
 
         Cost cost = new Cost();
@@ -22,8 +22,8 @@ public class Chancellor extends ComplexActionCard {
         setName("Chancellor");
     }
 
-    public Chancellor(String id, Player player) {
-        this();
+    public Chancellor(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }

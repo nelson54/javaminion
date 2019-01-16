@@ -8,8 +8,8 @@ import com.github.nelson54.dominion.cards.Cost;
 
 public class CurseCard extends Card {
 
-    public CurseCard(String id, Player player) {
-        this();
+    public CurseCard(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }
@@ -17,8 +17,8 @@ public class CurseCard extends Card {
     byte moneyCost = 0;
     private byte victoryPoints = -1;
 
-    public CurseCard() {
-        super();
+    public CurseCard(Long id) {
+        super(id);
         getCardTypes().add(CardType.CURSE);
 
         byte moneyCost = 0;

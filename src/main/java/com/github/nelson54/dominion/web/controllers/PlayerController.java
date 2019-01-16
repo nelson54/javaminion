@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/dominion/{gameId}/{playerId}")
+@RequestMapping("/dominion/{gameId}")
 public class PlayerController {
 
     private MatchService matchService;
@@ -29,18 +29,16 @@ public class PlayerController {
 
     @RequestMapping("/shuffle")
     Game shuffle(
-            @ModelAttribute
-            Optional<Account> account,
             @PathVariable("gameId")
-            Long gameId,
-            @PathVariable("playerId")
-            String playerId
+            Long gameId
     ) {
         Game game = matchService.getGame(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        Account account = accountService.getAuthorizedAccount()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
-        Player player = game.getPlayers().get(playerId);
+        Player player = game.getPlayers().get(account.getId());
 
         player.shuffle();
 
@@ -52,17 +50,16 @@ public class PlayerController {
 
     @RequestMapping("/draw")
     Game drawHand(
-            @ModelAttribute
-            Optional<Account> account,
             @PathVariable("gameId")
-            Long gameId,
-            @PathVariable("playerId")
-            String playerId
+            Long gameId
     ) {
         Game game = matchService.getGame(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Player player = game.getPlayers().get(playerId);
+        Account account = accountService.getAuthorizedAccount()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
+        Player player = game.getPlayers().get(account.getId());
 
         player.drawHand();
 
@@ -73,17 +70,16 @@ public class PlayerController {
 
     @RequestMapping("/discard")
     Game discardHand(
-            @ModelAttribute
-            Optional<Account> account,
             @PathVariable("gameId")
-            Long gameId,
-            @PathVariable("playerId")
-            String playerId
+            Long gameId
     ) {
         Game game = matchService.getGame(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Player player = game.getPlayers().get(playerId);
+        Account account = accountService.getAuthorizedAccount()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
+        Player player = game.getPlayers().get(account.getId());
 
         player.discardHand();
 
@@ -95,19 +91,18 @@ public class PlayerController {
 
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
     Game purchase(
-            @ModelAttribute
-            Optional<Account> account,
             @PathVariable("gameId")
             Long gameId,
-            @PathVariable("playerId")
-            String playerId,
             @RequestBody
             Card card
     ) {
         Game game = matchService.getGame(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Player player = game.getPlayers().get(playerId);
+        Account account = accountService.getAuthorizedAccount()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
+        Player player = game.getPlayers().get(account.getId());
 
         game.getTurn().purchaseCardForPlayer(card, player);
 
@@ -120,19 +115,18 @@ public class PlayerController {
 
     @RequestMapping(value = "/play", method = RequestMethod.POST)
     Game play(
-            @ModelAttribute
-            Optional<Account> account,
             @PathVariable("gameId")
             Long gameId,
-            @PathVariable("playerId")
-            String playerId,
             @RequestBody
             Card card
     ) {
         Game game = matchService.getGame(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        Player player = game.getPlayers().get(playerId);
+        Account account = accountService.getAuthorizedAccount()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
+        Player player = game.getPlayers().get(account.getId());
 
         Card playing = player.getHand()
                 .stream()
@@ -154,20 +148,19 @@ public class PlayerController {
 
     @RequestMapping(value = "/choice", method = RequestMethod.POST)
     Game chooseCard(
-            @ModelAttribute
-            Optional<Account> account,
             @PathVariable("gameId")
             Long gameId,
-            @PathVariable("playerId")
-            String playerId,
             @RequestBody
             ChoiceResponse choiceResponse
     ) {
         Game game = matchService.getGame(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        Account account = accountService.getAuthorizedAccount()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
         Kingdom kingdom = game.getKingdom();
-        Player player = game.getPlayers().get(playerId);
+        Player player = game.getPlayers().get(account.getId());
         Turn turn = player.getCurrentTurn();
         choiceResponse.setSource(player);
 
@@ -200,8 +193,6 @@ public class PlayerController {
 
     @RequestMapping(value = "/next-phase", method = RequestMethod.POST)
     Game endPhase(
-            @ModelAttribute
-            Optional<Account> account,
             @PathVariable("gameId")
             Long gameId
     ) {

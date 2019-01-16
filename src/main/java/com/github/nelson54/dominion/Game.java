@@ -43,7 +43,7 @@ public class Game {
     Iterator<Player> turnerator;
 
     @JsonProperty
-    private Map<String, Player> players;
+    private Map<Long, Player> players;
 
     @JsonProperty
     private boolean gameOver;
@@ -166,11 +166,11 @@ public class Game {
         return id;
     }
 
-    public Map<String, Player> getPlayers() {
+    public Map<Long, Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(Map<String, Player> players) {
+    public void setPlayers(Map<Long, Player> players) {
         this.players = players;
     }
 

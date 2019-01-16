@@ -8,8 +8,8 @@ import com.github.nelson54.dominion.cards.Cost;
 
 public class Smithy extends ActionCard {
 
-    public Smithy() {
-        super();
+    public Smithy(Long id) {
+        super(id);
         byte moneyCost = 4;
 
         Cost cost = new Cost();
@@ -19,8 +19,8 @@ public class Smithy extends ActionCard {
         setName("Smithy");
     }
 
-    public Smithy(String id, Player player) {
-        this();
+    public Smithy(Long id, Player player) {
+        this(id);
         super.setId(id);
         super.setOwner(player);
     }
