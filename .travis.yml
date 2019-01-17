@@ -1,4 +1,4 @@
 language: java
-script: gradle testJava
+script: gradle test
 jdk:
   - openjdk11
