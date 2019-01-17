@@ -10,8 +10,6 @@ import java.time.LocalTime;
 public class PurchaseCommand extends Command {
     public Account account;
     public Card card;
-    public LocalDateTime time;
-    public CommandType type = CommandType.PURCHASE_COMMAND;
 
 
 }
