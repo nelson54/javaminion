@@ -1,0 +1,18 @@
+version: '3.1'
+services:
+  mongo:
+    image: mongo:3.6.9-stretch
+    command: --smallfiles
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: testing
+  app:
+    build:
+      context: ./
+    volumes:
+      - ./:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+

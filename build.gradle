@@ -23,8 +23,18 @@ apply plugin: 'com.palantir.docker-run'
 group = 'dominionweb'
 version = '1.0-SNAPSHOT'
 sourceCompatibility = '1.8'
-
 mainClassName = 'com.github.nelson54.dominion.web.Application'
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
 
 jar {
     baseName = 'gs-spring-boot-docker'
@@ -63,6 +73,9 @@ ext{
 }
 
 dependencies {
+    developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$spring"
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "$spring", {
@@ -102,12 +115,6 @@ dependencies {
     testCompile 'org.codehaus.groovy:groovy-all:2.4.1'
     testCompile 'org.easymock:easymock:4.0.2'
     compileOnly 'com.newrelic.agent.java:newrelic-agent:3.14.0'
-}
-
-configurations {
-    all {
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-    }
 }
 
 
