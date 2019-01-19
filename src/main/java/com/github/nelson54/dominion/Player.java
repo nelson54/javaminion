@@ -46,7 +46,7 @@ public class Player {
 
     @JsonProperty("name")
     public String getName() {
-        return account.getFirstname();
+        return account.getUser().getUsername();
     }
 
     public byte order;

@@ -7,19 +7,21 @@ import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.choices.OptionType;
+import com.github.nelson54.dominion.commands.Command;
+import com.github.nelson54.dominion.commands.CommandType;
 import com.github.nelson54.dominion.services.AccountService;
 import com.github.nelson54.dominion.services.MatchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/dominion")
 public class GameController {
-
 
     private AccountService accountService;
     private MatchService matchService;
@@ -96,9 +98,18 @@ public class GameController {
 
         Account account = getAccount();
 
-        Player player = game.getPlayers().get(account.getId());
+        //game.getTurn().purchaseCardForPlayer(card, player);
 
-        game.getTurn().purchaseCardForPlayer(card, player);
+        Command command = new Command();
+        command.accountId = account.getId();
+        command.gameId = gameId;
+        command.cardId = card.getId();
+        command.time = LocalDateTime.now();
+        command.type = CommandType.PURCHASE_COMMAND;
+
+        matchService.applyCommand(game, command);
+
+
 
         return game;
     }

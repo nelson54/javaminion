@@ -12,15 +12,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
-@Configuration
+@EnableWebMvc
+
 @ComponentScan({"com.github.nelson54.dominion.web", "com.github.nelson54.dominion.services"})
 @EntityScan("com.github.nelson54.dominion.persistence.entities")
+
 @EnableJpaRepositories("com.github.nelson54.dominion.persistence")
-@EnableWebMvc
+@EnableMongoRepositories("com.github.nelson54.dominion.commands")
+
+@Configuration
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) throws Exception {

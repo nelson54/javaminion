@@ -125,7 +125,9 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.purchase = function(card){
-      let Purchase = $resource(baseUrl+'/dominion/:gameId/:playerId/purchase');
+      let Purchase = $resource(baseUrl+'/dominion/:gameId/:playerId/purchase',
+        {},
+        {get: {headers: {'Authorization': jwtService.getBearer()}}});
 
       let purchase = new Purchase(card);
 
@@ -133,7 +135,9 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.playCard = function(card){
-      let Play = $resource(baseUrl+'/dominion/:gameId/:playerId/play');
+      let Play = $resource(baseUrl+'/dominion/:gameId/:playerId/play',
+        {},
+        {get: {headers: {'Authorization': jwtService.getBearer()}}});
 
       let play = new Play(card);
 
@@ -141,7 +145,9 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.nextPhase = function(card){
-      let EndPhase = $resource(baseUrl+'/dominion/:gameId/next-phase');
+      let EndPhase = $resource(baseUrl+'/dominion/:gameId/next-phase',
+        {},
+        {get: {headers: {'Authorization': jwtService.getBearer()}}});
 
       let endPhase = new EndPhase(card);
 
@@ -159,7 +165,9 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.choose = function(game, player, choose, response){
-      let Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice');
+      let Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice',
+        {},
+        {get: {headers: {'Authorization': jwtService.getBearer()}}});
 
       var choice = new Choice();
 
@@ -178,7 +186,9 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.chooseDone = function(game, player, choose){
-      let Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice');
+      let Choice = $resource(baseUrl+'/dominion/:gameId/:playerId/choice',
+        {},
+        {get: {headers: {'Authorization': jwtService.getBearer()}}});
 
       let choice = new Choice();
       choice.targetChoice = choose.id;

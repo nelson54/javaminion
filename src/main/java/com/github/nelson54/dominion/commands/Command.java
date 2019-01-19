@@ -7,8 +7,13 @@ public class Command {
 
     @Id
     public String id;
+    public Long accountId;
     public Long gameId;
     public Long cardId;
     public LocalDateTime time;
     public CommandType type = CommandType.PURCHASE_COMMAND;
+
+    public String getId() {
+        return id;
+    }
 }

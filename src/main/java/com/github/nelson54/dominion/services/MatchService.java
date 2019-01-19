@@ -3,13 +3,13 @@ package com.github.nelson54.dominion.services;
 import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.GameFactory;
+import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.persistence.MatchRepository;
 import com.github.nelson54.dominion.persistence.entities.match.MatchEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,8 +20,10 @@ public class MatchService {
 
     private MatchRepository matchRepository;
     private GameFactory gameFactory;
+    private CommandService commandService;
 
-    public MatchService(MatchRepository matchRepository, GameFactory gameFactory) {
+    public MatchService(MatchRepository matchRepository, GameFactory gameFactory, CommandService commandService) {
+        this.commandService = commandService;
         this.matchRepository = matchRepository;
         this.gameFactory = gameFactory;
     }
@@ -33,12 +35,24 @@ public class MatchService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Game> getGame(Long matchId){
+    public Optional<Game> getGame(Long matchId) {
 
         return matchRepository
                 .findById(matchId)
                 .map(MatchEntity::toMatch)
-                .map(match -> gameFactory.createGame(match));
+                .map(match -> gameFactory.createGame(match))
+                .map(this::applyCommands);
+    }
+
+    public Game applyCommands(Game game) {
+        commandService.findCommandsForGame(game)
+                .forEach(command -> applyCommand(game, command));
+
+        return game;
+    }
+
+    public Game applyCommand(Game game, Command command) {
+        return commandService.applyCommand(game, command);
     }
 
     public Match createMatch(Match match) {

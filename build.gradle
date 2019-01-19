@@ -47,7 +47,7 @@ test {
 
 
 bootRun {
-    jvmArgs = ["-Xms256m", "-Xmx2048m", "--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED"]
+    jvmArgs = ["-Xms256m", "-Xmx2048m", "--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED",  "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]
 }
 
 docker {
