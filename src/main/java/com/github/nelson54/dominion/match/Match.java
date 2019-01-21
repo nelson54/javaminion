@@ -1,7 +1,6 @@
 package com.github.nelson54.dominion.match;
 
 import com.github.nelson54.dominion.Account;
-import com.github.nelson54.dominion.services.AiPlayerService;
 import com.github.nelson54.dominion.cards.GameCardSet;
 
 import java.util.*;
@@ -16,6 +15,13 @@ public class Match {
     private GameCardSet cards;
 
     public Match(Integer playerCount, GameCardSet cards) {
+        this.seed = new Random().nextLong();
+        this.participants = new ArrayList<>();
+        this.playerCount = playerCount;
+        this.cards = cards;
+    }
+
+    public Match(Integer playerCount, Long seed, GameCardSet cards) {
         this.seed = new Random().nextLong();
         this.participants = new ArrayList<>();
         this.playerCount = playerCount;

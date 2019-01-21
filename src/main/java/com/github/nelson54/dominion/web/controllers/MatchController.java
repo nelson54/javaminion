@@ -5,8 +5,6 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.cards.GameCardSet;
-import com.github.nelson54.dominion.cards.GameCards;
-import com.github.nelson54.dominion.exceptions.InvalidCardSetName;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.match.MatchProvider;
@@ -68,17 +66,11 @@ public class MatchController {
 
     @PostMapping(value = "/matches")
     @ResponseStatus(HttpStatus.CREATED)
-    Match createMatch(@RequestBody MatchDto matchDto) {
+    MatchDto createMatch(@RequestBody MatchDto matchDto) {
 
         Integer totalPlayers = (matchDto.getNumberOfAiPlayers() + matchDto.getNumberOfHumanPlayers());
 
-        GameCardSet gameCardSet;
-        GameCards gameCards = GameCards.ofName(matchDto.getCards());
-        if(gameCards != null) {
-            gameCardSet = gameCards.getGameCardSet();
-        } else {
-            throw new InvalidCardSetName();
-        }
+        GameCardSet gameCardSet = GameCardSet.byName(matchDto.getCards());
 
         Match match = new Match(totalPlayers, gameCardSet);
         Account account = getAccount()
@@ -99,7 +91,11 @@ public class MatchController {
             match.setMatchState(MatchState.WAITING_FOR_PLAYERS);
         }
 
-        return matchService.createMatch(match);
+        match = matchService.createMatch(match);
+
+        matchDto.setId(match.getId());
+
+        return matchDto;
     }
 
     @PatchMapping(value="/matches")

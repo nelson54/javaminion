@@ -13,13 +13,13 @@ public class GameFactory {
     private KingdomFactory kingdomFactory;
 
     public Game createGame(Match match) {
-        Game game = new Game(match.getSeed());
+        Game game = new Game(match.getId(), match.getSeed());
         try {
             game.setPlayers(new HashMap<>());
             game.setTurnOrder(new LinkedHashSet<>());
 
 
-                game.setKingdom(kingdomFactory.getKingdomFromCards(new Random(match.getSeed()), match.getCards().getCardClasses(), match.getPlayerCount()));
+            game.setKingdom(kingdomFactory.getKingdomFromCards(new Random(match.getSeed()), match.getCards().getCardClasses(), match.getPlayerCount()));
 
 
             addPlayers(match.getParticipants(), game);

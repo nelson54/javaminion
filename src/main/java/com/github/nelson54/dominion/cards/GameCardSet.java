@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.cards.types.Card;
+import com.github.nelson54.dominion.exceptions.InvalidCardSetName;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,6 +27,18 @@ public class GameCardSet {
 
     public Set<CardTypeReference> getCards() {
         return cards;
+    }
+
+    public static GameCardSet byName(String name) {
+        GameCardSet gameCardSet;
+        GameCards gameCards = GameCards.ofName(name);
+        if(gameCards != null) {
+            gameCardSet = gameCards.getGameCardSet();
+        } else {
+            throw new InvalidCardSetName();
+        }
+
+        return gameCardSet;
     }
 
     public Set<Class<? extends Card>> getCardClasses() {

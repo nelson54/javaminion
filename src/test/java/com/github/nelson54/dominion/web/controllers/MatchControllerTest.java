@@ -5,12 +5,13 @@ import com.github.nelson54.dominion.web.Application;
 import com.github.nelson54.dominion.web.dto.AccountCredentialsDto;
 import com.github.nelson54.dominion.web.dto.AuthenticationDto;
 import com.github.nelson54.dominion.web.dto.MatchDto;
+import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -24,84 +25,50 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class MatchControllerTest {
-
-    @Autowired
-    private ObjectMapper mapper;
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private AccountController accountController;
+    private ObjectMapper objectMapper;
 
     @Test
-    void createMatch() throws Exception {
+    void test1_authorize() throws Exception {
         AccountCredentialsDto accountCredentialsDto = new AccountCredentialsDto();
         accountCredentialsDto.setUsername("bob");
         accountCredentialsDto.setPassword("testing");
 
         MvcResult authResult = this.mockMvc.perform(post("/api/authentication")
                 .contentType(APPLICATION_JSON_UTF8)
-                .content(mapper.writeValueAsBytes(accountCredentialsDto))
+                .content(objectMapper.writeValueAsBytes(accountCredentialsDto))
         ).andReturn();
 
         byte[] resultBody = authResult.getResponse().getContentAsByteArray();
 
-        AuthenticationDto auth = mapper.readValue(resultBody, AuthenticationDto.class);
+        AuthenticationDto auth = objectMapper.readValue(resultBody, AuthenticationDto.class);
+
+        String authorization = "Bearer " + auth.getToken();
 
         MatchDto matchDto = new MatchDto();
-
         matchDto.setCount(2);
         matchDto.setNumberOfHumanPlayers(1);
         matchDto.setNumberOfAiPlayers(1);
         matchDto.setCards("First Game");
 
-        this.mockMvc.perform(post("/dominion/matches")
-                .header("Authorization", "Bearer " + auth.getToken())
+        MvcResult  mvcResult = this.mockMvc.perform(post("/dominion/matches")
+                .header("Authorization", authorization)
                 .contentType(APPLICATION_JSON_UTF8)
-                .content(mapper.writeValueAsBytes(matchDto))
+                .content(objectMapper.writeValueAsBytes(matchDto))
         ).andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(content().string(containsString("\"playerCount\":2")));
+                .andExpect(content().string(containsString("\"playerCount\":2")))
+                .andReturn();
 
+        byte[] matchResponse = mvcResult.getResponse().getContentAsByteArray();
 
-                //.andExpect(content().string(containsString("\"username\":\"bill\"")));
-    }
-
-    @Test
-    void createAndJoinMatch() throws Exception {
-        AccountCredentialsDto accountCredentialsDto = new AccountCredentialsDto();
-        accountCredentialsDto.setUsername("bob");
-        accountCredentialsDto.setPassword("testing");
-
-        MvcResult authResult = this.mockMvc.perform(post("/api/authentication")
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(mapper.writeValueAsBytes(accountCredentialsDto))
-        ).andReturn();
-
-        byte[] resultBody = authResult.getResponse().getContentAsByteArray();
-
-        AuthenticationDto auth = mapper.readValue(resultBody, AuthenticationDto.class);
-
-        MatchDto matchDto = new MatchDto();
-
-        matchDto.setCount(2);
-        matchDto.setNumberOfHumanPlayers(1);
-        matchDto.setNumberOfAiPlayers(1);
-        matchDto.setCards("First Game");
-
-        this.mockMvc.perform(post("/dominion/matches")
-                .header("Authorization", "Bearer " + auth.getToken())
-                .contentType(APPLICATION_JSON_UTF8)
-                .content(mapper.writeValueAsBytes(matchDto))
-        ).andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(content().string(containsString("\"playerCount\":2")));
-
-
-        //.andExpect(content().string(containsString("\"username\":\"bill\"")));
+        matchDto = objectMapper.readValue(matchResponse, MatchDto.class);
     }
 }

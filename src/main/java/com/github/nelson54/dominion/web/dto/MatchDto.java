@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.web.dto;
 
 public class MatchDto {
+    private Long id;
     private Integer numberOfHumanPlayers;
     private Integer numberOfAiPlayers;
     private Integer count;
@@ -8,6 +9,10 @@ public class MatchDto {
 
 
     public MatchDto() {
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getNumberOfHumanPlayers() {
@@ -40,5 +45,9 @@ public class MatchDto {
 
     public void setCards(String cards) {
         this.cards = cards;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
