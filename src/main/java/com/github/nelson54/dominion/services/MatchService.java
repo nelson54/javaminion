@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.services;
 
 import com.github.nelson54.dominion.Account;
+import com.github.nelson54.dominion.AiPlayer;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.commands.Command;
@@ -41,6 +42,7 @@ public class MatchService {
                 .findById(matchId)
                 .map(MatchEntity::toMatch)
                 .map(match -> gameFactory.createGame(match))
+                .map(this::addCommandServiceToAiPlayers)
                 .map(this::applyCommands);
     }
 
@@ -82,5 +84,15 @@ public class MatchService {
 
     private Match save(Match match) {
         return match;
+    }
+
+    private Game addCommandServiceToAiPlayers(Game game) {
+        game.getPlayers().values().stream().forEach(player -> {
+            if (player.getAccount().getAi()) {
+                ((AiPlayer)player).setCommandService(commandService);
+            }
+        });
+
+        return game;
     }
 }

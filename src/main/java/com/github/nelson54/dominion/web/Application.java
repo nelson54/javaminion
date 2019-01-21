@@ -4,6 +4,7 @@ import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.KingdomFactory;
 import com.github.nelson54.dominion.match.MatchProvider;
+import com.github.nelson54.dominion.services.CommandService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -19,7 +20,13 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @SpringBootApplication
 @EnableWebMvc
 
-@ComponentScan({"com.github.nelson54.dominion.web", "com.github.nelson54.dominion.services"})
+@ComponentScan({
+        "com.github.nelson54.dominion",
+        "com.github.nelson54.dominion.web",
+        "com.github.nelson54.dominion.services",
+        "com.github.nelson54.dominion.ai"
+})
+
 @EntityScan("com.github.nelson54.dominion.persistence.entities")
 
 @EnableJpaRepositories("com.github.nelson54.dominion.persistence")
@@ -33,11 +40,10 @@ public class Application extends SpringBootServletInitializer {
     }
 
     @Bean
-    GameFactory getGameFactory() {
-        GameFactory gameFactory = new GameFactory();
-        KingdomFactory kingdomFactory = new KingdomFactory();
-        gameFactory.setKingdomFactory(kingdomFactory);
-        return gameFactory;
+    GameFactory getGameFactory(KingdomFactory kingdomFactory, CommandService commandService) {
+
+        return new GameFactory(kingdomFactory, commandService);
+
     }
 
     @Bean

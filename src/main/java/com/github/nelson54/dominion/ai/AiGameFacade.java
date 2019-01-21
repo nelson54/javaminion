@@ -6,6 +6,7 @@ import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
+import com.github.nelson54.dominion.services.CommandService;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -13,14 +14,15 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
 
-@Component
 public class AiGameFacade {
 
+    private CommandService commandService;
     private Game game;
     private Player player;
     private Turn turn;
 
-    public AiGameFacade (Game game, Turn turn, Player player){
+    public AiGameFacade (CommandService commandService, Game game, Turn turn, Player player){
+        this.commandService = commandService;
         this.game = game;
         this.player = player;
         this.turn = turn;
@@ -63,6 +65,7 @@ public class AiGameFacade {
     }
 
     public void play(ActionCard card){
+
         turn.playCard(card, player, game);
     }
 

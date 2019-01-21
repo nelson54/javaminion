@@ -4,13 +4,21 @@ import com.github.nelson54.dominion.ai.AiStrategies;
 import com.github.nelson54.dominion.ai.AiStrategy;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
+import com.github.nelson54.dominion.services.CommandService;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Stream;
 
-
+@Component
 public class GameFactory {
-
     private KingdomFactory kingdomFactory;
+    private CommandService commandService;
+
+    public GameFactory(KingdomFactory kingdomFactory, CommandService commandService) {
+        this.kingdomFactory = kingdomFactory;
+        this.commandService = commandService;
+    }
 
     public Game createGame(Match match) {
         Game game = new Game(match.getId(), match.getSeed());
@@ -18,9 +26,8 @@ public class GameFactory {
             game.setPlayers(new HashMap<>());
             game.setTurnOrder(new LinkedHashSet<>());
 
-
-            game.setKingdom(kingdomFactory.getKingdomFromCards(new Random(match.getSeed()), match.getCards().getCardClasses(), match.getPlayerCount()));
-
+            Kingdom kingdom = kingdomFactory.getKingdomFromCards(new Random(match.getSeed()), match.getCards().getCardClasses(), match.getPlayerCount());
+            game.setKingdom(kingdom);
 
             addPlayers(match.getParticipants(), game);
             game.nextPlayer();
@@ -80,26 +87,13 @@ public class GameFactory {
     private Player createAiPlayer(Game game, Account account, AiStrategy aiStrategy, Kingdom kingdom) {
 
         AiPlayer player = new AiPlayer(account);
+        player.setCommandService(commandService);
         player.setAiStrategy(aiStrategy);
         return getPlayer(game, player);
     }
 
     private void addStartingCardsToPlayer(Player player, Game game) {
-
-        game.giveCardToPlayer("Estate", player);
-        game.giveCardToPlayer("Estate", player);
-        game.giveCardToPlayer("Estate", player);
-        game.giveCardToPlayer("Copper", player);
-        game.giveCardToPlayer("Copper", player);
-        game.giveCardToPlayer("Copper", player);
-        game.giveCardToPlayer("Copper", player);
-        game.giveCardToPlayer("Copper", player);
-        game.giveCardToPlayer("Copper", player);
-        game.giveCardToPlayer("Copper", player);
-
-    }
-
-    public void setKingdomFactory(KingdomFactory kingdomFactory) {
-        this.kingdomFactory = kingdomFactory;
+        Stream.of("Estate", "Estate", "Estate", "Copper", "Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
+                .forEach(name -> game.giveCardToPlayer(name, player));
     }
 }

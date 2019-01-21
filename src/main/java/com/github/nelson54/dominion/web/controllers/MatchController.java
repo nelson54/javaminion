@@ -14,6 +14,7 @@ import com.github.nelson54.dominion.persistence.GameRepository;
 import com.github.nelson54.dominion.persistence.entities.GameEntity;
 import com.github.nelson54.dominion.services.AccountService;
 import com.github.nelson54.dominion.services.AiPlayerService;
+import com.github.nelson54.dominion.services.CommandService;
 import com.github.nelson54.dominion.services.MatchService;
 import com.github.nelson54.dominion.web.dto.MatchDto;
 import org.springframework.data.domain.Page;
@@ -42,11 +43,14 @@ public class MatchController {
 
     private final GameFactory gameFactory;
 
+    private final CommandService commandService;
+
     private final AccountService accountService;
     private final AiPlayerService aiPlayerService;
     private MatchService matchService;
 
-    public MatchController(AiPlayerService aiPlayerService, MatchService matchService, AccountService accountService, AccountRepository accountRepository, GameProvider gameProvider, GameFactory gameFactory, MatchProvider matchProvider) {
+    public MatchController(CommandService commandService, AiPlayerService aiPlayerService, MatchService matchService, AccountService accountService, AccountRepository accountRepository, GameProvider gameProvider, GameFactory gameFactory, MatchProvider matchProvider) {
+        this.commandService = commandService;
         this.aiPlayerService = aiPlayerService;
         this.accountService = accountService;
         this.accountRepository = accountRepository;

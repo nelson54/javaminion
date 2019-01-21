@@ -1,11 +1,13 @@
 package com.github.nelson54.dominion.services;
 
 import com.github.nelson54.dominion.Game;
+import com.github.nelson54.dominion.Kingdom;
 import com.github.nelson54.dominion.cards.GameCardSet;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.web.Application;
 import com.github.nelson54.dominion.web.dto.RegistrationDto;
+import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +15,8 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -57,6 +61,16 @@ class MatchServiceTest {
 
         match = matchService.createMatch(match);
 
-        Game game = matchService.getGame(match.getId()).get();
+        Long matchId = match.getId();
+
+        Game game1 = matchService.getGame(matchId).get();
+
+        Game game2 = matchService.getGame(matchId).get();
+
+        Set<Long> cardIds1 = game1.getAllCards().keySet();
+
+        Set<Long> cardIds2 = game2.getAllCards().keySet();
+
+        Assert.assertEquals(cardIds1, cardIds2);
     }
 }

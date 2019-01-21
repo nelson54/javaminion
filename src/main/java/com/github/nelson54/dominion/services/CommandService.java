@@ -37,9 +37,9 @@ public class CommandService {
         Card card = game.getAllCards().get(command.cardId);
         Player player = game.getPlayers().get(command.accountId);
 
-        if(command.type.equals(CommandType.PLAY_COMMAND)) {
+        if(command.type.equals(CommandType.ACTION_COMMAND)) {
             turn.playCard((ActionCard) card, player, game);
-        } else if(command.type.equals(CommandType.PURCHASE_COMMAND)) {
+        } else if(command.type.equals(CommandType.BUY_COMMAND)) {
             turn.purchaseCardForPlayer(card, player);
         }
 

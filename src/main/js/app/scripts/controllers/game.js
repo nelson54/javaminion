@@ -125,7 +125,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.purchase = function(card){
-      let Purchase = $resource(baseUrl+'/dominion/:gameId/:playerId/purchase',
+      let Purchase = $resource(baseUrl+'/dominion/:gameId/purchase',
         {},
         {get: {headers: {'Authorization': jwtService.getBearer()}}});
 
@@ -135,7 +135,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.playCard = function(card){
-      let Play = $resource(baseUrl+'/dominion/:gameId/:playerId/play',
+      let Play = $resource(baseUrl+'/dominion/:gameId/play',
         {},
         {get: {headers: {'Authorization': jwtService.getBearer()}}});
 

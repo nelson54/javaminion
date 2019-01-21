@@ -62,7 +62,6 @@ public class MatchEntity {
 
         players.stream().map((playerAccount)->{
             if(playerAccount.isAi()) {
-
                 return MatchParticipant.createAi();
             }
             return new MatchParticipant(playerAccount.asAccount());

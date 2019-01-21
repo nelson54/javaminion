@@ -4,13 +4,15 @@ import com.github.nelson54.dominion.cards.sets.baseSet.*;
 import com.github.nelson54.dominion.cards.base.*;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.google.common.collect.ArrayListMultimap;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 
-
+@Service
 public class KingdomFactory {
 
     public Kingdom getKingdom(Long seed) throws IllegalAccessException, InstantiationException {

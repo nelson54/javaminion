@@ -100,12 +100,8 @@ public class GameController {
 
         //game.getTurn().purchaseCardForPlayer(card, player);
 
-        Command command = new Command();
-        command.accountId = account.getId();
-        command.gameId = gameId;
-        command.cardId = card.getId();
-        command.time = LocalDateTime.now();
-        command.type = CommandType.PURCHASE_COMMAND;
+        Command command = Command.buy(game, game.getPlayers().get(account.getId()), card);
+
 
         matchService.applyCommand(game, command);
 
