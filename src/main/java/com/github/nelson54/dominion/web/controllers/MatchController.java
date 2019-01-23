@@ -104,11 +104,13 @@ public class MatchController {
 
     @PatchMapping(value="/matches")
     void join(@RequestParam Long matchId) throws InstantiationException, IllegalAccessException {
-        Match match = matchProvider.getMatchById(matchId);
+        Match match = matchService.getMatch(matchId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         Account account = getAccount()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
+        matchService.addPlayerAccount(match, account);
         match.addParticipant(new MatchParticipant(account));
 
         createGameIfReady(match);

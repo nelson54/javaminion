@@ -4,7 +4,6 @@ import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.AiPlayer;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.GameFactory;
-import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
@@ -50,6 +49,12 @@ public class MatchService {
                 .map(this::applyCommands);
     }
 
+    public Optional<Match> getMatch(Long matchId) {
+        return matchRepository
+                .findById(matchId)
+                .map(MatchEntity::toMatch);
+    }
+
     private Game applyCommands(Game game) {
         commandService.findCommandsForGame(game)
                 .forEach(command -> applyCommand(game, command));
@@ -69,7 +74,7 @@ public class MatchService {
     public void addPlayerAccount(Match match, Account account) {
         MatchParticipant matchParticipant = new MatchParticipant(account);
         match.addParticipant(matchParticipant);
-
+        matchRepository.save(MatchEntity.ofMatch(match));
     }
 
     public void addAiPlayerAccount(Match match) {
@@ -92,7 +97,6 @@ public class MatchService {
 
 
     private Game addCommandServiceToAiPlayers(Game game) {
-        logger.info("All cards found: " + game.getAllCards().values().stream().map(Card::getId).collect(Collectors.toList()));
         game.getPlayers().values().stream().forEach(player -> {
             if (player.getAccount().getAi()) {
                 ((AiPlayer)player).setCommandService(commandService);
