@@ -18,6 +18,15 @@ public class Command {
     public LocalDateTime time;
     public CommandType type;
 
+    public Command(){}
+
+    public Command(Game game, Player account, CommandType commandType) {
+        this.gameId = game.getId();
+        this.accountId = account.getId();
+        this.type = commandType;
+        this.time = LocalDateTime.now();
+    }
+
     public Command(Game game, Player account, Card card, CommandType commandType) {
         this.gameId = game.getId();
         this.accountId = account.getId();
@@ -32,6 +41,14 @@ public class Command {
 
     public static Command action(Game game, Player account, Card card) {
         return new Command(game, account, card, CommandType.ACTION_COMMAND);
+    }
+
+    public static Command endPhase(Game game, Player player) {
+        return new Command(game, player, CommandType.END_PHASE);
+    }
+
+    public static Command endTurn(Game game, Player player) {
+        return new Command(game, player, CommandType.END_TURN);
     }
 
     public String getId() {

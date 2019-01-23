@@ -4,13 +4,16 @@ import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.AiPlayer;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.GameFactory;
+import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.persistence.MatchRepository;
 import com.github.nelson54.dominion.persistence.entities.match.MatchEntity;
+import org.jboss.logging.Logger;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,7 +21,7 @@ import java.util.stream.StreamSupport;
 
 @Component
 public class MatchService {
-
+    private static final Logger logger = Logger.getLogger(MatchService.class);
     private MatchRepository matchRepository;
     private GameFactory gameFactory;
     private CommandService commandService;
@@ -36,6 +39,7 @@ public class MatchService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Optional<Game> getGame(Long matchId) {
 
         return matchRepository
@@ -46,7 +50,7 @@ public class MatchService {
                 .map(this::applyCommands);
     }
 
-    public Game applyCommands(Game game) {
+    private Game applyCommands(Game game) {
         commandService.findCommandsForGame(game)
                 .forEach(command -> applyCommand(game, command));
 
@@ -86,7 +90,9 @@ public class MatchService {
         return match;
     }
 
+
     private Game addCommandServiceToAiPlayers(Game game) {
+        logger.info("All cards found: " + game.getAllCards().values().stream().map(Card::getId).collect(Collectors.toList()));
         game.getPlayers().values().stream().forEach(player -> {
             if (player.getAccount().getAi()) {
                 ((AiPlayer)player).setCommandService(commandService);

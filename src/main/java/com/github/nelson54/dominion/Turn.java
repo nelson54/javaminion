@@ -165,7 +165,7 @@ public class Turn {
     }
 
     @JsonProperty("money")
-    Integer getMoney() {
+    public Integer getMoney() {
         return (int) Cards.ofType(player.getHand(), TreasureCard.class)
                 .stream()
                 .map(card -> (TreasureCard) card)

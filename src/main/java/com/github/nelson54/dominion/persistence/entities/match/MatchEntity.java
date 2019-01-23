@@ -7,9 +7,7 @@ import com.github.nelson54.dominion.match.MatchState;
 import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -58,14 +56,21 @@ public class MatchEntity {
                 .map(CardTypeReferenceEntity::asCardTypeReference)
                 .collect(Collectors.toList()));
 
+        Map<Long, AccountEntity> accounts = new HashMap<>();
+
         Match match = new Match(id, seed, state, playerCount, cardSet);
 
-        players.stream().map((playerAccount)->{
-            if(playerAccount.isAi()) {
-                return MatchParticipant.createAi();
-            }
-            return new MatchParticipant(playerAccount.asAccount());
-        }).forEachOrdered(match::addParticipant);
+        players.forEach((playerAccount)-> accounts.put(playerAccount.getId(), playerAccount));
+
+        Arrays.asList(turnOrder.split(",")).stream()
+                .map(Long::valueOf)
+                .map(accounts::get)
+                .map((playerAccount) -> {
+                    if(playerAccount.isAi()) {
+                        return MatchParticipant.createAi();
+                    }
+                    return new MatchParticipant(playerAccount.asAccount());
+                }).forEachOrdered(match::addParticipant);
 
         return match;
     }

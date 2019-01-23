@@ -47,8 +47,8 @@ public class Match {
 
 
 
-    public Set<MatchParticipant> getParticipants() {
-        return new HashSet<>(this.participants);
+    public List<MatchParticipant> getParticipants() {
+        return this.participants;
     }
 
     public List<Long> getTurnOrder(){

@@ -25,7 +25,6 @@ public class CommandService {
     public List<Command> findCommandsForGame(Game game) {
         return this.commandRepository.findByGameIdOrderByTimeAsc(game.getId())
                 .orElse(new ArrayList<>());
-
     }
 
     public Command save(Command command) {
@@ -41,6 +40,10 @@ public class CommandService {
             turn.playCard((ActionCard) card, player, game);
         } else if(command.type.equals(CommandType.BUY_COMMAND)) {
             turn.purchaseCardForPlayer(card, player);
+        } else if(command.type.equals(CommandType.END_PHASE)) {
+            turn.endPhase();
+        } else if(command.type.equals(CommandType.END_TURN)) {
+
         }
 
         if(command.getId() == null) {
@@ -48,5 +51,9 @@ public class CommandService {
         }
 
         return game;
+    }
+
+    public void deleteAll() {
+        commandRepository.deleteAll();
     }
 }
