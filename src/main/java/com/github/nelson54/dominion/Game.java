@@ -2,6 +2,9 @@ package com.github.nelson54.dominion;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.google.common.collect.Multimap;
@@ -22,6 +25,8 @@ public class Game {
     private List<String> logs;
 
     @JsonProperty
+    @JsonSerialize(using= ToStringSerializer.class)
+    @JsonDeserialize(as = Long.class)
     private Long id;
 
     @JsonIgnore

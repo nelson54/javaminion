@@ -43,11 +43,8 @@ public class GameController {
     @RequestMapping("/{gameId}/shuffle")
     Game shuffle(@PathVariable("gameId") Long gameId) {
         Game game = getGame(gameId);
-
         Account account = getAccount();
-
         Player player = game.getPlayers().get(account.getId());
-
         player.shuffle();
 
         return game;
@@ -59,11 +56,8 @@ public class GameController {
                     Long gameId
     ) {
         Game game = getGame(gameId);
-
         Account account = getAccount();
-
         Player player = game.getPlayers().get(account.getId());
-
         player.drawHand();
 
         return game;
@@ -75,11 +69,8 @@ public class GameController {
                     Long gameId
     ) {
         Game game = getGame(gameId);
-
         Account account = getAccount();
-
         Player player = game.getPlayers().get(account.getId());
-
         player.discardHand();
 
         return game;
@@ -93,13 +84,11 @@ public class GameController {
             Card card
     ) {
         Game game = getGame(gameId);
-
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
-        Card purchasedCard = game.getKingdom().getCardMarket().get(card.getName()).stream().findFirst().get();
-        Command command = Command.buy(game, player, purchasedCard);
+        Card purchasedCard = game.getAllCards().get(card.getId());
 
-        matchService.applyCommand(game, command);
+        matchService.applyCommand(game, Command.buy(game, player, purchasedCard));
 
         return game;
     }
@@ -112,19 +101,12 @@ public class GameController {
                     Card card
     ) {
         Game game = getGame(gameId);
-
         Account account = getAccount();
-
         Player player = game.getPlayers().get(account.getId());
-
-        Card playing = player.getHand()
-                .stream()
-                .filter(handCard -> handCard.getId().equals(card.getId()))
-                .findFirst()
-                .get();
+        Card playing = game.getAllCards().get(card.getId());
 
         if (playing instanceof ActionCard) {
-            game.getTurn().playCard((ActionCard) playing, player, game);
+            matchService.applyCommand(game, Command.action(game, player, playing));
         } else {
             throw new IllegalStateException();
         }

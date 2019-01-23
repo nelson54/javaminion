@@ -2,6 +2,9 @@ package com.github.nelson54.dominion.cards.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.CardType;
 import com.github.nelson54.dominion.cards.Cost;
@@ -16,20 +19,24 @@ public class Card {
 
     @JsonProperty
     boolean isKingdom;
+
     @JsonProperty
     Set<CardType> cardTypes;
+
     @JsonProperty
-    private
-    Long id;
+    @JsonSerialize(using= ToStringSerializer.class)
+    @JsonDeserialize(as = Long.class)
+    private Long id;
+
     @JsonIgnore
-    private
-    Player owner;
+    private Player owner;
+
     @JsonProperty
-    private
-    String name;
+    private String name;
+
     @JsonProperty
-    private
-    Cost cost;
+    private Cost cost;
+
     @JsonProperty
     int kingdomSortOrder = 0;
 

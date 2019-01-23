@@ -44,7 +44,7 @@ public class MatchService {
         return matchRepository
                 .findById(matchId)
                 .map(MatchEntity::toMatch)
-                .map(match -> gameFactory.createGame(match))
+                .map(gameFactory::createGame)
                 .map(this::applyCommands);
     }
 
@@ -55,7 +55,8 @@ public class MatchService {
     }
 
     private Game applyCommands(Game game) {
-        commandService.findCommandsForGame(game)
+        commandService
+                .findCommandsForGame(game)
                 .forEach(command -> applyCommand(game, command));
 
         return game;
