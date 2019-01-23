@@ -4,5 +4,6 @@ public enum CommandType {
     ACTION_COMMAND,
     BUY_COMMAND,
     END_PHASE,
-    END_TURN
+    END_TURN,
+    CHOICE_RESPONSE
 }

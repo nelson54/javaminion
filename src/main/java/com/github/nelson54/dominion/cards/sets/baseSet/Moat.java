@@ -59,7 +59,7 @@ public class Moat extends ActionReactionCard {
         }
     }
 
-    private Choice getRevealChoice (Effect effect) {
+    private Choice getRevealChoice(Effect effect) {
         Choice choice = new Choice(effect.getTarget(), effect.getSource(), Reaction.from(effect));
         choice.setMessage(
                 "Would you like to reveal Moat to prevent the effect of "

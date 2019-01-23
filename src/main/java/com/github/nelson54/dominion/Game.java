@@ -30,7 +30,7 @@ public class Game {
     private Long id;
 
     @JsonIgnore
-    RandomSeed seed;
+    public RandomSeed seed;
 
     @JsonProperty
     private Kingdom kingdom;

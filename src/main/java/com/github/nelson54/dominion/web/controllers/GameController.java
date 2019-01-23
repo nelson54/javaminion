@@ -117,40 +117,15 @@ public class GameController {
     @RequestMapping(value = "/{gameId}/choice", method = RequestMethod.POST)
     Game chooseCard(
             @PathVariable("gameId")
-                    Long gameId,
+            Long gameId,
             @RequestBody
-                    ChoiceResponse choiceResponse
+            ChoiceResponse choiceResponse
     ) {
         Game game = getGame(gameId);
-
         Account account = getAccount();
-
-        Kingdom kingdom = game.getKingdom();
         Player player = game.getPlayers().get(account.getId());
-        Turn turn = player.getCurrentTurn();
         choiceResponse.setSource(player);
-
-        Choice choice = game.getChoiceById(choiceResponse.getTargetChoice()).get();
-
-
-        OptionType expectedType = choice.getExpectedAnswerType();
-
-        if (!choiceResponse.isDone()) {
-            if (expectedType.equals(OptionType.CARD))
-                choiceResponse.setCard(kingdom.getAllCards().get(choiceResponse.getCard().getId()));
-            else if (expectedType.equals(OptionType.LIST_OF_CARDS)) {
-                Set<Card> choices = choiceResponse.getCards()
-                        .stream()
-                        .map(Card::getId)
-                        .map(id -> kingdom.getAllCards().get(id))
-                        .collect(Collectors.toSet());
-
-                choiceResponse.getCards().clear();
-                choiceResponse.getCards().addAll(choices);
-            }
-        }
-
-        choice.apply(choiceResponse, turn);
+        matchService.applyCommand(game, Command.choice(game, player, choiceResponse));
 
         return game;
     }

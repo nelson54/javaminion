@@ -1,6 +1,9 @@
 package com.github.nelson54.dominion.choices;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
@@ -17,7 +20,9 @@ import java.util.UUID;
 
 public class Choice {
 
-    private UUID id;
+    @JsonSerialize(using= ToStringSerializer.class)
+    @JsonDeserialize(as = Long.class)
+    private Long id;
     private CardState state;
     @JsonIgnore
     private Player target;
@@ -58,7 +63,7 @@ public class Choice {
 
     public Choice(Player target, Card source) {
 
-        this.id = UUID.randomUUID();
+        this.id = target.getGame().seed.random().nextLong();
         this.target = target;
         this.source = source;
         this.owner = source.getOwner();
@@ -70,7 +75,7 @@ public class Choice {
 
     public Choice(Player target, Card source, Reaction reaction) {
 
-        this.id = UUID.randomUUID();
+        this.id = target.getGame().seed.random().nextLong();
         this.target = target;
         this.source = source;
         this.owner = source.getOwner();
@@ -209,11 +214,11 @@ public class Choice {
         this.source = source;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
