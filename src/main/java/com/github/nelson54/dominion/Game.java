@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.google.common.collect.Multimap;
+import org.jboss.logging.Logger;
 import org.joda.time.DateTime;
 
 import java.util.*;
@@ -14,6 +15,8 @@ import static com.github.nelson54.dominion.Phase.*;
 
 
 public class Game {
+
+    private static final Logger logger = Logger.getLogger(Game.class);
 
     @JsonProperty
     private List<String> logs;
@@ -70,6 +73,7 @@ public class Game {
     }
 
     Player nextPlayer() {
+
         if (turnerator == null || !turnerator.hasNext()) {
             turnerator = turnOrder.iterator();
         }
@@ -88,12 +92,14 @@ public class Game {
         pastTurns.add(turn);
         turn = nextPlayer.getCurrentTurn();
 
-        if (!turn.hasActionsInHand()) {
-            turn.setPhase(BUY);
-            nextPlayer.onBuyPhase();
-        } else {
+        if (turn.hasActionsInHand()) {
             turn.setPhase(ACTION);
+            logger.info("Now entering action phase for Player["+nextPlayer.getId()+"] "+nextPlayer.getName());
             nextPlayer.onActionPhase();
+        } else {
+            turn.setPhase(BUY);
+            logger.info("Now entering buy phase for Player["+nextPlayer.getId()+"] "+nextPlayer.getName());
+            nextPlayer.onBuyPhase();
         }
 
         return nextPlayer;
@@ -220,6 +226,7 @@ public class Game {
     }
 
     public void log(String string){
+        logger.info(string);
         logs.add(DateTime.now().toString() + ": " + string);
     }
 
