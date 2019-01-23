@@ -225,6 +225,8 @@ public class Game {
         player.getDeck().remove(card);
         player.getHand().remove(card);
 
+        logs.add("Player["+player.getId()+"] "+player.getName()+" discarded " + card.getName() + ".");
+
         card.setOwner(null);
 
         trash.add(card);

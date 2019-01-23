@@ -4,23 +4,21 @@ import com.github.nelson54.dominion.*;
 import com.github.nelson54.dominion.cards.RecommendedCards;
 import com.github.nelson54.dominion.cards.types.ActionCard;
 import com.github.nelson54.dominion.cards.types.Card;
-import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
-import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.services.AccountService;
 import com.github.nelson54.dominion.services.MatchService;
+import org.jboss.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/dominion")
 public class GameController {
 
+    private static final Logger logger = Logger.getLogger(GameController.class);
     private AccountService accountService;
     private MatchService matchService;
 
@@ -137,8 +135,10 @@ public class GameController {
     ) {
         Game game = matchService.getGame(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Account account = getAccount();
+        Player player = game.getPlayers().get(account.getId());
 
-        game.getTurn().endPhase();
+        matchService.applyCommand(game, Command.endPhase(game, player));
 
         return game;
     }

@@ -11,6 +11,10 @@ import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.commands.CommandRepository;
 import com.github.nelson54.dominion.commands.CommandType;
+import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
+import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
+import com.github.nelson54.dominion.web.controllers.GameController;
+import org.jboss.logging.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class CommandService {
 
+    private static final Logger logger = Logger.getLogger(CommandService.class);
     private CommandRepository commandRepository;
 
     public CommandService(CommandRepository commandRepository) {
@@ -37,24 +42,42 @@ public class CommandService {
     }
 
     public Game applyCommand(Game game, Command command) {
+        String msg = null;
         Turn turn = game.getTurn();
         Card card = game.getAllCards().get(command.cardId);
         Player player = game.getPlayers().get(command.accountId);
 
-        if(command.type.equals(CommandType.ACTION_COMMAND)) {
-            turn.playCard((ActionCard) card, player, game);
-        } else if(command.type.equals(CommandType.BUY_COMMAND)) {
-            turn.purchaseCardForPlayer(card, player);
-        } else if(command.type.equals(CommandType.CHOICE_RESPONSE)) {
-            applyChoiceResponse(game, command);
-        } else if(command.type.equals(CommandType.END_PHASE)) {
-            turn.endPhase();
-        } else if(command.type.equals(CommandType.END_TURN)) {
+        try {
 
+            if (command.type.equals(CommandType.ACTION_COMMAND)) {
+                turn.playCard((ActionCard) card, player, game);
+            } else if (command.type.equals(CommandType.BUY_COMMAND)) {
+                turn.purchaseCardForPlayer(card, player);
+            } else if (command.type.equals(CommandType.CHOICE_RESPONSE)) {
+                applyChoiceResponse(game, command);
+            } else if (command.type.equals(CommandType.END_PHASE)) {
+                turn.endPhase();
+            } else if (command.type.equals(CommandType.END_TURN)) {
+
+            }
+        } catch (IncorrectPhaseException e) {
+            msg = "Incorrect phase command for Player["+player.getId()+"] "+player.getName() +
+                    " attempted command {"+ command.toString() +"} in Phase " + turn.getPhase();
+        } catch (InsufficientFundsException e) {
+            msg = "Insufficient funds for["+player.getId()+"] "+player.getName() +
+                    " attempted to buy "+card.getName()+" with a money pool of" + turn.getMoney();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return game;
         }
 
-        if(command.getId() == null) {
+
+
+        if(command.getId() == null && msg == null) {
             save(command);
+        } else if (command.getId() == null && msg != null) {
+            logger.info(msg);
+            game.log(msg);
         }
 
         return game;

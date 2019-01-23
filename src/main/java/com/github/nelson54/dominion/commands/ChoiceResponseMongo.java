@@ -51,19 +51,25 @@ public class ChoiceResponseMongo {
     public static ChoiceResponseMongo ofChoiceResponse(ChoiceResponse choiceResponse) {
         ChoiceResponseMongo choiceResponseMongo = new ChoiceResponseMongo();
 
-        if(choiceResponse.getCard() != null) {
-            choiceResponseMongo.setCard(choiceResponse.getCard().getId());
-        }
-
         choiceResponseMongo.setTargetChoice(choiceResponse.getTargetChoice());
         choiceResponseMongo.setDecisionId(choiceResponse.getDecisionId());
         choiceResponseMongo.setMessage(choiceResponse.getMessage());
         choiceResponseMongo.setDone(choiceResponse.isDone());
         choiceResponseMongo.setYesOrNo(choiceResponse.isYes());
-        choiceResponseMongo.setCard(choiceResponse.getCard().getId());
-        choiceResponseMongo.setCards(choiceResponse.getCards().stream().map(Card::getId).collect(Collectors.toSet()));
         choiceResponseMongo.setChoice(choiceResponse.getChoice());
         choiceResponseMongo.setChoices(choiceResponse.getChoices());
+
+        if(choiceResponse.getCard() != null) {
+            choiceResponseMongo.setCard(choiceResponse.getCard().getId());
+        }
+
+        if(choiceResponse.getCard() != null) {
+            choiceResponseMongo.setCard(choiceResponse.getCard().getId());
+        }
+
+        if(choiceResponse.getCards() != null) {
+            choiceResponseMongo.setCards(choiceResponse.getCards().stream().map(Card::getId).collect(Collectors.toSet()));
+        }
 
         return choiceResponseMongo;
 
