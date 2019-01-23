@@ -65,12 +65,8 @@ public class MatchEntity {
         Arrays.asList(turnOrder.split(",")).stream()
                 .map(Long::valueOf)
                 .map(accounts::get)
-                .map((playerAccount) -> {
-                    if(playerAccount.isAi()) {
-                        return MatchParticipant.createAi();
-                    }
-                    return new MatchParticipant(playerAccount.asAccount());
-                }).forEachOrdered(match::addParticipant);
+                .map((playerAccount) -> new MatchParticipant(playerAccount.asAccount()))
+                .forEachOrdered(match::addParticipant);
 
         return match;
     }

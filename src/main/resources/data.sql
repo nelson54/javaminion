@@ -39,7 +39,7 @@ into
   accounts
 (id, email, is_ai, first_name, user_id)
 values
-(default, 'Monique@example.com', false, 'Monique', IDENTITY());
+(default, 'Monique@example.com', true, 'Monique', IDENTITY());
 
 insert
        into
@@ -59,7 +59,7 @@ insert
         accounts
         (id, email, is_ai, first_name, user_id)
     values
-        (default, 'Jamal@example.com', false, 'Jamal', IDENTITY());
+        (default, 'Jamal@example.com', true, 'Jamal', IDENTITY());
 
 insert
        into
@@ -79,7 +79,7 @@ into
   accounts
 (id, email, is_ai, first_name, user_id)
 values
-(default, 'Susan@example.com', false, 'Susan', IDENTITY());
+(default, 'Susan@example.com', true, 'Susan', IDENTITY());
 
 insert
        into
@@ -99,7 +99,7 @@ insert
         accounts
         (id, email, is_ai, first_name, user_id)
     values
-        (default, 'Ross@example.com', false, 'Ross', IDENTITY());
+        (default, 'Ross@example.com', true, 'Ross', IDENTITY());
 
 insert
        into
@@ -119,7 +119,7 @@ into
   accounts
 (id, email, is_ai, first_name, user_id)
 values
-(default, 'James@example.com', false, 'James', IDENTITY());
+(default, 'James@example.com', true, 'James', IDENTITY());
 
 insert
        into
@@ -139,7 +139,7 @@ insert
         accounts
         (id, email, is_ai, first_name, user_id)
     values
-        (default, 'Tanisha@example.com', false, 'Tanisha', IDENTITY());
+        (default, 'Tanisha@example.com', true, 'Tanisha', IDENTITY());
 
 insert
        into
@@ -159,7 +159,7 @@ into
   accounts
 (id, email, is_ai, first_name, user_id)
 values
-(default, 'Cane@example.com', false, 'Cane', IDENTITY());
+(default, 'Cane@example.com', true, 'Cane', IDENTITY());
 
 Commit;
 
@@ -181,7 +181,7 @@ insert
         accounts
         (id, email, is_ai, first_name, user_id)
     values
-        (default, 'Abel@example.com', false, 'Abel', IDENTITY());
+        (default, 'Abel@example.com', true, 'Abel', IDENTITY());
 
 Commit;
 
@@ -203,7 +203,7 @@ insert
         accounts
         (id, email, is_ai, first_name, user_id)
     values
-        (default, 'Krishna@example.com', false, 'Krishna', IDENTITY());
+        (default, 'Krishna@example.com', true, 'Krishna', IDENTITY());
 
 insert
        into
@@ -223,7 +223,7 @@ insert
   accounts
   (id, email, is_ai, first_name, user_id)
   values
-  (default, 'Saanvi@example.com', false, 'Saanvi', IDENTITY());
+  (default, 'Saanvi@example.com', true, 'Saanvi', IDENTITY());
 
 insert
        into
@@ -243,6 +243,6 @@ insert
   accounts
   (id, email, is_ai, first_name, user_id)
   values
-  (default, 'Prishna@example.com', false, 'Prishna', IDENTITY());
+  (default, 'Prishna@example.com', true, 'Prishna', IDENTITY());
 
 Commit;

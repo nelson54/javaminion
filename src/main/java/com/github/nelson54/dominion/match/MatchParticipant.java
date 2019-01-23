@@ -10,7 +10,7 @@ public class MatchParticipant {
     private boolean ai;
 
     public MatchParticipant(Account account) {
-        this.ai = false;
+        this.ai = account.getAi();
         this.account = account;
     }
 

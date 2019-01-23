@@ -51,16 +51,16 @@ public class GameFactory {
             Player p;
 
             if(player.isAi()){
-                p = createAiPlayer(game, player.getAccount(), game.getKingdom());
+                p = createAiPlayer(game, player.getAccount());
             } else {
-                p = createHumanPlayer(game, player.getAccount(), game.getKingdom());
+                p = createHumanPlayer(game, player.getAccount());
             }
 
             game.getPlayers().put(p.getId(), p);
         }
     }
 
-    private Player createHumanPlayer(Game game, Account account, Kingdom kingdom) {
+    private Player createHumanPlayer(Game game, Account account) {
 
 
         Player player = new Player(account);
@@ -79,13 +79,12 @@ public class GameFactory {
         return player;
     }
 
-    private Player createAiPlayer(Game game, Account account, Kingdom kingdom) {
+    private Player createAiPlayer(Game game, Account account) {
 
-        return createAiPlayer(game, account, AiStrategies.random(), kingdom);
+        return createAiPlayer(game, account, AiStrategies.random());
     }
 
-    private Player createAiPlayer(Game game, Account account, AiStrategy aiStrategy, Kingdom kingdom) {
-
+    private Player createAiPlayer(Game game, Account account, AiStrategy aiStrategy) {
         AiPlayer player = new AiPlayer(account);
         player.setCommandService(commandService);
         player.setAiStrategy(aiStrategy);

@@ -1,20 +1,13 @@
 package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Account;
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.GameFactory;
-import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.cards.GameCardSet;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
-import com.github.nelson54.dominion.match.MatchProvider;
 import com.github.nelson54.dominion.match.MatchState;
 import com.github.nelson54.dominion.persistence.AccountRepository;
-import com.github.nelson54.dominion.persistence.GameRepository;
-import com.github.nelson54.dominion.persistence.entities.GameEntity;
 import com.github.nelson54.dominion.services.AccountService;
 import com.github.nelson54.dominion.services.AiPlayerService;
-import com.github.nelson54.dominion.services.CommandService;
 import com.github.nelson54.dominion.services.MatchService;
 import com.github.nelson54.dominion.web.dto.MatchDto;
 import org.springframework.data.domain.Page;
@@ -23,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.inject.Inject;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,30 +24,17 @@ import java.util.stream.Collectors;
 @RequestMapping("/dominion")
 public class MatchController {
 
-    private GameRepository gameRepository;
 
     private final AccountRepository accountRepository;
-
-    private final GameProvider gameProvider;
-
-    private final MatchProvider matchProvider;
-
-    private final GameFactory gameFactory;
-
-    private final CommandService commandService;
 
     private final AccountService accountService;
     private final AiPlayerService aiPlayerService;
     private MatchService matchService;
 
-    public MatchController(CommandService commandService, AiPlayerService aiPlayerService, MatchService matchService, AccountService accountService, AccountRepository accountRepository, GameProvider gameProvider, GameFactory gameFactory, MatchProvider matchProvider) {
-        this.commandService = commandService;
+    public MatchController(AiPlayerService aiPlayerService, MatchService matchService, AccountService accountService, AccountRepository accountRepository) {
         this.aiPlayerService = aiPlayerService;
         this.accountService = accountService;
         this.accountRepository = accountRepository;
-        this.gameProvider = gameProvider;
-        this.gameFactory = gameFactory;
-        this.matchProvider = matchProvider;
         this.matchService = matchService;
     }
 
@@ -82,10 +60,11 @@ public class MatchController {
 
         match.addParticipant(new MatchParticipant(account));
 
-        Collection<MatchParticipant> participants = aiPlayerService
-                .random(matchDto.getNumberOfAiPlayers())
+        Collection<MatchParticipant> participants = aiPlayerService.random(matchDto.getNumberOfAiPlayers())
                 .stream()
-                .map(MatchParticipant::createAi).collect(Collectors.toList());
+                .map(this::addUserToAccount)
+                .map(MatchParticipant::createAi)
+                .collect(Collectors.toList());
 
         match.addAiParticipants(participants);
 
@@ -111,48 +90,12 @@ public class MatchController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
         matchService.addPlayerAccount(match, account);
-        match.addParticipant(new MatchParticipant(account));
-
-        createGameIfReady(match);
     }
 
-    private void addMatch (Match match) throws IllegalAccessException, InstantiationException {
-        if(match.isReady()) {
-            createGame(match);
-        } else {
-            matchProvider.addMatch(match);
-        }
+    private Account addUserToAccount(Account account) {
+        return accountRepository.findByUserUsername(account.getFirstname()).get().asAccount();
     }
 
-    private void createGameIfReady(Match match) throws IllegalAccessException, InstantiationException {
-        if(match.isReady()) {
-            createGame(match);
-        }
-    }
-
-    private void createGame(Match match) throws IllegalAccessException, InstantiationException {
-        Game game = gameFactory.createGame(match);
-        gameProvider.addGame(game);
-        matchProvider.remove(match);
-
-        GameEntity gameEntity = GameEntity.ofGame(game);
-        gameRepository.save(gameEntity);
-
-        GameEntity gameEntity1 = gameRepository.findById(game.getId()).get();
-
-        System.out.println(gameEntity1.toString());
-
-        try {
-            gameEntity1.asGame();
-        } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Inject
-    public void setGameRepository(GameRepository gameRepository) {
-        this.gameRepository = gameRepository;
-    }
 
     private Optional<Account> getAccount(){
         return accountService.getAuthorizedAccount();

@@ -1,9 +1,7 @@
 package com.github.nelson54.dominion.web;
 
 import com.github.nelson54.dominion.GameFactory;
-import com.github.nelson54.dominion.GameProvider;
 import com.github.nelson54.dominion.KingdomFactory;
-import com.github.nelson54.dominion.match.MatchProvider;
 import com.github.nelson54.dominion.services.CommandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -46,16 +44,6 @@ public class Application extends SpringBootServletInitializer {
 
         return new GameFactory(kingdomFactory, commandService);
 
-    }
-
-    @Bean
-    GameProvider getGameProvider() {
-        return new GameProvider();
-    }
-
-    @Bean
-    MatchProvider getMatchProvider() {
-        return new MatchProvider();
     }
 
     @Bean
