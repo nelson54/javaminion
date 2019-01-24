@@ -8,6 +8,12 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: testing
+  nagios:
+    image: jasonrivers/nagios:latest
+    volumes:
+      - ./nagios/plugins/:/opt/Custom-Nagios-Plugins
+    ports:
+      - "8081:80"
   app:
     build:
       context: ./
