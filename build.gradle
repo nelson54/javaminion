@@ -22,8 +22,9 @@ apply plugin: 'com.palantir.docker-run'
 
 group = 'dominionweb'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '1.8'
 mainClassName = 'com.github.nelson54.dominion.web.Application'
+sourceCompatibility = 11.0
+targetCompatibility = 11.0
 
 configurations {
     all {
@@ -41,15 +42,6 @@ jar {
     version =  '0.1.0'
 }
 
-test {
-    jvmArgs = ["-Xms256m", "-Xmx2048m", "--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED",  "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]
-}
-
-
-bootRun {
-    jvmArgs = ["-Xms256m", "-Xmx2048m", "--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED",  "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]
-}
-
 docker {
     name "${project.group}/${project.name}"
     dockerfile file("Dockerfile")
@@ -64,9 +56,6 @@ dockerRun {
 repositories {
     mavenCentral()
 }
-
-sourceCompatibility = 11.0
-targetCompatibility = 11.0 
 
 ext{
     spring = '2.1.1.RELEASE'
@@ -133,5 +122,3 @@ test {
 wrapper {
     gradleVersion = '5.1'
 }
-
-//applicationDefaultJvmArgs = ["--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED"]

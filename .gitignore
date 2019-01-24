@@ -9,6 +9,6 @@ target
 target
 build
 out
-
+db
 logs/*
 
