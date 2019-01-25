@@ -65,7 +65,11 @@ dependencies {
     developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$spring"
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: "$spring"
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$spring"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$spring",  {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "$spring", {
         exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
