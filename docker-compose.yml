@@ -1,4 +1,4 @@
-version: '2'
+version: '3.1'
 services:
   mongo:
     image: mongo:3.6.9-stretch
@@ -8,12 +8,21 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: testing
+    deploy:
+      resources:
+        limits:
+          memory: 100M
   nagios:
     image: jasonrivers/nagios:latest
     volumes:
       - ./nagios/plugins/:/opt/Custom-Nagios-Plugins
     ports:
       - "8081:80"
+    deploy:
+      resources:
+        limits:
+          memory: 100M
+
   app:
     build:
       context: ./
@@ -23,4 +32,7 @@ services:
       - "8080:8080"
       - "5005:5005"
       - "35729:35729"
-
+    deploy:
+      resources:
+        limits:
+          memory: 700M

@@ -62,7 +62,7 @@ RUN set -ex; \
 	\
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
-		openjdk-11-jdk-headless="$JAVA_DEBIAN_VERSION" \
+		openjdk-11-jdk-headless \
 	; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
