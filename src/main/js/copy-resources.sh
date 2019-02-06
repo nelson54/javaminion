@@ -10,7 +10,7 @@ mkdir /app/src/main/resources/public
 cd ./dist
 cp -R * /app/src/main/resources/public
 
-#rm -Rf /app/build
-#mkdir /app/build
+rm -Rf /build
+mkdir /build
 
-#tar -zcvf /app/build/front-end.tar.gz ./dist
+tar -zcvf /build/front-end.tar.gz ./dist

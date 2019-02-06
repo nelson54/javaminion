@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-cd /app/src/main/js/
-bash ./copy-resources.sh;
+cd /build/
+tar -xvzf /build/front-end.tar.gz
 
-cd /app/
-bash ./gradlew -Dskip.tests bootRun
+cd /build/dist
+cp -R * /app/src/main/resources/public

@@ -13,6 +13,7 @@ curl https://raw.githubusercontent.com/nelson54/snippets/master/.tmux.config > /
 
 apt install \
     nginx \
+    htop \
     tmux \
     vim \
     curl \
