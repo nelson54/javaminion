@@ -3,13 +3,13 @@
 apt update -y
 apt remove docker docker-engine docker.io containerd runc -y
 
-apt install tmux vim curl git -y
 
 curl https://raw.githubusercontent.com/nelson54/snippets/master/.git_profile > /root/.bashrc
 curl https://raw.githubusercontent.com/nelson54/snippets/master/.vimrc > /root/.vimrc
 curl https://raw.githubusercontent.com/nelson54/snippets/master/.tmux.config > /root/.tmux.config
 
 apt install \
+    nginx \
     tmux \
     vim \
     curl \
@@ -34,5 +34,9 @@ apt update -y
 apt install docker-ce docker-ce-cli containerd.io -y
 
 cd /root/javaminion
+
+cp config/nginx.conf /etc/nginx/nginx.conf
+
+systemctl nginx restart
 
 docker-compose build
