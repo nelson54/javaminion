@@ -27,7 +27,8 @@ services:
     build:
       context: ./
     volumes:
-      - ./src:/app/src
+      - ./src:/app/src/main/java
+      - ./build:/app/build
     ports:
       - "8080:8080"
       - "5005:5005"
