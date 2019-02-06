@@ -3,6 +3,9 @@
 apt update -y
 apt remove docker docker-engine docker.io containerd runc -y
 
+ufw enable
+ufw allow 80/tcp
+ufw allow 80/udp
 
 curl https://raw.githubusercontent.com/nelson54/snippets/master/.git_profile > /root/.bashrc
 curl https://raw.githubusercontent.com/nelson54/snippets/master/.vimrc > /root/.vimrc
