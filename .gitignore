@@ -9,5 +9,5 @@ target
 build
 out
 db
-log/*
+logs/*
 src/main/js/dist/*
