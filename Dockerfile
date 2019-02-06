@@ -93,5 +93,9 @@ RUN curl https://raw.githubusercontent.com/nelson54/snippets/master/.tmux.config
 RUN apt-get install -y nodejs git vim tmux
 RUN npm install -g sass bower
 
-CMD bash /app/run-build.sh && ./gradlew -Dskip.tests bootRun
+COPY ./ /app
+
+RUN bash /app/run-build.sh
+
+CMD /app/run.sh
 #CMD bash

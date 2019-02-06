@@ -11,7 +11,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 100M
+          memory: 75M
   nagios:
     image: jasonrivers/nagios:latest
     volumes:
@@ -27,7 +27,7 @@ services:
     build:
       context: ./
     volumes:
-      - ./:/app
+      - ./src:/app/src
     ports:
       - "8080:8080"
       - "5005:5005"

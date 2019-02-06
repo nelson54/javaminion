@@ -177,13 +177,13 @@ angular.module('dominionFrontendApp')
       let Choice = $resource(baseUrl+'/dominion/:gameId/choice',
         {},
         {
-          get: {
+          post: {
               headers: {'Authorization': jwtService.getBearer()}
           }
         }
        );
 
-      var choice = new Choice();
+      let choice = new Choice();
 
       choice.targetChoice = choose.id;
 
