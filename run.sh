@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-cd /build/
+cd /build
 tar -xvzf ./front-end.tar.gz
 
-cd /build/dist
+cd dist
 cp -R * /app/src/main/resources/public
 
 cd /app

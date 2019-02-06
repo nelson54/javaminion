@@ -18,19 +18,12 @@
 
 
 ```bash
-# Clean
-docker system prune
+cd javaminion
 
-# Builds
-docker build -t javaminion .
+./setup-environment.sh
 
-# Runs
-docker run javaminion
+docker-compose build
 
-# Enter bash
-docker run -it javaminion bash
-
-# Run from bash
-./gradlew build && java -Xmx512m -jar ./build/libs/gs-spring-boot-docker-0.1.0.jar
+docker-compose up
 
 ```
