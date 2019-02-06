@@ -9,6 +9,7 @@ mkdir /app/src/main/resources/public
 
 cd ./dist
 cp -R * /app/src/main/resources/public
+cd ../
 
 rm -Rf /build
 mkdir /build
