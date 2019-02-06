@@ -8,5 +8,5 @@ mkdir dist;
 mkdir ./dist/styles;
 sass ./app/styles/main.scss ./dist/styles/main.css;
 
-./copy-resources.sh
+bash ./copy-resources.sh
 

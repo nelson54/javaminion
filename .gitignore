@@ -1,8 +1,6 @@
 # Intellij
 .idea
 *.iml
-*.iws
-*.log
 out
 target
 
@@ -11,5 +9,5 @@ target
 build
 out
 db
-logs/*
-
+log/*
+src/main/js/dist/*

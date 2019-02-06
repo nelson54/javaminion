@@ -97,5 +97,5 @@ COPY ./ /app
 
 RUN bash /app/run-build.sh
 
-CMD /app/run.sh
+CMD bash /app/run.sh
 #CMD bash
