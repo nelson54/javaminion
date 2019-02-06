@@ -5,3 +5,5 @@ tar -xvzf /build/front-end.tar.gz
 
 cd /build/dist
 cp -R * /app/src/main/resources/public
+
+bash ./gradlew -Dskip.tests bootRun
