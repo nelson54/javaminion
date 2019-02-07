@@ -1,5 +1,7 @@
 package com.github.nelson54.dominion.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
@@ -27,9 +29,11 @@ public class CommandService {
 
     private static final Logger logger = Logger.getLogger(CommandService.class);
     private CommandRepository commandRepository;
+    private ObjectMapper objectMapper;
 
-    public CommandService(CommandRepository commandRepository) {
+    public CommandService(CommandRepository commandRepository, ObjectMapper objectMapper) {
         this.commandRepository = commandRepository;
+        this.objectMapper = objectMapper;
     }
 
     public List<Command> findCommandsForGame(Game game) {
@@ -87,9 +91,10 @@ public class CommandService {
         commandRepository.deleteAll();
     }
 
-    private void applyChoiceResponse(Game game, Command command) {
+    private void applyChoiceResponse(Game game, Command command) throws JsonProcessingException {
         ChoiceResponse choiceResponse = command.getChoiceResponse(game);
-
+        logger.info("command: " + objectMapper.writeValueAsString(command));
+        logger.info("choice response: " + objectMapper.writeValueAsString(choiceResponse));
         Choice choice = game.getChoiceById(choiceResponse.getTargetChoice()).get();
         OptionType expectedType = choice.getExpectedAnswerType();
 
@@ -113,3 +118,4 @@ public class CommandService {
         choice.apply(choiceResponse, turn);
     }
 }
+
