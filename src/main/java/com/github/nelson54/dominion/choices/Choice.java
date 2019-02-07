@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.choices;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -17,9 +18,12 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Choice {
 
+    @JsonProperty
     @JsonSerialize(using= ToStringSerializer.class)
     @JsonDeserialize(as = Long.class)
     private Long id;
@@ -34,6 +38,7 @@ public class Choice {
     private Card displayCard;
     private String message;
 
+    @JsonIgnore
     private Set<Long> options;
 
     private boolean isComplete;
@@ -59,6 +64,8 @@ public class Choice {
 
     @JsonIgnore
     private Effect effect;
+
+    @JsonIgnore
     private Set<Long> choices;
 
     public Choice(Player target, Card source) {
@@ -73,6 +80,20 @@ public class Choice {
         this.choices = new HashSet<>();
     }
 
+    @JsonProperty("options")
+    public Set<String> getJsonOptions() {
+        return options
+                .stream()
+                .map(Object::toString).collect(Collectors.toSet());
+    }
+
+    @JsonProperty("choices")
+    public Set<String> getJsonChoices() {
+        return options
+                .stream()
+                .map(Object::toString).collect(Collectors.toSet());
+    }
+
     public Choice(Player target, Card source, Reaction reaction) {
 
         this.id = target.getGame().seed.random().nextLong();
@@ -85,6 +106,8 @@ public class Choice {
         this.choices = new HashSet<>();
         this.reaction = reaction;
     }
+
+    @JsonProperty
 
     public void setIsDialog(boolean isDialog) {
         this.isDialog = isDialog;
