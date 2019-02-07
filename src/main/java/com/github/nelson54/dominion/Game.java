@@ -225,7 +225,7 @@ public class Game {
         player.getDeck().remove(card);
         player.getHand().remove(card);
 
-        logs.add("Player["+player.getId()+"] "+player.getName()+" discarded " + card.getName() + ".");
+        log("Player["+player.getId()+"] "+player.getName()+" discarded " + card.getName() + ".");
 
         card.setOwner(null);
 
@@ -242,13 +242,13 @@ public class Game {
         String fromLocation = (isCardInHand ? " from hand." : " from deck.");
 
 
-        logs.add(player.getName()+ " revealed card " + card.getName() + fromLocation);
+        log(player.getName()+ " revealed card " + card.getName() + fromLocation);
     }
 
     public void revealCardsFromHand (Player player, Set<Card> cards) {
         StringJoiner sj = new StringJoiner(", ");
         cards.forEach(card -> sj.add(card.getName()));
-        logs.add(player.getName()+ " revealed cards " + sj.toString() + " from hand.");
+        log(player.getName()+ " revealed cards " + sj.toString() + " from hand.");
     }
 
     public Map<Long, Card> getAllCards() {
