@@ -30,6 +30,7 @@ services:
       - ./src/main/java:/app/src/main/java
       - ./src/test/java:/app/src/test/java
       - ./src/main/js:/app/src/main/js
+      - ./logs:/app/logs  
     ports:
       - "8080:8080"
       - "5005:5005"
