@@ -58,7 +58,7 @@ public class CommandService {
             } else if (command.type.equals(CommandType.END_PHASE)) {
                 turn.endPhase();
             } else if (command.type.equals(CommandType.END_TURN)) {
-
+                turn.endTurn();
             }
         } catch (IncorrectPhaseException e) {
             msg = "Incorrect phase command for Player["+player.getId()+"] "+player.getName() +

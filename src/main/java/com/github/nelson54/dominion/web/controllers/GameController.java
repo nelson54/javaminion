@@ -123,6 +123,9 @@ public class GameController {
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
         choiceResponse.setSource(player);
+
+        choiceResponse.setCard(game.getAllCards().get(choiceResponse.getCard().getId()));
+
         matchService.applyCommand(game, Command.choice(game, player, choiceResponse));
 
         return game;

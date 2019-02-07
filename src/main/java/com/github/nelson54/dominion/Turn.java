@@ -75,9 +75,7 @@ public class Turn {
                 if(game.isGameOver()){
                     game.endGame();
                 } else {
-                    phase = ACTION;
-                    player.resetForNextTurn(this);
-                    game.nextPlayer();
+                    endTurn();
                 }
                 break;
             case ACTION:
@@ -86,6 +84,12 @@ public class Turn {
                 player.onBuyPhase();
                 break;
         }
+    }
+
+    public void endTurn() {
+        phase = ACTION;
+        player.resetForNextTurn(this);
+        game.nextPlayer();
     }
 
     public Card playCard(ActionCard card, Player player, Game game) {
