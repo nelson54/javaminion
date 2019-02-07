@@ -1,5 +1,7 @@
 #!/bin/bash
 
+app="/root/javaminion"
+
 apt update -y
 apt remove docker docker-engine docker.io containerd runc -y
 
@@ -37,7 +39,9 @@ apt update -y
 
 apt install docker-ce docker-ce-cli containerd.io -y
 
-cd /root/javaminion
+cd $app
+
+mkdir $app/logs
 
 cp config/nginx.conf /etc/nginx/nginx.conf
 

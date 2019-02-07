@@ -22,7 +22,7 @@ public class Game {
     private static final Logger logger = Logger.getLogger(Game.class);
 
     @JsonProperty
-    private List<String> logs;
+    private Set<String> logs;
 
     @JsonProperty
     @JsonSerialize(using= ToStringSerializer.class)
@@ -66,7 +66,7 @@ public class Game {
         pastTurns = new LinkedHashSet<>();
         allCards = new HashMap<>();
         trash = new HashSet<>();
-        logs = new ArrayList<>();
+        logs = new LinkedHashSet<>();
     }
 
     public Game(Long seed) {
@@ -74,7 +74,7 @@ public class Game {
         pastTurns = new LinkedHashSet<>();
         allCards = new HashMap<>();
         trash = new HashSet<>();
-        logs = new ArrayList<>();
+        logs = new LinkedHashSet<>();
     }
 
     Player nextPlayer() {
@@ -232,7 +232,7 @@ public class Game {
         trash.add(card);
     }
 
-    public void log(String string){
+    public void log(String string) {
         logger.info(string);
         logs.add(DateTime.now().toString() + ": " + string);
     }
