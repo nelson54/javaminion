@@ -2,6 +2,16 @@
 - hosts: webservers
   remote_user: root
   tasks:
+    - name: update packages
+      command: apt update -y
+    - name: enable firewall
+      command: ufw --force enable
+    - name: open port 80/tcp
+      command: ufw allow 80/tcp
+    - name: open port 80/udp
+      command: ufw allow 80/udp
+    - name: open port 8081/udp
+      command: ufw allow 8081/udp
     - name: install packages
       apt:
         name: "{{ packages }}"
@@ -17,11 +27,19 @@
           - curl
           - gnupg-agent
           - software-properties-common
+          - nginx
+
+    - name: Add Apt signing key on remote server to keyring
+      apt_key:
+        id: 0EBFCD88
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: fingerprint
+      command: apt-key fingerprint 0EBFCD88
     - name: add repository
       apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu bionic stable
-    - name: fingerprint
-      command: apt-key fingerprint 0EBFCD88
     - name: install docker
       apt:
         name: "{{ packages }}"
@@ -30,4 +48,53 @@
         packages:
           - docker-ce
           - docker-ce-cli
+          - docker-compose
           - containerd.io
+    - name: write the apache config file
+      copy:
+        src: ../config/nginx.conf
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - restart nginx
+    - name: ensure apache is running
+      service:
+        name: nginx
+        state: started
+    - name: make ssh directory
+      file:
+        path: /root/.ssh
+        state: directory
+        mode: 0700
+    - name: copy authorized_keys
+      copy:
+        src: ../config/ssh/authorized_keys
+        dest: /root/.ssh/authorized_keys
+        owner: root
+        group: root
+        mode: 0700
+    - name: copy id_rsa
+      copy:
+        src: ../config/ssh/id_rsa
+        dest: /root/.ssh/id_rsa
+        owner: root
+        group: root
+        mode: 0600
+    - name: copy id_rsa.pub
+      copy:
+        src: ../config/ssh/id_rsa.pub
+        dest: /root/.ssh/id_rsa.pub
+        owner: root
+        group: root
+        mode: 0644
+    - name: copy known_hosts
+      copy:
+        src: ../config/ssh/known_hosts
+        dest: /root/.ssh/known_hosts
+        owner: root
+        group: root
+        mode: 0700
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
