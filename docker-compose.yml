@@ -12,10 +12,6 @@ services:
       resources:
         limits:
           memory: 75M
-  vault:
-    image: _/vault:1.0.2
-    command:
-    ports:
   nagios:
     image: jasonrivers/nagios:latest
     volumes:
