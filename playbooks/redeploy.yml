@@ -1,0 +1,16 @@
+---
+- hosts: webservers
+  remote_user: root
+  tasks:
+    - name: remove old deployment
+      command: rm -Rf /root/javaminion/
+    - name: checkout
+      git:
+        repo: 'git@github.com:nelson54/javaminion.git'
+        dest: /root/javaminion
+    - name: stop
+      command: docker-compose -f /root/javaminion/docker-compose.yml down
+    - name: build
+      command: docker-compose -f /root/javaminion/docker-compose.yml build
+    - name: start
+      command: docker-compose -f /root/javaminion/docker-compose.yml up -d

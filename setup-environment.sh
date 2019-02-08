@@ -13,27 +13,13 @@ curl https://raw.githubusercontent.com/nelson54/snippets/master/.git_profile > /
 curl https://raw.githubusercontent.com/nelson54/snippets/master/.vimrc > /root/.vimrc
 curl https://raw.githubusercontent.com/nelson54/snippets/master/.tmux.config > /root/.tmux.config
 
-apt install \
-    nginx \
-    htop \
-    tmux \
-    vim \
-    curl \
-    git \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg-agent \
-    software-properties-common -y
+apt install nginx htop tmux vim curl git apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y
 
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
 apt-key fingerprint 0EBFCD88
 
-add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 apt update -y
 
