@@ -1,4 +1,5 @@
 ---
+- import_playbook: install.yml
 - hosts: webservers
   remote_user: root
   tasks:
