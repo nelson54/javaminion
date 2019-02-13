@@ -12,6 +12,10 @@
       command: ufw allow 80/udp
     - name: open port 8081/udp
       command: ufw allow 8081/udp
+    - name: open port 8082/udp
+      command: ufw allow 8082/udp
+    - name: open port 8082/tcp
+      command: ufw allow 8082/tcp
     - name: install packages
       apt:
         name: "{{ packages }}"

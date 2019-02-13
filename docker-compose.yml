@@ -22,7 +22,12 @@ services:
       resources:
         limits:
           memory: 100M
-
+  jenkins:
+    image: jenkinsci/blueocean:latest
+    environment:
+      - JENKINS_UC=http://ftp-chi.osuosl.org
+    ports:
+      - "8082:8080"
   app:
     build:
       context: ./
