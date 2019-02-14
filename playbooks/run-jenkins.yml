@@ -9,5 +9,7 @@
       git:
         repo: 'git@github.com:nelson54/javaminion.git'
         dest: /root/javaminion
-    - name: start
+    - name: stop everything
+      command: docker-compose down
+    - name: start jenkins
       command: docker-compose -f /root/javaminion/docker-compose.yml up jenkins
