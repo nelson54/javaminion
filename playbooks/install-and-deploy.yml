@@ -1,4 +1,5 @@
 ---
+- import_playbook: config-firewall.yml
 - import_playbook: install.yml
 - import_playbook: config-files.yml
 - import_playbook: deploy.yml

@@ -1,15 +1,16 @@
 ---
+- import_playbook: config-firewall.yml
 - import_playbook: install.yml
 - hosts: webservers
   remote_user: root
   tasks:
     - name: remove old deployment
-      command: rm -Rf /root/javaminion/
+      file: path=/root/javaminion/ state=absent
     - name: checkout
       git:
         repo: 'git@github.com:nelson54/javaminion.git'
         dest: /root/javaminion
-    - name: stop everything
-      command: docker-compose down
+    #- name: stop everything
+    #  command: docker-compose down -f /root/javaminion/docker-compose.yml down
     - name: start jenkins
-      command: docker-compose -f /root/javaminion/docker-compose.yml up jenkins
+      command: docker-compose up -f /root/javaminion/docker-compose.yml jenkins
