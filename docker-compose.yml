@@ -23,7 +23,7 @@ services:
         limits:
           memory: 100M
   jenkins:
-    image: jenkinsci/blueocean:latest
+    image: jenkins4eval/blueocean-platform-support:latest-jdk11
     environment:
       - JENKINS_UC=http://ftp-chi.osuosl.org
     ports:
