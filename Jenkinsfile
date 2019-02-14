@@ -1,13 +1,7 @@
 pipeline {
   agent any
   
-  stages {
-    stage('') {
-      steps {
-        retry(count: 1)
-      }
-    }
-    
+  stages { 
     stage('Compile Java') {
       steps {
         sh './gradlew compileJava'
