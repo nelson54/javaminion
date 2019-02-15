@@ -12,10 +12,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.charset.Charset;
-import java.util.Collections;
 
 @ControllerAdvice
 public class NotFoundHandler {

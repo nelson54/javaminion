@@ -113,7 +113,7 @@ public enum GameCards {
     );
 
     String name;
-    GameCardSet gameCardSet;
+    public GameCardSet gameCardSet;
 
     GameCards(String name, GameCardSet gameCardSet){
         this.name = name;

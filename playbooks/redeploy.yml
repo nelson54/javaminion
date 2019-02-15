@@ -11,6 +11,6 @@
     - name: stop
       command: docker-compose -f /root/javaminion/docker-compose.yml down
     - name: build
-      command: docker-compose -f /root/javaminion/docker-compose.yml build
+      command: docker-compose -f /root/javaminion/docker-compose.yml build --no-cache
     - name: start
       command: docker-compose -f /root/javaminion/docker-compose.yml up -d

@@ -15,7 +15,6 @@ import com.github.nelson54.dominion.commands.CommandRepository;
 import com.github.nelson54.dominion.commands.CommandType;
 import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
 import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
-import com.github.nelson54.dominion.web.controllers.GameController;
 import org.jboss.logging.Logger;
 import org.springframework.stereotype.Service;
 

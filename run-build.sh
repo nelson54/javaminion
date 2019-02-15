@@ -5,4 +5,4 @@ npm install && bower install --allow-root && bash ./build.sh
 
 
 cd /app
-bash ./gradlew -Dskip.tests compileJava
+bash ./gradlew compileJava

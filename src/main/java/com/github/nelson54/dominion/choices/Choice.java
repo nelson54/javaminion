@@ -17,8 +17,6 @@ import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Choice {

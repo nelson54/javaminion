@@ -15,9 +15,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 
 @RunWith(SpringRunner.class)
-
 @SpringBootTest(classes = Application.class)
-
 @WebAppConfiguration
 public class AccountEntityTest {
 

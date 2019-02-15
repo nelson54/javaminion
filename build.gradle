@@ -13,7 +13,6 @@ buildscript {
 
 apply plugin: 'application'
 apply plugin: 'java'
-apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
@@ -62,14 +61,6 @@ ext{
     spring = '2.1.1.RELEASE'
 }
 
-
-sourceSets {
-    test {
-        java.srcDirs = []
-        groovy.srcDirs = ["src/test/java", "src/test/groovy"]
-    }
-}
-
 dependencies {
     developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$spring"
 
@@ -108,15 +99,13 @@ dependencies {
     runtime group: 'com.h2database', name: 'h2', version: '1.4.197'
 
     testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.2')
-    compile 'org.codehaus.groovy:groovy-all:2.4.11'
 
     testCompile(
-            'junit:junit:4.12',
-            'org.easymock:easymock:4.0.2',
-            'org.springframework.boot:spring-boot-starter-test:2.1.1.RELEASE',
-            'org.junit.jupiter:junit-jupiter-api:5.3.2',
-            'org.junit.jupiter:junit-jupiter-params:5.3.2',
-
+        'junit:junit:4.12',
+        'org.easymock:easymock:4.0.2',
+        'org.springframework.boot:spring-boot-starter-test:2.1.1.RELEASE',
+        'org.junit.jupiter:junit-jupiter-api:5.3.2',
+        'org.junit.jupiter:junit-jupiter-params:5.3.2'
     )
 }
 
@@ -131,7 +120,10 @@ test {
 
     testLogging {
         events "passed", "skipped", "failed"
+        showStandardStreams = true
     }
+
+
 }
 
 wrapper {

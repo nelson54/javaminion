@@ -2,7 +2,6 @@ package com.github.nelson54.dominion.web.security;
 
 import com.github.nelson54.dominion.services.UserEntityDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.inject.Inject;
 import javax.sql.DataSource;
 
 @Configuration
@@ -53,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(HttpMethod.POST, "/api/authentication", "/api/register")
                 .permitAll()
-                .antMatchers("/api/**", "/dominion/**")
+                .antMatchers("/api/**", "/com/github/nelson54/dominion/**")
                 .authenticated();
 
 

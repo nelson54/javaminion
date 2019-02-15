@@ -7,7 +7,6 @@ import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.services.CommandService;
-import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Iterator;

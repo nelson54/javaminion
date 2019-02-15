@@ -7,4 +7,4 @@ cd dist
 cp -R * /app/src/main/resources/public
 
 cd /app
-bash ./gradlew -Dskip.tests bootRun
+bash ./gradlew bootRun

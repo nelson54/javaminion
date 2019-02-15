@@ -4,11 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nelson54.dominion.web.Application;
 import com.github.nelson54.dominion.web.dto.AccountCredentialsDto;
 import com.github.nelson54.dominion.web.dto.AuthenticationDto;
-import com.github.nelson54.dominion.web.dto.MatchDto;
-import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,12 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -57,7 +51,7 @@ class MatchControllerTest {
         matchDto.setNumberOfAiPlayers(1);
         matchDto.setCards("First Game");
 
-        MvcResult  mvcResult = this.mockMvc.perform(post("/dominion/matches")
+        MvcResult  mvcResult = this.mockMvc.perform(post("/com.github.nelson54.dominion/matches")
                 .header("Authorization", authorization)
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsBytes(matchDto))

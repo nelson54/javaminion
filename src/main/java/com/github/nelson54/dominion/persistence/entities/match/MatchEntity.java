@@ -8,10 +8,7 @@ import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 
 import javax.persistence.*;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import static javax.persistence.CascadeType.REFRESH;
 
 @Entity
 @Table(name="match")

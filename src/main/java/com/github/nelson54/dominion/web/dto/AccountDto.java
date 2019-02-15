@@ -3,8 +3,6 @@ package com.github.nelson54.dominion.web.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.Account;
-import com.github.nelson54.dominion.persistence.entities.AccountEntity;
-import com.github.nelson54.dominion.persistence.entities.UserEntity;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

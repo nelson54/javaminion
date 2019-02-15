@@ -1,15 +1,12 @@
 package com.github.nelson54.dominion.services;
 
 import com.github.nelson54.dominion.Account;
-import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.ai.AiName;
 import com.github.nelson54.dominion.persistence.AccountRepository;
 import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;

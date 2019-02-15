@@ -4,7 +4,6 @@ import com.github.nelson54.dominion.cards.sets.baseSet.*;
 import com.github.nelson54.dominion.cards.base.*;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.google.common.collect.ArrayListMultimap;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;

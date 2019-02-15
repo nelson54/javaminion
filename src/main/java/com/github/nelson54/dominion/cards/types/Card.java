@@ -12,7 +12,6 @@ import com.github.nelson54.dominion.choices.Choice;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 
 public class Card {

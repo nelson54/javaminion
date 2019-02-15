@@ -1,7 +1,6 @@
 package com.github.nelson54.dominion.persistence.entities;
 
 import com.github.nelson54.dominion.Account;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

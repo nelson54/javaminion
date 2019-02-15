@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
-@RequestMapping("/dominion")
+@RequestMapping("/com/github/nelson54/dominion")
 public class GameController {
 
     private static final Logger logger = Logger.getLogger(GameController.class);
