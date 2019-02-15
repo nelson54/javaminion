@@ -3,26 +3,23 @@ package com.github.nelson54.dominion.cards;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.exceptions.InvalidCardSetName;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
 public class GameCardSet {
     private Set<CardTypeReference> cards;
 
-    private GameCardSet(Set<CardTypeReference> cards) {
+    private GameCardSet(LinkedHashSet<CardTypeReference> cards) {
         this.cards = cards;
     }
 
-    public static GameCardSet of(Collection<CardTypeReference> cardTypes) {
-        return new GameCardSet(new HashSet<>(cardTypes));
+    public static GameCardSet of(List<CardTypeReference> cardTypes) {
+        return new GameCardSet(new LinkedHashSet<>(cardTypes));
     }
 
     public static GameCardSet of(CardTypeReference... refs) {
-        return of(Arrays.stream(refs).collect(Collectors.toSet()));
+        return of(Arrays.stream(refs).collect(Collectors.toList()));
     }
 
     public Set<CardTypeReference> getCards() {
