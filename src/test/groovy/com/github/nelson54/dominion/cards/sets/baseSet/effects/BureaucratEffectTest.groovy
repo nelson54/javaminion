@@ -38,13 +38,13 @@ class BureaucratEffectTest extends DominionTestCase {
 
         turn.playCard(bureaucrat, player, game)
 
-        assertEquals "Phase is WAITING_FOR_CHOICE ", Phase.WAITING_FOR_CHOICE, turn.getPhase()
+        //assertEquals "Phase is WAITING_FOR_CHOICE ", Phase.WAITING_FOR_CHOICE, turn.getPhase()
 
-        applyChoice(getChoice(), turn);
+        applyChoice(getChoice(), turn)
 
-        turn.actionPool++;
-        turn.getPlay().clear();
-        hand.add(bureaucrat);
+        turn.actionPool++
+        turn.getPlay().clear()
+        hand.add(bureaucrat)
 
         turn.setPhase(Phase.ACTION)
 
@@ -54,7 +54,7 @@ class BureaucratEffectTest extends DominionTestCase {
         }
 
         turn.playCard(bureaucrat, player, game)
-        turn.getPlay().clear();
+        turn.getPlay().clear()
         turn.endPhase()
 
 
@@ -62,16 +62,16 @@ class BureaucratEffectTest extends DominionTestCase {
     }
 
     Choice getChoice(){
-        return game.getChoices().stream()
+        return getNextPlayer().getChoices().stream()
                 .filter( { ch -> (ch.getSource() == bureaucrat) } )
                 .findFirst()
-                .get();
+                .get()
     }
 
     void applyChoice(Choice choice, Turn turn){
-        Card toTrash = new CardReference(choice.getOptions().first());
+        Card toTrash = new CardReference(choice.getOptions().first())
 
-        ChoiceResponse cr = new ChoiceResponse();
+        ChoiceResponse cr = new ChoiceResponse()
         cr.setCard(toTrash)
         cr.setSource(player)
 

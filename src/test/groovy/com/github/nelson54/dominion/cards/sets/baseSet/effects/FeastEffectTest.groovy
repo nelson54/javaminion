@@ -22,39 +22,36 @@ class FeastEffectTest extends DominionTestCase {
         turn.setPhase(Phase.ACTION)
         turn.playCard(feast, player, game)
 
-        choice = getChoice();
+        choice = getChoice()
     }
 
     void testEffect() {
-        String toGain = choice.getOptions().first();
+        String toGain = choice.getOptions().first()
 
         assertEquals "Phase is WAITING_FOR_CHOICE ", turn.getPhase(), Phase.WAITING_FOR_CHOICE
 
-        applyChoice(choice, turn);
+        applyChoice(choice, turn)
 
 
         assertFalse "Player doesn't have trashed card", player.getAllCards().values().contains(card)
         assertTrue "Trashed card is in trash", game.getTrash().contains(card)
-
         assertTrue "Player has gained card", player.getAllCards().keySet().contains(toGain)
 
     }
 
     Choice getChoice(){
-        return game.getChoices().stream()
+        return player.getChoices().stream()
                 .filter( { ch -> ch.getSource().equals(card) } )
-                .findFirst().get();
+                .findFirst().get()
     }
 
     void applyChoice(Choice choice, Turn turn){
-        Card toTrash = new CardReference(choice.getOptions().first());
+        Card toTrash = new CardReference(choice.getOptions().first())
 
-        ChoiceResponse cr = new ChoiceResponse();
+        ChoiceResponse cr = new ChoiceResponse()
         cr.setCard(toTrash)
         cr.setSource(player)
 
         choice.apply(cr, turn)
-
-        //return getChoice()
     }
 }

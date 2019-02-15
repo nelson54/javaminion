@@ -22,19 +22,19 @@ class RemodelEffectTest extends DominionTestCase {
         turn.playCard(remodel, player, game)
         //bureaucrat.apply(player, game)
 
-        choice = getChoice();
+        choice = getChoice()
     }
 
     void testEffect() {
         Turn turn = game.getTurn()
         Kingdom kingdom = game.getKingdom()
-        Card toTrash = kingdom.getAllCards().get(choice.getOptions().first());
+        Card toTrash = kingdom.getAllCards().get(choice.getOptions().first())
 
         assertEquals "Phase is WAITING_FOR_CHOICE ", Phase.WAITING_FOR_CHOICE, turn.getPhase()
 
         Choice choice = getChoice()
 
-        ChoiceResponse cr = new ChoiceResponse();
+        ChoiceResponse cr = new ChoiceResponse()
         cr.setCard(toTrash)
         cr.setSource(player)
 
@@ -42,8 +42,8 @@ class RemodelEffectTest extends DominionTestCase {
 
         Choice nextChoice = getChoice()
 
-        ChoiceResponse ncr = new ChoiceResponse();
-        Card toGain = kingdom.getAllCards().get(nextChoice.getOptions().first());
+        ChoiceResponse ncr = new ChoiceResponse()
+        Card toGain = kingdom.getAllCards().get(nextChoice.getOptions().first())
 
         ncr.setCard(toGain)
         ncr.setSource(player)
@@ -60,7 +60,7 @@ class RemodelEffectTest extends DominionTestCase {
     }
 
     Choice getChoice(){
-        return player.getChoices().first();
+        return player.getChoices().first()
     }
 
 

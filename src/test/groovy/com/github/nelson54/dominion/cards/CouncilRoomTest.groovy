@@ -16,46 +16,46 @@ import org.junit.runner.RunWith
 @RunWith(EasyMockRunner.class)
 class CouncilRoomTest extends EasyMockSupport {
 
-    ActionCard councilRoom;
-    Turn turn;
+    ActionCard councilRoom
+    Turn turn
 
     @Mock
-    private Game game;
+    private Game game
 
     @Mock
-    private Player player;
+    private Player player1
 
     @Mock
     private Player player2
 
     @Before
     void setUp() {
-        councilRoom = new CouncilRoom()
-        councilRoom.setOwner(player)
+        councilRoom = new CouncilRoom(1L)
+        councilRoom.setOwner(player1)
 
         turn = new Turn()
-        turn.setPlayer(player)
+        turn.setPlayer(player1)
         turn.setActionPool(1)
         turn.setBuyPool(1)
     }
 
     @Test
     void testApply() {
-        Map players = new HashMap<String, Player>()
-        players.put("1", player)
-        players.put("2", player2)
+        Map players = new HashMap<Long, Player>()
+        players.put(1, player1)
+        players.put(2, player2)
 
-        EasyMock.expect(player.getCurrentTurn()).andReturn(turn)
-        EasyMock.expect(player.drawXCards(4)).andVoid()
+        EasyMock.expect(player1.getCurrentTurn()).andReturn(turn)
+        EasyMock.expect(player1.drawXCards(4)).andVoid()
         EasyMock.expect(game.getPlayers()).andReturn(players)
         EasyMock.expect(player2.drawXCards(1)).andVoid()
-        EasyMock.expect(player.getId()).andStubReturn("1")
-        EasyMock.expect(player2.getId()).andStubReturn("2")
+        EasyMock.expect(player1.getId()).andStubReturn(1L)
+        EasyMock.expect(player2.getId()).andStubReturn(2L)
 
         EasyMock.replay(game)
-        EasyMock.replay(player)
+        EasyMock.replay(player1)
         EasyMock.replay(player2)
-        councilRoom.apply(player, game)
+        councilRoom.apply(player1, game)
 
         assert turn.getBuyPool() == 2, 'player has 2 buys'
     }

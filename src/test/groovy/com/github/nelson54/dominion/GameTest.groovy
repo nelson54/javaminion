@@ -3,9 +3,7 @@ package com.github.nelson54.dominion
 import org.junit.Before
 import org.junit.Test
 
-/**
- * Created by Derek on 3/15/2015.
- */
+
 class GameTest extends DominionTestCase {
 
     @Before

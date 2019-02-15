@@ -13,6 +13,7 @@ buildscript {
 
 apply plugin: 'application'
 apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
@@ -61,6 +62,9 @@ ext{
     spring = '2.1.1.RELEASE'
 }
 
+sourceSets.test.java.srcDirs = []
+sourceSets.test.groovy.srcDirs = ["src/test/java", "src/test/groovy"]
+
 dependencies {
     developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$spring"
 
@@ -71,6 +75,7 @@ dependencies {
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: "$spring"
+    
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "$spring", {
         exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
         exclude group: 'org.hibernate', module: 'hibernate-core'
@@ -82,14 +87,9 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: "$spring"
 
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.10.Final'
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: springVersion
-
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     compile group: 'javax.activation', name: 'javax.activation-api', version: '1.2.0'
     compile group: 'io.jsonwebtoken', name:'jjwt', version: '0.7.0'
-    //compile 'org.springframework.security:spring-security-crypto:4.2.1.RELEASE'
-    //compile 'org.springframework.social:spring-social-core:1.1.0.RELEASE'
-    //compile 'org.springframework.social:spring-social-facebook:1.1.1.RELEASE'
 
     compile 'com.google.guava:guava:27.0.1-jre'
     compile group: 'org.javassist', name: 'javassist', version: '3.23.1-GA'
@@ -101,13 +101,19 @@ dependencies {
     compile group: 'com.google.inject', name: 'guice', version: '4.0'
     runtime group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
     runtime group: 'com.h2database', name: 'h2', version: '1.4.197'
-    testCompile 'org.springframework.boot:spring-boot-starter-test:2.1.1.RELEASE'
-    testCompile('org.junit.jupiter:junit-jupiter-api:5.3.2')
-    testCompile('org.junit.jupiter:junit-jupiter-params:5.3.2')
+
     testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.2')
-    testCompile 'org.codehaus.groovy:groovy-all:2.4.1'
-    testCompile 'org.easymock:easymock:4.0.2'
-    compileOnly 'com.newrelic.agent.java:newrelic-agent:3.14.0'
+
+
+    testCompile(
+            'junit:junit:4.12',
+            'org.codehaus.groovy:groovy-all:2.4.11',
+            'org.easymock:easymock:4.0.2',
+            'org.springframework.boot:spring-boot-starter-test:2.1.1.RELEASE',
+            'org.junit.jupiter:junit-jupiter-api:5.3.2',
+            'org.junit.jupiter:junit-jupiter-params:5.3.2',
+
+    )
 }
 
 

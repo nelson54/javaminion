@@ -23,13 +23,13 @@ class ChapelEffectTest extends DominionTestCase {
     void testEffect() {
         turn.setPhase(Phase.ACTION)
         turn.playCard(chapel, player, game)
-        turn.getPlay().clear();
-        choice = getChoice();
-        Card toTrash = choice.getCardOptions().first();
+        turn.getPlay().clear()
+        choice = getChoice()
+        Card toTrash = choice.getCardOptions().first()
 
         assertEquals "Phase is WAITING_FOR_CHOICE ", turn.getPhase(), Phase.WAITING_FOR_CHOICE
 
-        ChoiceResponse cr = new ChoiceResponse();
+        ChoiceResponse cr = new ChoiceResponse()
         cr.setCard(toTrash)
         cr.setSource(player)
 
@@ -47,15 +47,15 @@ class ChapelEffectTest extends DominionTestCase {
     }
 
     Choice getChoice(){
-        return game.getChoices().stream()
+        return player.getChoices().stream()
                 .filter( { ch -> ch.getSource().equals(card) } )
-                .findFirst().get();
+                .findFirst().get()
     }
 
     void applyChoice(Choice choice, Turn turn){
-        Card toTrash = choice.getCardOptions().first();
+        Card toTrash = choice.getCardOptions().first()
 
-        ChoiceResponse cr = new ChoiceResponse();
+        ChoiceResponse cr = new ChoiceResponse()
         cr.setCard(toTrash)
         cr.setSource(player)
 

@@ -60,9 +60,9 @@ class AccountControllerTest {
         URI uri = new URI(url);
 
         RegistrationDto registrationDto = new RegistrationDto();
-        registrationDto.setUsername("derek");
-        registrationDto.setFirstname("derek");
-        registrationDto.setEmail("derek@test.com");
+        registrationDto.setUsername("Rashad");
+        registrationDto.setFirstname("rashad");
+        registrationDto.setEmail("rashad@test.com");
         registrationDto.setPassword("testing");
 
         HttpHeaders headers = new HttpHeaders();
@@ -108,9 +108,9 @@ class AccountControllerTest {
     void register() {
 
         RegistrationDto registrationDto = new RegistrationDto();
-        registrationDto.setUsername("derek");
-        registrationDto.setFirstname("derek");
-        registrationDto.setEmail("derek@test.com");
+        registrationDto.setUsername("Kent");
+        registrationDto.setFirstname("kent");
+        registrationDto.setEmail("kent@test.com");
         registrationDto.setPassword("testing");
 
         AccountDto accountDto = accountController.register(registrationDto);
