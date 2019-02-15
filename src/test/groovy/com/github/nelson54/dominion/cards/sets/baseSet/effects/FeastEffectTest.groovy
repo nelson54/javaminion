@@ -26,7 +26,7 @@ class FeastEffectTest extends DominionTestCase {
     }
 
     void testEffect() {
-        String toGain = choice.getOptions().first()
+        Long toGain = choice.getOptions().first()
 
         assertEquals "Phase is WAITING_FOR_CHOICE ", turn.getPhase(), Phase.WAITING_FOR_CHOICE
 

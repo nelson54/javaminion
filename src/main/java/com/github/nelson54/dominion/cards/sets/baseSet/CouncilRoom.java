@@ -36,9 +36,8 @@ public class CouncilRoom extends ActionCard {
         Map<Long, Player> players = game.getPlayers();
 
         players
-                .keySet()
+                .values()
                 .stream()
-                .map(players::get)
                 .filter(p -> !p.getId().equals(player.getId()))
                 .forEach(p -> p.drawXCards(1));
     }

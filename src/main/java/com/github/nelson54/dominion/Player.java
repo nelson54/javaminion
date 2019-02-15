@@ -131,7 +131,7 @@ public class Player {
         hand.clear();
     }
 
-    public void drawXCards(int x) {
+    public void drawXCards(long x) {
         List<Card> drawnCards = new ArrayList<>();
 
         if (deck.size() < x) {
