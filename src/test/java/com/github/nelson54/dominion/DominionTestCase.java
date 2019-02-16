@@ -4,6 +4,8 @@ import com.github.nelson54.dominion.cards.GameCards;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class DominionTestCase {
     public Player player;
     public Turn turn;
 
-    @Before
+    @BeforeEach
     public void setup() {
         kingdomFactory = new KingdomFactory();
         gameFactory = new GameFactory(kingdomFactory, null);

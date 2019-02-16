@@ -1,8 +1,9 @@
 package com.github.nelson54.dominion;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -14,9 +15,9 @@ class PlayerTest extends DominionTestCase {
 
     @Test
     void testGetVictoryPoints() {
-        assertTrue(player.getVictoryPoints() == 3, "Players start the game with 3 estates");
+        assertEquals(3, player.getVictoryPoints(), "Players start the game with 3 estates");
         game.giveCardToPlayer("Province", player);
-        assertTrue(player.getVictoryPoints() == 9, "Adding victory cards effects the result");
+        assertEquals(9, player.getVictoryPoints(), "Adding victory cards effects the result");
     }
 
 }

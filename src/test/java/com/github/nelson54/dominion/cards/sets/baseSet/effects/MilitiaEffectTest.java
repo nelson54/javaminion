@@ -11,7 +11,8 @@ import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.DominionTestCase;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +24,7 @@ public class MilitiaEffectTest extends DominionTestCase {
     ComplexActionCard militia;
     Choice choice;
 
-    @Before
+    @BeforeEach
     public void setup() {
         super.setup();
         player = getCurrentPlayer();

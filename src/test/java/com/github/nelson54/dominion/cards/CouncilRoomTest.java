@@ -10,31 +10,32 @@ import com.github.nelson54.dominion.DominionTestCase;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockRunner;
 import org.easymock.Mock;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(EasyMockRunner.class)
 public class CouncilRoomTest extends DominionTestCase {;
 
-    ActionCard councilRoom;
-    Turn turn;
-
-    @Mock
+    private ActionCard councilRoom;
+    private Turn turn;
     private Game game;
-
-    @Mock
     private Player player1;
-
-    @Mock
     private Player player2;
 
-    @Before
+    CouncilRoomTest() {
+        this.game = EasyMock.createMock(Game.class);
+        this.player1 = EasyMock.createMock(Player.class);
+        this.player2 = EasyMock.createMock(Player.class);
+    }
+
+    @BeforeEach
     public void setup() {
         councilRoom = new CouncilRoom(1L);
         councilRoom.setOwner(player1);
@@ -69,6 +70,6 @@ public class CouncilRoomTest extends DominionTestCase {;
         EasyMock.replay(player2);
         councilRoom.apply(player1, game);
 
-        assertTrue(turn.getBuyPool() == 2, "player has 2 buys");
+        assertEquals(2, turn.getBuyPool(), "player has 2 buys");
     }
 }

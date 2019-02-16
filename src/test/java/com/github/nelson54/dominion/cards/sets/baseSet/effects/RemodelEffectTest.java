@@ -9,8 +9,8 @@ import com.github.nelson54.dominion.cards.types.ComplexActionCard;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.DominionTestCase;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.*;
 
@@ -19,7 +19,7 @@ public class RemodelEffectTest extends DominionTestCase {
     ComplexActionCard remodel;
     Choice choice;
 
-    @Before
+    @BeforeEach
     public void setup() {
         super.setup();
         Turn turn = game.getTurn();
