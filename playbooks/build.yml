@@ -1,0 +1,11 @@
+---
+- hosts: webservers
+  remote_user: root
+  tasks:
+  - name: build
+      command: docker-compose -f /root/javaminion/docker-compose.yml build --no-cache > /root/javaminion/logs/build.log
+      ignore_errors: yes
+  - name: fetching test result html
+    fetch:
+      src: /root/javaminion/logs/build.log
+      dest: ../logs/remote-build.log
