@@ -15,7 +15,7 @@
   - name: prune docker
     command: docker system prune -f
   - name: build
-    command: docker-compose -f /root/javaminion/docker-compose.yml build --no-cache
+    command: docker-compose -f /root/javaminion/docker-compose.yml build --no-cache > /root/javaminion/logs/build.log
   - name: start
     command: docker-compose -f /root/javaminion/docker-compose.yml up -d
   - name: copy test log to host
