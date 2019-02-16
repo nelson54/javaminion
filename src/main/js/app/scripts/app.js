@@ -36,7 +36,7 @@ angular
 
             $http.defaults.headers.common.Authorization = jwtService.getBearer();
 
-            let RecommendedCards = $resource(baseUrl+'/com.github.nelson54.dominion/recommended',
+            let RecommendedCards = $resource(baseUrl+'/dominion/recommended',
               {
               },
               {
@@ -75,7 +75,7 @@ angular
             let defer = $q.defer();
             let game = $route.current.params.game;
 
-            let Game = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId',
+            let Game = $resource(baseUrl+'/dominion/:gameId',
               {
               },
               {
@@ -110,7 +110,7 @@ angular
         resolve: {
           game : function($route, $resource, $q){
             var defer = $q.defer();
-            var Game = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId');
+            var Game = $resource(baseUrl+'/dominion/:gameId');
             var game = $route.current.params.game;
 
             Game.get({gameId : game}, function(response){
@@ -135,7 +135,7 @@ angular
     let defer = $q.defer();
     let game = $route.current.params.game;
 
-    let Game = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId',
+    let Game = $resource(baseUrl+'/dominion/:gameId',
       {
       },
       {
