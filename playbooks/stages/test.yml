@@ -6,7 +6,7 @@
   - name: start mongo
     command: docker-compose -f /root/javaminion/docker-compose.yml up -d mongo
   - name: testing javaminion
-    command: docker-compose -f /root/javaminion/docker-compose.yml exec app ./gradlew test
+    command: docker-compose -f /root/javaminion/docker-compose.yml run app ./gradlew test
   - name: copy test log to host
     command: /root/javaminion/scripts/copy_test_log_from_docker.sh
   - name: fetching test result html

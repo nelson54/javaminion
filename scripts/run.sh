@@ -8,4 +8,4 @@ cp -R * /app/src/main/resources/public
 
 cd /app
 
-bash
+./gradlew bootRun
