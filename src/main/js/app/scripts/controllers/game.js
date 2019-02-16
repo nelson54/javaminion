@@ -104,19 +104,19 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.shuffle = function(){
-      let Game = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId/shuffle');
+      let Game = $resource(baseUrl+'/dominion/:gameId/shuffle');
       Game.get({gameId : game.id, playerId : playerId}, function(game){
         updateData(game);
       });
     };
 
     $scope.drawHand = function(){
-      let Game = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId/draw');
+      let Game = $resource(baseUrl+'/dominion/:gameId/draw');
       Game.get({gameId : game.id, playerId : playerId}, updateData);
     };
 
     $scope.discardHand = function(){
-      let Game = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId/discard');
+      let Game = $resource(baseUrl+'/dominion/:gameId/discard');
       Game.get({gameId : game.id, playerId : playerId}, updateData);
     };
 
@@ -125,7 +125,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.purchase = function(card){
-      let Purchase = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId/purchase',
+      let Purchase = $resource(baseUrl+'/dominion/:gameId/purchase',
         {},
         {
           get: {
@@ -140,7 +140,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.playCard = function(card){
-      let Play = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId/play',
+      let Play = $resource(baseUrl+'/dominion/:gameId/play',
         {},
         {post: {headers: {'Authorization': jwtService.getBearer()}}});
 
@@ -150,7 +150,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.nextPhase = function(card){
-      let EndPhase = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId/next-phase',
+      let EndPhase = $resource(baseUrl+'/dominion/:gameId/next-phase',
         {},
         {post:
             {
@@ -174,7 +174,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.choose = function(game, player, choose, response){
-      let Choice = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId/choice',
+      let Choice = $resource(baseUrl+'/dominion/:gameId/choice',
         {},
         {
           post: {
@@ -200,7 +200,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.chooseDone = function(game, player, choose){
-      let Choice = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId/choice',
+      let Choice = $resource(baseUrl+'/dominion/:gameId/choice',
         {},
         {get: {headers: {'Authorization': jwtService.getBearer()}}});
 
@@ -260,7 +260,7 @@ angular.module('dominionFrontendApp')
     };
 
     $interval(() => {
-      let Game = $resource(baseUrl+'/com.github.nelson54.dominion/:gameId', {
+      let Game = $resource(baseUrl+'/dominion/:gameId', {
         get: {
           headers: {'Authorization': jwtService.getBearer()}
         }

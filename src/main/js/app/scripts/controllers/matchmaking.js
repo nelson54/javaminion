@@ -7,7 +7,7 @@ angular.module('dominionFrontendApp')
       headers: {'Authorization': jwtService.getBearer()}
     };
 
-    let Match = $resource(baseUrl + '/com.github.nelson54.dominion/matches',
+    let Match = $resource(baseUrl + '/dominion/matches',
       {
       },
       {
@@ -23,7 +23,7 @@ angular.module('dominionFrontendApp')
           headers: matchHttpConfig.headers
         },
         join: {
-          url: '/com.github.nelson54.dominion/matches/:matchId',
+          url: '/dominion/matches/:matchId',
           action: 'join',
           method: 'patch',
           headers: matchHttpConfig.headers,

@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController()
-@RequestMapping("/com/github/nelson54/dominion")
+@RequestMapping("/dominion")
 public class MatchController {
 
 

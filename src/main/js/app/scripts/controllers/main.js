@@ -10,8 +10,8 @@
 angular.module('dominionFrontendApp')
   .controller('MainCtrl', function ($scope, $http, $resource, $route, baseUrl, recommendedCards) {
 
-    var Match = $resource(baseUrl+'/com.github.nelson54.dominion/matches/', null, {'update': { method:'PATCH' }});
-    var Game = $resource(baseUrl+'/com.github.nelson54.dominion/games/');
+    var Match = $resource(baseUrl+'//matches/', null, {'update': { method:'PATCH' }});
+    var Game = $resource(baseUrl+'//games/');
 
     $scope.matches = [];
     $scope.games = [];
