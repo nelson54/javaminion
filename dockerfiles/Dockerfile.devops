@@ -1,0 +1,10 @@
+FROM debian:stretch-slim
+
+RUN apt -y install ansible gcc python-dev libffi-dev libssl-dev tmux python3
+RUN curl https://raw.githubusercontent.com/nelson54/snippets/master/.git_profile > ~/.bashrc
+RUN curl https://raw.githubusercontent.com/nelson54/snippets/master/.vimrc > ~/.vimrc
+RUN curl https://raw.githubusercontent.com/nelson54/snippets/master/.tmux.config > ~/.tmux.config
+
+RUN apt-get install -y nodejs git vim tmux
+
+CMD bash
