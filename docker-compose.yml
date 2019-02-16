@@ -31,7 +31,6 @@ services:
   app:
     build:
       context: ./
-    command: ./gradlew clean test
     volumes:
       - ./src/main/java:/app/src/main/java
       - ./src/test/java:/app/src/test/java

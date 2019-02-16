@@ -16,10 +16,14 @@
     command: docker system prune -f
   - name: build
     command: docker-compose -f /root/javaminion/docker-compose.yml build --no-cache > /root/javaminion/logs/build.log
-  - name: start
-    command: docker-compose -f /root/javaminion/docker-compose.yml up -d
+  - name: start mongo
+    command: docker-compose -f /root/javaminion/docker-compose.yml up mongo -d
+  - name: testing javaminion
+    command: docker-compose -f /root/javaminion/docker-compose.yml run app ./gradlew test
   - name: copy test log to host
     command: docker cp $(docker ps -a -q -f "name=javaminion_app" | head -n 1):/app/build/reports/tests/test/index.html /root/
   - fetch:
-      src: /root/index.html
-      dest: ../logs/test-result.html
+    src: /root/index.html
+    dest: ../logs/test-result.html
+  - name: testing javaminion
+    command: docker-compose -f /root/javaminion/docker-compose.yml up app -d
