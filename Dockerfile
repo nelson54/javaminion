@@ -98,4 +98,4 @@ COPY ./ /app
 RUN bash /app/run-build.sh
 
 #CMD bash /app/run.sh
-CMD bash
+CMD tail -f /dev/null
