@@ -8,7 +8,7 @@
   - name: testing javaminion
     command: docker-compose -f /root/javaminion/docker-compose.yml exec app ./gradlew test
   - name: copy test log to host
-    command: docker cp $(docker ps -a -q -f "name=javaminion_app" | head -n 1):/app/build/reports/tests/test/index.html /root/
+    command: /root/javaminion/copy_test_log_from_docker.sh
   - name: fetching test result html
     fetch:
       src: /root/index.html
