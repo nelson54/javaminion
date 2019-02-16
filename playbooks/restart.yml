@@ -9,4 +9,4 @@
     - name: stop
       command: docker-compose -f /root/javaminion/docker-compose.yml stop
     - name: start
-      command: docker-compose -f /root/javaminion/docker-compose.yml up -d
+      command: docker-compose -f /root/javaminion/docker-compose.yml -d up

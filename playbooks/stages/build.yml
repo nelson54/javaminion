@@ -1,11 +1,9 @@
 ---
 - hosts: webservers
   remote_user: root
+  gather_facts: no
   tasks:
-  - name: build
+  - name: building docker image
     command: docker-compose -f /root/javaminion/docker-compose.yml build --no-cache
-    ignore_errors: yes
-  - name: fetching test result html
-    fetch:
-      src: /root/javaminion/logs/build.log
-      dest: ../logs/remote-build.log
+  - name: running gradle build
+    command: docker-compose -f /root/javaminion/docker-compose.yml run app ./gradlew compileJava

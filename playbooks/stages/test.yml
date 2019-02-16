@@ -1,6 +1,7 @@
 ---
 - hosts: webservers
   remote_user: root
+  gather_facts: no
   tasks:
   - name: start mongo
     command: docker-compose -f /root/javaminion/docker-compose.yml up -d mongo
