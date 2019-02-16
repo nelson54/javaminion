@@ -1,21 +1,6 @@
 ---
-- import_playbook: clean.yml
-- import_playbook: clone.yml
-- import_playbook: build.yml
-- import_playbook: test.yml
-- import_playbook: start.yml
-
-  - name: build
-    command: docker-compose -f /root/javaminion/docker-compose.yml build --no-cache > /root/javaminion/logs/build.log
-  - name: start mongo
-    command: docker-compose -f /root/javaminion/docker-compose.yml up -d mongo
-  - name: testing javaminion
-    command: docker-compose -f /root/javaminion/docker-compose.yml run app ./gradlew test
-  - name: copy test log to host
-    command: docker cp $(docker ps -a -q -f "name=javaminion_app" | head -n 1):/app/build/reports/tests/test/index.html /root/
-  - name: fetching test result html
-    fetch:
-      src: /root/index.html
-      dest: ../logs/test-result.html
-  - name: testing javaminion
-    command: docker-compose -f /root/javaminion/docker-compose.yml up -d app
+- import_playbook: ./stages/clean.yml
+- import_playbook: ./stages/clone.yml
+- import_playbook: ./stages/build.yml
+- import_playbook: ./stages/test.yml
+- import_playbook: ./stages/start.yml

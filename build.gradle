@@ -109,7 +109,11 @@ dependencies {
     )
 }
 
-
+subprojects {
+    tasks.withType(Test) {
+        maxParallelForks = Runtime.runtime.availableProcessors()
+    }
+}
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
