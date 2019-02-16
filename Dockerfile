@@ -95,7 +95,6 @@ RUN npm install -g sass bower
 
 COPY ./ /app
 
-RUN bash /app/run-build.sh
+RUN bash /app/scripts/run-build.sh
 
-#CMD bash /app/run.sh
-CMD tail -f /dev/null
+CMD bash /app/scripts/run.sh

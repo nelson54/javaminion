@@ -5,7 +5,3 @@
   tasks:
   - name: building docker image
     command: docker-compose -f /root/javaminion/docker-compose.yml build --no-cache
-  - name: starting application
-    command: docker-compose -f /root/javaminion/docker-compose.yml up -d app
-  - name: compiling java
-    command: docker-compose -f /root/javaminion/docker-compose.yml exec app ./gradlew compileJava

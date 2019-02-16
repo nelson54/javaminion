@@ -4,4 +4,4 @@
   gather_facts: no
   tasks:
   - name: running javaminion
-    command: docker-compose -f /root/javaminion/docker-compose.yml run -d app ./gradlew bootRun
+    command: docker-compose -f /root/javaminion/docker-compose.yml up -d app
