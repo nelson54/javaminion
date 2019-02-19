@@ -90,7 +90,7 @@ public class Player {
 
     public void discard(Set<Card> cards){
         String list = cards.stream()
-                .map(Card::getId)
+                .map(Card::getName)
                 .map(Object::toString)
                 .collect(Collectors.joining(", "));
 
