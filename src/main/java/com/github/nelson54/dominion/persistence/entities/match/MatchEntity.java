@@ -90,7 +90,7 @@ public class MatchEntity {
                 .map((participant)->AccountEntity.ofAccount(participant.getAccount()))
                 .collect(Collectors.toList());
 
-        if(match.getWinner().getAccount() != null) {
+        if(match.getWinner() != null) {
             matchEntity.winner = AccountEntity.ofAccount(match.getWinner().getAccount());
         }
 
