@@ -1,5 +1,6 @@
 package com.github.nelson54.dominion.persistence.entities.match;
 
+import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.GameCardSet;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
@@ -40,6 +41,10 @@ public class MatchEntity {
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn
     private List<CardTypeReferenceEntity> gameCards;
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn
+    private AccountEntity winner;
 
     public MatchEntity() {}
 
@@ -84,6 +89,8 @@ public class MatchEntity {
         matchEntity.players = match.getParticipants().stream()
                 .map((participant)->AccountEntity.ofAccount(participant.getAccount()))
                 .collect(Collectors.toList());
+
+        matchEntity.winner = AccountEntity.ofAccount(match.getWinner().getAccount());
 
         matchEntity.turnOrder = match.getTurnOrder()
                 .stream()

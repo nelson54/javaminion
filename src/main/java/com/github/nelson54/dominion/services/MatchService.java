@@ -6,6 +6,7 @@ import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
+import com.github.nelson54.dominion.match.MatchState;
 import com.github.nelson54.dominion.persistence.MatchRepository;
 import com.github.nelson54.dominion.persistence.entities.match.MatchEntity;
 import org.jboss.logging.Logger;
@@ -82,6 +83,21 @@ public class MatchService {
 
     }
 
+    public void endGame(Game game) {
+        matchRepository.findById(game.getId())
+                .map(MatchEntity::toMatch)
+                .map(match -> {
+                    if(match.getMatchState().equals(MatchState.FINISHED)) {
+                        return null;
+                    }
+
+                    match.setMatchState(MatchState.FINISHED);
+
+                    return MatchEntity.ofMatch(match);
+                })
+                .map((matchEntity) -> matchRepository.save(matchEntity));
+    }
+
     public void prepareToPlay() {
 
     }
@@ -93,4 +109,6 @@ public class MatchService {
     private Match save(Match match) {
         return match;
     }
+
+
 }

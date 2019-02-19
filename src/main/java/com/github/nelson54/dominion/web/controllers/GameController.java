@@ -86,7 +86,9 @@ public class GameController {
         Player player = game.getPlayers().get(account.getId());
         Card purchasedCard = game.getAllCards().get(card.getId());
 
-        matchService.applyCommand(game, Command.buy(game, player, purchasedCard));
+        game = matchService.applyCommand(game, Command.buy(game, player, purchasedCard));
+
+        checkForGameOver(game);
 
         return game;
     }
@@ -109,6 +111,8 @@ public class GameController {
             throw new IllegalStateException();
         }
 
+        checkForGameOver(game);
+
         return game;
     }
 
@@ -128,6 +132,8 @@ public class GameController {
 
         matchService.applyCommand(game, Command.choice(game, player, choiceResponse));
 
+        checkForGameOver(game);
+
         return game;
     }
 
@@ -143,12 +149,20 @@ public class GameController {
 
         matchService.applyCommand(game, Command.endPhase(game, player));
 
+        checkForGameOver(game);
+
         return game;
     }
 
     Account getAccount() {
         return accountService.getAuthorizedAccount()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+    }
+
+    private void checkForGameOver(Game game) {
+        if (game.getGameOver()) {
+            matchService.endGame(game);
+        }
     }
 
 }

@@ -11,6 +11,7 @@ public class Match {
     private Long seed;
     private Integer playerCount;
     private List <MatchParticipant> participants;
+    private MatchParticipant winner;
     private MatchState matchState;
     private GameCardSet cards;
 
@@ -93,5 +94,13 @@ public class Match {
 
     boolean hasAccount(Account account) {
         return getTurnOrder().contains(account.getId());
+    }
+
+    public MatchParticipant getWinner() {
+        return winner;
+    }
+
+    public void setWinner(MatchParticipant winner) {
+        this.winner = winner;
     }
 }
