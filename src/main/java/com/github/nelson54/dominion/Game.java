@@ -185,6 +185,16 @@ public class Game {
         this.players = players;
     }
 
+    public Player getWinningPlayer() {
+        if(this.gameOver) {
+            return players.values()
+                    .stream()
+                    .max(Comparator.comparing(player -> ((Long) player.getVictoryPoints())))
+                    .get();
+        }
+        return null;
+    }
+
     public Kingdom getKingdom() {
         return kingdom;
     }
