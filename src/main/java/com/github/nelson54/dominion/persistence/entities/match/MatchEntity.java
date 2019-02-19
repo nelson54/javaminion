@@ -90,7 +90,9 @@ public class MatchEntity {
                 .map((participant)->AccountEntity.ofAccount(participant.getAccount()))
                 .collect(Collectors.toList());
 
-        matchEntity.winner = AccountEntity.ofAccount(match.getWinner().getAccount());
+        if(match.getWinner().getAccount() != null) {
+            matchEntity.winner = AccountEntity.ofAccount(match.getWinner().getAccount());
+        }
 
         matchEntity.turnOrder = match.getTurnOrder()
                 .stream()
