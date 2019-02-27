@@ -23,7 +23,9 @@
 - [ ] Implement discard preferences for AI    
 - [x] End turn if no additional actions in pool or cards in hand after playing ComplexActionCard's
 
+# Port Forwarding
 
+ssh -L 8080:142.93.14.62:8080 -L 8081:142.93.14.62:8081 -L 8082:142.93.14.62:8082 root@142.93.14.62
 
 ```bash
 cd javaminion

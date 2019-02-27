@@ -1,0 +1,10 @@
+---
+- hosts: devops
+  remote_user: root
+  tasks:
+    - name: run nexus
+      command: docker run --name nexus -d -p 8081:8081 sonatype/nexus3
+    - name: run jenkins
+      command: docker run --name jenkins-lts -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
+    - name: run nagios
+      command: docker run --name nagios4 -p 8082:80 jasonrivers/nagios:latest
