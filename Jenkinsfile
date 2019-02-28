@@ -5,7 +5,7 @@ pipeline {
     stage('ansible redeploy') {
       steps {
         container('terraform') {
-          sh 'd-playbook ./playbooks/redeploy.yml'
+          sh 'ansible-playbook ./playbooks/redeploy.yml'
         }
       }
     }
