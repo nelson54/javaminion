@@ -13,3 +13,9 @@
     fetch:
       src: /root/index.html
       dest: ../../logs/buld-info
+  - name: copy test-results
+      src: /root/test-results.tar.gz
+      dest: ../../archives/
+  - name: copy test-reports
+      src: /root/test-reports.tar.gz
+      dest: ../../archives/
