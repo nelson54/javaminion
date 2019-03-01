@@ -5,3 +5,17 @@
   tasks:
   - name: running javaminion
     command: docker-compose -f /root/javaminion/docker-compose.yml up -d app
+  - name: copy test log to host
+    command: /root/javaminion/scripts/copy_test_log_from_docker.sh
+  - name: fetching test result html
+    fetch:
+      src: /root/index.html
+      dest: ../../logs/buld-info
+  - name: copy test-results
+    fetch:
+      src: /root/test-results.tar.gz
+      dest: ../../archives/
+  - name: copy test-reports
+    fetch:
+      src: /root/test-reports.tar.gz
+      dest: ../../archives/
