@@ -40,6 +40,13 @@ pipeline {
         junit '/test/*.xml'
       }
     }
+    stage('Local Cleanup') {
+      steps {
+        sh 'rm -Rf archives/'
+        sh 'rm -Rf test/'
+        sh 'rm -Rf tests/'
+      }
+    }
     stage('Start') {
       steps {
         sh 'ansible-playbook ./playbooks/stages/start.yml'
