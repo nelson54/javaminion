@@ -24,9 +24,9 @@ pipeline {
         sh 'tar -zxvf archives/*/root/archives/test-results.tar.gz'
         sh 'tar -zxvf archives/*/root/archives/test-reports.tar.gz'
 
-        archive (includes: '/tests/test/*.html')
-        archive (includes: '/tests/test/packages/*.html')
-        archive (includes: '/tests/test/classes/*.html')
+        archive (includes: './tests/test/*.html')
+        archive (includes: './tests/test/packages/*.html')
+        archive (includes: './tests/test/classes/*.html')
 
         publishHTML (target: [
               allowMissing: false,
