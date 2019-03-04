@@ -14,4 +14,4 @@
   - name: copy test-reports
     fetch:
       src: /root/archives/test-reports.tar.gz
-      dest: ../../archives/dds
+      dest: ../../archives/
