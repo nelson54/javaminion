@@ -26,6 +26,14 @@
 #For port forwarding to jenkins server:
 ```ssh -L 8080:142.93.14.62:8080 -L 8081:142.93.14.62:8081 -L 8082:142.93.14.62:8082 root@142.93.14.62```
 
+## Starting Jenkins
+```bash
+docker run --name jenkins -p 8080:8080 -p 50000:50000 -v $HOME/jenkins_home:/var/jenkins_home jenkins/jenkins:lts && \
+docker run --name nexus -d -p 8081:8081 sonatype/nexus3 && \ 
+docker run --name nagios4 -p 8082:80 jasonrivers/nagios:latest
+
+```
+
 ```bash
 cd javaminion
 

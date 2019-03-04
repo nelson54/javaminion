@@ -5,5 +5,5 @@
   tasks:
   - name: checkout
     git:
-      repo: 'git@github.com:nelson54/javaminion.git'
+      repo: 'git@github.com:nelson54/javaminion.git' accept_hostkey=yes
       dest: /root/javaminion
