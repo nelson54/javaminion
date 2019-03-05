@@ -21,9 +21,11 @@ pipeline {
         sh 'ansible-playbook -vvv ./playbooks/stages/test.yml'
         sh 'tar -zxvf archives/*/root/archives/test-results.tar.gz'
         sh 'tar -zxvf archives/*/root/archives/test-reports.tar.gz'
-        archive './tests/test/*.html'
-        archive './tests/test/packages/*.html'
-        archive './tests/test/classes/*.html'
+
+        archive '**/test/*.html'
+        archive '**/packages/*.html'
+        archive '**/classes/*.html'
+
         publishHTML([
                         allowMissing: false,
                         alwaysLinkToLastBuild: false,
@@ -32,6 +34,7 @@ pipeline {
                         reportFiles: 'index.html',
                         reportName: "Test report"
                       ])
+
           junit '**/TEST-*.xml'
         }
       }
