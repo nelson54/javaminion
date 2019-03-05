@@ -1,11 +1,7 @@
 FROM jenkins/jenkins:lts
-
-
-RUN chmod 600 ~/.ssh -R
+USER root
 RUN echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" >> /etc/apt/sources.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 RUN apt update
-RUN apt install software-properties-common
-RUN apt-add-repository ppa:ansible/ansible -y
-RUN apt update
-RUN apt install ansible vim
+RUN apt install ansible vim -y
 

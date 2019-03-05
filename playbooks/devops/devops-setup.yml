@@ -1,10 +1,34 @@
 ---
-- hosts: devops
+- hosts: jenkins
   remote_user: root
   tasks:
-    - name: run nexus
-      command: docker run --name nexus -d -p 8081:8081 sonatype/nexus3
-    - name: run jenkins
-      command: docker run --name jenkins-lts -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
-    - name: run nagios
-      command: docker run --name nagios4 -p 8082:80 jasonrivers/nagios:latest
+    - name: Add Apt signing key on remote server to keyring
+      apt_key:
+        id: 0EBFCD88
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: fingerprint
+      command: apt-key fingerprint 0EBFCD88
+    - name: add repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    - name: install docker
+      apt:
+        name: "{{ packages }}"
+        update_cache: yes
+      vars:
+        packages:
+          - docker-ce
+          - docker-ce-cli
+          - docker-compose
+          - containerd.io
+    - name: copy jenkins docker-compose
+      copy:
+        src: ../../devops/docker-compose.yml
+        dest: /root/docker-compose.yml
+    - name: copy jenkins docker file
+      copy:
+        src: ../../devops/jenkins.dockerfile
+        dest: /root/jenkins.dockerfile
+    - name: run docker
+      command: docker-compose -f /root/docker-compose.yml up -d
