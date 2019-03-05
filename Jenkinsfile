@@ -32,7 +32,7 @@ pipeline {
                         reportFiles: 'index.html',
                         reportName: "Test report"
                       ])
-          junit './test/*.xml'
+          junit '**/TEST-*.xml'
         }
       }
       stage('Local Cleanup') {
