@@ -7,6 +7,8 @@
     command: docker-compose -f /root/javaminion/docker-compose.yml up -d mongo
   - name: testing javaminion
     command: docker-compose -f /root/javaminion/docker-compose.yml run app bash -c "./gradlew test && ./scripts/create-test-archives.sh"
+    register: checkout
+  - debug: var=checkout.stdout
   - name: copy test-results
     fetch:
       src: /root/archives/test-results.tar.gz

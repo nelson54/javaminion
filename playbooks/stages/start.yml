@@ -5,3 +5,5 @@
   tasks:
   - name: running javaminion
     command: docker-compose -f /root/javaminion/docker-compose.yml up -d app
+    register: checkout
+  - debug: var=checkout.stdout_lines
