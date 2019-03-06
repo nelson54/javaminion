@@ -11,17 +11,19 @@ pipeline {
         ansiblePlaybook(playbook: './playbooks/stages/clean.yml')
       }
     }
+
     stage('Clone') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/clone.yml')
       }
     }
-    stage('Build') {
 
+    stage('Build') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/build.yml')
       }
     }
+
     stage('Test') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/test.yml')
@@ -44,17 +46,18 @@ pipeline {
           junit '**/TEST-*.xml'
         }
       }
-      stage('Local Cleanup') {
-        steps {
-          sh 'rm -Rf archives/'
-          sh 'rm -Rf test/'
-          sh 'rm -Rf tests/'
-        }
+    }
+    stage('Local Cleanup') {
+      steps {
+        sh 'rm -Rf archives/'
+        sh 'rm -Rf test/'
+        sh 'rm -Rf tests/'
       }
-      stage('Start') {
-        steps {
-          ansiblePlaybook(playbook: './playbooks/stages/start.yml')
-        }
+    }
+    stage('Start') {
+      steps {
+        ansiblePlaybook(playbook: './playbooks/stages/start.yml')
       }
     }
   }
+}
