@@ -44,9 +44,9 @@ pipeline {
                       ])
 
           junit '**/TEST-*.xml'
-        }
       }
     }
+
     stage('Local Cleanup') {
       steps {
         sh 'rm -Rf archives/'
