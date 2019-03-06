@@ -1,34 +1,30 @@
 pipeline {
   agent any
+
+  options {
+    ansiColor('xterm')
+  }
+
   stages {
     stage('Clean') {
       steps {
-        ansiColor('xterm') {
-          sh 'ansible-playbook -vvv ./playbooks/stages/clean.yml'
-        }
+        sh 'ansible-playbook -vvv ./playbooks/stages/clean.yml'
       }
     }
     stage('Clone') {
-      ansiColor('xterm') {
-        steps {
-          sh 'ansible-playbook -vvv ./playbooks/stages/clone.yml'
-        }
+      steps {
+        sh 'ansible-playbook -vvv ./playbooks/stages/clone.yml'
       }
     }
     stage('Build') {
 
       steps {
-        ansiColor('xterm') {
-          sh 'ansible-playbook -vvv ./playbooks/stages/build.yml'
-        }
+        sh 'ansible-playbook -vvv ./playbooks/stages/build.yml'
       }
     }
     stage('Test') {
       steps {
-        ansiColor('xterm') {
-          sh 'ansible-playbook -vvv ./playbooks/stages/test.yml'
-        }
-
+        sh 'ansible-playbook -vvv ./playbooks/stages/test.yml'
         sh 'tar -zxvf archives/*/root/archives/test-results.tar.gz'
         sh 'tar -zxvf archives/*/root/archives/test-reports.tar.gz'
 
@@ -57,9 +53,7 @@ pipeline {
       }
       stage('Start') {
         steps {
-          ansiColor('xterm') {
-            sh 'ansible-playbook ./playbooks/stages/start.yml'
-          }
+          sh 'ansible-playbook ./playbooks/stages/start.yml'
         }
       }
     }
