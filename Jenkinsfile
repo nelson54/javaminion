@@ -3,13 +3,13 @@ pipeline {
   stages {
     stage('Clean') {
       steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
+        ansiColor('xterm') {
           sh 'ansible-playbook -vvv ./playbooks/stages/clean.yml'
         }
       }
     }
     stage('Clone') {
-      wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
+      ansiColor('xterm') {
         steps {
           sh 'ansible-playbook -vvv ./playbooks/stages/clone.yml'
         }
@@ -18,14 +18,14 @@ pipeline {
     stage('Build') {
 
       steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
+        ansiColor('xterm') {
           sh 'ansible-playbook -vvv ./playbooks/stages/build.yml'
         }
       }
     }
     stage('Test') {
       steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
+        ansiColor('xterm') {
           sh 'ansible-playbook -vvv ./playbooks/stages/test.yml'
         }
 
@@ -57,7 +57,7 @@ pipeline {
       }
       stage('Start') {
         steps {
-          wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
+          ansiColor('xterm') {
             sh 'ansible-playbook ./playbooks/stages/start.yml'
           }
         }
