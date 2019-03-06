@@ -31,8 +31,6 @@ pipeline {
         sh 'tar -zxvf archives/*/root/archives/test-reports.tar.gz'
 
         archive '**/test/*.html'
-        archive '**/packages/*.html'
-        archive '**/classes/*.html'
 
         publishHTML([
                         allowMissing: false,
@@ -43,7 +41,7 @@ pipeline {
                         reportName: "Test report"
                       ])
 
-          junit '**/TEST-*.xml'
+        junit '**/TEST-*.xml'
       }
     }
 
