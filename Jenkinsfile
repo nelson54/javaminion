@@ -20,18 +20,7 @@ pipeline {
 
     stage('Build Node') {
       steps {
-        sh 'cd ./src/main/js; npm install --ignore-scripts'
-        sh 'cd ./src/main/js/; bower install'
-        sh 'rm -Rf /build/*'
-
-        sh 'cd ./src/main/js/; mkdir dist'
-        sh 'cd ./src/main/js/; mkdir ./dist/styles'
-        sh 'cd ./src/main/js/; ./node_modules/grunt-cli/bin/grunt build'
-        sh 'cd ./src/main/js/; sass ./app/styles/main.scss ./dist/styles/main.css'
-
-        sh 'cd ./src/main/js/; cp -R ./app/images ./dist/images'
-        sh 'cd ./src/main/js/; cp -R .tmp/concat/scripts ./dist/scripts'
-        sh 'cd ./src/main/js/; tar -zcvf /build/front-end.tar.gz ./dist'
+        ansiblePlaybook(playbook: './playbooks/stages/node-build.yml')
       }
     }
 
