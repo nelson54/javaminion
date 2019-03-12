@@ -11,7 +11,7 @@ cd ./dist
 cp -R * /app/src/main/resources/public
 cd ../
 
-rm -Rf /build
-mkdir /build
+rm -Rf /build/*
+
 
 tar -zcvf /build/front-end.tar.gz ./dist
