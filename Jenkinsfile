@@ -25,9 +25,9 @@ pipeline {
         sh 'rm -Rf /build/*'
 
         sh 'cd ./src/main/js/; mkdir dist'
-        sh 'cd ./src/main/js/; mkdir ./dist/styles;'
-        sh 'cd ./src/main/js/; ./node_modules/grunt-cli/bin/grunt build;'
-        sh 'cd ./src/main/js/; sass ./app/styles/main.scss ./dist/styles/main.css;
+        sh 'cd ./src/main/js/; mkdir ./dist/styles'
+        sh 'cd ./src/main/js/; ./node_modules/grunt-cli/bin/grunt build'
+        sh 'cd ./src/main/js/; sass ./app/styles/main.scss ./dist/styles/main.css'
 
         sh 'cd ./src/main/js/; cp -R ./app/images ./dist/images'
         sh 'cd ./src/main/js/; cp -R .tmp/concat/scripts ./dist/scripts'
