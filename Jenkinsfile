@@ -20,7 +20,7 @@ pipeline {
 
     stage('Build Node') {
       steps {
-        sh 'cd ./src/main/js; npm install'
+        sh 'cd ./src/main/js; npm install --ignore-scripts'
         sh 'cd ./src/main/js/; bower install'
         sh 'rm -Rf /build/*'
 
