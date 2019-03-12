@@ -1,6 +1,9 @@
 #!/bin/bash
 cd ../src/main/js/
 
+npm-cache install
+bower install --allow-root --offline
+
 rm -Rf ./dist/*;
 
 ./node_modules/grunt-cli/bin/grunt build;

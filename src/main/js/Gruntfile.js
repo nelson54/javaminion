@@ -41,10 +41,10 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         }
       },
-      jsTest: {
-        files: ['test/spec/{,*/}*.js'],
-        tasks: ['newer:jshint:test', 'karma']
-      },
+      //jsTest: {
+      //  files: ['test/spec/{,*/}*.js'],
+      //  tasks: ['newer:jshint:test', 'karma']
+      //},
       /*compass: {
         files: ['<%= yeoman.app %>/styles/{,*!/}*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer', 'dist']
@@ -205,22 +205,22 @@ module.exports = function (grunt) {
         src: ['<%= yeoman.app %>/index.html'],
         ignorePath:  /\.\.\//
       },
-      test: {
-        devDependencies: true,
-        src: '<%= karma.unit.configFile %>',
-        ignorePath:  /\.\.\//,
-        fileTypes:{
-          js: {
-            block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
-              detect: {
-                js: /'(.*\.js)'/gi
-              },
-              replace: {
-                js: '\'{{filePath}}\','
-              }
-            }
-          }
-      },
+      //test: {
+      //  devDependencies: true,
+      //  src: '<%= karma.unit.configFile %>',
+      //  ignorePath:  /\.\.\//,
+      //  fileTypes:{
+      //    js: {
+      //      block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
+      //        detect: {
+      //          js: /'(.*\.js)'/gi
+      //        },
+      //        replace: {
+      //          js: '\'{{filePath}}\','
+      //        }
+      //      }
+      //    }
+      //},
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         ignorePath: /(\.\.\/){1,2}bower_components\//
@@ -474,7 +474,7 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
+    //'karma'
   ]);
 
   grunt.registerTask('build', [
@@ -496,7 +496,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:jshint',
-    'test',
+    //'test',
     'build'
   ]);
 };
