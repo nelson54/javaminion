@@ -20,7 +20,7 @@ pipeline {
 
     stage('Build Node') {
       steps {
-        sh 'npm --prefix ./src/main/js install'
+        sh 'cd ./src/main/js; npm install'
         sh 'cd ./src/main/js/; bower install'
         sh 'rm -Rf /build/*'
 
