@@ -38,15 +38,6 @@ pipeline {
 
         archive '**/test/*.html'
 
-        publishHTML([
-                        allowMissing: false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll: true,
-                        reportDir: '/tests/test/',
-                        reportFiles: 'index.html',
-                        reportName: "Test report"
-                      ])
-
         junit '**/TEST-*.xml'
       }
     }
