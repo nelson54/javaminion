@@ -56,7 +56,7 @@ public class Player {
 
 
     @JsonProperty
-    long getVictoryPoints() {
+    public long getVictoryPoints() {
         return getAllCards()
                 .values().stream()
                 .filter(card -> card instanceof VictoryCard)

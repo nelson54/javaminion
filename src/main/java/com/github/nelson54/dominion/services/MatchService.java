@@ -3,18 +3,20 @@ package com.github.nelson54.dominion.services;
 import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.GameFactory;
+import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.match.MatchState;
 import com.github.nelson54.dominion.persistence.MatchRepository;
+import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 import com.github.nelson54.dominion.persistence.entities.match.MatchEntity;
+import com.github.nelson54.dominion.persistence.entities.match.PlayerScoreEntity;
 import org.jboss.logging.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -63,7 +65,28 @@ public class MatchService {
     }
 
     public Game applyCommand(Game game, Command command) {
-        return commandService.applyCommand(game, command);
+        game = commandService.applyCommand(game, command);
+
+        if(game.getGameOver()) {
+            Optional<MatchEntity> optionalMatchEntity = matchRepository.findById(game.getId());
+            Long winningPlayerId = game.getWinningPlayer().getId();
+            Collection<Player> players = game.getPlayers().values();
+            optionalMatchEntity.ifPresent((matchEntity) -> {
+                AccountEntity winner = matchEntity.findPlayerById(winningPlayerId);
+                matchEntity.setState(MatchState.FINISHED);
+                matchEntity.setWinner(winner);
+                Set<PlayerScoreEntity> scores = new HashSet<>();
+
+                players.forEach((player)->{
+                    PlayerScoreEntity playerScoreEntity = new PlayerScoreEntity();
+                    playerScoreEntity.setScore(player.getVictoryPoints());
+                });
+
+                matchEntity.setScores(scores);
+            });
+        }
+
+        return game;
     }
 
     public Match createMatch(Match match) {

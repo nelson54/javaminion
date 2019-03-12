@@ -8,4 +8,4 @@ cp -R * /app/src/main/resources/public
 
 cd /app
 
-./gradlew bootRun
+./gradlew bootRun -Dspring.profiles.active=prod

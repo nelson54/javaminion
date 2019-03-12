@@ -18,7 +18,13 @@ pipeline {
       }
     }
 
-    stage('Build') {
+    stage('Build Node') {
+      steps {
+        sh 'npm --prefix ./src/main/js install'
+      }
+    }
+
+    stage('Build Java') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/build.yml')
       }

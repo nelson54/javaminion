@@ -15,17 +15,13 @@ public class PlayerScoreEntity {
     private AccountEntity account;
 
     @Column
-    private Integer score;
-
-    @Column
-    private Integer place;
+    private Long score;
 
     public PlayerScoreEntity() {}
 
-    public PlayerScoreEntity(AccountEntity account, Integer score, Integer place) {
+    public PlayerScoreEntity(AccountEntity account, Long score) {
         this.account = account;
         this.score = score;
-        this.place = place;
     }
 
     public Long getId() {
@@ -44,19 +40,11 @@ public class PlayerScoreEntity {
         this.account = account;
     }
 
-    public Integer getScore() {
+    public Long getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Long score) {
         this.score = score;
-    }
-
-    public Integer getPlace() {
-        return place;
-    }
-
-    public void setPlace(Integer place) {
-        this.place = place;
     }
 }

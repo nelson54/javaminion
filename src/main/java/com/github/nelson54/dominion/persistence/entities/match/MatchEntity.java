@@ -107,4 +107,23 @@ public class MatchEntity {
 
         return matchEntity;
     }
+
+    public AccountEntity findPlayerById(Long id) {
+        Map<Long, AccountEntity> playersById = new HashMap<>();
+        this.players.forEach((player)-> playersById.put(player.getId(), player));
+
+        return playersById.get(id);
+    }
+
+    public void setState(MatchState state) {
+        this.state = state;
+    }
+
+    public void setScores(Set<PlayerScoreEntity> scores) {
+        this.scores = scores;
+    }
+
+    public void setWinner(AccountEntity accountEntity) {
+        this.winner = accountEntity;
+    }
 }
