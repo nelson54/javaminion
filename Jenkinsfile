@@ -42,6 +42,17 @@ pipeline {
       }
     }
 
+    #stage('Archive') {
+    #  publishHTML([
+    #    allowMissing: false,
+    #    alwaysLinkToLastBuild: false,
+    #    keepAll: true,
+    #    reportDir: '/tests/test/',
+    #    reportFiles: 'index.html',
+    #    reportName: "Test report"
+    #  ])
+    #}
+
     stage('Local Cleanup') {
       steps {
         sh 'rm -Rf archives/'
