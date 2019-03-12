@@ -42,6 +42,9 @@
           - docker-ce-cli
           - docker-compose
           - containerd.io
+          - nodejs
+    - name: install sass and gulp
+      command: npm install -g sass bower
     - name: write the apache config file
       copy:
         src: ../config/nginx.conf

@@ -6,12 +6,7 @@ RUN apt update
 
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 
-RUN apt install ansible vim nodejs build-essential htop -y
-RUN npm install -g sass bower
-RUN npm config set tmp /tmp/
-
-RUN mkdir /build
-RUN chmod 777 /build
+RUN apt install ansible vim htop -y
 
 
 USER jenkins
