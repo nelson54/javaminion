@@ -4,4 +4,4 @@
   gather_facts: no
   tasks:
   - name: build node
-    command: ./
+    command: /root/javaminion/scripts/node-build.sh
