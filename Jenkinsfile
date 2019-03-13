@@ -51,9 +51,10 @@ pipeline {
     }
 
     stage('Javadoc') {
-      sh './gradlew javadoc'
+      steps {
+        sh './gradlew javadoc'
 
-      publishHTML (target: [
+        publishHTML (target: [
             allowMissing: false,
             alwaysLinkToLastBuild: false,
             keepAll: true,
@@ -61,6 +62,7 @@ pipeline {
             reportFiles: 'index.html',
             reportName: "Javadoc"
           ])
+      }
     }
 
     /*stage('Archive') {
