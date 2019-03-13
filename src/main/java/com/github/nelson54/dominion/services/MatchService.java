@@ -80,6 +80,8 @@ public class MatchService {
                 players.forEach((player)->{
                     PlayerScoreEntity playerScoreEntity = new PlayerScoreEntity();
                     playerScoreEntity.setScore(player.getVictoryPoints());
+
+                    scores.add(playerScoreEntity);
                 });
 
                 matchEntity.setScores(scores);

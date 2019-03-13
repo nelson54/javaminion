@@ -42,6 +42,27 @@ pipeline {
       }
     }
 
+    stage('Checkstyle') {
+      steps {
+        sh './gradlew checkstyleMain'
+
+        recordIssues enabledForFailure: true, tool: checkStyle()
+      }
+    }
+
+    stage('Javadoc') {
+      sh './gradlew javadoc'
+
+      publishHTML (target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: true,
+            reportDir: 'build/docs/javadoc',
+            reportFiles: 'index.html',
+            reportName: "Javadoc"
+          ])
+    }
+
     /*stage('Archive') {
       publishHTML([
         allowMissing: false,

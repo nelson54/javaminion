@@ -19,8 +19,10 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.palantir.docker'
 apply plugin: 'com.palantir.docker-run'
+apply plugin: 'checkstyle'
 
-group = 'dominionweb'
+
+group = 'dominionback'
 version = '1.0-SNAPSHOT'
 mainClassName = 'com.github.nelson54.dominion.web.Application'
 sourceCompatibility = 11.0
@@ -62,6 +64,8 @@ ext{
 }
 
 dependencies {
+    checkstyle 'com.puppycrawl.tools:checkstyle:6.14.1'
+
     developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$spring"
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: "$spring"
@@ -130,6 +134,15 @@ test {
 
 }
 
+javadoc {
+    options.addBooleanOption('html5', true)
+}
+
+
 wrapper {
     gradleVersion = '5.1'
+}
+
+checkstyle {
+    toolVersion "8.18"
 }
