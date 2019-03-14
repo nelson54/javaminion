@@ -5,7 +5,7 @@
   - name: stop
     command: docker-compose -f /root/javaminion/docker-compose.yml down
   - name: prune docker
-    command: docker system prune --force
+    command: docker system prune -a --force
   - name: remove old deployment
     file:
       path: /root/javaminion/
