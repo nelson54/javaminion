@@ -1,0 +1,13 @@
+---
+- hosts: webservers
+  remote_user: root
+  gather_facts: no
+  tasks:
+    - name: running javadoc
+      command: docker-compose -f /root/javaminion/docker-compose.yml run app bash -c ./scripts/docker/checkstyle.sh
+      register: checkstyle
+    - debug: var=checkstyle.stdout
+    - name: copy checkstyle
+      fetch:
+        src: /root/archives/checkstyle.tar.gz
+        dest: ../../archives/

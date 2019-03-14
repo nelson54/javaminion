@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+cd /app
+
+./gradlew javadoc
+
 cd /app/build/test-results
 tar -cvzf ./test-results.tar.gz .
 chmod 777 ./test-results.tar.gz

@@ -83,7 +83,8 @@ pipeline {
         sh 'rm -Rf tests/'
       }
     }
-    stage('Start') {
+
+    stage('Deploy') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/start.yml')
       }
