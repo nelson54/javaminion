@@ -3,8 +3,10 @@
   remote_user: root
   gather_facts: no
   tasks:
+  - name: run mongo
+    command: docker-compose -f /root/javaminion/docker-compose.yml run -d mongo
   - name: testing javaminion
-    command: docker-compose -f /root/javaminion/docker-compose.yml run app bash -c ./scripts/docker/create-test-archives.sh
+    command: docker-compose -f /root/javaminion/docker-compose.yml run app bash -c /app/scripts/docker/create-test-archives.sh
     register: testing
   - debug: var=testing.stdout
   - name: copy test-results

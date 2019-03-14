@@ -41,6 +41,8 @@ services:
       - "8080:8080"
       - "5005:5005"
       - "35729:35729"
+    depends_on:
+      - mongo
     deploy:
       resources:
         limits:

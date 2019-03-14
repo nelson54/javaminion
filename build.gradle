@@ -20,6 +20,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.palantir.docker'
 apply plugin: 'com.palantir.docker-run'
 apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
 
 
 group = 'dominionback'
