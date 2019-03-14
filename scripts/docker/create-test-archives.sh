@@ -2,7 +2,7 @@
 
 cd /app
 
-./gradlew javadoc
+./gradlew test
 
 cd /app/build/test-results
 tar -cvzf ./test-results.tar.gz .

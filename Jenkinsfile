@@ -33,12 +33,12 @@ pipeline {
     stage('Test') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/test.yml')
-        sh 'tar -zxvf archives/*/root/archives/test-results.tar.gz -C ./archives'
-        sh 'tar -zxvf archives/*/root/archives/test-reports.tar.gz -C ./archives'
+        sh 'tar -zxvf archives/*/root/archives/test-results.tar.gz'
+        sh 'tar -zxvf archives/*/root/archives/test-reports.tar.gz'
 
-        archive 'archives/**/test/*.html'
+        archive 'test/*.html'
 
-        junit 'archives/**/TEST-*.xml'
+        junit 'TEST-*.xml'
       }
     }
 
@@ -46,6 +46,7 @@ pipeline {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/checkstyle.yml')
         sh 'mkdir ./archives/checkstyle'
+
         sh 'tar -zxvf archives/*/root/archives/checkstyle.tar.gz -C ./archives/checkstyle'
 
         publishHTML (target: [
