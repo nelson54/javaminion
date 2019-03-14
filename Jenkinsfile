@@ -44,21 +44,32 @@ pipeline {
 
     stage('Checkstyle') {
       steps {
-        sh './gradlew checkstyleMain'
+        ansiblePlaybook(playbook: './playbooks/stages/checkstyle.yml')
+        sh 'mkdir ./archives/checkstyle'
+        sh 'tar -zxvf archives/*/root/archives/checkstyle.tar.gz -C ./archives/checkstyle'
 
-        recordIssues enabledForFailure: true, tool: checkStyle()
+        publishHTML (target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: 'archives/checkstyle',
+                reportFiles: 'index.html',
+                reportName: "Javadoc"
+        ])
       }
     }
 
     stage('Javadoc') {
       steps {
-        sh './gradlew javadoc'
+        ansiblePlaybook(playbook: './playbooks/stages/javadoc.yml')
+        sh 'mkdir ./archives/javadoc'
+        sh 'tar -zxvf archives/*/root/archives/javadoc.tar.gz  -C ./archives/javadoc'
 
         publishHTML (target: [
             allowMissing: false,
             alwaysLinkToLastBuild: false,
             keepAll: true,
-            reportDir: 'build/docs/javadoc',
+            reportDir: 'archives/javadoc',
             reportFiles: 'index.html',
             reportName: "Javadoc"
           ])
