@@ -77,6 +77,17 @@ pipeline {
       }
     }
 
+    stage('Checkstyle') {
+      steps {
+        ansiblePlaybook(playbook: './playbooks/stages/spotbugs.yml')
+        sh 'mkdir ./archives/spotbugs'
+
+        sh 'tar -zxvf archives/*/root/archives/spotbugs.tar.gz -C ./archives/spotbugs'
+
+
+      }
+    }
+
     /*stage('Archive') {
       publishHTML([
         allowMissing: false,
@@ -100,6 +111,16 @@ pipeline {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/start.yml')
       }
+    }
+  }
+
+  post {
+    always {
+      recordIssues enabledForFailure: false,
+              tools: [[tool: [$class: 'Java']],
+                      [tool: [$class: 'JavaDoc']]]
+
+      recordIssues tools: [[tool: [$class: 'SpotBugs'], pattern: 'archives/spotbugs/main.xml']]
     }
   }
 }

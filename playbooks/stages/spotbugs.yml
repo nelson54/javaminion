@@ -1,0 +1,13 @@
+---
+- hosts: webservers
+  remote_user: root
+  gather_facts: no
+  tasks:
+    - name: running spotbugs
+      command: docker-compose -f /root/javaminion/docker-compose.yml run app bash -c ./scripts/docker/spotbugs.sh
+      register: spotbugs
+    - debug: var=spotbugs.stdout
+    - name: copy spotbugs
+      fetch:
+        src: /root/archives/spotbugs.tar.gz
+        dest: ../../archives/
