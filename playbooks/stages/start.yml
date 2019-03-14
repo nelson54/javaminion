@@ -3,6 +3,8 @@
   remote_user: root
   gather_facts: no
   tasks:
+  - name: copy javascript resources
+    command: bash /root/javaminion/scripts/copy-resources.sh
   - name: running javaminion
     command: docker-compose -f /root/javaminion/docker-compose.yml up -d app
     register: checkout
