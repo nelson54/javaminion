@@ -65,8 +65,6 @@ pipeline {
         sh 'mkdir ./archives/spotbugs'
 
         sh 'tar -zxvf archives/*/root/archives/spotbugs.tar.gz -C ./archives/spotbugs'
-
-
       }
     }
 
@@ -80,14 +78,6 @@ pipeline {
         reportName: "Test report"
       ])
     }*/
-
-    stage('Local Cleanup') {
-      steps {
-        sh 'rm -Rf archives/'
-        sh 'rm -Rf test/'
-        sh 'rm -Rf tests/'
-      }
-    }
 
     stage('Deploy') {
       steps {
@@ -121,6 +111,10 @@ pipeline {
                       [tool: [$class: 'JavaDoc']]]
 
       recordIssues tools: [[tool: [$class: 'SpotBugs'], pattern: 'archives/spotbugs/main.xml']]
+
+      sh 'rm -Rf archives/'
+      sh 'rm -Rf test/'
+      sh 'rm -Rf tests/'
     }
   }
 }
