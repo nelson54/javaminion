@@ -84,33 +84,33 @@ pipeline {
         ansiblePlaybook(playbook: './playbooks/stages/start.yml')
       }
     }
-  }
 
-  stage('Archiving') {
-    steps {
-      publishHTML(target: [
-              allowMissing         : false,
-              alwaysLinkToLastBuild: false,
-              keepAll              : true,
-              reportDir            : 'archives/checkstyle',
-              reportFiles          : 'index.html',
-              reportName           : "Javadoc"
-      ])
+    stage('Archiving') {
+      steps {
+        publishHTML(target: [
+                allowMissing         : false,
+                alwaysLinkToLastBuild: false,
+                keepAll              : true,
+                reportDir            : 'archives/checkstyle',
+                reportFiles          : 'index.html',
+                reportName           : "Javadoc"
+        ])
 
-      publishHTML(target: [
-              allowMissing         : false,
-              alwaysLinkToLastBuild: false,
-              keepAll              : true,
-              reportDir            : 'archives/javadoc',
-              reportFiles          : 'index.html',
-              reportName           : "Javadoc"
-      ])
+        publishHTML(target: [
+                allowMissing         : false,
+                alwaysLinkToLastBuild: false,
+                keepAll              : true,
+                reportDir            : 'archives/javadoc',
+                reportFiles          : 'index.html',
+                reportName           : "Javadoc"
+        ])
 
-      recordIssues enabledForFailure: false,
-              tools: [[tool: [$class: 'Java']],
-                      [tool: [$class: 'JavaDoc']]]
+        recordIssues enabledForFailure: false,
+                tools: [[tool: [$class: 'Java']],
+                        [tool: [$class: 'JavaDoc']]]
 
-      recordIssues tools: [[tool: [$class: 'SpotBugs'], pattern: 'archives/spotbugs/main.xml']]
+        recordIssues tools: [[tool: [$class: 'SpotBugs'], pattern: 'archives/spotbugs/main.xml']]
+      }
     }
   }
 
