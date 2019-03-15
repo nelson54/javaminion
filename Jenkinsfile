@@ -105,11 +105,17 @@ pipeline {
                 reportName           : "Javadoc"
         ])
 
-        recordIssues enabledForFailure: false,
-                tools: [[tool: [$class: 'Java']],
-                        [tool: [$class: 'JavaDoc']]]
+        recordIssues (
+                enabledForFailure: false,
+                aggregatingResults : false,
+                tool: checkStyle(pattern: 'archives/checkstyle/main.xml')
+        )
 
-        recordIssues tools: [[tool: [$class: 'SpotBugs'], pattern: 'archives/spotbugs/main.xml']]
+        recordIssues (
+          enabledForFailure: false,
+          aggregatingResults : false,
+          tool: spotBugs(pattern: 'archives/spotbugs/main.xml')
+        )
       }
     }
   }
