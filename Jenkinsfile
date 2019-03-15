@@ -86,24 +86,24 @@ pipeline {
     }
   }
 
-  post {
-    always {
-      publishHTML (target: [
-              allowMissing: false,
+  stage('Archiving') {
+    steps {
+      publishHTML(target: [
+              allowMissing         : false,
               alwaysLinkToLastBuild: false,
-              keepAll: true,
-              reportDir: 'archives/checkstyle',
-              reportFiles: 'index.html',
-              reportName: "Javadoc"
+              keepAll              : true,
+              reportDir            : 'archives/checkstyle',
+              reportFiles          : 'index.html',
+              reportName           : "Javadoc"
       ])
 
-      publishHTML (target: [
-              allowMissing: false,
+      publishHTML(target: [
+              allowMissing         : false,
               alwaysLinkToLastBuild: false,
-              keepAll: true,
-              reportDir: 'archives/javadoc',
-              reportFiles: 'index.html',
-              reportName: "Javadoc"
+              keepAll              : true,
+              reportDir            : 'archives/javadoc',
+              reportFiles          : 'index.html',
+              reportName           : "Javadoc"
       ])
 
       recordIssues enabledForFailure: false,
@@ -111,7 +111,11 @@ pipeline {
                       [tool: [$class: 'JavaDoc']]]
 
       recordIssues tools: [[tool: [$class: 'SpotBugs'], pattern: 'archives/spotbugs/main.xml']]
+    }
+  }
 
+  post {
+    always {
       sh 'rm -Rf archives/'
       sh 'rm -Rf test/'
       sh 'rm -Rf tests/'
