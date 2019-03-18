@@ -108,19 +108,25 @@ public class MatchService {
 
     }
 
-    public void endGame(Game game) {
-        matchRepository.findById(game.getId())
-                .map(MatchEntity::toMatch)
-                .map(match -> {
-                    if(match.getMatchState().equals(MatchState.FINISHED)) {
-                        return null;
-                    }
+    public Optional<Match> endGame(Game game) {
+        if(game.getGameOver()) {
 
-                    match.setMatchState(MatchState.FINISHED);
+            return matchRepository.findById(game.getId())
+                    .map(MatchEntity::toMatch)
+                    .map(match -> {
+                        if (match.getMatchState().equals(MatchState.FINISHED)) {
+                            return null;
+                        }
 
-                    return MatchEntity.ofMatch(match);
-                })
-                .map((matchEntity) -> matchRepository.save(matchEntity));
+                        match.setMatchState(MatchState.FINISHED);
+
+                        return MatchEntity.ofMatch(match);
+                    })
+                    .map((matchEntity) -> matchRepository.save(matchEntity))
+                    .map(MatchEntity::toMatch);
+        }
+
+        return null;
     }
 
     public void prepareToPlay() {
