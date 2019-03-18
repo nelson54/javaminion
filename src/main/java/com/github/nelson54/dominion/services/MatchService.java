@@ -68,24 +68,7 @@ public class MatchService {
         game = commandService.applyCommand(game, command);
 
         if(game.getGameOver()) {
-            Optional<MatchEntity> optionalMatchEntity = matchRepository.findById(game.getId());
-            Long winningPlayerId = game.getWinningPlayer().getId();
-            Collection<Player> players = game.getPlayers().values();
-            optionalMatchEntity.ifPresent((matchEntity) -> {
-                AccountEntity winner = matchEntity.findPlayerById(winningPlayerId);
-                matchEntity.setState(MatchState.FINISHED);
-                matchEntity.setWinner(winner);
-                Set<PlayerScoreEntity> scores = new HashSet<>();
-
-                players.forEach((player)->{
-                    PlayerScoreEntity playerScoreEntity = new PlayerScoreEntity();
-                    playerScoreEntity.setScore(player.getVictoryPoints());
-
-                    scores.add(playerScoreEntity);
-                });
-
-                matchEntity.setScores(scores);
-            });
+            endGame(game);
         }
 
         return game;
@@ -111,22 +94,29 @@ public class MatchService {
     public Optional<Match> endGame(Game game) {
         if(game.getGameOver()) {
 
-            return matchRepository.findById(game.getId())
-                    .map(MatchEntity::toMatch)
-                    .map(match -> {
-                        if (match.getMatchState().equals(MatchState.FINISHED)) {
-                            return null;
-                        }
+            Optional<MatchEntity> optionalMatchEntity = matchRepository.findById(game.getId());
+            Long winningPlayerId = game.getWinningPlayer().getId();
+            Collection<Player> players = game.getPlayers().values();
+            return optionalMatchEntity.map((matchEntity) -> {
+                AccountEntity winner = matchEntity.findPlayerById(winningPlayerId);
+                matchEntity.setState(MatchState.FINISHED);
+                matchEntity.setWinner(winner);
+                Set<PlayerScoreEntity> scores = new HashSet<>();
 
-                        match.setMatchState(MatchState.FINISHED);
+                players.forEach((player) -> {
+                    PlayerScoreEntity playerScoreEntity = new PlayerScoreEntity();
+                    playerScoreEntity.setScore(player.getVictoryPoints());
 
-                        return MatchEntity.ofMatch(match);
-                    })
-                    .map((matchEntity) -> matchRepository.save(matchEntity))
-                    .map(MatchEntity::toMatch);
+                    scores.add(playerScoreEntity);
+                });
+
+                matchEntity.setScores(scores);
+
+                return matchEntity.toMatch();
+            });
         }
 
-        return null;
+        return Optional.empty();
     }
 
     public void prepareToPlay() {
