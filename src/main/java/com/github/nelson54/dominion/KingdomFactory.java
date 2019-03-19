@@ -158,7 +158,8 @@ public class KingdomFactory {
         addXCardsOfType(random, 10, Workshop.class, kingdom);
     }
 
-    private void addKingdomCards(Random random, Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+    private void addKingdomCards(Random random, Kingdom kingdom)
+            throws InstantiationException, IllegalAccessException {
         addXCardsOfType(random, 10, Smithy.class, kingdom);
         addXCardsOfType(random, 10, Village.class, kingdom);
         addXCardsOfType(random, 10, CouncilRoom.class, kingdom);
@@ -186,7 +187,11 @@ public class KingdomFactory {
         addXCardsOfType(random, 10, Thief.class, kingdom);
     }
 
-    private void addXCardsOfType(Random random, int x, Class<? extends Card> clazz, Kingdom kingdom) throws IllegalAccessException, InstantiationException {
+    private void addXCardsOfType(
+            Random random,
+            int x,
+            Class<? extends Card> clazz,
+            Kingdom kingdom) throws IllegalAccessException, InstantiationException {
         try {
             for (; x > 0; x--) {
                 Card card = clazz.getDeclaredConstructor(Long.class).newInstance(random.nextLong());

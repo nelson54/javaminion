@@ -17,7 +17,7 @@ public class ThroneRoomEffect extends Effect {
     @Override
     boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
 
-        if(response.isDone()){
+        if (response.isDone()) {
 
             return true;
         } else {

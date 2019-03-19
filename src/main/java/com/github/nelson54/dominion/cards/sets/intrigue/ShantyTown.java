@@ -20,7 +20,7 @@ public class ShantyTown extends ActionCard {
     public void apply(Player player, Game game) {
         game.revealCardsFromHand(player, player.getHand());
 
-        if(Cards.ofType(player.getHand(), CardType.ACTION).size() >= 2) {
+        if (Cards.ofType(player.getHand(), CardType.ACTION).size() >= 2) {
             player.drawXCards(2);
         }
     }

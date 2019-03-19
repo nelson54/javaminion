@@ -25,7 +25,7 @@ public class Turn {
     @JsonProperty
     Phase phase;
 
-    @JsonBackReference(value="game")
+    @JsonBackReference(value = "game")
     private Game game;
 
     @JsonIgnore
@@ -52,7 +52,7 @@ public class Turn {
         resolvedChoices = new HashSet<>();
     }
 
-    static Turn create(Player player){
+    static Turn create(Player player) {
         Turn turn = new Turn();
         turn.setPlayerId(player.getId());
         turn.setGame(player.getGame());
@@ -72,7 +72,7 @@ public class Turn {
             case WAITING_FOR_CHOICE:
                 break;
             case BUY:
-                if(game.isGameOver()){
+                if (game.isGameOver()) {
                     game.endGame();
                 } else {
                     endTurn();
@@ -94,7 +94,7 @@ public class Turn {
 
     public Card playCard(ActionCard card, Player player, Game game) {
 
-        game.log(" "+player.getName()+" played card " + card.getName());
+        game.log(" " + player.getName() + " played card " + card.getName());
 
         if (phase != ACTION || !player.getId().equals(this.player.getId())) {
             throw new IncorrectPhaseException();
@@ -104,7 +104,7 @@ public class Turn {
             throw new InsufficientActionsException();
         }
 
-        if (play.contains(card)){
+        if (play.contains(card)) {
             throw new AlreadyPlayedException();
         }
 
@@ -115,7 +115,8 @@ public class Turn {
 
         if (game.getChoices().size() > 0) {
             game.getChoices().forEach(choice -> choice.getTarget().onChoice());
-        } else if(actionPool == 0 || Cards.ofType(player.getHand(), ActionCard.class).size() == 0 ) {
+        } else if ((actionPool == 0)
+                || (Cards.ofType(player.getHand(), ActionCard.class).size() == 0)) {
             endPhase();
         } else {
             player.onActionPhase();
@@ -127,7 +128,7 @@ public class Turn {
     public Card purchaseCardForPlayer(Card card, Player player)
             throws IncorrectPhaseException, InsufficientFundsException {
 
-        game.log(" "+player.getName()+" purchased card " + card.getName());
+        game.log(" " + player.getName() + " purchased card " + card.getName());
 
         if (!phase.equals(Phase.BUY) || !player.getId().equals(this.player.getId())) {
             throw new IncorrectPhaseException();
@@ -145,7 +146,7 @@ public class Turn {
         buyPool--;
         Card bought = getGame().giveCardToPlayer(card.getName(), player);
 
-        if(buyPool == 0){
+        if (buyPool == 0) {
             endPhase();
         } else {
             player.onBuyPhase();
@@ -162,9 +163,9 @@ public class Turn {
         return canAffordCost(card.getCost());
     }
 
-    boolean hasActionsInHand(){
+    boolean hasActionsInHand() {
         return player.getHand().stream()
-                .filter(c-> c instanceof ActionCard)
+                .filter(c -> c instanceof ActionCard)
                 .count() > 0;
     }
 
@@ -277,7 +278,8 @@ public class Turn {
         if (!player.equals(turn.player)) return false;
         if (!playerId.equals(turn.playerId)) return false;
         if (!resolvedChoices.equals(turn.resolvedChoices)) return false;
-        if (revealed != null ? !revealed.equals(turn.revealed) : turn.revealed != null) return false;
+        if (revealed != null ? !revealed.equals(turn.revealed) : turn.revealed != null)
+            return false;
 
         return true;
     }

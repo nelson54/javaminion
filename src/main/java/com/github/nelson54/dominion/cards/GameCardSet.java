@@ -29,7 +29,7 @@ public class GameCardSet {
     public static GameCardSet byName(String name) {
         GameCardSet gameCardSet;
         GameCards gameCards = GameCards.ofName(name);
-        if(gameCards != null) {
+        if (gameCards != null) {
             gameCardSet = gameCards.getGameCardSet();
         } else {
             throw new InvalidCardSetName();

@@ -1,6 +1,5 @@
 package com.github.nelson54.dominion.persistence.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.userdetails.User;
 
@@ -8,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Objects;
-
 
 @Entity
 @Table(name = "users")
@@ -86,10 +84,10 @@ public class UserEntity {
 
     @Override
     public boolean equals(Object o) {
-        if(this == o) {
+        if (this == o) {
             return true;
         }
-        if(o == null || getClass() != o.getClass()) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
@@ -104,8 +102,6 @@ public class UserEntity {
 
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                "}";
+        return "User{ username='" + username + "'}";
     }
 }

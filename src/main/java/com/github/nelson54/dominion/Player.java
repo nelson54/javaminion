@@ -51,10 +51,6 @@ public class Player {
 
     public byte order;
 
-
-
-
-
     @JsonProperty
     public long getVictoryPoints() {
         return getAllCards()

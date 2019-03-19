@@ -35,8 +35,8 @@ public class Remodel extends ComplexActionCard {
     }
 
     @Override
-    public CardState getState(Choice choice){
-        if(choice.getParentChoice() == null){
+    public CardState getState(Choice choice) {
+        if (choice.getParentChoice() == null) {
             return CardState.TRASHING_CARD;
         } else {
             return CardState.GAINING_CARD;
@@ -82,7 +82,7 @@ public class Remodel extends ComplexActionCard {
                 .map(market::get)
                 .map(cards -> cards.stream().findAny())
                 .map(Optional::get)
-                .filter(card -> card.getCost().getMoney() <= cost+2)
+                .filter(card -> card.getCost().getMoney() <= cost + 2)
                 .collect(Collectors.toSet());
 
         options.removeAll(game.getTurn().getPlay());

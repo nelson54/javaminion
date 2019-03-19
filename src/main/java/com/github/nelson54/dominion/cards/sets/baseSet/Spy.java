@@ -51,7 +51,9 @@ public class Spy extends SymmetricActionAttackCard {
         Card revealed = target.revealCard();
 
         choice.setDisplayCard(revealed);
-        choice.setMessage("Would you like to discard " + revealed.getName() + " for player " + revealed.getOwner().getName());
+        choice.setMessage("Would you like to discard " + revealed.getName()
+                + " for player " + revealed.getOwner().getName());
+
         choice.setExpectedAnswerType(OptionType.YES_OR_NO);
         choice.setRequired(true);
         Set<String> options = new HashSet<>();

@@ -24,7 +24,7 @@ public class ThiefEffect extends Effect {
             target.getDiscard().add(trashedCard);
 
             return true;
-        } else if(!response.isYes()) {
+        } else if (!response.isYes()) {
             return true;
         }
 

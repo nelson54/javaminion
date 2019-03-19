@@ -20,7 +20,7 @@ public enum RecommendedCards {
             Woodcutter.class,
             Workshop.class
     ),
-    VILLAGE_SQUARE (
+    VILLAGE_SQUARE(
             "Village Square",
             Bureaucrat.class,
             Cellar.class,
@@ -33,7 +33,7 @@ public enum RecommendedCards {
             Woodcutter.class,
             Village.class
     ),
-    BIG_MONEY (
+    BIG_MONEY(
             "Big Money",
             Adventurer.class,
             Bureaucrat.class,
@@ -46,7 +46,7 @@ public enum RecommendedCards {
             Moneylender.class,
             ThroneRoom.class
     ),
-    INTERACTION (
+    INTERACTION(
             "Interaction",
             Bureaucrat.class,
             Chancellor.class,
@@ -59,7 +59,7 @@ public enum RecommendedCards {
             Thief.class,
             Village.class
     ),
-    SIZE_DISTORTION (
+    SIZE_DISTORTION(
             "Size Distortion",
             Cellar.class,
             Chapel.class,
@@ -77,7 +77,7 @@ public enum RecommendedCards {
     Class<? extends Card>[] cards;
 
     @SafeVarargs
-    RecommendedCards(String name, Class<? extends Card> ... cards){
+    RecommendedCards(String name, Class<? extends Card> ... cards) {
         this.name = name;
         this.cards = cards;
     }
@@ -98,9 +98,9 @@ public enum RecommendedCards {
         this.cards = cards;
     }
 
-    public static RecommendedCards ofName(String name){
-        for(RecommendedCards rc : RecommendedCards.values()) {
-            if(rc.getName().equals(name.trim())){
+    public static RecommendedCards ofName(String name) {
+        for (RecommendedCards rc : RecommendedCards.values()) {
+            if (rc.getName().equals(name.trim())) {
                 return rc;
             }
         }

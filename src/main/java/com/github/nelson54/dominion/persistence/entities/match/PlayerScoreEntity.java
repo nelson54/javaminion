@@ -5,13 +5,13 @@ import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="card_type_reference")
+@Table(name = "card_type_reference")
 public class PlayerScoreEntity {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private AccountEntity account;
 
     @Column

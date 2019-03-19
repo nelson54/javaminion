@@ -1,6 +1,5 @@
 package com.github.nelson54.dominion.match;
 
-
 import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.ai.AiUtils;
 

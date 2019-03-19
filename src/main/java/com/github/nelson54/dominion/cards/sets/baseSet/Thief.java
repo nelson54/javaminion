@@ -34,10 +34,10 @@ public class Thief extends ComplexActionAttackCard {
     }
 
     @Override
-    public CardState getState(Choice choice){
-        if(choice.getParentChoice() == null){
+    public CardState getState(Choice choice) {
+        if (choice.getParentChoice() == null) {
             return CardState.TRASHING_CARD;
-        } else if (choice.getParentChoice().getState().equals(CardState.TRASHING_CARD)){
+        } else if (choice.getParentChoice().getState().equals(CardState.TRASHING_CARD)) {
             return CardState.GAINING_CARD;
         } else {
             return CardState.RESOLVING;
@@ -48,10 +48,10 @@ public class Thief extends ComplexActionAttackCard {
     public Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();
 
-        if(choice.getState().equals(CardState.TRASHING_CARD)){
+        if (choice.getState().equals(CardState.TRASHING_CARD)) {
             Set<Card> revealed = Cards.ofType(target.revealCards(2), TreasureCard.class);
 
-            if(revealed.size() > 0) {
+            if (revealed.size() > 0) {
                 choice.setMessage("Choose a card to trash from " + target.getName() + ".");
                 choice.setTarget(this.getOwner());
                 choice.setCardOptions(revealed);
@@ -64,7 +64,8 @@ public class Thief extends ComplexActionAttackCard {
             choice.setExpectedAnswerType(OptionType.YES_OR_NO);
             String parentChoiceName = parent.getCardOptions().stream().findFirst().get().getName();
             choice.setRequired(true);
-            choice.setMessage("Would you like to gain the "+parentChoiceName+ " that was trashed?" );
+            choice.setMessage("Would you like to gain the "
+                    + parentChoiceName + " that was trashed?");
         }
         return choice;
     }
@@ -78,6 +79,6 @@ public class Thief extends ComplexActionAttackCard {
     public void play(Player player, Game game) {
         Turn turn = game.getTurn();
         player.drawXCards(1);
-        turn.setActionPool(turn.getActionPool()+1);
+        turn.setActionPool(turn.getActionPool() + 1);
     }
 }

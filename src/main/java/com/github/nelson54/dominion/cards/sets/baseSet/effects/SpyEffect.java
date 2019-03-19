@@ -16,7 +16,7 @@ public class SpyEffect extends Effect {
         Card displayCard = getChoice().getDisplayCard();
         Player owner = displayCard.getOwner();
 
-        if(response.isYes()){
+        if (response.isYes()) {
             owner.discard(displayCard);
         } else {
             owner.putOnTopOfDeck(displayCard);

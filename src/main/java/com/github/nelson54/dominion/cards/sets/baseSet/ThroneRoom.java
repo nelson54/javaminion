@@ -36,7 +36,8 @@ public class ThroneRoom extends ComplexActionCard {
     }
 
     @Override
-    public Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException {
+    public Choice getChoiceForTarget(Choice choice, Player target, Game game)
+            throws NoValidChoiceException {
 
         Set<Card> options = getOptions(target.getHand());
         choice.setCardOptions(options);
@@ -44,7 +45,7 @@ public class ThroneRoom extends ComplexActionCard {
 
         choice.setMessage("Choose a card to play twice.");
 
-        if(options.isEmpty()){
+        if (options.isEmpty()) {
             throw new NoValidChoiceException();
         }
 

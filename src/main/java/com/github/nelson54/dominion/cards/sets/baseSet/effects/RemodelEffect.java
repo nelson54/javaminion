@@ -15,7 +15,7 @@ public class RemodelEffect extends Effect {
         Card card = response.getCard();
         Choice choice = getChoice();
 
-        if ( card != null && choice.getState() == CardState.TRASHING_CARD) {
+        if (card != null && choice.getState() == CardState.TRASHING_CARD) {
             game.trashCard(card);
             return false;
         } else if (choice.getState() == CardState.GAINING_CARD) {

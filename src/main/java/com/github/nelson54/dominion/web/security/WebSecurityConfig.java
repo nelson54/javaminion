@@ -29,7 +29,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthorizationFilter authenticationTokenFilter;
 
-    public WebSecurityConfig(BCryptPasswordEncoder passwordEncoder, UserEntityDetailsService userDetailsService) {
+    public WebSecurityConfig(
+            BCryptPasswordEncoder passwordEncoder,
+            UserEntityDetailsService userDetailsService) {
+
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
     }
@@ -44,7 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/")
@@ -55,12 +59,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated();
 
 
-        http
-                .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(
+                authenticationTokenFilter,
+                UsernamePasswordAuthenticationFilter.class);
 
-        http
-                .headers()
-                .frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
+        http.headers()
+                .frameOptions().sameOrigin()
                 .cacheControl();
     }
 
