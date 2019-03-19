@@ -27,7 +27,7 @@ public class GameController {
         this.matchService = matchService;
     }
 
-    @RequestMapping(value = "/recommended", method = RequestMethod.GET)
+    @GetMapping(value = "/recommended")
     RecommendedCards[] getRecomendedCards(){
         return RecommendedCards.values();
     }
@@ -38,7 +38,7 @@ public class GameController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping("/{gameId}/shuffle")
+    @PostMapping("/{gameId}/shuffle")
     Game shuffle(@PathVariable("gameId") Long gameId) {
         Game game = getGame(gameId);
         Account account = getAccount();
@@ -48,7 +48,7 @@ public class GameController {
         return game;
     }
 
-    @RequestMapping("/{gameId}/draw")
+    @PostMapping("/{gameId}/draw")
     Game drawHand(
             @PathVariable("gameId")
                     Long gameId
@@ -61,7 +61,7 @@ public class GameController {
         return game;
     }
 
-    @RequestMapping("/{gameId}/discard")
+    @PostMapping("/{gameId}/discard")
     Game discardHand(
             @PathVariable("gameId")
                     Long gameId
@@ -74,7 +74,7 @@ public class GameController {
         return game;
     }
 
-    @RequestMapping(value = "/{gameId}/purchase", method = RequestMethod.POST)
+    @PostMapping(value = "/{gameId}/purchase")
     Game purchase(
             @PathVariable("gameId")
             Long gameId,
@@ -91,7 +91,7 @@ public class GameController {
         return game;
     }
 
-    @RequestMapping(value = "/{gameId}/play", method = RequestMethod.POST)
+    @PostMapping(value = "/{gameId}/play")
     Game play(
             @PathVariable("gameId")
                     Long gameId,
@@ -112,7 +112,7 @@ public class GameController {
         return game;
     }
 
-    @RequestMapping(value = "/{gameId}/choice", method = RequestMethod.POST)
+    @PostMapping(value = "/{gameId}/choice")
     Game chooseCard(
             @PathVariable("gameId")
             Long gameId,
@@ -131,7 +131,7 @@ public class GameController {
         return game;
     }
 
-    @RequestMapping(value = "/{gameId}/next-phase", method = RequestMethod.POST)
+    @PostMapping(value = "/{gameId}/next-phase")
     Game endPhase(
             @PathVariable("gameId")
                     Long gameId
