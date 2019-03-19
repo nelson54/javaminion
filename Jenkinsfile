@@ -93,7 +93,7 @@ pipeline {
                 keepAll              : true,
                 reportDir            : 'archives/checkstyle',
                 reportFiles          : 'index.html',
-                reportName           : "Javadoc"
+                reportName           : "Checkstyle"
         ])
 
         publishHTML(target: [
