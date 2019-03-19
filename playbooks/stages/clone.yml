@@ -8,3 +8,5 @@
       repo: 'git@github.com:nelson54/javaminion.git'
       dest: /root/javaminion
       accept_hostkey: yes
+  - name: configure gradle
+    command: cp /root/javaminion/environments/production/gradle.properties /root/javaminion/
