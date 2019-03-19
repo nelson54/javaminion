@@ -37,15 +37,16 @@ public class Bureaucrat extends ComplexActionAttackCard {
     }
 
     @Override
-    public Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException {
+    public Choice getChoiceForTarget(Choice choice, Player target, Game game)
+            throws NoValidChoiceException {
         Choice parent = choice.getParentChoice();
         choice.setMessage("Choose a victory card to put on top of your deck.");
 
         Set<Card> victoryCardsInHand = target.getHand().stream()
-                .filter(card-> card instanceof VictoryCard)
+                .filter(card -> card instanceof VictoryCard)
                 .collect(Collectors.toSet());
 
-        if(victoryCardsInHand.size() > 0) {
+        if (victoryCardsInHand.size() > 0) {
 
             choice.setOptions(Cards.getIds(victoryCardsInHand));
 

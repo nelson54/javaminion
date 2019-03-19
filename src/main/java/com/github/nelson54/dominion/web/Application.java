@@ -46,7 +46,7 @@ public class Application extends SpringBootServletInitializer {
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    public BCryptPasswordEncoder createBCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

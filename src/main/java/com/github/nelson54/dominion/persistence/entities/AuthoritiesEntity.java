@@ -3,10 +3,10 @@ package com.github.nelson54.dominion.persistence.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name="authorities")
+@Table(name = "authorities")
 public class AuthoritiesEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

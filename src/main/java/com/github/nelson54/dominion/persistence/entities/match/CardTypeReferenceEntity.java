@@ -7,8 +7,7 @@ import javax.persistence.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-    @Entity
-    @Table(name="card_type_reference", uniqueConstraints=@UniqueConstraint(columnNames={"clazz", "name"}))
+    @Entity @Table(name="card_type_reference", uniqueConstraints=@UniqueConstraint(columnNames={"clazz", "name"}))
     public class CardTypeReferenceEntity {
 
         @Id

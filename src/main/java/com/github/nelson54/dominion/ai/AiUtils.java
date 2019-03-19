@@ -13,15 +13,15 @@ public class AiUtils {
 
     static String province = "Province";
 
-    static int gainsToEndGame(Kingdom kingdom){
+    static int gainsToEndGame(Kingdom kingdom) {
         Multimap<String, Card> market = kingdom.getCardMarket();
-        if(market.containsKey(province)){
+        if (market.containsKey(province)) {
             return market.get(province).size();
         }
         return 0;
     }
 
-    static int getTotalMoney(Set<Card> cards){
+    static int getTotalMoney(Set<Card> cards) {
         return cards.stream()
                 .filter(card -> card instanceof TreasureCard)
                 .map(c -> (TreasureCard) c)
@@ -29,14 +29,20 @@ public class AiUtils {
                 .sum();
     }
 
-    static int numberOfCardsByName(Set<Card> cards, String name){
+    static int numberOfCardsByName(Set<Card> cards, String name) {
         return (int) cards.stream()
                 .filter(c -> c.getName().equals(name))
                 .count();
     }
 
     public static AiPlayer randomPlayer() {
-        Account account = new Account(Long.valueOf("10"),  null, "ai@example.com", AiName.random().toString(), true);
+        Account account = new Account(
+                Long.valueOf("10"),
+                null,
+                "ai@example.com",
+                AiName.random().toString(),
+                true);
+
         return new AiPlayer(account);
     }
 

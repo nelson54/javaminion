@@ -107,7 +107,7 @@ public class Card {
         this.kingdomSortOrder = kingdomSortOrder;
     }
 
-    public boolean isType (CardType type) {
+    public boolean isType(CardType type) {
         return cardTypes.contains(type);
     }
 

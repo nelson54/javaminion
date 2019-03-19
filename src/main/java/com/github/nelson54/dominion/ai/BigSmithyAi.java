@@ -13,12 +13,12 @@ public class BigSmithyAi extends DoNothingAi {
     @Override
     public void actionPhase(AiGameFacade game) {
         Optional<ActionCard> smithy = game.getHand().stream()
-                .filter(c->c.getName().equals("Smithy"))
-                .filter(c->c instanceof ActionCard)
-                .map(c-> (ActionCard)c)
+                .filter(c -> c.getName().equals("Smithy"))
+                .filter(c -> c instanceof ActionCard)
+                .map(c -> (ActionCard)c)
                 .findFirst();
 
-        if(smithy.isPresent() && game.getActions() > 0){
+        if (smithy.isPresent() && game.getActions() > 0) {
             game.play(smithy.get());
         } else {
             game.endPhase();
@@ -53,9 +53,7 @@ public class BigSmithyAi extends DoNothingAi {
 
     @Override
     public void choice(AiGameFacade game) {
-        game.getChoice().ifPresent(
-                c->handleChoice(game, c)
-            );
+        game.getChoice().ifPresent(c -> handleChoice(game, c));
     }
 
 }

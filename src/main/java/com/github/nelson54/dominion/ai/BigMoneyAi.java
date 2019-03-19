@@ -28,7 +28,7 @@ class BigMoneyAi extends DoNothingAi {
                 .pick("Silver")
                 .findFirstMatch();
 
-        if(card.isPresent() && game.getBuys() > 0){
+        if (card.isPresent() && game.getBuys() > 0) {
             game.buy(card.get());
         } else {
             game.endPhase();
@@ -37,8 +37,6 @@ class BigMoneyAi extends DoNothingAi {
 
     @Override
     public void choice(AiGameFacade game) {
-        game.getChoice().ifPresent(
-                c->handleChoice(game, c)
-            );
+        game.getChoice().ifPresent(c -> handleChoice(game, c));
     }
 }

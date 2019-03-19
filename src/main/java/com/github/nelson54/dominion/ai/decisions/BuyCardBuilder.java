@@ -15,11 +15,11 @@ public class BuyCardBuilder {
     List<ActionCondition<String>> buyOptions;
     Optional<ActionCondition<String>> currentDecision;
 
-    static BuyCardBuilder create(AiDecisionBuilder parent){
+    static BuyCardBuilder create(AiDecisionBuilder parent) {
         return new BuyCardBuilder(parent);
     }
 
-    public BuyCardBuilder pick(String card){
+    public BuyCardBuilder pick(String card) {
         if(currentDecision.isPresent()){
             throw new IllegalStateException();
         }
@@ -28,7 +28,7 @@ public class BuyCardBuilder {
         return this;
     }
 
-    public BuyCardBuilder when(Boolean... decisions){
+    public BuyCardBuilder when(Boolean... decisions) {
         if(!currentDecision.isPresent()){
             throw new IllegalStateException();
         }
@@ -41,8 +41,8 @@ public class BuyCardBuilder {
         return this;
     }
 
-    public BuyCardBuilder or(){
-        if(!currentDecision.isPresent()){
+    public BuyCardBuilder or() {
+        if(!currentDecision.isPresent()) {
             throw new IllegalStateException();
         }
 
@@ -51,7 +51,7 @@ public class BuyCardBuilder {
         return this;
     }
 
-    public List<Card> matches(){
+    public List<Card> matches() {
         currentDecision.ifPresent(buyOptions::add);
         return buyOptions.stream()
                 .filter(b -> game.getKingdom().getCardMarket().containsKey(b.getObj()))
@@ -61,13 +61,13 @@ public class BuyCardBuilder {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Card> findFirstMatch(){
+    public Optional<Card> findFirstMatch() {
 
         return matches().stream()
                 .findFirst();
     }
 
-    private BuyCardBuilder(AiDecisionBuilder parent){
+    private BuyCardBuilder(AiDecisionBuilder parent) {
         this.parent = parent;
         this.game = parent.getFacade();
         buyOptions = new ArrayList<>();
