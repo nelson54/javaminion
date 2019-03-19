@@ -26,10 +26,12 @@ public class AccountController {
     }
 
     @PostMapping("/authentication")
-    public AuthenticationDto authentication(@RequestBody @Valid AccountCredentialsDto accountCredentials) {
+    public AuthenticationDto authentication(
+            @RequestBody @Valid AccountCredentialsDto accountCredentials) {
         try {
             return accountService.authenticateWithCredentials(accountCredentials)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
+                    .orElseThrow(() ->
+                            new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
         } catch (AuthenticationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }

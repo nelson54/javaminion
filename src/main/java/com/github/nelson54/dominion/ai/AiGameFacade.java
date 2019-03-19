@@ -20,14 +20,14 @@ public class AiGameFacade {
     private Player player;
     private Turn turn;
 
-    public AiGameFacade (CommandService commandService, Game game, Turn turn, Player player){
+    public AiGameFacade (CommandService commandService, Game game, Turn turn, Player player) {
         this.commandService = commandService;
         this.game = game;
         this.player = player;
         this.turn = turn;
     }
 
-    Set<Card> getHand(){
+    Set<Card> getHand() {
         return player.getHand();
     }
 
@@ -35,61 +35,61 @@ public class AiGameFacade {
         return turn.getPhase();
     }
 
-    long getMoney(){
+    long getMoney() {
         return turn.getMoneyPool();
     }
 
-    long getActions(){
+    long getActions() {
         return turn.getActionPool();
     }
 
-    long getBuys(){
+    long getBuys() {
         return turn.getBuyPool();
     }
 
-    public Kingdom getKingdom(){
+    public Kingdom getKingdom() {
         return game.getKingdom();
     }
 
-    Optional<Choice> getChoice(){
+    Optional<Choice> getChoice() {
         Iterator<Choice> choices = player.getChoices().iterator();
-        if(choices.hasNext()){
+        if(choices.hasNext()) {
             return Optional.of(choices.next());
         }
         return Optional.empty();
     }
 
-    Set<Card> getAllMyCards(){
+    Set<Card> getAllMyCards() {
         return new HashSet<>(player.getAllCards().values());
     }
 
-    public void play(ActionCard card){
+    public void play(ActionCard card) {
 
         turn.playCard(card, player, game);
     }
 
-    public void buy(Card card){
+    public void buy(Card card) {
         turn.purchaseCardForPlayer(card, player);
     }
 
-    void respond(ChoiceResponse choiceResponse){
+    void respond(ChoiceResponse choiceResponse) {
         game.getChoiceById(choiceResponse.getChoice())
                 .ifPresent(choice -> choice.apply(choiceResponse, turn));
     }
 
-    public boolean canAffordCost(Cost cost){
+    public boolean canAffordCost(Cost cost) {
         return turn.canAffordCost(cost);
     }
 
-    public boolean canAffordCard(Card card){
+    public boolean canAffordCard(Card card) {
         return canAffordCost(card.getCost());
     }
 
-    boolean buyCardIf(String cardName, boolean... conditions){
+    boolean buyCardIf(String cardName, boolean... conditions) {
         return true;
     }
 
-    void endPhase(){
+    void endPhase() {
         turn.endPhase();
     }
 }

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
-@Resource(name="accountService")
+@Resource(name = "accountService")
 public class AccountService {
 
     BCryptPasswordEncoder passwordEncoder;

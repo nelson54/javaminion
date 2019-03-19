@@ -16,7 +16,7 @@ public enum AiName {
     Saanvi,
     Prishna;
 
-    public static Set<AiName> random(int number){
+    public static Set<AiName> random(int number) {
         List<AiName> aiNames = Arrays.asList(AiName.values());
         Collections.shuffle(aiNames);
 
@@ -25,7 +25,7 @@ public enum AiName {
                 .collect(Collectors.toSet());
     }
 
-    public static AiName random(){
+    public static AiName random() {
         List<AiName> aiNames = Arrays.asList(AiName.values());
         Collections.shuffle(aiNames);
 

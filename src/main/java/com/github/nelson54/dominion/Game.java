@@ -18,44 +18,29 @@ import static com.github.nelson54.dominion.Phase.*;
 
 
 public class Game {
-
     private static final Logger logger = Logger.getLogger(Game.class);
-
     @JsonProperty
     private Set<String> logs;
-
-    @JsonProperty
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(as = Long.class)
+    @JsonProperty @JsonSerialize(using = ToStringSerializer.class) @JsonDeserialize(as = Long.class)
     private Long id;
-
     @JsonIgnore
     public RandomSeed seed;
-
     @JsonProperty
     private Kingdom kingdom;
-
     @JsonIgnore
     private Set<Player> turnOrder;
-
     @JsonIgnore
     private Map<Long, Card> allCards;
-
     @JsonProperty
     private Set<Turn> pastTurns;
-
     @JsonProperty
     private Set<Card> trash;
-
     @JsonIgnore
     Iterator<Player> turnerator;
-
     @JsonProperty
     private Map<Long, Player> players;
-
     @JsonProperty
     private boolean gameOver;
-
     @JsonProperty
     private Turn turn;
 

@@ -19,7 +19,7 @@ public class AiPlayerService {
     private AccountRepository accountRepository;
 
     @Autowired
-    public void setAccountRepository(AccountRepository accountRepository){
+    public void setAccountRepository(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 

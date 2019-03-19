@@ -10,7 +10,7 @@ public enum AiStrategies {
 
     AiStrategy aiStrategy;
 
-    AiStrategies(AiStrategy aiStrategy){
+    AiStrategies(AiStrategy aiStrategy) {
         this.aiStrategy = aiStrategy;
     }
 
@@ -18,7 +18,7 @@ public enum AiStrategies {
         return aiStrategy;
     }
 
-    public static AiStrategy random(){
+    public static AiStrategy random() {
         return Arrays.asList(values()).stream()
                 .map(AiStrategies::getAiStrategy)
                 .unordered()
