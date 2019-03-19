@@ -25,7 +25,7 @@ public class Game {
     private Set<String> logs;
 
     @JsonProperty
-    @JsonSerialize(using= ToStringSerializer.class)
+    @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(as = Long.class)
     private Long id;
 
@@ -99,11 +99,11 @@ public class Game {
 
         if (turn.hasActionsInHand()) {
             turn.setPhase(ACTION);
-            logger.info("Now entering action phase for Player["+nextPlayer.getId()+"] "+nextPlayer.getName());
+            logger.info("Now entering action phase for Player[" + nextPlayer.getId() + "] " + nextPlayer.getName());
             nextPlayer.onActionPhase();
         } else {
             turn.setPhase(BUY);
-            logger.info("Now entering buy phase for Player["+nextPlayer.getId()+"] "+nextPlayer.getName());
+            logger.info("Now entering buy phase for Player[" + nextPlayer.getId() + "] " + nextPlayer.getName());
             nextPlayer.onBuyPhase();
         }
 
@@ -186,7 +186,7 @@ public class Game {
     }
 
     public Player getWinningPlayer() {
-        if(this.gameOver) {
+        if (this.gameOver) {
             return players.values()
                     .stream()
                     .max(Comparator.comparing(player -> ((Long) player.getVictoryPoints())))
@@ -235,7 +235,7 @@ public class Game {
         player.getDeck().remove(card);
         player.getHand().remove(card);
 
-        log("Player["+player.getId()+"] "+player.getName()+" discarded " + card.getName() + ".");
+        log("Player[" + player.getId() + "] " + player.getName() + " discarded " + card.getName() + ".");
 
         card.setOwner(null);
 
@@ -247,18 +247,18 @@ public class Game {
         logs.add(DateTime.now().toString() + ": " + string);
     }
 
-    void revealCard(Player player, Card card){
+    void revealCard(Player player, Card card) {
         boolean isCardInHand = player.getHand().contains(card);
         String fromLocation = (isCardInHand ? " from hand." : " from deck.");
 
 
-        log(player.getName()+ " revealed card " + card.getName() + fromLocation);
+        log(player.getName() + " revealed card " + card.getName() + fromLocation);
     }
 
-    public void revealCardsFromHand (Player player, Set<Card> cards) {
+    public void revealCardsFromHand(Player player, Set<Card> cards) {
         StringJoiner sj = new StringJoiner(", ");
         cards.forEach(card -> sj.add(card.getName()));
-        log(player.getName()+ " revealed cards " + sj.toString() + " from hand.");
+        log(player.getName() + " revealed cards " + sj.toString() + " from hand.");
     }
 
     public Map<Long, Card> getAllCards() {
@@ -288,7 +288,7 @@ public class Game {
         result = 31 * result + trash.hashCode();
         result = 31 * result + players.hashCode();
         result = 31 * result + (gameOver ? 1 : 0);
-        if(turn != null && turn.getPhase() != null) {
+        if (turn != null && turn.getPhase() != null) {
             result = 31 * result + turn.getPhase().hashCode();
         }
         return result;

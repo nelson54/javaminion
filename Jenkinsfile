@@ -87,12 +87,13 @@ pipeline {
 
     stage('Archiving') {
       steps {
+
         publishHTML(target: [
                 allowMissing         : false,
                 alwaysLinkToLastBuild: false,
                 keepAll              : true,
                 reportDir            : 'archives/checkstyle',
-                reportFiles          : 'index.html',
+                reportFiles          : 'main.html',
                 reportName           : "Checkstyle"
         ])
 
