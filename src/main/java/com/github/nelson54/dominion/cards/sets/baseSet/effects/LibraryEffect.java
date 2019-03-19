@@ -13,18 +13,18 @@ public class LibraryEffect extends Effect {
 
     Set<Card> setAside;
 
-    public LibraryEffect(){
+    public LibraryEffect() {
         super();
         setAside = new HashSet<>();
     }
 
     @Override
     boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
-        if(setAside == null){
+        if (setAside == null) {
             setAside = new HashSet<>();
         }
 
-        if(response.isYes()){
+        if (response.isYes()) {
             setAside.addAll(getChoice().getParentChoice().getCardOptions());
             target.getDeck().removeAll(getChoice().getParentChoice().getCardOptions());
         } else {

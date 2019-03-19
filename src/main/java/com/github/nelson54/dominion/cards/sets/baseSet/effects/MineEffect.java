@@ -18,7 +18,7 @@ public class MineEffect extends Effect {
         Card card = response.getCard();
         Choice choice = getChoice();
 
-        if ( card != null && choice.getState() == CardState.TRASHING_CARD) {
+        if (card != null && choice.getState() == CardState.TRASHING_CARD) {
             trashedCard = response.getCard();
             game.trashCard(trashedCard);
             return false;
@@ -26,7 +26,10 @@ public class MineEffect extends Effect {
             Card gainedCard = response.getCard();
             Card toGive = game.giveCardToPlayer(gainedCard.getName(), target);
             moveCardToHand(target, toGive);
-            game.log("Player["+target.getId()+"] "+target.getName()+" gained gained the card " + card.getName() + " to their hand from Mine.");
+            game.log("Player[" + target.getId() + "] "+target.getName()
+                    + " gained gained the card "
+                    + card.getName() + " to their hand from Mine.");
+
             return true;
         }
 

@@ -14,11 +14,16 @@ import java.util.Set;
 @Service
 public class KingdomFactory {
 
-    public Kingdom getKingdom(Long seed) throws IllegalAccessException, InstantiationException {
-        Random random = new Random(seed);
+    private static Kingdom createKingdom() {
         Kingdom kingdom = new Kingdom();
         kingdom.setAllCards(new HashMap<>());
         kingdom.setCardMarket(ArrayListMultimap.create());
+        return kingdom;
+    }
+
+    public Kingdom getKingdom(Long seed) throws IllegalAccessException, InstantiationException {
+        Random random = new Random(seed);
+        Kingdom kingdom = createKingdom();
 
         addTreasureCards(random, kingdom);
         addVictoryCards(random, kingdom, 4);
@@ -28,25 +33,23 @@ public class KingdomFactory {
     }
 
     @Deprecated
-    Kingdom getKingdomFromCards(Random random, Class<? extends Card>[] cards, int players) throws IllegalAccessException, InstantiationException {
-        Kingdom kingdom = new Kingdom();
-        kingdom.setAllCards(new HashMap<>());
-        kingdom.setCardMarket(ArrayListMultimap.create());
+    Kingdom getKingdomFromCards(Random random, Class<? extends Card>[] cards, int players)
+            throws IllegalAccessException, InstantiationException {
+        Kingdom kingdom = createKingdom();
 
         addTreasureCards(random, kingdom);
         addVictoryCards(random, kingdom, players);
 
-        for(Class<? extends Card> clazz: cards){
+        for (Class<? extends Card> clazz: cards) {
             addXCardsOfType(random, 10, clazz, kingdom);
         }
 
         return kingdom;
     }
 
-    Kingdom getKingdomFromCards(Random random, Set<Class<? extends Card>> cards, int players) throws IllegalAccessException, InstantiationException {
-        Kingdom kingdom = new Kingdom();
-        kingdom.setAllCards(new HashMap<>());
-        kingdom.setCardMarket(ArrayListMultimap.create());
+    Kingdom getKingdomFromCards(Random random, Set<Class<? extends Card>> cards, int players)
+            throws IllegalAccessException, InstantiationException {
+        Kingdom kingdom = createKingdom();
 
         addTreasureCards(random, kingdom);
         addVictoryCards(random, kingdom, players);
@@ -64,10 +67,10 @@ public class KingdomFactory {
         return kingdom;
     }
 
-    Kingdom getKingdomAllCards(Random random) throws IllegalAccessException, InstantiationException {
-        Kingdom kingdom = new Kingdom();
-        kingdom.setAllCards(new HashMap<>());
-        kingdom.setCardMarket(ArrayListMultimap.create());
+    Kingdom getKingdomAllCards(Random random)
+            throws IllegalAccessException, InstantiationException {
+
+        Kingdom kingdom = createKingdom();
 
         addTreasureCards(random, kingdom);
         addVictoryCards(random, kingdom, 4);
@@ -76,13 +79,17 @@ public class KingdomFactory {
         return kingdom;
     }
 
-    private void addTreasureCards(Random random, Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+    private void addTreasureCards(Random random, Kingdom kingdom)
+            throws InstantiationException, IllegalAccessException {
+
         addXCardsOfType(random, 60, Copper.class, kingdom);
         addXCardsOfType(random, 60, Silver.class, kingdom);
         addXCardsOfType(random, 60, Gold.class, kingdom);
     }
 
-    private void addVictoryCards(Random random, Kingdom kingdom, int players) throws InstantiationException, IllegalAccessException {
+    private void addVictoryCards(Random random, Kingdom kingdom, int players)
+            throws InstantiationException, IllegalAccessException {
+
         int provinces = (players == 2) ? 8 : 12;
 
         addXCardsOfType(random, 30, Estate.class, kingdom);
@@ -91,7 +98,9 @@ public class KingdomFactory {
         addXCardsOfType(random, 20, CurseCard.class, kingdom);
     }
 
-    private void firstGame(Random random, Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+    private void firstGame(Random random, Kingdom kingdom)
+            throws InstantiationException, IllegalAccessException {
+
         addXCardsOfType(random, 10, Cellar.class, kingdom);
         addXCardsOfType(random, 10, Market.class, kingdom);
         addXCardsOfType(random, 10, Militia.class, kingdom);
@@ -104,7 +113,9 @@ public class KingdomFactory {
         addXCardsOfType(random, 10, Workshop.class, kingdom);
     }
 
-    private void villageSquare(Random random, Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+    private void villageSquare(Random random, Kingdom kingdom)
+            throws InstantiationException, IllegalAccessException {
+
         addXCardsOfType(random, 10, Bureaucrat.class, kingdom);
         addXCardsOfType(random, 10, Cellar.class, kingdom);
         addXCardsOfType(random, 10, Festival.class, kingdom);
@@ -117,7 +128,9 @@ public class KingdomFactory {
         addXCardsOfType(random, 10, Village.class, kingdom);
     }
 
-    private void sizeDistortion(Random random, Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+    private void sizeDistortion(Random random, Kingdom kingdom)
+            throws InstantiationException, IllegalAccessException {
+
         addXCardsOfType(random, 10, Cellar.class, kingdom);
         addXCardsOfType(random, 10, Chapel.class, kingdom);
         addXCardsOfType(random, 10, Feast.class, kingdom);
@@ -130,7 +143,9 @@ public class KingdomFactory {
         addXCardsOfType(random, 10, Workshop.class, kingdom);
     }
 
-    private void bigMoney(Random random, Kingdom kingdom) throws InstantiationException, IllegalAccessException {
+    private void bigMoney(Random random, Kingdom kingdom)
+            throws InstantiationException, IllegalAccessException {
+
         addXCardsOfType(random, 10, Cellar.class, kingdom);
         addXCardsOfType(random, 10, Chapel.class, kingdom);
         addXCardsOfType(random, 10, Feast.class, kingdom);

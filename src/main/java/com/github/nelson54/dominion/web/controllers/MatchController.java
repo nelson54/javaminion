@@ -31,14 +31,19 @@ public class MatchController {
     private final AiPlayerService aiPlayerService;
     private MatchService matchService;
 
-    public MatchController(AiPlayerService aiPlayerService, MatchService matchService, AccountService accountService, AccountRepository accountRepository) {
+    public MatchController(
+            AiPlayerService aiPlayerService,
+            MatchService matchService,
+            AccountService accountService,
+            AccountRepository accountRepository) {
+
         this.aiPlayerService = aiPlayerService;
         this.accountService = accountService;
         this.accountRepository = accountRepository;
         this.matchService = matchService;
     }
 
-    @GetMapping(value="/matches")
+    @GetMapping(value = "/matches")
     Page<Match> matches() {
         Account account = accountService.getAuthorizedAccount()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
@@ -50,7 +55,8 @@ public class MatchController {
     @ResponseStatus(HttpStatus.CREATED)
     MatchDto createMatch(@RequestBody MatchDto matchDto) {
 
-        Integer totalPlayers = (matchDto.getNumberOfAiPlayers() + matchDto.getNumberOfHumanPlayers());
+        Integer totalPlayers = matchDto.getNumberOfAiPlayers()
+                + matchDto.getNumberOfHumanPlayers();
 
         GameCardSet gameCardSet = GameCardSet.byName(matchDto.getCards());
 
@@ -60,15 +66,16 @@ public class MatchController {
 
         match.addParticipant(new MatchParticipant(account));
 
-        Collection<MatchParticipant> participants = aiPlayerService.random(matchDto.getNumberOfAiPlayers())
-                .stream()
-                .map(this::addUserToAccount)
-                .map(MatchParticipant::createAi)
-                .collect(Collectors.toList());
+        Collection<MatchParticipant> participants =
+                aiPlayerService.random(matchDto.getNumberOfAiPlayers())
+                    .stream()
+                    .map(this::addUserToAccount)
+                    .map(MatchParticipant::createAi)
+                    .collect(Collectors.toList());
 
         match.addAiParticipants(participants);
 
-        if(match.isReady()) {
+        if (match.isReady()) {
             match.setMatchState(MatchState.IN_PROGRESS);
         } else {
             match.setMatchState(MatchState.WAITING_FOR_PLAYERS);
@@ -81,7 +88,7 @@ public class MatchController {
         return matchDto;
     }
 
-    @PatchMapping(value="/matches")
+    @PatchMapping(value = "/matches")
     void join(@RequestParam Long matchId) throws InstantiationException, IllegalAccessException {
         Match match = matchService.getMatch(matchId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -97,7 +104,7 @@ public class MatchController {
     }
 
 
-    private Optional<Account> getAccount(){
+    private Optional<Account> getAccount() {
         return accountService.getAuthorizedAccount();
     }
 }

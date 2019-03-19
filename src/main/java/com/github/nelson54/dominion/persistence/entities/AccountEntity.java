@@ -6,14 +6,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="accounts")
+@Table(name = "accounts")
 public class AccountEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="is_ai")
+    @Column(name = "is_ai")
     private Boolean ai;
 
     @NotNull
@@ -30,7 +30,11 @@ public class AccountEntity {
 
     public AccountEntity() {}
 
-    public AccountEntity(Boolean ai, @NotNull String firstname, @NotNull String email, UserEntity user) {
+    public AccountEntity(
+            Boolean ai,
+            @NotNull String firstname,
+            @NotNull String email,
+            UserEntity user) {
         this.ai = ai;
         this.firstname = firstname;
         this.user = user;
@@ -38,7 +42,12 @@ public class AccountEntity {
     }
 
     public static AccountEntity ofAccount(Account account) {
-        AccountEntity accountEntity = new AccountEntity(account.getAi(), account.getFirstname(), account.getEmail(), null);
+        AccountEntity accountEntity = new AccountEntity(
+                account.getAi(),
+                account.getFirstname(),
+                account.getEmail(),
+                null);
+
         accountEntity.id = account.getId();
         accountEntity.user = UserEntity.ofUser(account.getUser());
         return accountEntity;

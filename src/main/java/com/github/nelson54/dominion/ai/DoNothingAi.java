@@ -22,9 +22,7 @@ class DoNothingAi extends AiStrategy {
 
     @Override
     public void choice(AiGameFacade game) {
-        game.getChoice().ifPresent(
-                c->handleChoice(game, c)
-            );
+        game.getChoice().ifPresent(c -> handleChoice(game, c));
     }
 
     void handleChoice(AiGameFacade game, Choice choice) {
@@ -32,11 +30,11 @@ class DoNothingAi extends AiStrategy {
         choiceResponse.setChoice(choice.getId().toString());
         choiceResponse.setSource(choice.getTarget());
 
-        if(!choice.isRequired()){
+        if (!choice.isRequired()) {
             choiceResponse.setDone(true);
-        } else if (choice.getExpectedAnswerType().equals(YES_OR_NO)){
+        } else if (choice.getExpectedAnswerType().equals(YES_OR_NO)) {
             choiceResponse.setYes(false);
-        } else if (choice.getExpectedAnswerType().equals(CARD)){
+        } else if (choice.getExpectedAnswerType().equals(CARD)) {
             Set<Long> choices = new HashSet<>();
 
             choice.getOptions().stream().findFirst().ifPresent(choices::add);

@@ -20,7 +20,7 @@ public class AiGameFacade {
     private Player player;
     private Turn turn;
 
-    public AiGameFacade (CommandService commandService, Game game, Turn turn, Player player) {
+    public AiGameFacade(CommandService commandService, Game game, Turn turn, Player player) {
         this.commandService = commandService;
         this.game = game;
         this.player = player;
@@ -31,7 +31,7 @@ public class AiGameFacade {
         return player.getHand();
     }
 
-    Phase getPhase(){
+    Phase getPhase() {
         return turn.getPhase();
     }
 
@@ -53,7 +53,7 @@ public class AiGameFacade {
 
     Optional<Choice> getChoice() {
         Iterator<Choice> choices = player.getChoices().iterator();
-        if(choices.hasNext()) {
+        if (choices.hasNext()) {
             return Optional.of(choices.next());
         }
         return Optional.empty();

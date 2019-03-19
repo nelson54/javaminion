@@ -18,9 +18,9 @@ public class MoatRevealEffect extends Effect {
             reaction.getEffect().setCancelled(response.isYes());
             return true;
 
-       } else {
-           throw new MissingEffectException();
-       }
+        } else {
+            throw new MissingEffectException();
+        }
     }
 
     public static MoatRevealEffect create(Moat card, Choice choice) {

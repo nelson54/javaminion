@@ -26,13 +26,14 @@ public abstract class ComplexActionCard extends ActionCard {
         super(id, player);
     }
 
-    public abstract Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException ;
+    public abstract Choice getChoiceForTarget(Choice choice, Player target, Game game)
+            throws NoValidChoiceException;
 
     public abstract Effect getEffect(Player player, Game game);
 
     public abstract void play(Player player, Game game);
 
-    public CardState getState(Choice choice){
+    public CardState getState(Choice choice) {
         return CardState.RESOLVING;
     }
 
@@ -51,8 +52,6 @@ public abstract class ComplexActionCard extends ActionCard {
     }
 
     public void addChoice(Player player, Game game, ChoiceResponse response, Choice parent) {
-        Turn turn = game.getTurn();
-
         Choice choice = new Choice(player, this);
         choice.setOwner(getOwner());
         choice.setComplete(false);
@@ -77,20 +76,24 @@ public abstract class ComplexActionCard extends ActionCard {
             choice.setComplete(true);
         }
 
-        if(parent != null && parent.getChoices() != null)
+        if (parent != null && parent.getChoices() != null) {
             choice.getChoices().addAll(parent.getChoices());
+        }
 
-        if(response != null && response.getChoices() != null)
+        if (response != null && response.getChoices() != null) {
             choice.getChoices().addAll(response.getChoices());
+        }
 
-        if(choice != null && choice.getChoices() != null)
+        if (choice != null && choice.getChoices() != null) {
             choice.getOptions().removeAll(choice.getChoices());
+        }
 
 
-        if(!choice.isComplete())
+        if (!choice.isComplete()) {
             game.addChoice(choice);
+        }
 
-        choice.resolveIfComplete(turn);
+        choice.resolveIfComplete(game.getTurn());
     }
 
     private Choice findParentChoice(Game game, Player player) {

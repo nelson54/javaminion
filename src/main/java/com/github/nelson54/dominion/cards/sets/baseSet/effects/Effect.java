@@ -16,34 +16,27 @@ public abstract class Effect {
     @JsonIgnore
     private boolean noValidTarget;
 
-    @JsonBackReference(value="owner")
-    private
-    Player owner;
-    @JsonBackReference(value="target")
-    private
-    Player target;
+    @JsonBackReference(value = "owner")
+    private Player owner;
 
-    @JsonBackReference(value="source")
-    private
-    Card source;
+    @JsonBackReference(value = "target")
+    private Player target;
+
+    @JsonBackReference(value = "source")
+    private Card source;
 
     private boolean cancelled;
 
-    @JsonBackReference(value="choice")
-    private
-    Choice choice;
+    @JsonBackReference(value = "choice")
+    private Choice choice;
 
     Effect() {
         cancelled = false;
     }
 
     public boolean resolve(ChoiceResponse response, Player target, Turn turn, Game game) {
-        if (cancelled) {
-
-            if(noValidTarget){
-                onNoValidTarget(choice, target, turn, game);
-            }
-
+        if (cancelled && noValidTarget) {
+            onNoValidTarget(choice, target, turn, game);
             return true;
         } else {
             return effect(response, target, turn, game);

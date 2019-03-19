@@ -36,8 +36,8 @@ public class Mine extends ComplexActionCard {
     }
 
     @Override
-    public CardState getState(Choice choice){
-        if(choice.getParentChoice() == null){
+    public CardState getState(Choice choice) {
+        if (choice.getParentChoice() == null) {
             return CardState.TRASHING_CARD;
         } else {
             return CardState.GAINING_CARD;

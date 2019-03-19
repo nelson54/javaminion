@@ -64,19 +64,19 @@ public class CommandService {
                 turn.endTurn();
             }
         } catch (IncorrectPhaseException e) {
-            msg = "Incorrect phase command for Player["+player.getId()+"] "+player.getName() +
-                    " attempted command {"+ command.toString() +"} in Phase " + turn.getPhase();
+            msg = "Incorrect phase command for Player[" + player.getId() + "] " + player.getName()
+                    + " attempted command {" + command.toString() + "} in Phase " + turn.getPhase();
         } catch (InsufficientFundsException e) {
-            msg = "Insufficient funds for["+player.getId()+"] "+player.getName() +
-                    " attempted to buy "+card.getName()+" with a money pool of" + turn.getMoney();
+            msg = "Insufficient funds for[" + player.getId() + "] " + player.getName()
+                    + " attempted to buy " + card.getName()
+                    + " with a money pool of" + turn.getMoney();
         } catch (Exception e) {
             logger.error(e.getMessage());
             return game;
         }
 
 
-
-        if(command.getId() == null && msg == null) {
+        if (command.getId() == null && msg == null) {
             save(command);
         } else if (command.getId() == null && msg != null) {
             logger.info(msg);
@@ -100,9 +100,9 @@ public class CommandService {
         Turn turn = game.getTurn();
 
         if (!choiceResponse.isDone()) {
-            if (expectedType.equals(OptionType.CARD))
+            if (expectedType.equals(OptionType.CARD)) {
                 choiceResponse.setCard(game.getAllCards().get(choiceResponse.getCard().getId()));
-            else if (expectedType.equals(OptionType.LIST_OF_CARDS)) {
+            } else if (expectedType.equals(OptionType.LIST_OF_CARDS)) {
                 Set<Card> choices = choiceResponse.getCards()
                         .stream()
                         .map(Card::getId)

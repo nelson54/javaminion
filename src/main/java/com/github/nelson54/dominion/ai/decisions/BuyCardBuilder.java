@@ -20,7 +20,7 @@ public class BuyCardBuilder {
     }
 
     public BuyCardBuilder pick(String card) {
-        if(currentDecision.isPresent()){
+        if (currentDecision.isPresent()) {
             throw new IllegalStateException();
         }
 
@@ -29,7 +29,7 @@ public class BuyCardBuilder {
     }
 
     public BuyCardBuilder when(Boolean... decisions) {
-        if(!currentDecision.isPresent()){
+        if (!currentDecision.isPresent()) {
             throw new IllegalStateException();
         }
 
@@ -42,7 +42,7 @@ public class BuyCardBuilder {
     }
 
     public BuyCardBuilder or() {
-        if(!currentDecision.isPresent()) {
+        if (!currentDecision.isPresent()) {
             throw new IllegalStateException();
         }
 
@@ -56,7 +56,13 @@ public class BuyCardBuilder {
         return buyOptions.stream()
                 .filter(b -> game.getKingdom().getCardMarket().containsKey(b.getObj()))
                 .filter(b -> b.getDecisions() == null || b.getDecisions().stream().allMatch(t -> t))
-                .map(b -> game.getKingdom().getCardMarket().get(b.getObj()).stream().findFirst().get())
+                .map(b ->
+                        game.getKingdom()
+                                .getCardMarket()
+                                .get(b.getObj())
+                                .stream()
+                                .findFirst())
+                .map(Optional::get)
                 .filter(game::canAffordCard)
                 .collect(Collectors.toList());
     }

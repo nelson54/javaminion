@@ -23,7 +23,7 @@ public class Card {
     Set<CardType> cardTypes;
 
     @JsonProperty
-    @JsonSerialize(using= ToStringSerializer.class)
+    @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(as = Long.class)
     private Long id;
 

@@ -37,7 +37,11 @@ public class Command {
         this.time = LocalDateTime.now();
     }
 
-    public Command(Game game, Player account, ChoiceResponse choiceResponse, CommandType commandType) {
+    public Command(
+            Game game,
+            Player account,
+            ChoiceResponse choiceResponse,
+            CommandType commandType) {
         this.gameId = game.getId();
         this.accountId = account.getId();
         this.choiceResponse = ChoiceResponseMongo.ofChoiceResponse(choiceResponse);

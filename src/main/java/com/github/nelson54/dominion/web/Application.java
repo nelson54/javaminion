@@ -40,7 +40,6 @@ public class Application extends SpringBootServletInitializer {
 
     @Bean
     GameFactory getGameFactory(KingdomFactory kingdomFactory, CommandService commandService) {
-
         return new GameFactory(kingdomFactory, commandService);
 
     }
@@ -49,19 +48,4 @@ public class Application extends SpringBootServletInitializer {
     public BCryptPasswordEncoder createBCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Autowired
-    void clearMongo(MongoTemplate mongoTemplate) {
-        mongoTemplate.dropCollection("commands");
-    }
-
-/*    @Bean
-    public UndertowServletWebServerFactory embeddedServletContainerFactory() {
-        UndertowServletWebServerFactory factory = new UndertowServletWebServerFactory();
-
-        factory.addBuilderCustomizers((UndertowBuilderCustomizer) builder ->
-                builder.addHttpListener(8080, "0.0.0.0"));
-
-        return factory;
-    }*/
 }

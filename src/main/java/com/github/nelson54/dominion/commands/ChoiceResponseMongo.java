@@ -22,20 +22,20 @@ public class ChoiceResponseMongo {
     }
 
     public ChoiceResponse toChoiceResponse(Game game) {
-        Set<Card> cards = null
-                ;
         ChoiceResponse cr = new ChoiceResponse();
         cr.setTargetChoice(targetChoice);
         cr.setDecisionId(decisionId);
         cr.setMessage(message);
         cr.setDone(done);
         cr.setYes(yesOrNo);
-        if(card != null) {
+        if (card != null) {
             cr.setCard(game.getAllCards().get(card));
         }
 
-        if(this.cards != null ) {
-            cards = this.cards.stream().map(id -> game.getAllCards().get(id)).collect(Collectors.toSet());
+        Set<Card> cards = null;
+        if (this.cards != null) {
+            cards = this.cards.stream()
+                    .map(id -> game.getAllCards().get(id)).collect(Collectors.toSet());
         }
 
         cr.setCards(cards);
@@ -57,16 +57,18 @@ public class ChoiceResponseMongo {
         choiceResponseMongo.setChoice(choiceResponse.getChoice());
         choiceResponseMongo.setChoices(choiceResponse.getChoices());
 
-        if(choiceResponse.getCard() != null) {
+        if (choiceResponse.getCard() != null) {
             choiceResponseMongo.setCard(choiceResponse.getCard().getId());
         }
 
-        if(choiceResponse.getCard() != null) {
+        if (choiceResponse.getCard() != null) {
             choiceResponseMongo.setCard(choiceResponse.getCard().getId());
         }
 
-        if(choiceResponse.getCards() != null) {
-            choiceResponseMongo.setCards(choiceResponse.getCards().stream().map(Card::getId).collect(Collectors.toSet()));
+        if (choiceResponse.getCards() != null) {
+            Set<Long> cardIds = choiceResponse
+                    .getCards().stream().map(Card::getId).collect(Collectors.toSet());
+            choiceResponseMongo.setCards(cardIds);
         }
 
         return choiceResponseMongo;

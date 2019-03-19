@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Cellar extends ComplexActionCard {
-    public Cellar(Long id){
+    public Cellar(Long id) {
         super(id);
         byte moneyCost = 2;
 
@@ -40,7 +40,7 @@ public class Cellar extends ComplexActionCard {
         Set<Card> options;
         choice.setIsDialog(false);
         choice.setMessage("Choose any number of cards to discard.");
-        if(parent == null){
+        if (parent == null) {
             options = new HashSet<>();
             options.addAll(target.getHand());
 
@@ -50,7 +50,7 @@ public class Cellar extends ComplexActionCard {
         } else {
             options = parent.getCardOptions();
 
-            if(parent.getResponse() != null && parent.getResponse().getCard() != null){
+            if (parent.getResponse() != null && parent.getResponse().getCard() != null) {
                 options.remove(parent.getResponse().getCard());
             }
         }
@@ -73,6 +73,6 @@ public class Cellar extends ComplexActionCard {
     @Override
     public void play(Player player, Game game) {
         Turn turn = player.getCurrentTurn();
-        turn.setActionPool(turn.getActionPool()+1);
+        turn.setActionPool(turn.getActionPool() + 1);
     }
 }

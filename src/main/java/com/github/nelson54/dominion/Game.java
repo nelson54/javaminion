@@ -84,11 +84,13 @@ public class Game {
 
         if (turn.hasActionsInHand()) {
             turn.setPhase(ACTION);
-            logger.info("Now entering action phase for Player[" + nextPlayer.getId() + "] " + nextPlayer.getName());
+            logger.info("Now entering action phase for Player[" + nextPlayer.getId() + "] "
+                    + nextPlayer.getName());
             nextPlayer.onActionPhase();
         } else {
             turn.setPhase(BUY);
-            logger.info("Now entering buy phase for Player[" + nextPlayer.getId() + "] " + nextPlayer.getName());
+            logger.info("Now entering buy phase for Player[" + nextPlayer.getId() + "] "
+                    + nextPlayer.getName());
             nextPlayer.onBuyPhase();
         }
 
@@ -220,7 +222,8 @@ public class Game {
         player.getDeck().remove(card);
         player.getHand().remove(card);
 
-        log("Player[" + player.getId() + "] " + player.getName() + " discarded " + card.getName() + ".");
+        log("Player[" + player.getId() + "] " + player.getName()
+                + " discarded " + card.getName() + ".");
 
         card.setOwner(null);
 

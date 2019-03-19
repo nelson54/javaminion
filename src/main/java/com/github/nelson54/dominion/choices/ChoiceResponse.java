@@ -17,11 +17,9 @@ public class ChoiceResponse {
     private String message;
 
     @JsonIgnore
-    private
-    Player source;
+    private Player source;
     @JsonIgnore
-    private
-    Effect effect;
+    private Effect effect;
 
     private boolean done;
 
@@ -127,7 +125,7 @@ public class ChoiceResponse {
         return yesOrNo;
     }
 
-    public void setYes(boolean isYes){
+    public void setYes(boolean isYes) {
         this.yesOrNo = isYes;
     }
 

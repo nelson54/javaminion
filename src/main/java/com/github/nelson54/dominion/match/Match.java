@@ -29,7 +29,12 @@ public class Match {
         this.cards = cards;
     }
 
-    public Match(Long id, Long seed, MatchState matchState, Integer playerCount, GameCardSet cards) {
+    public Match(Long id,
+                 Long seed,
+                 MatchState matchState,
+                 Integer playerCount,
+                 GameCardSet cards) {
+
         this.id = id;
         this.seed = seed;
         this.matchState = matchState;
@@ -52,9 +57,9 @@ public class Match {
         return this.participants;
     }
 
-    public List<Long> getTurnOrder(){
+    public List<Long> getTurnOrder() {
         return this.participants.stream()
-                .map((participant)->participant.getAccount().getId())
+                .map((participant) -> participant.getAccount().getId())
                 .collect(Collectors.toList());
     }
 
@@ -68,7 +73,7 @@ public class Match {
         return cards;
     }
 
-    public void addParticipant (MatchParticipant participant) {
+    public void addParticipant(MatchParticipant participant) {
         participants.add(participant);
     }
 
@@ -77,7 +82,7 @@ public class Match {
     }
 
     public boolean isReady() {
-        return participants.size()== playerCount;
+        return participants.size() == playerCount;
     }
 
     public void addAiParticipants(Collection<MatchParticipant> participants) {

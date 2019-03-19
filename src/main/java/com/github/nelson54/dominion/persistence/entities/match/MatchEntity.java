@@ -12,17 +12,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name="match")
+@Table(name = "match")
 public class MatchEntity {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
     private Long seed;
 
-    @ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<AccountEntity> players;
 
     @Column
@@ -34,15 +34,15 @@ public class MatchEntity {
     @Column
     private MatchState state;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
     private Set<PlayerScoreEntity> scores;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
     private List<CardTypeReferenceEntity> gameCards;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private AccountEntity winner;
 
@@ -62,7 +62,7 @@ public class MatchEntity {
 
         Match match = new Match(id, seed, state, playerCount, cardSet);
 
-        players.forEach((playerAccount)-> accounts.put(playerAccount.getId(), playerAccount));
+        players.forEach((playerAccount) -> accounts.put(playerAccount.getId(), playerAccount));
 
         Arrays.asList(turnOrder.split(",")).stream()
                 .map(Long::valueOf)
@@ -76,7 +76,7 @@ public class MatchEntity {
     public static MatchEntity ofMatch(Match match) {
         MatchEntity matchEntity = new MatchEntity();
 
-        if(match.getId() != null) {
+        if (match.getId() != null) {
             matchEntity.id = match.getId();
         }
 
@@ -87,10 +87,10 @@ public class MatchEntity {
         matchEntity.state = match.getMatchState();
 
         matchEntity.players = match.getParticipants().stream()
-                .map((participant)->AccountEntity.ofAccount(participant.getAccount()))
+                .map((participant) -> AccountEntity.ofAccount(participant.getAccount()))
                 .collect(Collectors.toList());
 
-        if(match.getWinner() != null) {
+        if (match.getWinner() != null) {
             matchEntity.winner = AccountEntity.ofAccount(match.getWinner().getAccount());
         }
 
@@ -110,7 +110,7 @@ public class MatchEntity {
 
     public AccountEntity findPlayerById(Long id) {
         Map<Long, AccountEntity> playersById = new HashMap<>();
-        this.players.forEach((player)-> playersById.put(player.getId(), player));
+        this.players.forEach((player) -> playersById.put(player.getId(), player));
 
         return playersById.get(id);
     }

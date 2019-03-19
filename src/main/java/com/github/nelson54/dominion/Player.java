@@ -71,7 +71,7 @@ public class Player {
     }
 
     protected void resetForNextTurn(Turn turn) {
-        if(turn != null){
+        if (turn != null) {
             hand.addAll(turn.getPlay());
         }
 
@@ -82,26 +82,26 @@ public class Player {
 
     }
 
-    public void discard(Card card){
+    public void discard(Card card) {
         hand.remove(card);
         deck.remove(card);
         discard.add(card);
     }
 
-    public void discard(Set<Card> cards){
+    public void discard(Set<Card> cards) {
         String list = cards.stream()
                 .map(Card::getName)
                 .map(Object::toString)
                 .collect(Collectors.joining(", "));
 
+        game.log(getName() + " discarded: " + list);
+
         hand.removeAll(cards);
         deck.removeAll(cards);
         discard.addAll(cards);
-
-        game.log(getName() + " discarded: " + list);
     }
 
-    public void putOnTopOfDeck(Card card){
+    public void putOnTopOfDeck(Card card) {
         hand.remove(card);
         deck.add(card);
     }

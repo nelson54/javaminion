@@ -7,17 +7,20 @@ import javax.persistence.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-    @Entity @Table(name="card_type_reference", uniqueConstraints=@UniqueConstraint(columnNames={"clazz", "name"}))
-    public class CardTypeReferenceEntity {
+@Entity
+@Table(
+        name = "card_type_reference",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"clazz", "name"}))
+public class CardTypeReferenceEntity {
 
-        @Id
-        @GeneratedValue(strategy= GenerationType.AUTO)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-        @Column
-        private String clazz;
+    @Column
+    private String clazz;
 
-        @Column
+    @Column
     private String name;
 
     public static CardTypeReferenceEntity ofCardTypeReference(CardTypeReference cardTypeReference) {
@@ -39,7 +42,7 @@ import java.util.regex.Pattern;
             Matcher match = p.matcher(this.clazz);
 
 
-            if(match.find()) {
+            if (match.find()) {
                 this.clazz = match.group(1);
             }
 

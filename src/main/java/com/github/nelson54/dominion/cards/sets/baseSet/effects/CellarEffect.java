@@ -12,13 +12,14 @@ import java.util.Set;
 public class CellarEffect extends Effect {
 
     Set<Card> toDiscard;
+
     @Override
     boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
-        if(response.getCards() == null && toDiscard == null){
+        if (response.getCards() == null && toDiscard == null) {
             toDiscard = new HashSet<>();
         }
 
-        if(response.isDone()) {
+        if (response.isDone()) {
             int toDraw = toDiscard.size();
             target.drawXCards(toDraw);
             target.discard(toDiscard);

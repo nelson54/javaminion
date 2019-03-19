@@ -27,7 +27,11 @@ public class MatchService {
     private GameFactory gameFactory;
     private CommandService commandService;
 
-    public MatchService(MatchRepository matchRepository, GameFactory gameFactory, CommandService commandService) {
+    public MatchService(
+            MatchRepository matchRepository,
+            GameFactory gameFactory,
+            CommandService commandService) {
+
         this.commandService = commandService;
         this.matchRepository = matchRepository;
         this.gameFactory = gameFactory;
@@ -67,7 +71,7 @@ public class MatchService {
     public Game applyCommand(Game game, Command command) {
         game = commandService.applyCommand(game, command);
 
-        if(game.getGameOver()) {
+        if (game.getGameOver()) {
             endGame(game);
         }
 
@@ -92,7 +96,7 @@ public class MatchService {
     }
 
     public Optional<Match> endGame(Game game) {
-        if(game.getGameOver()) {
+        if (game.getGameOver()) {
 
             Optional<MatchEntity> optionalMatchEntity = matchRepository.findById(game.getId());
             Long winningPlayerId = game.getWinningPlayer().getId();

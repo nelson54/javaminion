@@ -43,7 +43,7 @@ public class Militia extends ComplexActionAttackCard {
 
         Set<Card> options = new HashSet<>();
 
-        if(parent == null){
+        if (parent == null) {
             options.addAll(target.getHand());
 
             choice.getOptions().addAll(
@@ -58,7 +58,7 @@ public class Militia extends ComplexActionAttackCard {
                         .collect(Collectors.toSet())
             );
 
-            if(parent.getResponse() != null && parent.getResponse().getCard() != null){
+            if (parent.getResponse() != null && parent.getResponse().getCard() != null) {
                 options.remove(parent.getResponse().getCard());
             }
         }
@@ -81,6 +81,6 @@ public class Militia extends ComplexActionAttackCard {
     @Override
     public void play(Player player, Game game) {
         Turn turn = player.getCurrentTurn();
-        turn.setMoneyPool(turn.getMoneyPool()+2);
+        turn.setMoneyPool(turn.getMoneyPool() + 2);
     }
 }

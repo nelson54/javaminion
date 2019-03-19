@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private JWTAuthorizationFilter authenticationTokenFilter;
+    private JwtAuthorizationFilter authenticationTokenFilter;
 
     public WebSecurityConfig(BCryptPasswordEncoder passwordEncoder, UserEntityDetailsService userDetailsService) {
         this.passwordEncoder = passwordEncoder;

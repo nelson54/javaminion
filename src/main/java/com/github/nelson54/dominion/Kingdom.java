@@ -24,10 +24,11 @@ public class Kingdom {
     }
 
     public int getNumberOfRemainingCardsByName(String name) {
-        if (!cardMarket.containsKey(name))
+        if (!cardMarket.containsKey(name)) {
             return 0;
-        else
-            return getCardsByName(name).size();
+        }
+
+        return getCardsByName(name).size();
     }
 
     public Multimap<String, Card> getCardMarket() {
@@ -46,6 +47,12 @@ public class Kingdom {
         this.allCards = allCards;
     }
 
+    public Set<Card> getTreasureCards() {
+        return getCardOfEachType().stream()
+                .filter(card -> card instanceof TreasureCard)
+                .collect(Collectors.toSet());
+    }
+
     private Set<Card> getCardOfEachType() {
         Set<Card> cardsOfEachType = new HashSet<>();
 
@@ -55,11 +62,5 @@ public class Kingdom {
                 .forEach(cardsOfEachType::add);
 
         return cardsOfEachType;
-    }
-
-    public Set<Card> getTreasureCards() {
-        return getCardOfEachType().stream()
-                .filter(card -> card instanceof TreasureCard)
-                .collect(Collectors.toSet());
     }
 }

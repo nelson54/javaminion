@@ -36,10 +36,7 @@ public class Feast extends ComplexActionCard {
         super.setOwner(player);
     }
 
-    public @Override
-    Choice getChoiceForTarget(Choice choice, Player target, Game game) {
-        Choice parent = choice.getParentChoice();
-
+    @Override public Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         choice.setGame(game);
         choice.setMessage("Choose a card to gain.");
         choice.setExpectedAnswerType(OptionType.CARD);
@@ -55,8 +52,8 @@ public class Feast extends ComplexActionCard {
         return choice;
     }
 
-    public @Override
-    Effect getEffect(Player player, Game game) {
+    @Override
+    public Effect getEffect(Player player, Game game) {
         Effect effect = new FeastEffect();
         effect.setOwner(getOwner());
         effect.setTarget(player);
@@ -64,8 +61,8 @@ public class Feast extends ComplexActionCard {
         return effect;
     }
 
-    public @Override
-    void play(Player player, Game game) {
+    @Override
+    public void play(Player player, Game game) {
         game.trashCard(this);
     }
 

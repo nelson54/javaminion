@@ -6,12 +6,12 @@ public class AiDecisionBuilder {
 
     private AiGameFacade facade;
 
-    public static AiDecisionBuilder start(AiGameFacade facade){
+    public static AiDecisionBuilder start(AiGameFacade facade) {
         return new AiDecisionBuilder(facade);
     }
 
 
-    public BuyCardBuilder buyPreferences(){
+    public BuyCardBuilder buyPreferences() {
         return BuyCardBuilder.create(this);
     }
 

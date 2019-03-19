@@ -25,7 +25,10 @@ public class NotFoundHandler {
             return ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(body);
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was an error completing the action." + e.getLocalizedMessage());
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("There was an error completing the action."
+                            + e.getLocalizedMessage());
         }
     }
 

@@ -42,7 +42,7 @@ public class BigSmithyAi extends DoNothingAi {
                 //.pick("Copper").when(gainsToEndGame <= 3)
                 .findFirstMatch();
 
-        if(card.isPresent() && game.getBuys() > 0){
+        if (card.isPresent() && game.getBuys() > 0) {
             game.buy(card.get());
         } else {
             game.endPhase();

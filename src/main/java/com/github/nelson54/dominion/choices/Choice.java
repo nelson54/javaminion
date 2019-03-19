@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class Choice {
 
     @JsonProperty
-    @JsonSerialize(using= ToStringSerializer.class)
+    @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(as = Long.class)
     private Long id;
     private CardState state;
@@ -154,8 +154,8 @@ public class Choice {
             choices.remove(this);
             resolved.add(this);
 
-            if (choices.size() > 0){
-               choices.stream().findFirst().ifPresent((choice)-> choice.getTarget().onChoice());
+            if (choices.size() > 0) {
+                choices.stream().findFirst().ifPresent((choice) -> choice.getTarget().onChoice());
             } else {
                 game.getTurn().setPhase(Phase.ACTION);
                 game.getTurn().getPlayer().onActionPhase();

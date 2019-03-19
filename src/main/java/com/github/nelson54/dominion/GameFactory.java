@@ -26,16 +26,20 @@ public class GameFactory {
             game.setPlayers(new HashMap<>());
             game.setTurnOrder(new LinkedHashSet<>());
 
-            Kingdom kingdom = kingdomFactory.getKingdomFromCards(new Random(match.getSeed()), match.getCards().getCardClasses(), match.getPlayerCount());
+            Kingdom kingdom = kingdomFactory.getKingdomFromCards(
+                    new Random(match.getSeed()),
+                    match.getCards().getCardClasses(),
+                    match.getPlayerCount());
+
             game.setKingdom(kingdom);
 
             addPlayers(match.getParticipants(), game);
             game.nextPlayer();
-            Iterator<Player> turnerator =  game.getTurnOrder().iterator();
+            Iterator<Player> turnerator = game.getTurnOrder().iterator();
 
             byte i = 0;
 
-            while(turnerator.hasNext()) {
+            while (turnerator.hasNext()) {
                 turnerator.next().setOrder(i++);
             }
 
@@ -47,10 +51,10 @@ public class GameFactory {
 
     private void addPlayers(Collection<MatchParticipant> players, Game game) {
 
-        for(MatchParticipant player : players){
+        for (MatchParticipant player : players) {
             Player p;
 
-            if(player.isAi()){
+            if (player.isAi()) {
                 p = createAiPlayer(game, player.getAccount());
             } else {
                 p = createHumanPlayer(game, player.getAccount());
@@ -61,8 +65,6 @@ public class GameFactory {
     }
 
     private Player createHumanPlayer(Game game, Account account) {
-
-
         Player player = new Player(account);
         return getPlayer(game, player);
     }
@@ -92,7 +94,9 @@ public class GameFactory {
     }
 
     private void addStartingCardsToPlayer(Player player, Game game) {
-        Stream.of("Estate", "Estate", "Estate", "Copper", "Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
+        Stream.of(
+                "Estate", "Estate", "Estate",
+                "Copper", "Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
                 .forEach(name -> game.giveCardToPlayer(name, player));
     }
 }

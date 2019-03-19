@@ -18,8 +18,12 @@ public class MilitiaEffect extends Effect {
     @Override
     boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
 
-        if(response != null && response.getChoices() != null && target.getHand().size() > 3) {
-            Set<Card> cards = response.getChoices().stream().map(id -> Cards.ofId(game, id)).collect(Collectors.toSet());
+        if (response != null && response.getChoices() != null && target.getHand().size() > 3) {
+            Set<Card> cards = response
+                    .getChoices().stream()
+                    .map(id -> Cards.ofId(game, id))
+                    .collect(Collectors.toSet());
+
             target.discard(cards);
         }
 

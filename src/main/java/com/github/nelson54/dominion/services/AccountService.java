@@ -36,8 +36,8 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Optional<AuthenticationDto> authenticateWithCredentials(AccountCredentialsDto accountCredentials)
-            throws AuthenticationException {
+    public Optional<AuthenticationDto> authenticateWithCredentials(
+            AccountCredentialsDto accountCredentials) throws AuthenticationException {
         UserEntity userEntity = userRepository.findByUsername(accountCredentials.getUsername())
                 .orElseThrow(() -> new RuntimeException("Incorrect username"));
 
@@ -69,7 +69,11 @@ public class AccountService {
         String encryptedPassword = passwordEncoder.encode(registrationDto.getPassword());
         userEntity.setPassword(encryptedPassword);
 
-        AccountEntity accountEntity = new AccountEntity(false, registrationDto.getFirstname(), registrationDto.getEmail(), userEntity);
+        AccountEntity accountEntity = new AccountEntity(
+                false,
+                registrationDto.getFirstname(),
+                registrationDto.getEmail(),
+                userEntity);
         accountRepository.save(accountEntity);
 
         return Optional.of(accountEntity.asAccount());
@@ -77,7 +81,8 @@ public class AccountService {
 
     public Optional<Account> getAuthorizedAccount() {
         return accountRepository
-                .findByUserUsername((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                .findByUserUsername((String)
+                        SecurityContextHolder.getContext().getAuthentication().getPrincipal())
                 .map(AccountEntity::asAccount);
     }
 }

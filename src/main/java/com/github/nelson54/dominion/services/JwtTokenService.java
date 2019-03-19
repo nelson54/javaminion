@@ -30,9 +30,10 @@ public class JwtTokenService {
     }
 
     public static String generateToken(Authentication auth) {
+        Date date = new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME);
         String token = Jwts.builder()
                 .setSubject(((User) auth.getPrincipal()).getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
+                .setExpiration(date)
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
                 .compact();
         return token;

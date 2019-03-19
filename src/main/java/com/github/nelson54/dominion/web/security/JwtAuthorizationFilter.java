@@ -16,18 +16,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class JWTAuthorizationFilter extends OncePerRequestFilter {
+public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
-    public JWTAuthorizationFilter(UserEntityDetailsService userDetailsService) {
+    public JwtAuthorizationFilter(UserEntityDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
-                                    FilterChain chain) throws IOException, ServletException, UsernameNotFoundException {
+                                    FilterChain chain)
+            throws IOException, ServletException, UsernameNotFoundException {
         String header = req.getHeader(SecurityConstants.AUTH_HEADER_NAME);
 
         if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {

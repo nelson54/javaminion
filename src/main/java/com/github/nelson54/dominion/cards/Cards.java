@@ -35,24 +35,30 @@ public class Cards {
         return cardsInHand;
     }
 
-    public static Set<Long> getIds(Collection<Card> cards){
+    public static Set<Long> getIds(Collection<Card> cards) {
         return cards.stream()
                 .map(Card::getId)
                 .collect(Collectors.toSet());
     }
 
-    public static Card ofId(Game game, Long id){
+    public static Card ofId(Game game, Long id) {
         return new CardReference(id);
     }
 
-    public static boolean isAttackCard (Card card) {
+    public static boolean isAttackCard(Card card) {
         return card.getClass().isAssignableFrom(ActionAttackCard.class);
     }
 
-    public static Card createInstance(String className, Long id) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static Card createInstance(String className, Long id) throws
+            ClassNotFoundException,
+            NoSuchMethodException,
+            IllegalAccessException,
+            InvocationTargetException,
+            InstantiationException {
+
         Class<?> clazz = Class.forName(className);
 
-        if( Card.class.isAssignableFrom(clazz)) {
+        if (Card.class.isAssignableFrom(clazz)) {
             Constructor<?> ctor = clazz.getConstructor(Long.class, Player.class);
             return (Card) ctor.newInstance(id, null);
         } else {
@@ -60,10 +66,16 @@ public class Cards {
         }
     }
 
-    public static Card createInstance(String className, Long id, Player player) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static Card createInstance(String className, Long id, Player player) throws
+            ClassNotFoundException,
+            NoSuchMethodException,
+            IllegalAccessException,
+            InvocationTargetException,
+            InstantiationException {
+
         Class<?> clazz = Class.forName(className);
 
-        if( Card.class.isAssignableFrom(clazz)) {
+        if (Card.class.isAssignableFrom(clazz)) {
             Constructor<?> ctor = clazz.getConstructor(Long.class, Player.class);
             return (Card) ctor.newInstance(id, player);
         } else {

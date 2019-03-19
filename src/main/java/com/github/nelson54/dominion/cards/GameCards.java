@@ -21,7 +21,7 @@ public enum GameCards {
                 CardTypeReference.of("Workshop", Workshop.class)
             )
     ),
-    VILLAGE_SQUARE (
+    VILLAGE_SQUARE(
             "Village Square",
             GameCardSet.of(
                 CardTypeReference.of("Bureaucrat", Bureaucrat.class),
@@ -36,7 +36,7 @@ public enum GameCards {
                 CardTypeReference.of("Village", Village.class)
             )
     ),
-    BIG_MONEY (
+    BIG_MONEY(
             "Big Money",
             GameCardSet.of(
                 CardTypeReference.of("Adventurer", Adventurer.class),
@@ -51,7 +51,7 @@ public enum GameCards {
                 CardTypeReference.of("Throne Room", ThroneRoom.class)
             )
     ),
-    INTERACTION (
+    INTERACTION(
             "Interaction",
             GameCardSet.of(
                 CardTypeReference.of("Bureaucrat", Bureaucrat.class),
@@ -66,7 +66,7 @@ public enum GameCards {
                 CardTypeReference.of("Village", Village.class)
             )
     ),
-    SIZE_DISTORTION (
+    SIZE_DISTORTION(
             "Size Distortion",
             GameCardSet.of(
                 CardTypeReference.of("Cellar", Cellar.class),
@@ -81,7 +81,7 @@ public enum GameCards {
                 CardTypeReference.of("Workshop", Workshop.class)
             )
     ),
-    ALL_CARDS (
+    ALL_CARDS(
             "All Cards",
             GameCardSet.of(
                     CardTypeReference.of("Cellar", Cellar.class),
@@ -115,7 +115,7 @@ public enum GameCards {
     String name;
     public GameCardSet gameCardSet;
 
-    GameCards(String name, GameCardSet gameCardSet){
+    GameCards(String name, GameCardSet gameCardSet) {
         this.name = name;
         this.gameCardSet = gameCardSet;
     }
@@ -128,9 +128,9 @@ public enum GameCards {
         return gameCardSet;
     }
 
-    public static GameCards ofName(String name){
-        for(GameCards rc : GameCards.values()) {
-            if(rc.getName().equals(name.trim())){
+    public static GameCards ofName(String name) {
+        for (GameCards rc : GameCards.values()) {
+            if (rc.getName().equals(name.trim())) {
                 return rc;
             }
         }
