@@ -2,7 +2,6 @@
 cd /root/javaminion/src/main/js/
 
 npm-cache install
-bower install --allow-root --offline
 
 rm -Rf ./dist/*;
 
