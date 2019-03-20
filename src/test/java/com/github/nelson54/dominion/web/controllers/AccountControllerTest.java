@@ -33,7 +33,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 class AccountControllerTest {
 
@@ -53,26 +52,6 @@ class AccountControllerTest {
 
     @Autowired
     private ObjectMapper mapper;
-
-    @Test
-    public void signup() throws Exception {
-        String url = "http://localhost:" + port + "/api/register";
-        URI uri = new URI(url);
-
-        RegistrationDto registrationDto = new RegistrationDto();
-        registrationDto.setUsername("Rashad");
-        registrationDto.setFirstname("rashad");
-        registrationDto.setEmail("rashad@test.com");
-        registrationDto.setPassword("testing");
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        String requestJson = mapper.writeValueAsString(registrationDto);
-        HttpEntity<String> request = new HttpEntity<>(requestJson, headers);
-
-        this.restTemplate.postForEntity(uri, request, AccountDto.class);
-    }
 
     @Test
     void signupMockTest() throws Exception {
@@ -99,24 +78,6 @@ class AccountControllerTest {
 
         try {
             logger.info(mapper.writeValueAsString(auth));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    void register() {
-
-        RegistrationDto registrationDto = new RegistrationDto();
-        registrationDto.setUsername("Kent");
-        registrationDto.setFirstname("kent");
-        registrationDto.setEmail("kent@test.com");
-        registrationDto.setPassword("testing");
-
-        AccountDto accountDto = accountController.register(registrationDto);
-
-        try {
-            logger.info(mapper.writeValueAsString(accountDto));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
