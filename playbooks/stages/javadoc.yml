@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
     - name: running javadoc
-      command: docker-compose -f /root/javaminion/docker-compose.yml run app bash -c ./scripts/docker/javadoc.sh
+      command: docker-compose -f /root/javaminion/docker-compose.yml run app sh ./scripts/docker/javadoc.sh
       register: javadoc
     - debug: var=javadoc.stdout
     - name: copy javadoc

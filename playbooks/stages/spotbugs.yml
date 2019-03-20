@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
     - name: running spotbugs
-      command: docker-compose -f /root/javaminion/docker-compose.yml run app bash -c ./scripts/docker/spotbugs.sh
+      command: docker-compose -f /root/javaminion/docker-compose.yml run app sh ./scripts/docker/spotbugs.sh
       register: spotbugs
     - debug: var=spotbugs.stdout
     - name: copy spotbugs
