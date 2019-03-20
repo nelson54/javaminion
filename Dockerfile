@@ -1,4 +1,8 @@
-FROM openjdk:13-ea-9-jdk-alpine3.9
+FROM debian:stretch-slim
+
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+
 
 COPY ./ /app
 
