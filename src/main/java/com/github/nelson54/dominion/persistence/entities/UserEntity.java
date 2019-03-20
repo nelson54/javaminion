@@ -28,6 +28,11 @@ public class UserEntity {
     @Column
     private Boolean enabled;
 
+    /**
+     * Creates a UserEntity that can be saved to the database.
+     * @param user
+     * @return
+     */
     public static UserEntity ofUser(User user) {
 
         if (user != null) {
