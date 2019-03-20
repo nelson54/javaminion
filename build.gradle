@@ -27,8 +27,8 @@ apply plugin: 'com.github.spotbugs'
 group = 'dominionback'
 version = '1.0-SNAPSHOT'
 mainClassName = 'com.github.nelson54.dominion.web.Application'
-sourceCompatibility = 11.0
-targetCompatibility = 11.0
+sourceCompatibility = 10.0
+targetCompatibility = 10.0
 
 configurations {
     all {

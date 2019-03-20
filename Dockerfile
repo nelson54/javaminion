@@ -1,4 +1,4 @@
-FROM openjdk:13-ea-9-jdk-alpine3.9
+FROM gradle:5.2.1-jdk11-slim
 
 ENV APP_HOME /app
 WORKDIR $APP_HOME

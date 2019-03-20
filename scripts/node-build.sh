@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 cd /root/javaminion/src/main/js/
 
 npm-cache install
