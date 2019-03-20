@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
   - name: ensure mongo is stopped
-    command: docker-compose -f /root/javaminion/docker-compose.yml stop
+    command: docker-compose -f /root/javaminion/docker-compose.yml down
   - name: testing javaminion
     command: docker-compose -f /root/javaminion/docker-compose.yml run app bash -c /app/scripts/docker/create-test-archives.sh
     register: testing

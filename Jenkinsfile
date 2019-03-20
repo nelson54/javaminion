@@ -24,9 +24,15 @@ pipeline {
       }
     }
 
-    stage('Build Java') {
+    stage('Build Docker') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/build.yml')
+      }
+    }
+
+    stage('Build Jar') {
+      steps {
+        sh 'echo "build jar"'
       }
     }
 
