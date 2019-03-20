@@ -3,7 +3,7 @@
   remote_user: root
   tasks:
   - name: stop
-    command: docker-compose -f /root/javaminion/docker-compose.yml stop
+    command: docker-compose -f /root/javaminion/docker-compose.yml down
   - name: prune docker
     command: docker system prune -a --force
   - name: remove all volumes
