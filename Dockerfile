@@ -1,4 +1,4 @@
-FROM openjdk:13-ea-9-jdk-alpine3.9
+FROM openjdk:11.0.2-jdk-slim-stretch
 
 ENV APP_HOME /app
 WORKDIR $APP_HOME
