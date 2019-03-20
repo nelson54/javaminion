@@ -12,26 +12,11 @@ services:
       resources:
         limits:
           memory: 75M
-  nagios:
-    image: jasonrivers/nagios:latest
-    volumes:
-      - ./nagios/plugins/:/opt/Custom-Nagios-Plugins
-    ports:
-      - "8081:80"
-    deploy:
-      resources:
-        limits:
-          memory: 100M
-  #jenkins:
-  #  image: jenkins4eval/blueocean-platform-support:latest-jdk11
-  #  environment:
-  #    - JENKINS_UC=http://ftp-chi.osuosl.org
-  #  ports:
-  #    - "8082:8080"
   app:
     build:
       context: ./
     volumes:
+      - /logs:/logs
       - ./src/main/java:/app/src/main/java
       - ./src/test/java:/app/src/test/java
       - ./src/main/js:/app/src/main/js

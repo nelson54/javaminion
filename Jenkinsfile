@@ -74,17 +74,6 @@ pipeline {
       }
     }
 
-    /*stage('Archive') {
-      publishHTML([
-        allowMissing: false,
-        alwaysLinkToLastBuild: false,
-        keepAll: true,
-        reportDir: '/tests/test/',
-        reportFiles: 'index.html',
-        reportName: "Test report"
-      ])
-    }*/
-
     stage('Deploy') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/start.yml')
