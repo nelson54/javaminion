@@ -96,8 +96,8 @@ pipeline {
                 allowMissing         : false,
                 alwaysLinkToLastBuild: true,
                 keepAll              : true,
-                reportDir            : 'archives/jacoco/test/html/index.html',
-                reportFiles          : 'main.html',
+                reportDir            : 'archives/jacoco/test/html/',
+                reportFiles          : 'index.html',
                 reportName           : "Test Coverage"
         ])
 
