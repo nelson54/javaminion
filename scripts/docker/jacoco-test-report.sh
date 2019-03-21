@@ -4,7 +4,7 @@ cd /app
 
 ./gradlew jacocoTestReport
 
-cd /app/build/reports/checkstyle
+cd /app/build/reports/jacoco
 tar -cvzf ./checkstyle.tar.gz .
 chmod 777 ./checkstyle.tar.gz
-mv ./checkstyle.tar.gz /archives/
+mv ./jacoco.tar.gz /archives/

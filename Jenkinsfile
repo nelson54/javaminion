@@ -119,11 +119,7 @@ pipeline {
                 reportName           : "Javadoc"
         ])
 
-        recordIssues (
-                enabledForFailure: false,
-                aggregatingResults : false,
-                tool: jacoco(pattern: 'archives/jacoco/test/jacocoTestReport.xml')
-        )
+        publishCoverage adapters: [jacocoAdapter('archives/jacoco/test/jacocoTestReport.xml')]
 
         recordIssues (
                 enabledForFailure: false,
