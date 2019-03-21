@@ -74,6 +74,15 @@ pipeline {
       }
     }
 
+    stage('Jacoco Test Coverage') {
+      steps {
+        ansiblePlaybook(playbook: './playbooks/stages/jacoco.yml')
+        sh 'mkdir ./archives/jacoco'
+
+        sh 'tar -zxvf archives/*/root/archives/jacoco.tar.gz -C ./archives/jacoco'
+      }
+    }
+
     stage('Deploy') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/start.yml')
@@ -82,6 +91,15 @@ pipeline {
 
     stage('Archiving') {
       steps {
+
+        publishHTML(target: [
+                allowMissing         : false,
+                alwaysLinkToLastBuild: true,
+                keepAll              : true,
+                reportDir            : 'archives/jacoco/test/html/index.html',
+                reportFiles          : 'main.html',
+                reportName           : "Test Coverage"
+        ])
 
         publishHTML(target: [
                 allowMissing         : false,
@@ -100,6 +118,12 @@ pipeline {
                 reportFiles          : 'index.html',
                 reportName           : "Javadoc"
         ])
+
+        recordIssues (
+                enabledForFailure: false,
+                aggregatingResults : false,
+                tool: jacoco(pattern: 'archives/jacoco/test/jacocoTestReport.xml')
+        )
 
         recordIssues (
                 enabledForFailure: false,

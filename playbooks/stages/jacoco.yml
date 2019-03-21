@@ -1,0 +1,13 @@
+---
+- hosts: webservers
+  remote_user: root
+  gather_facts: no
+  tasks:
+    - name: running jacoco
+      command: docker-compose -f /root/javaminion/docker-compose.yml run app sh ./scripts/docker/jacoco.sh
+      register: jacoco
+    - debug: var=jacoco.stdout
+    - name: copy jacoco
+      fetch:
+        src: /root/archives/jacoco.tar.gz
+        dest: ../../archives/
