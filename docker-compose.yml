@@ -17,6 +17,7 @@ services:
       context: ./
     volumes:
       - /root/logs:/logs
+      - /root/db:/db
       - /root/javaminion:/app
       - /root/archives:/archives
       - /root/gradle_home:/root/.gradle
