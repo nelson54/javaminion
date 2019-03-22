@@ -96,29 +96,24 @@ class MatchServiceTest {
 
         matchService.applyCommand(game1, endPhaseCommand);
 
-        Card card = game1.getKingdom().getCardMarket().get("Smithy").stream().findFirst().get();
+        Player nextTurnPlayer = game1.getTurn().getPlayer();
 
-        Command buyCommand = Command.buy(game1, player, card);
+        Card card = game1.getKingdom().getCardMarket().get("Estate").stream().findFirst().get();
 
-        matchService.applyCommand(game1, buyCommand);
+        matchService.applyCommand(game1, Command.buy(game1, nextTurnPlayer, card));
 
         //Assert.assertNotEquals(turn.getPlayerId(), game1.getTurn().getPlayerId());
 
         Game nextTurnGame = matchService.getGame(matchId).get();
 
-        Player nextTurnPlayer = nextTurnGame.getTurn().getPlayer();
+        nextTurnPlayer = nextTurnGame.getTurn().getPlayer();
 
         //Assert.assertEquals(player.getId(), nextTurnPlayer.getId());
 
         Kingdom kingdom = game1.getKingdom();
-
-        game1.giveCardToPlayer("Province", nextTurnPlayer);
-
         kingdom.getCardMarket().clear();
 
-        Command command = Command.endPhase(game1, nextTurnPlayer);
-
-        Game game = matchService.applyCommand(game1, command);
+        Game game = matchService.applyCommand(game1, Command.endPhase(game1, nextTurnPlayer));
 
         Assert.assertTrue(game.isGameOver());
     }
