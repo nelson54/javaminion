@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.DominionTestCase;
+import com.github.nelson54.dominion.cards.types.ActionAttackCard;
 import com.github.nelson54.dominion.cards.types.ActionCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ public class WitchTest extends DominionTestCase {
 
     @Test
     public void testApply() {
-        ActionCard card = (ActionCard)game.giveCardToPlayer("Witch", player);
+        ActionAttackCard card = (ActionAttackCard)game.giveCardToPlayer("Witch", player);
         int startingHandSize = player.getHand().size();
         card.apply(player, game);
         assertEquals(2, player.getHand().size() - startingHandSize, "Playing Witch draws 2 cards");
