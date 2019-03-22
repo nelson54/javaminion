@@ -99,7 +99,8 @@ public class MatchService {
         if (game.isGameOver()) {
 
             Optional<MatchEntity> optionalMatchEntity = matchRepository.findById(game.getId());
-            Long winningPlayerId = game.getWinningPlayer().getId();
+
+            Long winningPlayerId = game.getWinningPlayer().get().getId();
             Collection<Player> players = game.getPlayers().values();
             return optionalMatchEntity.map((matchEntity) -> {
                 AccountEntity winner = matchEntity.findPlayerById(winningPlayerId);
