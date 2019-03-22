@@ -116,6 +116,7 @@ public class MatchService {
                 });
 
                 matchEntity.setScores(scores);
+                matchEntity = matchRepository.save(matchEntity);
 
                 return matchEntity.toMatch();
             });
