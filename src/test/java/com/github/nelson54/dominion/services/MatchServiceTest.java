@@ -112,11 +112,11 @@ class MatchServiceTest {
 
         Kingdom kingdom = game1.getKingdom();
 
+        game1.giveCardToPlayer("Province", nextTurnPlayer);
+
         kingdom.getCardMarket().clear();
 
         Command command = Command.endPhase(game1, nextTurnPlayer);
-
-        game1.giveCardToPlayer("Province", nextTurnPlayer);
 
         Game game = matchService.applyCommand(game1, command);
 
