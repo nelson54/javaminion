@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameTest extends DominionTestCase {
 
-
     @Test
     void testNextPlayer() {
         game.nextPlayer();
@@ -35,6 +34,8 @@ class GameTest extends DominionTestCase {
         kingdom.getCardMarket().clear();
 
         assertTrue(game.isGameOver(), "Game ends if cards are gone.");
+
+
     }
 
 }

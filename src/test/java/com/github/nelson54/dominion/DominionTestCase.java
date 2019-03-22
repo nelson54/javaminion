@@ -43,11 +43,11 @@ public class DominionTestCase {
     public Match gameModel(){
         Match match = new Match(2, GameCards.ALL_CARDS.getGameCardSet());
 
-        User user1 = new User("user 1", "password", new ArrayList());
-        User user2 = new User("user 2", "password", new ArrayList());
+        User user1 = new User("User1", "password", new ArrayList());
+        User user2 = new User("User2", "password", new ArrayList());
 
-        match.addParticipant(new MatchParticipant(new Account(1L, user1, "email", "first", false)));
-        match.addParticipant(new MatchParticipant(new Account(2L, user2, "email", "first", false)));
+        match.addParticipant(new MatchParticipant(new Account(1L, user1, "user1@example.com", "User1", false)));
+        match.addParticipant(new MatchParticipant(new Account(2L, user2, "user2@example.com", "User2", false)));
 
         return match;
     }

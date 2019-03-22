@@ -104,12 +104,8 @@ public class Game {
         }
     }
 
-    boolean isGameOver() {
+    public boolean isGameOver() {
         return kingdom.getNumberOfRemainingCardsByName("Province") == 0;
-    }
-
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
     }
 
     public Card giveCardToPlayer(String name, Player player) {
@@ -298,9 +294,5 @@ public class Game {
         if (!trash.equals(game.trash)) return false;
         return turn.equals(game.turn);
 
-    }
-
-    public boolean getGameOver() {
-        return gameOver;
     }
 }

@@ -109,5 +109,15 @@ class MatchServiceTest {
         Player nextTurnPlayer = nextTurnGame.getTurn().getPlayer();
 
         //Assert.assertEquals(player.getId(), nextTurnPlayer.getId());
+
+        Kingdom kingdom = game1.getKingdom();
+
+        kingdom.getCardMarket().clear();
+
+        Command command = Command.endPhase(game1, game1.getTurn().getPlayer());
+
+        Game game = matchService.applyCommand(game1, command);
+
+        Assert.assertTrue(game.isGameOver());
     }
 }

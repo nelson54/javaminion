@@ -71,7 +71,7 @@ public class MatchService {
     public Game applyCommand(Game game, Command command) {
         game = commandService.applyCommand(game, command);
 
-        if (game.getGameOver()) {
+        if (game.isGameOver()) {
             endGame(game);
         }
 
@@ -96,7 +96,7 @@ public class MatchService {
     }
 
     public Optional<Match> endGame(Game game) {
-        if (game.getGameOver()) {
+        if (game.isGameOver()) {
 
             Optional<MatchEntity> optionalMatchEntity = matchRepository.findById(game.getId());
             Long winningPlayerId = game.getWinningPlayer().getId();
