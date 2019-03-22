@@ -40,8 +40,6 @@ public class Game {
     @JsonProperty
     private Map<Long, Player> players;
     @JsonProperty
-    private boolean gameOver;
-    @JsonProperty
     private Turn turn;
 
     public Game(Long id, Long seed) {
@@ -74,7 +72,6 @@ public class Game {
 
         if (isGameOver()) {
             turn.phase = END_OF_GAME;
-            gameOver = true;
             return null;
         }
 
@@ -104,6 +101,7 @@ public class Game {
         }
     }
 
+    @JsonProperty
     public boolean isGameOver() {
         return kingdom.getNumberOfRemainingCardsByName("Province") == 0;
     }
@@ -169,7 +167,7 @@ public class Game {
     }
 
     public Optional<Player> getWinningPlayer() {
-        if (this.gameOver) {
+        if (this.isGameOver()) {
             return players.values()
                     .stream()
                     .max(Comparator.comparing(player -> ((Long) player.getVictoryPoints())));
@@ -265,12 +263,10 @@ public class Game {
     public int hashCode() {
         int result = (0);
         result = 31 * result + kingdom.hashCode();
-        //result = 31 * result + turnOrder.hashCode();
         result = 31 * result + allCards.hashCode();
         result = 31 * result + pastTurns.hashCode();
         result = 31 * result + trash.hashCode();
         result = 31 * result + players.hashCode();
-        result = 31 * result + (gameOver ? 1 : 0);
         if (turn != null && turn.getPhase() != null) {
             result = 31 * result + turn.getPhase().hashCode();
         }
@@ -283,8 +279,6 @@ public class Game {
         if (!(o instanceof Game)) return false;
 
         Game game = (Game) o;
-
-        if (gameOver != game.gameOver) return false;
         if (!allCards.equals(game.allCards)) return false;
         if (!id.equals(game.id)) return false;
         if (!kingdom.equals(game.kingdom)) return false;

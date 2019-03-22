@@ -69,11 +69,11 @@ public class Command {
         return new Command(game, player, CommandType.END_TURN);
     }
 
-    public String getId() {
-        return id;
-    }
-
     public ChoiceResponse getChoiceResponse(Game game) {
         return this.choiceResponse.toChoiceResponse(game);
+    }
+
+    public String getId() {
+        return id;
     }
 }
