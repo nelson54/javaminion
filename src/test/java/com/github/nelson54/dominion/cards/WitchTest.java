@@ -36,7 +36,7 @@ public class WitchTest extends DominionTestCase {
         card.apply(player, game);
         assertEquals(2, player.getHand().size() - startingHandSize, "Playing Witch draws 2 cards");
 
-        Collection<String> playerCardNames = otherPlayer.getAllCards()
+        Collection<String> playerCardNames = player.getAllCards()
                 .values()
                 .stream()
                 .map((c)-> card.getName())
