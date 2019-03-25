@@ -4,6 +4,7 @@ import com.github.nelson54.dominion.DominionTestCase;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.types.ActionAttackCard;
 import com.github.nelson54.dominion.cards.types.ActionCard;
+import com.github.nelson54.dominion.cards.types.Card;
 import org.jboss.logging.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ public class WitchTest extends DominionTestCase {
         Collection<String> otherPlayerCardNames = otherPlayer.getAllCards()
                 .values()
                 .stream()
-                .map((c)-> card.getName())
+                .map(Card::getName)
                 .collect(Collectors.toList());
 
         game.getPlayers().values().forEach(this::showCards);
