@@ -6,6 +6,8 @@ import com.github.nelson54.dominion.cards.types.TreasureCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -27,7 +29,8 @@ public class AdventurerTest extends DominionTestCase {
 
         int startingHandSize = player.getHand().size();
         int startingMoney = player.getCurrentTurn().getMoney();
-        card.apply(player, game);
+
+        assertTimeoutPreemptively(Duration.ofMillis(500), () -> card.apply(player, game));
 
         assertEquals(2, player.getHand().size() - startingHandSize, "Playing Laboratory draws 2 cards");
         assertTrue(startingMoney < player.getCurrentTurn().getMoney(), "Gives you more money.");
