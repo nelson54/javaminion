@@ -145,14 +145,13 @@ public class Player {
         deck.removeAll(drawnCards);
     }
 
-    public Card revealCard() {
+    public Optional<Card> revealCard() {
         if (deck.size() == 0) {
             shuffle();
         }
 
         return deck.stream()
-                .findFirst()
-                .get();
+                .findFirst();
     }
 
     public Set<Card> revealCards(int number) {

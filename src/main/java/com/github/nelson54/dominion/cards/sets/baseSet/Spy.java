@@ -48,22 +48,22 @@ public class Spy extends SymmetricActionAttackCard {
 
     @Override
     public Choice getChoiceForTarget(Choice choice, Player target, Game game) {
-        Card revealed = target.revealCard();
+        return target.revealCard().map((card) -> {
+            choice.setDisplayCard(card);
+            choice.setMessage("Would you like to discard " + card.getName()
+                    + " for player " + card.getOwner().getName());
 
-        choice.setDisplayCard(revealed);
-        choice.setMessage("Would you like to discard " + revealed.getName()
-                + " for player " + revealed.getOwner().getName());
+            choice.setExpectedAnswerType(OptionType.YES_OR_NO);
+            choice.setRequired(true);
+            Set<String> options = new HashSet<>();
+            options.add(option1);
+            options.add(option2);
 
-        choice.setExpectedAnswerType(OptionType.YES_OR_NO);
-        choice.setRequired(true);
-        Set<String> options = new HashSet<>();
-        options.add(option1);
-        options.add(option2);
+            choice.setTarget(this.getOwner());
+            choice.setTextOptions(options);
 
-        choice.setTarget(this.getOwner());
-        choice.setTextOptions(options);
-
-        return choice;
+            return choice;
+        }).get();
     }
 
     @Override

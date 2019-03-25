@@ -11,6 +11,7 @@ import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
 import com.github.nelson54.dominion.cards.sets.baseSet.effects.LibraryEffect;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -35,19 +36,18 @@ public class Library extends ComplexActionCard {
 
     @Override
     public Choice getChoiceForTarget(Choice choice, Player target, Game game) {
-        Choice parent = choice.getParentChoice();
         choice.setMessage("Would you like to set this card aside?");
 
-        Set<Card> card = new HashSet<>();
-        card.add(target.revealCard());
+        Set<Long> cards = new HashSet<>();
+        return target.revealCard().map((card) -> {
+            cards.add(card.getId());
+            choice.setOptions(cards);
+            choice.setExpectedAnswerType(OptionType.YES_OR_NO);
+            choice.setRequired(true);
+            choice.setNumber((byte)3);
 
-        choice.setCardOptions(card);
-
-        choice.setExpectedAnswerType(OptionType.YES_OR_NO);
-        choice.setRequired(true);
-        choice.setNumber((byte)3);
-
-        return choice;
+            return choice;
+        }).get();
     }
 
     @Override

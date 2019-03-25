@@ -32,15 +32,13 @@ public class Adventurer extends ActionCard {
     @Override
     public void apply(Player player, Game game) {
         Set<Card> treasures = new HashSet<>();
-
         while (isDoneLooking(player, treasures)) {
-            Card topCard = player.revealCard();
+             Card topCard = player.revealCard().get();
 
             if (topCard instanceof TreasureCard) {
                 treasures.add(topCard);
             } else {
-                player.getDeck().remove(topCard);
-                player.getDiscard().add(topCard);
+                player.discard(topCard);
             }
         }
 
