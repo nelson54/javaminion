@@ -2,6 +2,8 @@ package com.github.nelson54.dominion;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.nelson54.dominion.cards.CardType;
+import com.github.nelson54.dominion.cards.base.CurseCard;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.types.VictoryCard;
 import com.github.nelson54.dominion.choices.Choice;
@@ -53,12 +55,21 @@ public class Player {
 
     @JsonProperty
     public long getVictoryPoints() {
-        return getAllCards()
+        Long victoryCardPoints = getAllCards()
                 .values().stream()
-                .filter(card -> card instanceof VictoryCard)
+                .filter(card -> card.isType(CardType.VICTORY))
                 .map(card -> (VictoryCard) card)
                 .mapToLong(VictoryCard::getVictoryPoints)
                 .sum();
+
+        Long curseCardPoints = getAllCards()
+                .values().stream()
+                .filter(card -> card.isType(CardType.CURSE))
+                .map(card -> (CurseCard) card)
+                .mapToLong(CurseCard::getVictoryPoints)
+                .sum();
+
+        return victoryCardPoints + curseCardPoints;
     }
 
     @JsonIgnore
