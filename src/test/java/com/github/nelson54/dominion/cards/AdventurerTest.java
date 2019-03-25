@@ -10,9 +10,6 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Created by Derek on 3/14/2015.
- */
 public class AdventurerTest extends DominionTestCase {
 
     @BeforeEach
@@ -22,11 +19,11 @@ public class AdventurerTest extends DominionTestCase {
 
     @Test
     public void testApply() {
-        ActionCard card = (ActionCard)game.giveCardToPlayer("Adventurer", player);
-
         player.getHand().clear();
         player.getDeck().clear();
+        player.getDiscard().clear();
 
+        ActionCard card = (ActionCard)game.giveCardToPlayer("Adventurer", player);
 
         game.giveCardToPlayer("Silver", player);
         game.giveCardToPlayer("Silver", player);
@@ -36,7 +33,7 @@ public class AdventurerTest extends DominionTestCase {
 
         assertTimeoutPreemptively(Duration.ofMillis(500), () -> card.apply(player, game));
 
-        assertEquals(2, player.getHand().size() - startingHandSize, "Playing Laboratory draws 2 cards");
+        assertEquals(2, player.getHand().size() - startingHandSize, "Playing Adventurer draws 2 cards");
         assertTrue(startingMoney < player.getCurrentTurn().getMoney(), "Gives you more money.");
     }
 }
