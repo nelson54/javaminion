@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.DominionTestCase;
 import com.github.nelson54.dominion.cards.types.ActionCard;
+import com.github.nelson54.dominion.cards.types.TreasureCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +21,9 @@ public class AdventurerTest extends DominionTestCase {
     @Test
     public void testApply() {
         ActionCard card = (ActionCard)game.giveCardToPlayer("Adventurer", player);
+
+        game.giveCardToPlayer("Silver", player);
+        game.giveCardToPlayer("Silver", player);
 
         int startingHandSize = player.getHand().size();
         int startingMoney = player.getCurrentTurn().getMoney();
