@@ -32,6 +32,6 @@ public class WitchTest extends DominionTestCase {
                 .filter((name)-> name.equals("Curse"))
                 .count();
 
-        assertEquals((long)1, numberOfCurses, "Playing Witch gives other players one Witch");
+        assertEquals((long)1, numberOfCurses, "Playing Witch gives other players one Curse");
     }
 }

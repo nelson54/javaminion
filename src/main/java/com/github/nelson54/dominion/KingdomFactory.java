@@ -96,6 +96,7 @@ public class KingdomFactory {
         addXCardsOfType(random, 20, Duchy.class, kingdom);
         addXCardsOfType(random, provinces, Province.class, kingdom);
         addXCardsOfType(random, 20, CurseCard.class, kingdom);
+
     }
 
     private void firstGame(Random random, Kingdom kingdom)
