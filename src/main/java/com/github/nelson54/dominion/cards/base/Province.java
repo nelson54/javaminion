@@ -18,10 +18,4 @@ public class Province extends VictoryCard {
         setKingdomSortOrder(2);
         setName("Province");
     }
-
-    public Province(Long id, Player player) {
-        this(id);
-        super.setId(id);
-        super.setOwner(player);
-    }
 }

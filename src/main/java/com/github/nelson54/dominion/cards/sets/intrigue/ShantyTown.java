@@ -12,10 +12,6 @@ public class ShantyTown extends ActionCard {
         super(id);
     }
 
-    public ShantyTown(Long id, Player player) {
-        super(id, player);
-    }
-
     @Override
     public void apply(Player player, Game game) {
         game.revealCardsFromHand(player, player.getHand());

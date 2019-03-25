@@ -3,7 +3,7 @@ package com.github.nelson54.dominion.choices;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.types.Card;
-import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
+import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
 
 import java.util.HashSet;
 import java.util.Set;

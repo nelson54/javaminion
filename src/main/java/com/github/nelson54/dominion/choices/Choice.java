@@ -12,7 +12,7 @@ import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.*;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.types.ComplexActionCard;
-import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
+import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
 
 import java.util.Deque;
 import java.util.HashSet;

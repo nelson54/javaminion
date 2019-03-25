@@ -21,10 +21,4 @@ public class Duchy extends VictoryCard {
 
         setName("Duchy");
     }
-
-    public Duchy(Long id, Player player) {
-        this(id);
-        super.setId(id);
-        super.setOwner(player);
-    }
 }

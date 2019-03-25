@@ -1,7 +1,7 @@
 package com.github.nelson54.dominion.cards;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.github.nelson54.dominion.cards.sets.baseSet.*;
+import com.github.nelson54.dominion.cards.sets.base.*;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum GameCards {

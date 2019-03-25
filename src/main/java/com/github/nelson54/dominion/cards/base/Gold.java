@@ -20,10 +20,4 @@ public class Gold extends TreasureCard {
 
         setName("Gold");
     }
-
-    public Gold(Long id, Player player) {
-        this(id);
-        super.setId(id);
-        super.setOwner(player);
-    }
 }

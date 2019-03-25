@@ -6,11 +6,6 @@ import com.github.nelson54.dominion.cards.types.TreasureCard;
 
 public class Copper extends TreasureCard {
 
-    public Copper(Long id, Player player) {
-        this(id);
-        super.setOwner(player);
-    }
-
     public Copper(Long id) {
         super(id);
         byte moneyCost = 0;

@@ -4,7 +4,7 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.CardType;
 import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
+import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
 
 import java.util.Map;
 import java.util.Set;

@@ -1,6 +1,6 @@
 package com.github.nelson54.dominion;
 
-import com.github.nelson54.dominion.cards.sets.baseSet.*;
+import com.github.nelson54.dominion.cards.sets.base.*;
 import com.github.nelson54.dominion.cards.base.*;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.google.common.collect.ArrayListMultimap;

@@ -1,7 +1,7 @@
 package com.github.nelson54.dominion.choices;
 
 import com.github.nelson54.dominion.cards.types.Card;
-import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
+import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
 
 public class Reaction {
     private Effect effect;

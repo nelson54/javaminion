@@ -22,10 +22,4 @@ public class Silver extends TreasureCard {
         setKingdomSortOrder(11);
         setName("Silver");
     }
-
-    public Silver(Long id, Player player) {
-        this(id);
-        super.setId(id);
-        super.setOwner(player);
-    }
 }

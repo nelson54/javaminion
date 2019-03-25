@@ -7,7 +7,7 @@ import com.github.nelson54.dominion.cards.CardState;
 import com.github.nelson54.dominion.cards.CardType;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
-import com.github.nelson54.dominion.cards.sets.baseSet.effects.Effect;
+import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
 import com.github.nelson54.dominion.exceptions.NoValidChoiceException;
 
 import java.util.HashSet;

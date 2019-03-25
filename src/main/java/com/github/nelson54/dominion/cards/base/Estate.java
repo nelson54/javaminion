@@ -21,10 +21,4 @@ public class Estate extends VictoryCard {
 
         setName("Estate");
     }
-
-    public Estate(Long id, Player player) {
-        this(id);
-        super.setId(id);
-        super.setOwner(player);
-    }
 }
