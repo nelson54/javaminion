@@ -40,10 +40,6 @@ public class Adventurer extends ActionCard {
     }
 
     private boolean isDoneLooking(Player player, Set<Card> treasures) {
-        return !hasCardsRemaining(player) || treasures.size() == 2;
-    }
-
-    private boolean hasCardsRemaining(Player player) {
-        return player.getDeck().size() == 0 && player.getDiscard().size() == 0;
+        return treasures.size() == 2 || (player.getDeck().size() + player.getDiscard().size()) == 0;
     }
 }

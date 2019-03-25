@@ -6,9 +6,6 @@ import com.github.nelson54.dominion.cards.types.TreasureCard;
 
 public class Silver extends TreasureCard {
 
-    private byte moneyValue = 2;
-    private byte moneyCost = 3;
-
     public Silver(Long id) {
         super(id);
         byte moneyCost = 3;
