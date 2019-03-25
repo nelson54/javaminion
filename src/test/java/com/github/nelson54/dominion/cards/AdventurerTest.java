@@ -24,6 +24,10 @@ public class AdventurerTest extends DominionTestCase {
     public void testApply() {
         ActionCard card = (ActionCard)game.giveCardToPlayer("Adventurer", player);
 
+        player.getHand().clear();
+        player.getDeck().clear();
+
+
         game.giveCardToPlayer("Silver", player);
         game.giveCardToPlayer("Silver", player);
 
