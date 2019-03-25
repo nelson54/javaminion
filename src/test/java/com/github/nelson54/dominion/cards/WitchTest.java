@@ -27,7 +27,9 @@ public class WitchTest extends DominionTestCase {
 
     @Test
     public void testApply() {
-        Player otherPlayer = getNextPlayer();
+        player = game.getTurn().getPlayer();
+        Player otherPlayer = game.nextPlayer();
+
 
         ActionAttackCard card = (ActionAttackCard)game.giveCardToPlayer("Witch", player);
         int startingHandSize = player.getHand().size();

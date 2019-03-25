@@ -60,7 +60,7 @@ public class Game {
         logs = new LinkedHashSet<>();
     }
 
-    Player nextPlayer() {
+    public Player nextPlayer() {
 
         if (turnerator == null || !turnerator.hasNext()) {
             turnerator = turnOrder.iterator();
