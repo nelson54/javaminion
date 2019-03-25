@@ -42,9 +42,7 @@ public class Adventurer extends ActionCard {
             }
         }
 
-        if (treasures.size() > 0) {
-            player.getHand().addAll(treasures);
-        }
+        player.getHand().addAll(treasures);
     }
 
     private boolean isDoneLooking(Player player, Set<Card> treasures) {
