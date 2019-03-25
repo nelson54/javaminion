@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class WitchTest extends DominionTestCase {
 
-    private static final Logger logger = Logger.getLogger(CurseTest.class);
+    private static final Logger logger = Logger.getLogger(WitchTest.class);
 
     @BeforeEach
     public void setup() {
@@ -36,11 +36,7 @@ public class WitchTest extends DominionTestCase {
         card.apply(player, game);
         assertEquals(2, player.getHand().size() - startingHandSize, "Playing Witch draws 2 cards");
 
-        Collection<String> playerCardNames = player.getAllCards()
-                .values()
-                .stream()
-                .map((c)-> card.getName())
-                .collect(Collectors.toList());
+
 
         Collection<String> otherPlayerCardNames = otherPlayer.getAllCards()
                 .values()
@@ -48,18 +44,24 @@ public class WitchTest extends DominionTestCase {
                 .map((c)-> card.getName())
                 .collect(Collectors.toList());
 
-        String allPlayerCardsByName = String.join(", ", playerCardNames);
-
-        String allOtherPlayerCardsByName = String.join(", ", otherPlayerCardNames);
-
-        logger.info("Player cards: " + allPlayerCardsByName);
-
-        logger.info("Other player cards: " + allOtherPlayerCardsByName);
+        game.getPlayers().values().forEach(this::showCards);
 
         long numberOfCurses = otherPlayerCardNames.stream()
                 .filter((name) -> name.equals("Curse"))
                 .count();
 
         assertEquals((long)1, numberOfCurses, "Playing Witch gives other players one Curse");
+    }
+
+    private void showCards(Player player) {
+        logger.info("Showing cards for Player {" + player.getId() + "}");
+
+        Collection<String> playerCardNames = player.getAllCards()
+                .values()
+                .stream()
+                .map((c)-> c.getName())
+                .collect(Collectors.toList());
+
+        logger.info("Cards: " + String.join(", ", playerCardNames));
     }
 }
