@@ -28,6 +28,7 @@ public class AdventurerTest extends DominionTestCase {
         game.giveCardToPlayer("Silver", player);
         game.giveCardToPlayer("Silver", player);
 
+
         int startingHandSize = player.getHand().size();
         int startingMoney = player.getCurrentTurn().getMoney();
 
