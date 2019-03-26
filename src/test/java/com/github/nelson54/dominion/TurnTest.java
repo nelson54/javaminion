@@ -12,6 +12,7 @@ class TurnTest {
     void testIncorrectPhaseException() {
 
         DominionTestCase testCase = new DominionTestCase();
+        testCase.setup();
         Game game = testCase.game;
 
 
@@ -30,6 +31,7 @@ class TurnTest {
     void testInsufficientActionsException() {
 
         DominionTestCase testCase = new DominionTestCase();
+        testCase.setup();
         Game game = testCase.game;
 
 
@@ -47,9 +49,11 @@ class TurnTest {
     void testEquals() {
 
         DominionTestCase testCase = new DominionTestCase();
+        testCase.setup();
         Game game = testCase.game;
 
         Turn turn = game.getTurn();
+
         assertTrue(turn.equals(turn), "Equals Self");
 
         assertFalse(turn.equals(""), "Not equals string Self");
