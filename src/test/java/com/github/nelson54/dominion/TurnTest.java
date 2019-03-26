@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion;
 
 import com.github.nelson54.dominion.cards.types.ActionCard;
+import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
 import com.github.nelson54.dominion.exceptions.InsufficientActionsException;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ class TurnTest {
         Player player = turn.getPlayer();
         ActionCard card = (ActionCard)game.giveCardToPlayer("Adventurer", player);
 
-        assertThrows(InsufficientActionsException.class, ()-> turn.playCard(card, player, game), "Throws exception when no turns.");
+        assertThrows(IncorrectPhaseException.class, ()-> turn.playCard(card, player, game), "Throws exception when wrong phase.");
 
 
     }
