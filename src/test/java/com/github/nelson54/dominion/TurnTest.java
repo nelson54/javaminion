@@ -55,12 +55,14 @@ class TurnTest {
 
         Turn turn = game.getTurn();
 
+        Turn differentTurn = new Turn();
+
         assertTrue(turn.equals(turn), "Equals Self");
 
         assertFalse(turn.equals(""), "Not equals string Self");
 
         assertFalse(turn.equals(null), "Not equals null");
 
-
+        assertFalse(turn.equals(differentTurn), "Other turns don't match.");
     }
 }

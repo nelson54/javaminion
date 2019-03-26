@@ -8,9 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Entity
-@Table(
-        name = "card_type_reference",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"clazz", "name"}))
+@Table(name = "card_type_reference")
 public class CardTypeReferenceEntity {
 
     @Id

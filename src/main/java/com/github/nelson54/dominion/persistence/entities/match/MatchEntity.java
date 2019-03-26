@@ -38,7 +38,7 @@ public class MatchEntity {
     @JoinColumn
     private Set<PlayerScoreEntity> scores;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn
     private List<CardTypeReferenceEntity> gameCards;
 
