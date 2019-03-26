@@ -163,3 +163,7 @@ wrapper {
 checkstyle {
     toolVersion "8.18"
 }
+
+checkstyleMain {
+    configProperties += ['checkstyle.cache.file': file('checkstyleCacheFile')]
+}

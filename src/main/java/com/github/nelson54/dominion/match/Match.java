@@ -82,7 +82,7 @@ public class Match {
     }
 
     public boolean isReady() {
-        return participants.size() == playerCount;
+        return participants.size() >= playerCount;
     }
 
     public void addAiParticipants(Collection<MatchParticipant> participants) {
