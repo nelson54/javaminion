@@ -10,7 +10,7 @@
     - [x] Display open games
     - [ ] Join game
     - [x] Join AI game
-    - [ ] Show Completed games
+    - [x] Show Completed games
     - [ ] Show wins and losses
 - [x] Better logging for Discard     
 - [x] Thief reveals non-treasure cards

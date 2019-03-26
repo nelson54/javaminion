@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.cards.GameCardSet;
+import com.github.nelson54.dominion.cards.RecommendedCards;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.match.MatchState;
@@ -16,7 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -43,12 +46,34 @@ public class MatchController {
         this.matchService = matchService;
     }
 
+    @GetMapping(value = "/recommended")
+    RecommendedCards[] getRecomendedCards(){
+        return RecommendedCards.values();
+    }
+
     @GetMapping(value = "/matches")
-    Page<Match> matches() {
+    Page<Match> matches(
+            @RequestParam(defaultValue = "true") Boolean waitingForOpponent,
+            @RequestParam(defaultValue = "false") Boolean isFinished,
+            @RequestParam(defaultValue = "false") Boolean inProgress) {
         Account account = accountService.getAuthorizedAccount()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
-        return new PageImpl<>(matchService.all());
+        List<MatchState> matchStates = new ArrayList<>();
+
+        if(waitingForOpponent) {
+            matchStates.add(MatchState.WAITING_FOR_PLAYERS);
+        }
+
+        if(isFinished) {
+            matchStates.add(MatchState.FINISHED);
+        }
+
+        if(inProgress) {
+            matchStates.add(MatchState.IN_PROGRESS);
+        }
+
+        return new PageImpl<>(matchService.findByStateIn(matchStates));
     }
 
     @PostMapping(value = "/matches")

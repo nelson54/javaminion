@@ -27,11 +27,6 @@ public class GameController {
         this.matchService = matchService;
     }
 
-    @GetMapping(value = "/recommended")
-    RecommendedCards[] getRecomendedCards(){
-        return RecommendedCards.values();
-    }
-
     @RequestMapping(value = "/{gameId}", method = {RequestMethod.GET, RequestMethod.OPTIONS})
     Game getGame(@PathVariable("gameId") Long id) {
         return matchService.getGame(id)

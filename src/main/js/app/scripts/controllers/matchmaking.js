@@ -2,6 +2,7 @@
 
 angular.module('dominionFrontendApp')
   .controller('MatchesCtrl', function ($scope, $http, $resource, $route, baseUrl, recommendedCards, jwtService) {
+
     $http.defaults.headers.common.Authorization = jwtService.getBearer();
     let matchHttpConfig = {
       headers: {'Authorization': jwtService.getBearer()}
@@ -37,6 +38,12 @@ angular.module('dominionFrontendApp')
     $scope.playerNumbers = [2, 3, 4];
     $scope.recommendedCards = recommendedCards;
     $scope.players = [{id: 0, ai: true}, {id: 1, ai: true}];
+
+    $scope.filters = {
+      waitingForOpponent: true,
+      finished: false,
+      inProgress: false,
+    };
 
     $scope.setCards = function (cards) {
       $scope.cards = cards;

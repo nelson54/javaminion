@@ -37,6 +37,13 @@ public class MatchService {
         this.gameFactory = gameFactory;
     }
 
+    public List<Match> findByStateIn(List<MatchState> states) {
+        return StreamSupport
+                .stream(matchRepository.findByStateIn(states).spliterator(), false)
+                .map(MatchEntity::toMatch)
+                .collect(Collectors.toList());
+    }
+
     public List<Match> all() {
         return StreamSupport
                 .stream(matchRepository.findAll().spliterator(), false)
