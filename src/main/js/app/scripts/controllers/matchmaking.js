@@ -84,8 +84,12 @@ angular.module('dominionFrontendApp')
       }
     };
 
-    $scope.getMatches().then((response)=> {
-      $scope.games = response.content;
-    });
+    $scope.updateMatches = ()=> {
+      $scope.getMatches().then((response)=> {
+        $scope.games = response.content;
+      });
+    };
+
+    $scope.updateMatches();
 
   });
