@@ -80,8 +80,7 @@ public class MatchController {
     @ResponseStatus(HttpStatus.CREATED)
     MatchDto createMatch(@RequestBody MatchDto matchDto) {
 
-        Integer totalPlayers = matchDto.getNumberOfAiPlayers()
-                + matchDto.getNumberOfHumanPlayers();
+        Integer totalPlayers = matchDto.getCount();
 
         GameCardSet gameCardSet = GameCardSet.byName(matchDto.getCards());
 
@@ -91,12 +90,12 @@ public class MatchController {
 
         match.addParticipant(new MatchParticipant(account));
 
-        Collection<MatchParticipant> participants =
-                aiPlayerService.random(matchDto.getNumberOfAiPlayers())
-                    .stream()
-                    .map(this::addUserToAccount)
-                    .map(MatchParticipant::createAi)
-                    .collect(Collectors.toList());
+        Collection<MatchParticipant> participants = aiPlayerService
+                 .random(matchDto.getNumberOfAiPlayers())
+                 .stream()
+                 .map(this::addUserToAccount)
+                 .map(MatchParticipant::createAi)
+                 .collect(Collectors.toList());
 
         match.addAiParticipants(participants);
 
