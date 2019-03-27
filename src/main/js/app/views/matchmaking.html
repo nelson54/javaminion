@@ -34,15 +34,15 @@
 
   <p>
     <label for="waiting-for-opponent">Waiting for Opponent</label>
-    <input type="checkbox" id="waiting-for-opponent" ng-click="updateMatches()" ng-model="filters.waitingForOpponent">
+    <input type="checkbox" id="waiting-for-opponent" ng-change="updateMatches()" ng-model="filters.waitingForOpponent">
   </p>
   <p>
     <label for="finished">Finished</label>
-    <input type="checkbox" id="finished" ng-click="updateMatches()" ng-model="filters.finished">
+    <input type="checkbox" id="finished" ng-change="updateMatches()" ng-model="filters.finished">
   </p>
   <p>
     <label for="in-progress">In Progress</label>
-    <input type="checkbox" id="in-progress" ng-click="updateMatches()" ng-model="filters.inProgress">
+    <input type="checkbox" id="in-progress" ng-change="updateMatches()" ng-model="filters.inProgress">
   </p>
 
   <table class="game-list">
