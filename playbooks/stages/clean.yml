@@ -3,7 +3,7 @@
   remote_user: root
   tasks:
   - name: stop
-    command: docker-compose -f /root/javaminion/docker-compose.yml down
+    command: systemctl stop javaminion
   - name: remove old deployment
     file:
       path: /root/javaminion/

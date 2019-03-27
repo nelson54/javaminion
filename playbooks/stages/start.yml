@@ -4,6 +4,6 @@
   gather_facts: no
   tasks:
   - name: running javaminion
-    command: docker-compose -f /root/javaminion/docker-compose.yml up -d app
+    command: systemctl start javaminion
     register: checkout
   - debug: var=checkout.stdout_lines

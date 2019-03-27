@@ -1,0 +1,17 @@
+# Save as e.g. /etc/systemd/system/my-service.service
+[Unit]
+Description=Javaminion
+Requires=docker.service
+After=docker.service
+[Service]
+Restart=always
+User=root
+Group=root
+# Shutdown container (if running) when unit is stopped
+ExecStartPre=/usr/bin/docker-compose -f /root/javaminion/docker-compose.yml down -v
+# Start container when unit is started
+ExecStart=/usr/bin/docker-compose -f /root/javaminion/docker-compose.yml up
+# Stop container when unit is stopped
+ExecStop=/usr/bin/docker-compose -f /root/javaminion/docker-compose.yml down -v
+[Install]
+WantedBy=multi-user.target

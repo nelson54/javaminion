@@ -16,7 +16,12 @@ services:
       - ./nagios/plugins/:/opt/Custom-Nagios-Plugins
     ports:
       - "8081:8081"
-  nexus:
-    image: sonatype/nexus3
+  sonarqube:
+    image: sonarqube:6.7-community
     ports:
-      - "8082:8082"
+      - "8082:9000"
+    volumes:
+      - $HOME/.sonar_qube/conf:/opt/sonarqube/conf
+      - $HOME/.sonar_qube/data:/opt/sonarqube/data
+      - $HOME/.sonar_qube/logs:/opt/sonarqube/logs
+      - $HOME/.sonar_qube/extensions:/opt/sonarqube/extensions
