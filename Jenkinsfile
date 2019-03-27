@@ -30,24 +30,6 @@ pipeline {
       }
     }
 
-    stage('Build Jar') {
-      steps {
-        ansiblePlaybook(playbook: './playbooks/stages/jar.yml')
-      }
-    }
-
-    stage('Test') {
-      steps {
-        ansiblePlaybook(playbook: './playbooks/stages/test.yml')
-        sh 'tar -zxvf archives/*/root/archives/test-results.tar.gz'
-        sh 'tar -zxvf archives/*/root/archives/test-reports.tar.gz'
-
-        archive 'tests/**/*.html'
-
-        junit 'test/TEST-*.xml'
-      }
-    }
-
     stage('Checkstyle') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/checkstyle.yml')
@@ -74,12 +56,30 @@ pipeline {
       }
     }
 
+    stage('Test') {
+      steps {
+        ansiblePlaybook(playbook: './playbooks/stages/test.yml')
+        sh 'tar -zxvf archives/*/root/archives/test-results.tar.gz'
+        sh 'tar -zxvf archives/*/root/archives/test-reports.tar.gz'
+
+        archive 'tests/**/*.html'
+
+        junit 'test/TEST-*.xml'
+      }
+    }
+
     stage('Jacoco Test Coverage') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/jacoco.yml')
         sh 'mkdir ./archives/jacoco'
 
         sh 'tar -zxvf archives/*/root/archives/jacoco.tar.gz -C ./archives/jacoco'
+      }
+    }
+
+    stage('Build Jar') {
+      steps {
+        ansiblePlaybook(playbook: './playbooks/stages/jar.yml')
       }
     }
 

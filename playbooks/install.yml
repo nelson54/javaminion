@@ -20,6 +20,7 @@
           - gnupg-agent
           - software-properties-common
           - nginx
+          - openjdk-11-jre-headless
 
     - name: Add Apt signing key on remote server to keyring
       apt_key:
