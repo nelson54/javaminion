@@ -32,6 +32,7 @@ public class MatchEntity {
     private String turnOrder;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private MatchState state;
 
     @OneToMany(cascade = CascadeType.ALL)

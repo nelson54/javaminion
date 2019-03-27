@@ -13,5 +13,7 @@ import java.util.Optional;
 @Repository
 public interface MatchRepository extends CrudRepository<MatchEntity, Long> {
 
+    @Query("select match from MatchEntity match where match.state in :states")
     Iterable<MatchEntity> findByStateIn(@Param("states") List<MatchState> states);
+
 }
