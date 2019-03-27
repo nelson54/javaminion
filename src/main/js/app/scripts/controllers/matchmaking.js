@@ -50,7 +50,7 @@ angular.module('dominionFrontendApp')
     };
 
     $scope.getMatches = function () {
-      return Match.query().$promise;
+      return Match.query($scope.filters).$promise;
     };
 
     $scope.createGame = function () {
