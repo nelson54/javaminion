@@ -4,4 +4,4 @@
   gather_facts: no
   tasks:
     - name: make jar
-      command: docker-compose -f /root/javaminion/docker-compose.yml run app ./gradlew shadowJar
+      command: docker-compose -f /root/javaminion/docker-compose.yml run app sh ./scripts/docker/create-jar.sh
