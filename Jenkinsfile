@@ -32,7 +32,7 @@ pipeline {
 
     stage('Build Jar') {
       steps {
-        sh 'echo "build jar"'
+        ansiblePlaybook(playbook: './playbooks/stages/jar.yml')
       }
     }
 
