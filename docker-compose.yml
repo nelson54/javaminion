@@ -8,10 +8,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: testing
-    deploy:
-      resources:
-        limits:
-          memory: 75M
   app:
     build:
       context: ./
@@ -27,7 +23,3 @@ services:
       - "35729:35729"
     depends_on:
       - mongo
-    deploy:
-      resources:
-        limits:
-          memory: 700M
