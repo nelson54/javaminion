@@ -3,7 +3,11 @@
   remote_user: root
   gather_facts: no
   tasks:
+  - name: running mongo
+    command: docker-compose -f /root/javaminion/docker-compose.yml start mongo
+    register: mongo
+  - debug: var=mongo.stdout_lines
   - name: running javaminion
-    command: systemctl start javaminion
-    register: checkout
-  - debug: var=checkout.stdout_lines
+    command: pm2 restart Javaminion
+    register: pm2
+  - debug: var=pm2.stdout_lines

@@ -1,0 +1,9 @@
+---
+- hosts: webservers
+  remote_user: root
+  gather_facts: no
+  tasks:
+  - name: testing javaminion
+    command: docker-compose -f /root/javaminion/docker-compose.yml run app sh ./gradlew build -x spotbugsMain -x spotbugsTest -x test -x jacocoTestReport
+    register: building
+  - debug: var=building.stdout

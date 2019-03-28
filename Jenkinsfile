@@ -8,31 +8,37 @@ pipeline {
   stages {
     stage('Clean') {
       steps {
-        ansiblePlaybook(playbook: './playbooks/stages/clean.yml')
+        ansiblePlaybook(playbook: './playbooks/stages/clean.yml', colorized: true)
       }
     }
 
     stage('Clone') {
       steps {
-        ansiblePlaybook(playbook: './playbooks/stages/clone.yml')
+        ansiblePlaybook(playbook: './playbooks/stages/clone.yml', colorized: true)
       }
     }
 
     stage('Build Node') {
       steps {
-        ansiblePlaybook(playbook: './playbooks/stages/node-build.yml')
+        ansiblePlaybook(playbook: './playbooks/stages/node-build.yml', colorized: true)
       }
     }
 
     stage('Build Docker') {
       steps {
-        ansiblePlaybook(playbook: './playbooks/stages/build.yml')
+        ansiblePlaybook(playbook: './playbooks/stages/build.yml', colorized: true)
+      }
+    }
+
+    stage('Build Java') {
+      steps {
+        ansiblePlaybook(playbook: './playbooks/stages/build-java.yml', colorized: true)
       }
     }
 
     stage('Checkstyle') {
       steps {
-        ansiblePlaybook(playbook: './playbooks/stages/checkstyle.yml')
+        ansiblePlaybook(playbook: './playbooks/stages/checkstyle.yml', colorized: true)
         sh 'mkdir ./archives/checkstyle'
 
         sh 'tar -zxvf archives/*/root/archives/checkstyle.tar.gz -C ./archives/checkstyle'
@@ -41,7 +47,7 @@ pipeline {
 
     stage('Javadoc') {
       steps {
-        ansiblePlaybook(playbook: './playbooks/stages/javadoc.yml')
+        ansiblePlaybook(playbook: './playbooks/stages/javadoc.yml', colorized: true)
         sh 'mkdir ./archives/javadoc'
         sh 'tar -zxvf archives/*/root/archives/javadoc.tar.gz  -C ./archives/javadoc'
       }
@@ -49,7 +55,7 @@ pipeline {
 
     stage('Spotbugs') {
       steps {
-        ansiblePlaybook(playbook: './playbooks/stages/spotbugs.yml')
+        ansiblePlaybook(playbook: './playbooks/stages/spotbugs.yml', colorized: true)
         sh 'mkdir ./archives/spotbugs'
 
         sh 'tar -zxvf archives/*/root/archives/spotbugs.tar.gz -C ./archives/spotbugs'
@@ -58,7 +64,7 @@ pipeline {
 
     stage('Test') {
       steps {
-        ansiblePlaybook(playbook: './playbooks/stages/test.yml')
+        ansiblePlaybook(playbook: './playbooks/stages/test.yml', colorized: true)
         sh 'tar -zxvf archives/*/root/archives/test-results.tar.gz'
         sh 'tar -zxvf archives/*/root/archives/test-reports.tar.gz'
 
@@ -70,7 +76,7 @@ pipeline {
 
     stage('Jacoco Test Coverage') {
       steps {
-        ansiblePlaybook(playbook: './playbooks/stages/jacoco.yml')
+        ansiblePlaybook(playbook: './playbooks/stages/jacoco.yml', colorized: true)
         sh 'mkdir ./archives/jacoco'
 
         sh 'tar -zxvf archives/*/root/archives/jacoco.tar.gz -C ./archives/jacoco'
@@ -79,13 +85,13 @@ pipeline {
 
     stage('Build Jar') {
       steps {
-        ansiblePlaybook(playbook: './playbooks/stages/jar.yml')
+        ansiblePlaybook(playbook: './playbooks/stages/jar.yml', colorized: true)
       }
     }
 
     stage('Deploy') {
       steps {
-        ansiblePlaybook(playbook: './playbooks/stages/start.yml')
+        ansiblePlaybook(playbook: './playbooks/stages/start.yml', colorized: true)
       }
     }
 

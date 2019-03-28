@@ -52,6 +52,7 @@
       <td ng-repeat="participant in game.participants">
         <a ng-href="#!/players/{{player.account.id}}" ng-class="{winner: game.winner && game.winner.id === participant.id, loser: game.winner && game.winner.id !== participant.id}"><strong>Player {{$index+1}}:</strong> {{participant.account.email}}</a>
       </td>
+      <td><button ng-if="isMyGame(game)" ng-class="">Play</button></td>
       <td><button ng-if="game.matchState === 'WAITING_FOR_PLAYERS'" ng-click="joinGame(game)">Join</button></td>
     </tr>
   </table>
