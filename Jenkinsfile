@@ -83,7 +83,7 @@ pipeline {
       }
     }
 
-    stage('Build Jar') {
+    stage('Copy Jar') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/jar.yml', colorized: true)
       }

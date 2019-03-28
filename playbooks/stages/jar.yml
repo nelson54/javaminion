@@ -4,4 +4,4 @@
   gather_facts: no
   tasks:
     - name: make jar
-      command: mv /root/javaminion/build/libs/dominionweb*.jar /archives/
+      command: mv /root/javaminion/build/libs/dominionweb*.jar /root/archives/
