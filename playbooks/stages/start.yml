@@ -8,6 +8,6 @@
     register: mongo
   - debug: var=mongo.stdout_lines
   - name: running javaminion
-    command: pm2 restart Javaminion
+    command: pm2 reload /root/javaminion/ecosystem.config.js
     register: pm2
   - debug: var=pm2.stdout_lines
