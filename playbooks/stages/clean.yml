@@ -2,8 +2,6 @@
 - hosts: webservers
   remote_user: root
   tasks:
-  - name: stop
-    command: systemctl stop javaminion
   - name: remove old deployment
     file:
       path: /root/javaminion/
