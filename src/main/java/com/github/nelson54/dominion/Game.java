@@ -224,7 +224,6 @@ public class Game {
     }
 
     public void log(String string) {
-        logger.info(string);
         logs.add(DateTime.now().toString() + ": " + string);
     }
 
