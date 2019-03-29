@@ -8,6 +8,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: testing
+    volumes:
+      - /root/mongo:/data/db
   app:
     build:
       context: ./
