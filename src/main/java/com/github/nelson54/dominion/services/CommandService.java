@@ -73,6 +73,7 @@ public class CommandService {
         } catch (Exception e) {
 
             logger.error(e.getMessage());
+            logger.error(e.getStackTrace());
             return game;
         }
 
