@@ -18,6 +18,8 @@ import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
 import org.jboss.logging.Logger;
 import org.springframework.stereotype.Service;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -73,7 +75,10 @@ public class CommandService {
         } catch (Exception e) {
 
             logger.error(e.getMessage());
-            logger.error(e.getStackTrace());
+            StringWriter outError = new StringWriter();
+            e.printStackTrace(new PrintWriter(outError));
+            logger.error(outError.toString());
+
             return game;
         }
 
