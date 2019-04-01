@@ -41,12 +41,17 @@
                 <a href="/">{{user.username}}</a>
                 <a href="/logout" ng-show="user.username">Logout</a>
               </li>
-              <li ng-hide="user.username">
+              <li ng-if="user.username">
                 <form class="navbar-form pull-right" action="/login" method="post">
                   <label> User Name : <input type="text" name="username"/> </label>
                   <input type="submit" value="Sign In"/>
                 </form>
               </li>
+
+              <li>
+                <login></login>
+              </li>
+
             </ul>
           </div>
         </div>
