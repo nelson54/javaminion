@@ -29,9 +29,6 @@ angular
         templateUrl: 'views/matchmaking.html',
         controller: 'MatchesCtrl',
         resolve : {
-          baseUrl: function() {
-            return baseUrl;
-          },
           recommendedCards: function($http, $resource, jwtService){
 
             $http.defaults.headers.common.Authorization = jwtService.getBearer();
@@ -51,21 +48,11 @@ angular
       })
       .when('/login', {
         templateUrl: 'views/login.html',
-        controller: 'LoginCtrl',
-        resolve : {
-          baseUrl: function() {
-            return baseUrl;
-          }
-        }
+        controller: 'LoginCtrl'
       })
       .when('/signup', {
         templateUrl: 'views/signup.html',
-        controller: 'SignupCtrl',
-        resolve : {
-          baseUrl: function() {
-            return baseUrl;
-          }
-        }
+        controller: 'SignupCtrl'
       })
       .when('/games/:game', {
         templateUrl: 'views/game.html',
@@ -98,9 +85,6 @@ angular
             });
 
             return defer.promise;
-          },
-          baseUrl: function() {
-            return baseUrl;
           }
         }
       })
@@ -121,9 +105,6 @@ angular
           },
           playerId : function($route) {
             return $route.current.params.player;
-          },
-          baseUrl : function() {
-            return baseUrl;
           }
         }
       })
@@ -167,7 +148,7 @@ angular
 
 
   })
-
+  .value('BaseUrlProvider', baseUrl)
   .factory('UserServiceFactory', ['$resource', 'jwtService', function($resource, jwtService){
     return function() {
       return $resource(baseUrl + '/api/account', {}, {
