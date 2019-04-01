@@ -145,10 +145,8 @@ angular
         
       }
     };
-
-
   })
-  .value('BaseUrlProvider', baseUrl)
+  .value('baseUrl', baseUrl)
   .factory('UserServiceFactory', ['$resource', 'jwtService', function($resource, jwtService){
     return function() {
       return $resource(baseUrl + '/api/account', {}, {
