@@ -35,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource("application-test.properties")
 @Sql({"seed"})
 @AutoConfigureMockMvc
 class AccountControllerTest {

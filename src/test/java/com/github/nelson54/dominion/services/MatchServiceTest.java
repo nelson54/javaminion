@@ -22,8 +22,6 @@ import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource("application-test.properties")
-@Sql({"seed"})
 class MatchServiceTest {
 
     private static final Logger logger = Logger.getLogger(MatchServiceTest.class);

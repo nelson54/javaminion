@@ -20,10 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-@TestPropertySource("application-test.properties")
-@Sql({"seed"})
 @AutoConfigureMockMvc
-
 class MatchControllerTest {
 
     @Autowired
