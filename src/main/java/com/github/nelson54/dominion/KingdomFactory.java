@@ -7,9 +7,7 @@ import com.google.common.collect.ArrayListMultimap;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class KingdomFactory {
@@ -21,7 +19,7 @@ public class KingdomFactory {
         return kingdom;
     }
 
-    Kingdom getKingdomFromCards(Random random, Set<Class<? extends Card>> cards, int players)
+    Kingdom getKingdomFromCards(Random random, LinkedHashSet<Class<? extends Card>> cards, int players)
             throws IllegalAccessException, InstantiationException {
         Kingdom kingdom = createKingdom();
 

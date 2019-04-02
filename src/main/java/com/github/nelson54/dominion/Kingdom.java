@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.types.TreasureCard;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 import java.util.*;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 public class Kingdom {
 
     @JsonProperty
-    private Multimap<String, Card> cardMarket;
+    private ArrayListMultimap<String, Card> cardMarket;
 
     @JsonProperty
     private Map<Long, Card> allCards;
@@ -31,11 +32,11 @@ public class Kingdom {
         return getCardsByName(name).size();
     }
 
-    public Multimap<String, Card> getCardMarket() {
+    public ArrayListMultimap<String, Card> getCardMarket() {
         return cardMarket;
     }
 
-    public void setCardMarket(Multimap<String, Card> cardMarket) {
+    public void setCardMarket(ArrayListMultimap<String, Card> cardMarket) {
         this.cardMarket = cardMarket;
     }
 

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 
 public class GameCardSet {
-    private Set<CardTypeReference> cards;
+    private LinkedHashSet<CardTypeReference> cards;
 
     private GameCardSet(LinkedHashSet<CardTypeReference> cards) {
         this.cards = cards;
@@ -38,10 +38,10 @@ public class GameCardSet {
         return gameCardSet;
     }
 
-    public Set<Class<? extends Card>> getCardClasses() {
+    public LinkedHashSet<Class<? extends Card>> getCardClasses() {
         return cards
                 .stream()
                 .map(CardTypeReference::getCardClass)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 }
