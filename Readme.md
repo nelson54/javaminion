@@ -20,9 +20,10 @@
     - [ ] Add onAttackEvent
     - [ ] Add Attack Bypass to turn
     - [ ] Add onCardEntersHand Event
-- [ ] Implement discard preferences for AI    
+- [ ] Implement discard preferences for AI or reverse buy preferences   
 - [x] End turn if no additional actions in pool or cards in hand after playing ComplexActionCard's
-- [ ] Update and save PM2 configuration every time a build is done.
+- [x] Update and save PM2 configuration every time a build is done.
+- [ ] Prevent from rebuilding database every time
 
 #For port forwarding to jenkins server:
 ```bash

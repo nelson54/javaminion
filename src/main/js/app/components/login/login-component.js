@@ -9,8 +9,24 @@ dominionFrontendApp.component('login', {
       <input type="password" id="password" ng-model="user.password" class="form-control mr-sm-2" placeholder="Password" aria-label="Password">
       <button ng-click="login()">Login</button>
     </div>`,
-  resolve: {
-    userId: function($route, UserServiceFactory, $q){
+  controller: function($http, $resource, $route, $location, $q, baseUrl, jwtService) {
+
+    let Authentication = $resource(baseUrl+'/api/authentication');
+    this.userId = -1;
+    this.user = new Authentication({});
+
+    this.isLoggedIn = ()=>{
+      return this.userId > -1;
+    };
+
+    this.login = ()=>{
+      this.user.$save().then(function(response) {
+        jwtService.setToken(response.token);
+        $location.path('/games');
+      });
+    };
+
+    (($route, UserServiceFactory, $q) => {
       let defer = $q.defer();
       let userService = new UserServiceFactory();
 
@@ -20,23 +36,9 @@ dominionFrontendApp.component('login', {
       );
 
       return defer.promise;
-    }
-  },
-  controller: function($http, $resource, $route, $location, $q, baseUrl, jwtService, userId) {
+    })().then((userId) => {
+      this.userId = userId;
+    });
 
-    let Authentication = $resource(baseUrl+'/api/authentication');
-
-    this.user = new Authentication({});
-
-    this.isLoggedIn = ()=>{
-      return userId > -1;
-    };
-
-    this.login = ()=>{
-      this.user.$save().then(function(response) {
-        jwtService.setToken(response.token);
-        $location.path('/games');
-      });
-    };
   }
 });
