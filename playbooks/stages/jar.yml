@@ -1,7 +1,0 @@
----
-- hosts: webservers
-  remote_user: root
-  gather_facts: no
-  tasks:
-    - name: make jar
-      command: mv /root/javaminion/build/libs/dominionweb-1.0-SNAPSHOT.jar /root/archives/

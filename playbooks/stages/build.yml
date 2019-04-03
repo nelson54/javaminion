@@ -1,9 +1,0 @@
----
-- hosts: webservers
-  remote_user: root
-  gather_facts: no
-  tasks:
-  - name: building docker image
-    command: docker-compose -f /root/javaminion/docker-compose.yml build
-    register: build
-  - debug: var=build.stdout_lines

@@ -6,6 +6,12 @@ pipeline {
   }
 
   stages {
+    stage('Setup') {
+      steps {
+        sh 'git clone https://github.com/nelson54/dominion-playbooks.git playbooks'
+      }
+    }
+
     stage('Clean') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/clean.yml', colorized: true)
@@ -158,6 +164,7 @@ pipeline {
       sh 'rm -Rf archives/'
       sh 'rm -Rf test/'
       sh 'rm -Rf tests/'
+      sh 'rm -Rf dominion-playbooks'
     }
   }
 }

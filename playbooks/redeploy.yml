@@ -1,6 +1,0 @@
----
-- import_playbook: ./stages/clean.yml
-- import_playbook: ./stages/clone.yml
-- import_playbook: ./stages/build.yml
-- import_playbook: ./stages/test.yml
-- import_playbook: ./stages/start.yml
