@@ -12,15 +12,15 @@ dominionFrontendApp.component('login', {
   controller: function($scope, $http, $resource, $route, $location, $q, UserServiceFactory, baseUrl, jwtService) {
 
     let Authentication = $resource(baseUrl+'/api/authentication');
-    this.userId = -1;
-    this.user = new Authentication({});
+    $scope.userId = -1;
+    $scope.user = new Authentication({});
 
-    this.isLoggedIn = ()=>{
-      return this.userId > -1;
+    $scope.isLoggedIn = ()=>{
+      return $scope.userId > -1;
     };
 
-    this.login = ()=>{
-      this.user.$save().then(function(response) {
+    $scope.login = ()=>{
+      $scope.user.$save().then(function(response) {
         jwtService.setToken(response.token);
         $location.path('/games');
       });
@@ -37,8 +37,7 @@ dominionFrontendApp.component('login', {
 
       return defer.promise;
     })().then((userId) => {
-      this.userId = userId;
-      $scope.$apply();
+      $scope.userId = userId;
     });
   }
 });
