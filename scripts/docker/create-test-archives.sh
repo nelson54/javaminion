@@ -2,7 +2,7 @@
 
 cd /app
 
-./gradlew test
+SPRING_PROFILES_ACTIVE=test ./gradlew test
 
 cd /app/build/test-results
 tar -cvzf ./test-results.tar.gz .

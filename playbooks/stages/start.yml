@@ -5,5 +5,7 @@
   tasks:
   - name: reloading javaminion config
     command: pm2 reload /root/javaminion/ecosystem.config.js
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
     register: pm2
   - debug: var=pm2.stdout_lines
