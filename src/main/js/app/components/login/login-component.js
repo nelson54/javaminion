@@ -4,7 +4,7 @@ let dominionFrontendApp = angular.module('dominionFrontendApp');
 
 dominionFrontendApp.component('login', {
   template: `
-    <div class="form" class="navbar-form" ng-if="isLoggedIn()">
+    <div class="form" class="navbar-form" ng-show="isLoggedIn()">
       <input type="text" id="username" ng-model="user.username" class="form-control mr-sm-2" placeholder="Username" aria-label="Username">
       <input type="password" id="password" ng-model="user.password" class="form-control mr-sm-2" placeholder="Password" aria-label="Password">
       <button ng-click="login()">Login</button>
@@ -38,6 +38,7 @@ dominionFrontendApp.component('login', {
       return defer.promise;
     })().then((userId) => {
       this.userId = userId;
+      this.$apply();
     });
   }
 });
