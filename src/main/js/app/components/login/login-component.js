@@ -14,9 +14,10 @@ dominionFrontendApp.component('login', {
       let defer = $q.defer();
       let userService = new UserServiceFactory();
 
-      userService.get(function(response){
-        defer.resolve(response.id);
-      });
+      userService.get(
+        (response) => defer.resolve(response.id),
+        () => defer.resolve(-1)
+      );
 
       return defer.promise;
     }
