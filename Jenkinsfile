@@ -117,10 +117,14 @@ pipeline {
     }
 
     stage('Jacoco Test Coverage') {
+      when {
+        expression { env.BRANCH_NAME == 'production' }
+      }
+
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/jacoco.yml', colorized: true)
-        sh 'mkdir ./archives/jacoco'
 
+        sh 'mkdir ./archives/jacoco'
         sh 'tar -zxvf archives/*/root/archives/jacoco.tar.gz -C ./archives/jacoco'
 
         publishHTML(target: [
