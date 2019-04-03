@@ -38,7 +38,7 @@ pipeline {
 
     stage('Checkstyle') {
       when {
-        expression { CURRENT_BRANCH == 'production' }
+        expression { env.BRANCH_NAME == 'production' }
       }
 
       steps {
@@ -66,7 +66,7 @@ pipeline {
 
     stage('Javadoc') {
       when {
-        expression { CURRENT_BRANCH == 'production' }
+        expression { env.BRANCH_NAME == 'production' }
       }
 
       steps {
@@ -87,7 +87,7 @@ pipeline {
 
     stage('Spotbugs') {
       when {
-        expression { CURRENT_BRANCH == 'production' }
+        expression { env.BRANCH_NAME == 'production' }
       }
 
       steps {
