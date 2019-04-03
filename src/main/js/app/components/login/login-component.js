@@ -9,7 +9,7 @@ dominionFrontendApp.component('login', {
       <input type="password" id="password" ng-model="user.password" class="form-control mr-sm-2" placeholder="Password" aria-label="Password">
       <button ng-click="login()">Login</button>
     </div>`,
-  controller: function($http, $resource, $route, $location, $q, UserServiceFactory, baseUrl, jwtService) {
+  controller: function($scope, $http, $resource, $route, $location, $q, UserServiceFactory, baseUrl, jwtService) {
 
     let Authentication = $resource(baseUrl+'/api/authentication');
     this.userId = -1;
@@ -38,7 +38,7 @@ dominionFrontendApp.component('login', {
       return defer.promise;
     })().then((userId) => {
       this.userId = userId;
-      this.$apply();
+      $scope.$apply();
     });
   }
 });
