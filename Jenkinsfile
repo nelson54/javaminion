@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Setup') {
       steps {
-        sh 'git clone https://github.com/nelson54/dominion-playbooks.git playbooks'
+        sh 'git clone git@github.com:nelson54/dominion-playbooks.git'
       }
     }
 
@@ -21,12 +21,6 @@ pipeline {
     stage('Clone') {
       steps {
         ansiblePlaybook(playbook: './playbooks/stages/clone.yml', colorized: true)
-      }
-    }
-
-    stage('Build Node') {
-      steps {
-        ansiblePlaybook(playbook: './playbooks/stages/node-build.yml', colorized: true)
       }
     }
 
