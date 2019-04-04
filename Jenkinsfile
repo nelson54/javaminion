@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Setup') {
       steps {
-        sh 'git clone git@github.com:nelson54/dominion-playbooks.git'
+        sh 'git clone git@github.com:nelson54/dominion-playbooks.git playbooks'
       }
     }
 
