@@ -8,25 +8,25 @@ pipeline {
   stages {
     stage('Clean') {
       steps {
-        ansiblePlaybook(playbook: '~/workspace/dominion-frontend_master/stages/clean.yml', colorized: true)
+        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/clean.yml', colorized: true)
       }
     }
 
     stage('Clone') {
       steps {
-        ansiblePlaybook(playbook: '~/workspace/dominion-frontend_master/stages/clone.yml', colorized: true)
+        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/clone.yml', colorized: true)
       }
     }
 
     stage('Build Docker') {
       steps {
-        ansiblePlaybook(playbook: '~/workspace/dominion-frontend_master/stages/build.yml', colorized: true)
+        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/build.yml', colorized: true)
       }
     }
 
     stage('Build Java') {
       steps {
-        ansiblePlaybook(playbook: '~/workspace/dominion-frontend_master/stages/build-java.yml', colorized: true)
+        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/build-java.yml', colorized: true)
       }
     }
 
@@ -36,7 +36,7 @@ pipeline {
       }
 
       steps {
-        ansiblePlaybook(playbook: '~/workspace/dominion-frontend_master/stages/checkstyle.yml', colorized: true)
+        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/checkstyle.yml', colorized: true)
         sh 'mkdir ./archives/checkstyle'
 
         sh 'tar -zxvf archives/*/root/archives/checkstyle.tar.gz -C ./archives/checkstyle'
@@ -64,7 +64,7 @@ pipeline {
       }
 
       steps {
-        ansiblePlaybook(playbook: '~/workspace/dominion-frontend_master/stages/javadoc.yml', colorized: true)
+        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/javadoc.yml', colorized: true)
         sh 'mkdir ./archives/javadoc'
         sh 'tar -zxvf archives/*/root/archives/javadoc.tar.gz  -C ./archives/javadoc'
 
@@ -85,7 +85,7 @@ pipeline {
       }
 
       steps {
-        ansiblePlaybook(playbook: '~/workspace/dominion-frontend_master/stages/spotbugs.yml', colorized: true)
+        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/spotbugs.yml', colorized: true)
 
         sh 'mkdir ./archives/spotbugs'
         sh 'tar -zxvf archives/*/root/archives/spotbugs.tar.gz -C ./archives/spotbugs'
@@ -100,7 +100,7 @@ pipeline {
 
     stage('Test') {
       steps {
-        ansiblePlaybook(playbook: '~/workspace/dominion-frontend_master/stages/test.yml', colorized: true)
+        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/test.yml', colorized: true)
 
         sh 'tar -zxvf archives/*/root/archives/test-results.tar.gz'
         sh 'tar -zxvf archives/*/root/archives/test-reports.tar.gz'
@@ -116,7 +116,7 @@ pipeline {
       }
 
       steps {
-        ansiblePlaybook(playbook: '~/workspace/dominion-frontend_master/stages/jacoco.yml', colorized: true)
+        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/jacoco.yml', colorized: true)
 
         sh 'mkdir ./archives/jacoco'
         sh 'tar -zxvf archives/*/root/archives/jacoco.tar.gz -C ./archives/jacoco'
@@ -136,13 +136,13 @@ pipeline {
 
     stage('Copy Jar') {
       steps {
-        ansiblePlaybook(playbook: '~/workspace/dominion-frontend_master/stages/jar.yml', colorized: true)
+        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/jar.yml', colorized: true)
       }
     }
 
     stage('Deploy') {
       steps {
-        ansiblePlaybook(playbook: '~/workspace/dominion-frontend_master/stages/start.yml', colorized: true)
+        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/start.yml', colorized: true)
       }
     }
   }
