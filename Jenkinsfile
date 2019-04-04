@@ -167,13 +167,13 @@ pipeline {
         ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/start.yml', colorized: true)
       }
     }
-  }
 
-  post {
-    always {
-      sh 'rm -Rf archives/'
-      sh 'rm -Rf test/'
-      sh 'rm -Rf tests/'
+    stage('Cleanup') {
+      steps {
+        sh 'rm -Rf archives/'
+        sh 'rm -Rf test/'
+        sh 'rm -Rf tests/'
+      }
     }
   }
 }
