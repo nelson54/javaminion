@@ -102,8 +102,8 @@ pipeline {
       steps {
         ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/test.yml', colorized: true)
 
-        sh 'tar -zxvf archives/*/root/archives/test-results.tar.gz'
-        sh 'tar -zxvf archives/*/root/archives/test-reports.tar.gz'
+        sh 'tar -zxvf ../archives/*/root/archives/test-results.tar.gz'
+        sh 'tar -zxvf ../archives/*/root/archives/test-reports.tar.gz'
 
         archive 'tests/**/*.html'
         junit 'test/TEST-*.xml'
