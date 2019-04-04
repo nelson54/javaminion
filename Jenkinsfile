@@ -37,6 +37,7 @@ pipeline {
 
       steps {
         ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/checkstyle.yml', colorized: true)
+        sh 'mkdir ./archives/'
         sh 'mkdir ./archives/checkstyle'
 
         sh 'tar -zxvf archives/*/root/archives/checkstyle.tar.gz -C ./archives/checkstyle'
