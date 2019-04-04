@@ -41,8 +41,8 @@ angular.module('dominionFrontendApp')
 
     $scope.filters = {
       waitingForOpponent: true,
-      finished: false,
-      inProgress: false,
+      inProgress: true,
+      finished: false
     };
 
     $scope.setCards = function (cards) {

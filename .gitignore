@@ -11,3 +11,4 @@ out
 db
 logs/*
 src/main/js/dist/*
+*.retry
