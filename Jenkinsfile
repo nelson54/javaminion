@@ -39,7 +39,11 @@ pipeline {
         sh 'mkdir ./archives/'
         sh 'mkdir ./archives/checkstyle'
 
-        ansiblePlaybook(playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/checkstyle.yml -extra-vars 'base_dir=\"${pwd()}\"'", colorized: true)
+        ansiblePlaybook(
+                playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/checkstyle.yml",
+                colorized: true,
+                extraVars { extraVar('base_dir', pwd()) }
+        )
 
         sh 'tar -zxvf archives/*/root/archives/checkstyle.tar.gz -C ./archives/checkstyle'
 
@@ -66,7 +70,11 @@ pipeline {
       }
 
       steps {
-        ansiblePlaybook(playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/javadoc.yml -extra-vars 'base_dir=\"${pwd()}\"'", colorized: true)
+        ansiblePlaybook(
+                playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/javadoc.yml",
+                colorized: true,
+                extraVars { extraVar('base_dir', pwd()) }
+        )
         sh 'mkdir ./archives/javadoc'
         sh 'tar -zxvf archives/*/root/archives/javadoc.tar.gz  -C ./archives/javadoc'
 
@@ -87,7 +95,11 @@ pipeline {
       }
 
       steps {
-        ansiblePlaybook(playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/spotbugs.yml -extra-vars 'base_dir=\"${pwd()}\"'", colorized: true)
+        ansiblePlaybook(
+                playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/spotbugs.yml",
+                colorized: true,
+                extraVars { extraVar('base_dir', pwd()) }
+        )
 
         sh 'mkdir ./archives/spotbugs'
         sh 'tar -zxvf archives/*/root/archives/spotbugs.tar.gz -C ./archives/spotbugs'
@@ -102,7 +114,11 @@ pipeline {
 
     stage('Test') {
       steps {
-        ansiblePlaybook(playbook: '/var/jenkins_home/workspace/dominion-playbooks_master/stages/test.yml', colorized: true)
+        ansiblePlaybook(
+                playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/test.yml",
+                colorized: true,
+                extraVars { extraVar('base_dir', pwd()) }
+        )
 
         sh 'tar -zxvf ../archives/*/root/archives/test-results.tar.gz'
         sh 'tar -zxvf ../archives/*/root/archives/test-reports.tar.gz'
@@ -118,7 +134,11 @@ pipeline {
       }
 
       steps {
-        ansiblePlaybook(playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/jacoco.yml  -extra-vars 'base_dir=\"${pwd()}\"'", colorized: true)
+        ansiblePlaybook(
+                playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/jacoco.yml",
+                colorized: true,
+                extraVars { extraVar('base_dir', pwd()) }
+        )
 
         sh 'mkdir ./archives/jacoco'
         sh 'tar -zxvf archives/*/root/archives/jacoco.tar.gz -C ./archives/jacoco'
