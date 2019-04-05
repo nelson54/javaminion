@@ -187,7 +187,9 @@ pipeline {
         sh 'sleep 1'
 
         waitUntil {
-          sh 'timeout 300 bash -c \'while [[ "$(curl -s -o /dev/null -w \'\'%{http_code}\'\' 206.189.224.80)" != "200" ]]; do sleep 1; done;\' || true'
+          sh 'timeout 300 bash -c \'while [[ "$(curl -s -o /dev/null -w \'\'%{http_code}\'\' 206.189.224.80)" != "200" ]]; do sleep 1; done;\''
+
+          return true
         }
       }
     }
