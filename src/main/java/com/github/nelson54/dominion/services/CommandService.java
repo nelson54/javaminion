@@ -50,7 +50,7 @@ public class CommandService {
         String msg = null;
         Turn turn = game.getTurn();
         Player player = game.getPlayers().get(command.accountId);
-        Card card = player.getAllCards().get(command.cardId);
+        Card card = game.getAllCards().get(command.cardId);
 
         try {
 

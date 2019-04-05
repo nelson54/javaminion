@@ -128,7 +128,12 @@ public class Turn {
     public Card purchaseCardForPlayer(@NotNull Card card, @NotNull Player player)
             throws IncorrectPhaseException, InsufficientFundsException {
 
-        game.log(" " + player.getName() + " purchased card " + card.getName());
+        game.log((new StringBuffer())
+                .append(" ")
+                .append(player.getName())
+                .append(" purchased card ")
+                .append(card.getName())
+                .toString());
 
         if (!phase.equals(Phase.BUY) || !player.getId().equals(this.player.getId())) {
             throw new IncorrectPhaseException();
