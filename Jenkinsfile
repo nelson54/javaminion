@@ -113,6 +113,10 @@ pipeline {
     }
 
     stage('Test') {
+      when {
+        expression { env.BRANCH_NAME == 'production' }
+      }
+
       steps {
         ansiblePlaybook(
                 playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/test.yml",

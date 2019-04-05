@@ -20,7 +20,7 @@ public class RemodelEffect extends Effect {
             return false;
         } else if (choice.getState() == CardState.GAINING_CARD) {
             Card gainedCard = response.getCard();
-            game.giveCardToPlayer(gainedCard.getName(), response.getSource());
+            game.giveCardToPlayer(gainedCard.getName(), target);
             return true;
         }
 
