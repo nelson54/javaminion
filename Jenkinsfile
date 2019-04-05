@@ -185,8 +185,10 @@ pipeline {
     stage('Waiting for server') {
       steps {
         waitUntil {
-          def r = sh 'timeout 300 bash -c \'while [[ "$(curl -s -o /dev/null -w \'\'%{http_code}\'\' 206.189.224.80)" != "200" ]]; do sleep 1; done;\' || false'
-          return (r == 0)
+          script {
+            def statusCode = sh script: 'timeout 300 bash -c \'while [[ "$(curl -s -o /dev/null -w \'\'%{http_code}\'\' 206.189.224.80)" != "200" ]]; do sleep 1; done;\' || false', returnStatus: true
+            return (statusCode == 0)
+          }
         }
       }
     }
