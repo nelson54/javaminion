@@ -12,6 +12,7 @@ import com.github.nelson54.dominion.exceptions.*;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 import static com.github.nelson54.dominion.Phase.ACTION;
@@ -92,17 +93,7 @@ public class Turn {
         game.nextPlayer();
     }
 
-    public Card playCard(ActionCard card, Player player, Game game) {
-
-        if (player == null) {
-            game.log("Null player");
-        }
-
-        if(card == null) {
-            game.log("Null card");
-        }
-
-
+    public Card playCard(@NotNull ActionCard card, @NotNull Player player, Game game) {
         game.log(" " + player.getName() + " played card " + card.getName());
 
         if (phase != ACTION || !player.getId().equals(this.player.getId())) {
@@ -134,7 +125,7 @@ public class Turn {
         return card;
     }
 
-    public Card purchaseCardForPlayer(Card card, Player player)
+    public Card purchaseCardForPlayer(@NotNull Card card, @NotNull Player player)
             throws IncorrectPhaseException, InsufficientFundsException {
 
         game.log(" " + player.getName() + " purchased card " + card.getName());
