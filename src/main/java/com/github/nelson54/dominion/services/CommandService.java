@@ -55,8 +55,10 @@ public class CommandService {
         try {
 
             if (command.type.equals(CommandType.ACTION_COMMAND)) {
+                logMissingItem(game, command, player, card);
                 turn.playCard((ActionCard) card, player, game);
             } else if (command.type.equals(CommandType.BUY_COMMAND)) {
+                logMissingItem(game, command, player, card);
                 turn.purchaseCardForPlayer(card, player);
             } else if (command.type.equals(CommandType.CHOICE_RESPONSE)) {
                 applyChoiceResponse(game, command);
@@ -91,6 +93,17 @@ public class CommandService {
 
         return game;
     }
+
+    private void logMissingItem(Game game, Command command, Player player, Card card) {
+        if(card == null) {
+            game.log("Card: " + command.cardId + " not found.");
+        }
+
+        if(player == null) {
+            game.log("Player: " + command.accountId + " not found.");
+        }
+    }
+
 
     public void deleteAll() {
         commandRepository.deleteAll();
