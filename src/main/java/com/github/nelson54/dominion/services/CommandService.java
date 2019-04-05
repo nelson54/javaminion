@@ -73,7 +73,6 @@ public class CommandService {
                     + " attempted to buy " + card.getName()
                     + " with a money pool of" + turn.getMoney();
         } catch (Exception e) {
-
             logger.error(e.getMessage());
             StringWriter outError = new StringWriter();
             e.printStackTrace(new PrintWriter(outError));

@@ -3,6 +3,7 @@ package com.github.nelson54.dominion.cards.sets.base;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
+import com.github.nelson54.dominion.cards.CardType;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.Cards;
 import com.github.nelson54.dominion.cards.types.ComplexActionAttackCard;
@@ -21,6 +22,10 @@ public class Militia extends ComplexActionAttackCard {
 
     public Militia(Long id) {
         super(id);
+
+        getCardTypes().add(CardType.ACTION);
+        getCardTypes().add(CardType.ATTACK);
+
         byte moneyCost = 4;
 
         Cost cost = new Cost();

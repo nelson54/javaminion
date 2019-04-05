@@ -116,7 +116,7 @@ public class Turn {
         if (game.getChoices().size() > 0) {
             game.getChoices().forEach(choice -> choice.getTarget().onChoice());
         } else if ((actionPool == 0)
-                || (Cards.ofType(player.getHand(), ActionCard.class).size() == 0)) {
+                || (Cards.ofType(player.getHand(), CardType.ACTION).size() == 0)) {
             endPhase();
         } else {
             player.onActionPhase();
@@ -171,7 +171,7 @@ public class Turn {
 
     @JsonProperty("money")
     public Integer getMoney() {
-        return (int) Cards.ofType(player.getHand(), TreasureCard.class)
+        return (int) Cards.ofType(player.getHand(), CardType.TREASURE)
                 .stream()
                 .map(card -> (TreasureCard) card)
                 .mapToLong(card -> (int) card.getMoneyValue())
