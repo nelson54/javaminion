@@ -27,7 +27,7 @@ public class MineEffect extends Effect {
             Card toGive = game.giveCardToPlayer(gainedCard.getName(), target);
             moveCardToHand(target, toGive);
             game.log("Player[" + target.getId() + "] " + target.getName()
-                    + " gained gained the card "
+                    + " gained the card "
                     + card.getName() + " to their hand from Mine.");
 
             return true;

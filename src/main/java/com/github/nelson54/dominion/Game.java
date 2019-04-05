@@ -223,7 +223,7 @@ public class Game {
         player.getHand().remove(card);
 
         log("Player[" + player.getId() + "] " + player.getName()
-                + " discarded " + card.getName() + ".");
+                + " trashed " + card.getName() + ".");
 
         card.setOwner(null);
 

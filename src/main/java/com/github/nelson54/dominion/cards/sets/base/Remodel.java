@@ -44,9 +44,11 @@ public class Remodel extends ComplexActionCard {
         choice.setExpectedAnswerType(OptionType.CARD);
 
         if (choice.getState() == CardState.TRASHING_CARD) {
+            choice.setMessage("Choose a card to trash.");
             choice.setOptions(Cards.getIds(target.getHand()));
         } else if (choice.getState() == CardState.GAINING_CARD) {
             Card lastChoice = parent.getResponse().getCard();
+            choice.setMessage("Choose a card to Gain.");
             choice.setOptions(
                     Cards.getIds(getGainOptions(game, lastChoice.getCost().getMoney()))
             );
@@ -63,10 +65,6 @@ public class Remodel extends ComplexActionCard {
 
     @Override
     public void play(Player player, Game game) {
-    }
-
-    Set<Card> getTrashCardOptions(Player player) {
-        return player.getHand();
     }
 
     Set<Card> getGainOptions(Game game, byte cost) {

@@ -21,6 +21,10 @@ public class RemodelEffect extends Effect {
         } else if (choice.getState() == CardState.GAINING_CARD) {
             Card gainedCard = response.getCard();
             game.giveCardToPlayer(gainedCard.getName(), target);
+
+            game.log("Player[" + target.getId() + "] " + target.getName()
+                    + " gained the card "
+                    + card.getName() + " from Remodel.");
             return true;
         }
 

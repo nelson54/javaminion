@@ -15,6 +15,8 @@
 - [x] Better logging for Discard     
 - [x] Thief reveals non-treasure cards
 - [x] Cellar should remove the cards from your hand after you mark them for being discarded
+- [x] Militia doesn't work for AI's
+- [ ] Remodel doesn't work for players
 - [ ] Animations
 - [ ] Moat
     - [ ] Add onAttackEvent

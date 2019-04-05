@@ -47,23 +47,17 @@ public class Mine extends ComplexActionCard {
         if (choice.getState() == CardState.TRASHING_CARD) {
             choice.setMessage("Choose a card to trash.");
 
-            choice.setCardOptions(
-                    getTrashOptions(target.getHand())
+            choice.getOptions().addAll(
+                    Cards.getIds(getTrashOptions(target.getHand()))
             );
 
-            choice.getOptions().addAll(
-                    Cards.getIds(choice.getCardOptions())
-            );
         } else if (parent != null && choice.getState() == CardState.GAINING_CARD) {
             choice.setMessage("Choose a card to gain.");
             ChoiceResponse response = parent.getResponse();
             choice.setRequired(true);
-            choice.setCardOptions(
-                    getGainOptions(game.getKingdom(), response.getCard())
-            );
 
             choice.getOptions().addAll(
-                    Cards.getIds(choice.getCardOptions())
+                    Cards.getIds(getGainOptions(game.getKingdom(), response.getCard()))
             );
         }
 
