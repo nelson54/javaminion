@@ -5,6 +5,7 @@ import com.github.nelson54.dominion.cards.CardType;
 import com.github.nelson54.dominion.cards.RecommendedCards;
 import com.github.nelson54.dominion.cards.types.ActionCard;
 import com.github.nelson54.dominion.cards.types.Card;
+import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.services.AccountService;
@@ -136,9 +137,19 @@ public class GameController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
+        Choice choice = player.getChoices().peek();
 
-        matchService.applyCommand(game, Command.endPhase(game, player));
+        if(game.getTurn().getPhase().equals(Phase.WAITING_FOR_CHOICE) && choice != null) {
+            ChoiceResponse choiceResponse = new ChoiceResponse();
+            choiceResponse.setChoice(choice.getId().toString());
+            choiceResponse.setEffect(choice.getEffect());
+            choiceResponse.setDone(true);
+            choiceResponse.setSource(player);
 
+            matchService.applyCommand(game, Command.choice(game, player, choiceResponse));
+        } else {
+            matchService.applyCommand(game, Command.endPhase(game, player));
+        }
         return game;
     }
 

@@ -54,7 +54,7 @@ public class Cellar extends ComplexActionCard {
         choice.setIsDialog(false);
         choice.setRequired(false);
         choice.setRange(Range.ANY);
-        choice.setOptions(new HashSet<>(options));
+        choice.setOptions(options.stream().collect(Collectors.toSet()));
 
         return choice;
     }
