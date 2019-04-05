@@ -1,9 +1,10 @@
 package com.github.nelson54.dominion.web.controllers;
 
-import com.github.nelson54.dominion.*;
+import com.github.nelson54.dominion.Account;
+import com.github.nelson54.dominion.Game;
+import com.github.nelson54.dominion.Phase;
+import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.CardType;
-import com.github.nelson54.dominion.cards.RecommendedCards;
-import com.github.nelson54.dominion.cards.types.ActionCard;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
@@ -110,7 +111,7 @@ public class GameController {
     }
 
     @PostMapping(value = "/{gameId}/choice")
-    Game chooseCard(
+    Game chooseResponse(
             @PathVariable("gameId")
             Long gameId,
             @RequestBody
@@ -121,7 +122,9 @@ public class GameController {
         Player player = game.getPlayers().get(account.getId());
         choiceResponse.setSource(player);
 
-        choiceResponse.setCard(game.getAllCards().get(choiceResponse.getCard().getId()));
+        if (choiceResponse.getCard() != null && choiceResponse.getCard().getId() != null) {
+            choiceResponse.setCard(game.getAllCards().get(choiceResponse.getCard().getId()));
+        }
 
         matchService.applyCommand(game, Command.choice(game, player, choiceResponse));
 
