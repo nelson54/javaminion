@@ -18,10 +18,6 @@ public abstract class ActionReactionCard extends ActionCard {
         cardTypes.add(CardType.REACTION);
     }
 
-    public ActionReactionCard(Long id, Player player) {
-        super(id, player);
-    }
-
     public abstract void apply(Player player, Game game);
 
     public abstract void react(Effect effect);

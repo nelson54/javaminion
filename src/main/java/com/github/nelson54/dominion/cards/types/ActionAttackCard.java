@@ -14,10 +14,6 @@ public abstract class ActionAttackCard extends ActionCard {
         cardTypes.add(CardType.ATTACK);
     }
 
-    public ActionAttackCard(Long id, Player player) {
-        super(id, player);
-    }
-
     public void apply(Player player, Game game) {
         Set<Player> others = getOtherPlayers(player, game).stream()
                 .filter(p -> p.getHand().stream().anyMatch(c -> !c.getName().equals("Moat")))

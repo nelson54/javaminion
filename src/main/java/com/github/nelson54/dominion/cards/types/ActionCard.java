@@ -13,10 +13,12 @@ public abstract class ActionCard extends Card {
         super(id);
         isKingdom = true;
         cardTypes.add(CardType.ACTION);
+        getCardTypes().add(CardType.ATTACK);
     }
 
     public ActionCard(Long id, Player player) {
         super(id, player);
+        getCardTypes().add(CardType.ATTACK);
     }
 
     public abstract void apply(Player player, Game game);

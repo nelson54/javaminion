@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.web.controllers;
 
 import com.github.nelson54.dominion.*;
+import com.github.nelson54.dominion.cards.CardType;
 import com.github.nelson54.dominion.cards.RecommendedCards;
 import com.github.nelson54.dominion.cards.types.ActionCard;
 import com.github.nelson54.dominion.cards.types.Card;
@@ -98,7 +99,7 @@ public class GameController {
         Player player = game.getPlayers().get(account.getId());
         Card playing = game.getAllCards().get(card.getId());
 
-        if (playing instanceof ActionCard) {
+        if (playing.getCardTypes().contains(CardType.ACTION)) {
             matchService.applyCommand(game, Command.action(game, player, playing));
         } else {
             throw new IllegalStateException();

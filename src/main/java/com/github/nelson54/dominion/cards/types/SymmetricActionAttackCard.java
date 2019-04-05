@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.cards.types;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.cards.CardType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,10 +11,7 @@ public abstract class SymmetricActionAttackCard extends ComplexActionAttackCard 
 
     public SymmetricActionAttackCard(Long id) {
         super(id);
-    }
-
-    public SymmetricActionAttackCard(Long id, Player player) {
-        super(id, player);
+        getCardTypes().add(CardType.ATTACK);
     }
 
     @Override

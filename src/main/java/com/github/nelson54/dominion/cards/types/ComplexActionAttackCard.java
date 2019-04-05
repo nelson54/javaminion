@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.cards.types;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.cards.CardType;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,10 +14,7 @@ public abstract class ComplexActionAttackCard extends ComplexActionCard {
 
     public ComplexActionAttackCard(Long id) {
         super(id);
-    }
-
-    public ComplexActionAttackCard(Long id, Player player) {
-        super(id, player);
+        getCardTypes().add(CardType.ATTACK);
     }
 
     @Override
