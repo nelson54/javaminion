@@ -19,9 +19,6 @@ module.exports = {
         exec_mode: 'fork',
         env: {
             SPRING_PROFILES_ACTIVE: 'prod'
-        },
-        env_production: {
-            NODE_ENV: 'production'
         }
     }]
 };
