@@ -79,6 +79,7 @@ public class CommandService {
             StringWriter outError = new StringWriter();
             e.printStackTrace(new PrintWriter(outError));
             logger.error(outError.toString());
+            game.log(msg);
 
             return game;
         }

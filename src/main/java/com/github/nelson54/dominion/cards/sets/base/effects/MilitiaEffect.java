@@ -21,7 +21,7 @@ public class MilitiaEffect extends Effect {
         if (response != null && response.getChoices() != null && target.getHand().size() > 3) {
             Set<Card> cards = response
                     .getChoices().stream()
-                    .map(id -> Cards.ofId(game, id))
+                    .map(id -> game.getAllCards().get(id))
                     .collect(Collectors.toSet());
 
             target.discard(cards);

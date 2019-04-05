@@ -4,6 +4,7 @@ import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.github.nelson54.dominion.choices.OptionType.CARD;
@@ -37,7 +38,9 @@ class DoNothingAi extends AiStrategy {
         } else if (choice.getExpectedAnswerType().equals(CARD)) {
             Set<Long> choices = new HashSet<>();
 
-            choice.getOptions().stream().findFirst().ifPresent(choices::add);
+            Optional<Long> option = choice.getOptions().stream().findFirst();
+
+            option.ifPresent(choices::add);
 
             choiceResponse.setChoices(choices);
         }
