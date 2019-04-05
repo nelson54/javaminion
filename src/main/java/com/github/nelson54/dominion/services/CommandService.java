@@ -49,8 +49,8 @@ public class CommandService {
     public Game applyCommand(Game game, Command command) {
         String msg = null;
         Turn turn = game.getTurn();
-        Card card = game.getAllCards().get(command.cardId);
         Player player = game.getPlayers().get(command.accountId);
+        Card card = player.getAllCards().get(command.cardId);
 
         try {
 

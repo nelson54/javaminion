@@ -94,6 +94,15 @@ public class Turn {
 
     public Card playCard(ActionCard card, Player player, Game game) {
 
+        if (player == null) {
+            game.log("Null player");
+        }
+
+        if(card == null) {
+            game.log("Null card");
+        }
+
+
         game.log(" " + player.getName() + " played card " + card.getName());
 
         if (phase != ACTION || !player.getId().equals(this.player.getId())) {

@@ -125,13 +125,20 @@ public class Game {
     public Optional<Choice> getChoiceById(String id) {
         Optional<Choice> optChoice = Optional.empty();
 
+        StringBuffer sb = new StringBuffer();
+        sb.append("Looking for choice: ")
+                .append(id)
+                .append(" [ ");
         for (Choice choice : getChoices()) {
+            sb.append(choice.getId()).append(", ");
             if (choice.getId().toString().equals(id)) {
 
                 optChoice = Optional.of(choice);
                 break;
             }
         }
+
+        sb.append(" ]");
 
         return optChoice;
     }
