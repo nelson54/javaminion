@@ -50,7 +50,6 @@ public class Mine extends ComplexActionCard {
             choice.getOptions().addAll(
                     Cards.getIds(getTrashOptions(target.getHand()))
             );
-
         } else if (parent != null && choice.getState() == CardState.GAINING_CARD) {
             choice.setMessage("Choose a card to gain.");
             ChoiceResponse response = parent.getResponse();

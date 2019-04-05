@@ -32,18 +32,17 @@ public class Cellar extends ComplexActionCard {
     @Override
     public Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();
-        Set<Card> options;
+        Set<Long> options;
         choice.setIsDialog(false);
         choice.setMessage("Choose any number of cards to discard.");
         if (parent == null) {
-            options = new HashSet<>();
-            options.addAll(target.getHand());
+            options = new HashSet<>(Cards.getIds(target.getHand()));
 
             choice.getOptions().addAll(
-                    Cards.getIds(options)
+                    options
             );
         } else {
-            options = parent.getCardOptions();
+            options = parent.getOptions();
 
             if (parent.getResponse() != null && parent.getResponse().getCard() != null) {
                 options.remove(parent.getResponse().getCard());
@@ -55,7 +54,7 @@ public class Cellar extends ComplexActionCard {
         choice.setIsDialog(false);
         choice.setRequired(false);
         choice.setRange(Range.ANY);
-        choice.setOptions(options.stream().map(Card::getId).collect(Collectors.toSet()));
+        choice.setOptions(new HashSet<>(options));
 
         return choice;
     }
