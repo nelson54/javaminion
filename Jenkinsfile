@@ -30,85 +30,82 @@ pipeline {
       }
     }
 
-    stage('Checkstyle') {
+    stage('quality') {
       when {
         expression { env.BRANCH_NAME == 'production' }
       }
 
-      steps {
-        sh 'mkdir ./archives/'
-        sh 'mkdir ./archives/checkstyle'
+      parallel {
+        stage('Checkstyle') {
+          steps {
+            sh 'mkdir ./archives/'
+            sh 'mkdir ./archives/checkstyle'
 
-        ansiblePlaybook(
-                playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/checkstyle.yml",
-                colorized: true,
-                extraVars: [ base_dir: pwd() ]
-        )
+            ansiblePlaybook(
+                    playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/checkstyle.yml",
+                    colorized: true,
+                    extraVars: [ base_dir: pwd() ]
+            )
 
-        sh 'tar -zxvf archives/*/root/archives/checkstyle.tar.gz -C ./archives/checkstyle'
+            sh 'tar -zxvf archives/*/root/archives/checkstyle.tar.gz -C ./archives/checkstyle'
 
-        publishHTML(target: [
-                allowMissing         : false,
-                alwaysLinkToLastBuild: false,
-                keepAll              : true,
-                reportDir            : 'archives/checkstyle',
-                reportFiles          : 'main.html',
-                reportName           : 'Checkstyle'
-        ])
+            publishHTML(target: [
+                    allowMissing         : false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll              : true,
+                    reportDir            : 'archives/checkstyle',
+                    reportFiles          : 'main.html',
+                    reportName           : 'Checkstyle'
+            ])
 
-        recordIssues (
-                enabledForFailure: false,
-                aggregatingResults : false,
-                tool: checkStyle(pattern: 'archives/checkstyle/main.xml')
-        )
-      }
-    }
+            recordIssues (
+                    enabledForFailure: false,
+                    aggregatingResults : false,
+                    tool: checkStyle(pattern: 'archives/checkstyle/main.xml')
+            )
+          }
+        }
 
-    stage('Javadoc') {
-      when {
-        expression { env.BRANCH_NAME == 'production' }
-      }
+        stage('Javadoc') {
 
-      steps {
-        ansiblePlaybook(
-                playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/javadoc.yml",
-                colorized: true,
-                extraVars: [ base_dir: pwd() ]
-        )
-        sh 'mkdir ./archives/javadoc'
-        sh 'tar -zxvf archives/*/root/archives/javadoc.tar.gz  -C ./archives/javadoc'
+          steps {
+            ansiblePlaybook(
+                    playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/javadoc.yml",
+                    colorized: true,
+                    extraVars: [ base_dir: pwd() ]
+            )
+            sh 'mkdir ./archives/javadoc'
+            sh 'tar -zxvf archives/*/root/archives/javadoc.tar.gz  -C ./archives/javadoc'
 
-        publishHTML(target: [
-                allowMissing         : false,
-                alwaysLinkToLastBuild: false,
-                keepAll              : true,
-                reportDir            : 'archives/javadoc',
-                reportFiles          : 'index.html',
-                reportName           : "Javadoc"
-        ])
-      }
-    }
+            publishHTML(target: [
+                    allowMissing         : false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll              : true,
+                    reportDir            : 'archives/javadoc',
+                    reportFiles          : 'index.html',
+                    reportName           : "Javadoc"
+            ])
+          }
+        }
 
-    stage('Spotbugs') {
-      when {
-        expression { env.BRANCH_NAME == 'production' }
-      }
+        stage('Spotbugs') {
+          steps {
+            ansiblePlaybook(
+                    playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/spotbugs.yml",
+                    colorized: true,
+                    extraVars: [ base_dir: pwd() ]
+            )
 
-      steps {
-        ansiblePlaybook(
-                playbook: "/var/jenkins_home/workspace/dominion-playbooks_master/stages/spotbugs.yml",
-                colorized: true,
-                extraVars: [ base_dir: pwd() ]
-        )
+            sh 'mkdir ./archives/spotbugs'
+            sh 'tar -zxvf archives/*/root/archives/spotbugs.tar.gz -C ./archives/spotbugs'
 
-        sh 'mkdir ./archives/spotbugs'
-        sh 'tar -zxvf archives/*/root/archives/spotbugs.tar.gz -C ./archives/spotbugs'
-
-        recordIssues (
-                enabledForFailure: false,
-                aggregatingResults : false,
-                tool: spotBugs(pattern: 'archives/spotbugs/main.xml')
-        )
+            recordIssues (
+                    enabledForFailure: false,
+                    aggregatingResults : false,
+                    tool: spotBugs(pattern: 'archives/spotbugs/main.xml')
+            )
+          }
+        }
       }
     }
 
