@@ -11,6 +11,7 @@ import com.google.common.collect.Multimap;
 import org.jboss.logging.Logger;
 import org.joda.time.DateTime;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,8 @@ public class Game {
     @JsonProperty
     private Turn turn;
 
+    private LocalDateTime commandTime;
+
     public Game(Long id, Long seed) {
         this.id = id;
         this.seed = RandomSeed.create(seed);
@@ -59,6 +62,8 @@ public class Game {
         trash = new HashSet<>();
         logs = new LinkedHashSet<>();
     }
+
+
 
     public Player nextPlayer() {
 
@@ -231,7 +236,13 @@ public class Game {
     }
 
     public void log(String string) {
-        logs.add(DateTime.now().toString() + ": " + string);
+        LocalDateTime dateTime = commandTime;
+
+        if(dateTime == null) {
+            dateTime = LocalDateTime.now();
+        }
+
+        logs.add(dateTime.toString() + ": " + string);
     }
 
     void revealCard(Player player, Card card) {
@@ -262,6 +273,10 @@ public class Game {
 
     public void setTurnerator(Iterator<Player> turnerator) {
         this.turnerator = turnerator;
+    }
+
+    public void setCommandTime(LocalDateTime commandTime) {
+
     }
 
     @JsonProperty

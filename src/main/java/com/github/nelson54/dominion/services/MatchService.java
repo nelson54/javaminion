@@ -76,8 +76,9 @@ public class MatchService {
     }
 
     public Game applyCommand(Game game, Command command) {
+        game.setCommandTime(command.time);
         game = commandService.applyCommand(game, command);
-
+        game.setCommandTime(null);
         if (game.isGameOver()) {
             endGame(game);
         }

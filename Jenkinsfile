@@ -181,5 +181,15 @@ pipeline {
         sh 'rm -Rf tests/'
       }
     }
+
+    stage('Waiting for server') {
+      steps {
+        sh 'sleep 1'
+
+        waitUntil {
+          sh 'timeout 120 wget --retry-connrefused --tries=120 --waitretry=1 -q http://206.189.224.80/ -O /dev/null'
+        }
+      }
+    }
   }
 }
