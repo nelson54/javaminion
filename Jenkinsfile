@@ -187,7 +187,7 @@ pipeline {
         sh 'sleep 1'
 
         waitUntil {
-          sh 'timeout 120 wget --retry-on-http-error=429,502,503,504 --tries=120 --waitretry=1 -q http://206.189.224.80/ -O /dev/null'
+          sh 'timeout 300 bash -c \'while [[ "$(curl -s -o /dev/null -w \'\'%{http_code}\'\' 206.189.224.80)" != "200" ]]; do sleep 5; done\' || false'
         }
       }
     }
