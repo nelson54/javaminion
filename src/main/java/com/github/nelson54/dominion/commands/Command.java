@@ -22,14 +22,14 @@ public class Command {
 
     public Command(){}
 
-    public Command(Game game, Player account, CommandType commandType) {
+    private Command(Game game, Player account, CommandType commandType) {
         this.gameId = game.getId();
         this.accountId = account.getId();
         this.type = commandType;
         this.time = LocalDateTime.now();
     }
 
-    public Command(Game game, Player account, Card card, CommandType commandType) {
+    private Command(Game game, Player account, Card card, CommandType commandType) {
         this.gameId = game.getId();
         this.accountId = account.getId();
         this.cardId = card.getId();
@@ -37,7 +37,7 @@ public class Command {
         this.time = LocalDateTime.now();
     }
 
-    public Command(
+    private Command(
             Game game,
             Player account,
             ChoiceResponse choiceResponse,
@@ -75,5 +75,57 @@ public class Command {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public Long getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(Long gameId) {
+        this.gameId = gameId;
+    }
+
+    public Long getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(Long cardId) {
+        this.cardId = cardId;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
+
+    public ChoiceResponseMongo getChoiceResponse() {
+        return choiceResponse;
+    }
+
+    public void setChoiceResponse(ChoiceResponseMongo choiceResponse) {
+        this.choiceResponse = choiceResponse;
+    }
+
+    public CommandType getType() {
+        return type;
+    }
+
+    public void setType(CommandType type) {
+        this.type = type;
     }
 }
