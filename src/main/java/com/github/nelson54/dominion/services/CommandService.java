@@ -89,7 +89,7 @@ public class CommandService {
         if (command.getId() == null && msg == null) {
             save(command);
         } else if (command.getId() == null && msg != null) {
-            logger.info(msg);
+            logger.error(msg);
             game.log(msg);
         }
 
