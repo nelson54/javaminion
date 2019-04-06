@@ -48,6 +48,8 @@ public class CommandService {
 
     public Game applyCommand(Game game, Command command) {
         String msg = null;
+        game.setCommandTime(command.time);
+        logger.info("command time: " + command.time);
         Turn turn = game.getTurn();
         Player player = game.getPlayers().get(command.accountId);
         Card card = game.getAllCards().get(command.cardId);
@@ -79,9 +81,8 @@ public class CommandService {
             StringWriter outError = new StringWriter();
             e.printStackTrace(new PrintWriter(outError));
             logger.error(outError.toString());
-            game.log(msg);
-
-            return game;
+        } finally {
+            game.setCommandTime(null);
         }
 
 
@@ -91,7 +92,6 @@ public class CommandService {
             logger.info(msg);
             game.log(msg);
         }
-
         return game;
     }
 
