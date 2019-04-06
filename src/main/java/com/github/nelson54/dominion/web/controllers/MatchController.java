@@ -112,9 +112,9 @@ public class MatchController {
         return matchDto;
     }
 
-    @PatchMapping(value = "/matches")
-    void join(@RequestParam Long matchId) throws InstantiationException, IllegalAccessException {
-        Match match = matchService.getMatch(matchId)
+    @PatchMapping(value = "/matches/{gameId}")
+    void join(@PathVariable Long gameId) {
+        Match match = matchService.getMatch(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         Account account = getAccount()
