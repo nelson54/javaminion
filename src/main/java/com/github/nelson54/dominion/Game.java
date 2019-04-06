@@ -9,7 +9,6 @@ import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.google.common.collect.Multimap;
 import org.jboss.logging.Logger;
-import org.joda.time.DateTime;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -21,7 +20,7 @@ import static com.github.nelson54.dominion.Phase.*;
 public class Game {
     private static final Logger logger = Logger.getLogger(Game.class);
     @JsonProperty
-    private Set<String> logs;
+    private LinkedHashSet<String> logs;
     @JsonProperty @JsonSerialize(using = ToStringSerializer.class) @JsonDeserialize(as = Long.class)
     private Long id;
     @JsonIgnore

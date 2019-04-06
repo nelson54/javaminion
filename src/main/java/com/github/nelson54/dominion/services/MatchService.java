@@ -76,8 +76,8 @@ public class MatchService {
     }
 
     public Game applyCommand(Game game, Command command) {
+        logger.info("command time: " + command.time);
         game.setCommandTime(command.time);
-
         game = commandService.applyCommand(game, command);
         game.setCommandTime(null);
 
