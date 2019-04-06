@@ -71,6 +71,19 @@ public enum RecommendedCards {
             Witch.class,
             Woodcutter.class,
             Workshop.class
+    ),
+    POWER(
+            "Power",
+            Moat.class,
+            Chapel.class,
+            Feast.class,
+            Village.class,
+            Laboratory.class,
+            Militia.class,
+            Market.class,
+            Witch.class,
+            Mine.class,
+            Bureaucrat.class
     );
 
     String name;
