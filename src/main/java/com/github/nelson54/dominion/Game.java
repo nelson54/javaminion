@@ -237,11 +237,7 @@ public class Game {
     public void log(String string) {
         LocalDateTime dateTime = commandTime;
 
-        if(dateTime == null) {
-            dateTime = LocalDateTime.now();
-        }
-
-        logs.add(dateTime.toString() + ": " + string);
+        logs.add(dateTime + ": " + string);
     }
 
     void revealCard(Player player, Card card) {
