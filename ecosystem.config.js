@@ -18,7 +18,8 @@ module.exports = {
         exec_interpreter: 'none',
         exec_mode: 'fork',
         env: {
-            SPRING_PROFILES_ACTIVE: 'prod'
+            SPRING_PROFILES_ACTIVE: 'prod',
+            SYS_LOG: '/root/logs'
         }
     }]
 };
