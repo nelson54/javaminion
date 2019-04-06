@@ -271,7 +271,7 @@ public class Game {
     }
 
     public void setCommandTime(LocalDateTime commandTime) {
-
+        this.commandTime = commandTime;
     }
 
     @JsonProperty

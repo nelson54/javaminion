@@ -49,7 +49,6 @@ public class CommandService {
     public Game applyCommand(Game game, Command command) {
         String msg = null;
         game.setCommandTime(command.time);
-        logger.info("command time: " + command.time);
         Turn turn = game.getTurn();
         Player player = game.getPlayers().get(command.accountId);
         Card card = game.getAllCards().get(command.cardId);
