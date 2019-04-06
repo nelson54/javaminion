@@ -21,6 +21,21 @@ public enum GameCards {
                 CardTypeReference.of("Workshop", Workshop.class)
             )
     ),
+    POWER(
+            "Power",
+            GameCardSet.of(
+                CardTypeReference.of("Moat", Moat.class),
+                CardTypeReference.of("Chapel", Chapel.class),
+                CardTypeReference.of("Feast", Feast.class),
+                CardTypeReference.of("Village", Village.class),
+                CardTypeReference.of("Laboratory", Laboratory.class),
+                CardTypeReference.of("Militia", Militia.class),
+                CardTypeReference.of("Market", Market.class),
+                CardTypeReference.of("Witch", Witch.class),
+                CardTypeReference.of("Mine", Mine.class),
+                CardTypeReference.of("Bureaucrat", Bureaucrat.class)
+            )
+    ),
     VILLAGE_SQUARE(
             "Village Square",
             GameCardSet.of(
