@@ -92,6 +92,7 @@ public class CommandService {
             logger.info(msg);
             game.log(msg);
         }
+
         return game;
     }
 
