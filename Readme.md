@@ -25,7 +25,8 @@
 - [ ] Implement discard preferences for AI or reverse buy preferences   
 - [x] End turn if no additional actions in pool or cards in hand after playing ComplexActionCard's
 - [x] Update and save PM2 configuration every time a build is done.
-- [ ] Prevent from rebuilding database every time
+- [x] Prevent from rebuilding database every time
+- [x] Test leaving and coming back to games.
 
 #For port forwarding to jenkins server:
 ```bash
