@@ -18,10 +18,8 @@
 - [x] Militia doesn't work for AI's
 - [x] Remodel doesn't work for players
 - [ ] Animations
-- [ ] Moat
-    - [ ] Add onAttackEvent
-    - [ ] Add Attack Bypass to turn
-    - [ ] Add onCardEntersHand Event
+- [x] Moat
+    - [x] Add Attack Bypass to turn
 - [ ] Implement discard preferences for AI or reverse buy preferences   
 - [x] End turn if no additional actions in pool or cards in hand after playing ComplexActionCard's
 - [x] Update and save PM2 configuration every time a build is done.

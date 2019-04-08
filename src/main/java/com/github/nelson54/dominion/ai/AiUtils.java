@@ -29,12 +29,6 @@ public class AiUtils {
                 .sum();
     }
 
-    static int numberOfCardsByName(Set<Card> cards, String name) {
-        return (int) cards.stream()
-                .filter(c -> c.getName().equals(name))
-                .count();
-    }
-
     public static AiPlayer randomPlayer() {
         Account account = new Account(
                 Long.valueOf("10"),

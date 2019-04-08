@@ -3,6 +3,7 @@ package com.github.nelson54.dominion.cards.types;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.CardType;
+import com.github.nelson54.dominion.cards.CardUtils;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,13 +16,18 @@ public abstract class ActionAttackCard extends ActionCard {
     }
 
     public void apply(Player player, Game game) {
-        Set<Player> others = getOtherPlayers(player, game).stream()
-                .filter(p -> p.getHand().stream().anyMatch(c -> !c.getName().equals("Moat")))
-                .collect(Collectors.toSet());
-
-
         bonus(player, game);
-        others.stream().forEach(other -> attack(other, game));
+        getOtherPlayers(player, game).stream()
+                .filter(otherPlayer -> {
+                    boolean success = CardUtils.numberOfCardsByName(player.getHand(), "Moat") > 0;
+
+                    if (!success) {
+                        game.log(otherPlayer.getName() + " reveals a Moat and skips the attack");
+                    }
+
+                    return success;
+                })
+                .forEach(other -> attack(other, game));
     }
 
     protected abstract void attack(Player player, Game game);

@@ -7,7 +7,7 @@ import com.github.nelson54.dominion.cards.types.Card;
 import java.util.Optional;
 
 import static com.github.nelson54.dominion.ai.AiUtils.gainsToEndGame;
-import static com.github.nelson54.dominion.ai.AiUtils.numberOfCardsByName;
+import static com.github.nelson54.dominion.cards.CardUtils.numberOfCardsByName;
 
 public class BigSmithyAi extends DoNothingAi {
     @Override
