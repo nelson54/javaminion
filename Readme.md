@@ -27,56 +27,31 @@
 - [x] Test leaving and coming back to games.
 
 Cards Working
-- Cellar
-  - [x] Working
-- Chapel
-  - [x] Working
-- Moat
-  - [x] Working
-- Chancellor
-  - [ ] Untested
-- Woodcutter
-  - [ ] Untested
-- Village
-  - [x] Working
-- Workshop
-  - [ ] Untested
-- Bureaucrat
-  - [ ] Untested
-- Gardens
-  - [x] Working
-- Militia
-  - [x] Working
-- Moneylender
-  - [ ] Untested
-- Feast
-  - Working
-- Spy
-  - [ ] Untested
-- Thief
-  - [x] Working
-- Remodel
-  - [x] Working
-- Smithy
-  - [x] Working
-- Throne Room
-  - [ ] Untested
-- Council Room
-  - [ ] Untested 
-- Festival
-  - [x] Working
-- Laboratory
-  - [x] Working
-- Library
-  - [ ] Untested
-- Market
-  - [x] Working
-- Mine
-  - [x] Working
-- Witch
-  - [x] Working
-- Adventurer
-  - [ ] Untested
+- [x] Cellar **Working**
+- [x] Chapel **Working**
+- [x] Moat **Working**
+- [ ] Chancellor **Untested**
+- [x] Woodcutter **Working**
+- [x] Village **Working**
+- [x] Workshop **Working**
+- [ ] Bureaucrat **Untested**
+- [x] Gardens **Working**
+- [x] Militia **Working**
+- [ ] Moneylender **Untested**
+- [ ] Feast **Working**
+- [ ] Spy **Untested**
+- [x] Thief **Working**
+- [x] Remodel **Working**
+- [x] Smithy **Working**
+- [ ] Throne Room **Untested**
+- [ ] Council Room **Untested** 
+- [x] Festival **Working**
+- [x] Laboratory **Working**
+- [ ] Library **Untested**
+- [x] Market **Working**
+- [x] Mine **Working**
+- [x] Witch **Working**
+- [ ] Adventurer **Untested**
 
 #For port forwarding to jenkins server:
 ```bash

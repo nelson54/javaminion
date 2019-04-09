@@ -21,7 +21,7 @@ public class ThroneRoomEffect extends Effect {
 
             return true;
         } else {
-            Card option = game.getAllCards().get(response.getCard().getId().toString());
+            Card option = game.getAllCards().get(response.getCard().getId());
             ActionCard actionCard = null;
 
             if (option instanceof ActionCard) {
