@@ -36,7 +36,7 @@ public class Workshop extends ComplexActionCard {
         choice.setExpectedAnswerType(OptionType.CARD);
         choice.setNumber((byte) 1);
         choice.setRange(Range.EXACTLY);
-        choice.setCardOptions(getOptions(target, game));
+        choice.setOptions(getOptions(target, game));
 
         return choice;
     }
@@ -52,10 +52,10 @@ public class Workshop extends ComplexActionCard {
 
     @Override
     public void play(Player player, Game game) {
-        game.trashCard(this);
+
     }
 
-    Set<Card> getOptions(Player player, Game game) {
+    Set<Long> getOptions(Player player, Game game) {
         Multimap<String, Card> market = game.getKingdom().getCardMarket();
 
         return market.keySet().stream()
@@ -63,6 +63,7 @@ public class Workshop extends ComplexActionCard {
                 .map(cards -> cards.stream().findAny())
                 .map(Optional::get)
                 .filter(card -> card.getCost().getMoney() <= 4)
+                .map((card)-> card.getId())
                 .collect(Collectors.toSet());
     }
 }
