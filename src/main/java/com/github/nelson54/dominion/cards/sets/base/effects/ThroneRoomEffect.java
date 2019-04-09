@@ -41,6 +41,8 @@ public class ThroneRoomEffect extends Effect {
 
                 target.getChoices().addAll(choiceSet);
 
+                game.log(target.getName() + " play's card " + actionCard.getName() + " twice using Throne Room.");
+
                 turn.getPlay().add(actionCard);
                 turn.getPlay().add(actionCard);
 

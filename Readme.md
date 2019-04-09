@@ -30,20 +30,20 @@ Cards Working
 - [x] Cellar **Working**
 - [x] Chapel **Working**
 - [x] Moat **Working**
-- [ ] Chancellor **Untested**
+- [x] Chancellor **Working**
 - [x] Woodcutter **Working**
 - [x] Village **Working**
 - [x] Workshop **Working**
 - [ ] Bureaucrat **Untested**
 - [x] Gardens **Working**
 - [x] Militia **Working**
-- [ ] Moneylender **Untested**
-- [ ] Feast **Working**
+- [x] Moneylender **Working**
+- [x] Feast **Working**
 - [ ] Spy **Untested**
 - [x] Thief **Working**
 - [x] Remodel **Working**
 - [x] Smithy **Working**
-- [ ] Throne Room **Untested**
+- [x] Throne Room **Untested**
 - [ ] Council Room **Untested** 
 - [x] Festival **Working**
 - [x] Laboratory **Working**
