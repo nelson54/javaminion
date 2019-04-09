@@ -28,17 +28,4 @@ public class AiUtils {
                 .mapToInt(TreasureCard::getMoneyValue)
                 .sum();
     }
-
-    public static AiPlayer randomPlayer() {
-        Account account = new Account(
-                Long.valueOf("10"),
-                null,
-                "ai@example.com",
-                AiName.random().toString(),
-                true);
-
-        return new AiPlayer(account);
-    }
-
-
 }

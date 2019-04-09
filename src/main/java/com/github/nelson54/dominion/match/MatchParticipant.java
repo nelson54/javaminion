@@ -18,12 +18,6 @@ public class MatchParticipant {
         return ai;
     }
 
-    public static MatchParticipant createAi() {
-        MatchParticipant ai = new MatchParticipant(AiUtils.randomPlayer().getAccount());
-        ai.ai = true;
-        return ai;
-    }
-
     public Account getAccount() {
         return account;
     }

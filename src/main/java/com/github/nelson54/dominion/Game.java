@@ -178,12 +178,11 @@ public class Game {
     }
 
     public Optional<Player> getWinningPlayer() {
-        if (this.isGameOver()) {
+
             return players.values()
                     .stream()
-                    .max(Comparator.comparing(player -> ((Long) player.getVictoryPoints())));
-        }
-        return Optional.empty();
+                    .max(Comparator.comparing(player -> (Long) player.getVictoryPoints()));
+
     }
 
     public Kingdom getKingdom() {

@@ -51,7 +51,6 @@ public class MatchService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public Optional<Game> getGame(Long matchId) {
 
         return matchRepository
@@ -95,12 +94,6 @@ public class MatchService {
         MatchParticipant matchParticipant = new MatchParticipant(account);
         match.addParticipant(matchParticipant);
         matchRepository.save(MatchEntity.ofMatch(match));
-    }
-
-    public void addAiPlayerAccount(Match match) {
-        MatchParticipant matchParticipant = MatchParticipant.createAi();
-        match.addParticipant(matchParticipant);
-
     }
 
     public Optional<Match> endGame(Game game) {
