@@ -26,6 +26,58 @@
 - [x] Prevent from rebuilding database every time
 - [x] Test leaving and coming back to games.
 
+Cards Working
+- Cellar
+  - [x] Working
+- Chapel
+  - [x] Working
+- Moat
+  - [x] Working
+- Chancellor
+  - [ ] Untested
+- Woodcutter
+  - [ ] Untested
+- Village
+  - [x] Working
+- Workshop
+  - [ ] Untested
+- Bureaucrat
+  - [ ] Untested
+- Gardens
+  - [x] Working
+- Militia
+  - [x] Working
+- Moneylender
+  - [ ] Untested
+- Feast
+  - Working
+- Spy
+  - [ ] Untested
+- Thief
+  - [x] Working
+- Remodel
+  - [x] Working
+- Smithy
+  - [x] Working
+- Throne Room
+  - [ ] Untested
+- Council Room
+  - [ ] Untested 
+- Festival
+  - [x] Working
+- Laboratory
+  - [x] Working
+- Library
+  - [ ] Untested
+- Market
+  - [x] Working
+- Mine
+  - [x] Working
+- Witch
+  - [x] Working
+- Adventurer
+  - [ ] Untested
+
 #For port forwarding to jenkins server:
 ```bash
 ssh -L 8080:142.93.14.62:8080 -L 8081:142.93.14.62:8081 -L 8082:142.93.14.62:8082 root@142.93.14.62
