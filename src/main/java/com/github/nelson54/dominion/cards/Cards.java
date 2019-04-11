@@ -10,6 +10,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,10 +36,8 @@ public class Cards {
         return cardsInHand;
     }
 
-    public static Set<Long> getIds(Collection<Card> cards) {
-        return cards.stream()
-                .map(Card::getId)
-                .collect(Collectors.toSet());
+    public static LinkedHashSet<Long> getIds(Collection<Card> cards) {
+        return new LinkedHashSet<>(cards.stream().map(Card::getId).collect(Collectors.toList()));
     }
 
     public static Card ofId(Game game, Long id) {

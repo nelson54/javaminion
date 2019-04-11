@@ -8,19 +8,20 @@ import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.google.common.collect.Multimap;
 
+import java.util.Optional;
+
 public class BureaucratEffect extends Effect {
     @Override
     boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
-        Card card = response.getCard();
-        target.putOnTopOfDeck(card);
+        response.getChoices().stream()
+                .findAny()
+                .ifPresent((id) -> target.putOnTopOfDeck(target.getAllCards().get(id)));
+
         return true;
     }
 
     @Override
     void onNoValidTarget(Choice choice, Player target, Turn turn, Game game) {
-        Multimap<Long, Card> revealed = turn.getRevealed();
-        revealed.putAll(target.getId(), target.getHand());
-        target.getHand();
+        game.revealCardsFromHand(target, target.getHand());
     }
-
 }

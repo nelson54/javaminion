@@ -16,13 +16,13 @@ public class Player {
     private Account account;
 
     @JsonProperty
-    private Set<Card> hand;
+    private LinkedHashSet<Card> hand;
 
     @JsonProperty
-    private Set<Card> deck;
+    private LinkedHashSet<Card> deck;
 
     @JsonProperty
-    private Set<Card> discard;
+    private LinkedHashSet<Card> discard;
 
     @JsonIgnore
     private Game game;
@@ -35,9 +35,9 @@ public class Player {
 
     public Player(Account account) {
         this.account = account;
-        hand = new HashSet<>();
+        hand = new LinkedHashSet<>();
         deck = new LinkedHashSet<>();
-        discard = new HashSet<>();
+        discard = new LinkedHashSet<>();
         choices = new LinkedList<>();
     }
 
@@ -179,6 +179,7 @@ public class Player {
         game.revealCard(this, card);
     }
 
+    @JsonIgnore
     public Map<Long, Card> getAllCards() {
         Map<Long, Card> allCards = new HashMap<>();
 
@@ -209,23 +210,23 @@ public class Player {
         return hand;
     }
 
-    public void setHand(Set<Card> hand) {
+    public void setHand(LinkedHashSet<Card> hand) {
         this.hand = hand;
     }
 
-    public Set<Card> getDeck() {
+    public LinkedHashSet<Card> getDeck() {
         return deck;
     }
 
-    public void setDeck(Set<Card> deck) {
+    public void setDeck(LinkedHashSet<Card> deck) {
         this.deck = deck;
     }
 
-    public Set<Card> getDiscard() {
+    public LinkedHashSet<Card> getDiscard() {
         return discard;
     }
 
-    public void setDiscard(Set<Card> discard) {
+    public void setDiscard(LinkedHashSet<Card> discard) {
         this.discard = discard;
     }
 

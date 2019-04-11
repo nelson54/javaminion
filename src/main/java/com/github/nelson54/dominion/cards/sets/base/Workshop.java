@@ -12,6 +12,7 @@ import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
 import com.github.nelson54.dominion.cards.sets.base.effects.FeastEffect;
 import com.google.common.collect.Multimap;
 
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -56,7 +57,7 @@ public class Workshop extends ComplexActionCard {
 
     }
 
-    Set<Long> getOptions(Player player, Game game) {
+    LinkedHashSet<Long> getOptions(Player player, Game game) {
         Multimap<String, Card> market = game.getKingdom().getCardMarket();
 
         return market.keySet().stream()
@@ -65,6 +66,6 @@ public class Workshop extends ComplexActionCard {
                 .map(Optional::get)
                 .filter(card -> card.getCost().getMoney() <= 4)
                 .map((card)-> card.getId())
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 }

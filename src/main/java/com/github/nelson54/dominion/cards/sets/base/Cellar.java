@@ -14,6 +14,7 @@ import com.github.nelson54.dominion.cards.sets.base.effects.CellarEffect;
 import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,11 +33,11 @@ public class Cellar extends ComplexActionCard {
     @Override
     public Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();
-        Set<Long> options;
+        LinkedHashSet<Long> options;
         choice.setIsDialog(false);
         choice.setMessage("Choose any number of cards to discard.");
         if (parent == null) {
-            options = new HashSet<>(Cards.getIds(target.getHand()));
+            options = new LinkedHashSet<>(Cards.getIds(target.getHand()));
 
             choice.getOptions().addAll(
                     options
@@ -54,7 +55,7 @@ public class Cellar extends ComplexActionCard {
         choice.setIsDialog(false);
         choice.setRequired(false);
         choice.setRange(Range.ANY);
-        choice.setOptions(options.stream().collect(Collectors.toSet()));
+        choice.setOptions(options);
 
         return choice;
     }

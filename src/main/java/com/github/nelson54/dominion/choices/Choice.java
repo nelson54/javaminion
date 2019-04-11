@@ -16,6 +16,7 @@ import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
 
 import java.util.Deque;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -37,7 +38,7 @@ public class Choice {
     private String message;
 
     @JsonIgnore
-    private Set<Long> options;
+    private LinkedHashSet<Long> options;
 
     private boolean isComplete;
     private boolean isRequired;
@@ -72,7 +73,7 @@ public class Choice {
         this.target = target;
         this.source = source;
         this.owner = source.getOwner();
-        this.options = new HashSet<>();
+        this.options = new LinkedHashSet<>();
         //TODO isDialog should not be true
         this.setIsDialog(true);
         this.choices = new HashSet<>();
@@ -98,7 +99,7 @@ public class Choice {
         this.target = target;
         this.source = source;
         this.owner = source.getOwner();
-        this.options = new HashSet<>();
+        this.options = new LinkedHashSet<>();
         //TODO isDialog should not be true
         this.setIsDialog(true);
         this.choices = new HashSet<>();
@@ -307,11 +308,11 @@ public class Choice {
         this.state = state;
     }
 
-    public Set<Long> getOptions() {
+    public LinkedHashSet<Long> getOptions() {
         return options;
     }
 
-    public void setOptions(Set<Long> options) {
+    public void setOptions(LinkedHashSet<Long> options) {
         this.options = options;
     }
 

@@ -115,11 +115,15 @@ public class Game {
         Optional<Card> purchasedCard;
 
         if (cards != null) {
-            purchasedCard = cards.stream().filter(card -> card.getOwner() == null).findFirst();
+            purchasedCard = cards.stream().findAny();
             purchasedCard.ifPresent(cards::remove);
-            purchasedCard.ifPresent(card -> card.setOwner(player));
-            purchasedCard.ifPresent(card -> player.getDiscard().add(card));
-            purchasedCard.ifPresent(card -> card.setOwner(player));
+            purchasedCard.ifPresent(card -> {
+                cards.remove(card);
+                card.setOwner(player);
+                player.getDiscard().add(card);
+                card.setOwner(player);
+            });
+
             return purchasedCard.get();
         } else {
             return null;

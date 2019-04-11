@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.cards.sets.base;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.cards.CardType;
 import com.github.nelson54.dominion.cards.Cards;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.types.ComplexActionAttackCard;
@@ -37,7 +38,7 @@ public class Bureaucrat extends ComplexActionAttackCard {
         choice.setMessage("Choose a victory card to put on top of your deck.");
 
         Set<Card> victoryCardsInHand = target.getHand().stream()
-                .filter(card -> card instanceof VictoryCard)
+                .filter(card -> card.getCardTypes().contains(CardType.VICTORY))
                 .collect(Collectors.toSet());
 
         if (victoryCardsInHand.size() > 0) {
