@@ -10,18 +10,18 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: testing
     volumes:
       - ~/mongo:/data/db
-#  app:
-#    build:
-#      context: ./
-#    volumes:
-#      - /root/logs:/logs
-#      - /root/db:/db
-#      - /root/javaminion:/app
-#      - /root/archives:/archives
-#      - /root/gradle_home:/root/.gradle
-#    ports:
-#      - "8080:8080"
-#      - "5005:5005"
-#      - "35729:35729"
-#    depends_on:
-#      - mongo
+  app:
+    build:
+      context: ./
+    volumes:
+      - /root/logs:/logs
+      - /root/db:/db
+      - /root/javaminion:/app
+      - /root/archives:/archives
+      - /root/gradle_home:/root/.gradle
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+      - "35729:35729"
+    depends_on:
+      - mongo
