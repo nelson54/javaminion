@@ -60,10 +60,7 @@ public class GameController {
     }
 
     @PostMapping("/{gameId}/discard")
-    Game discardHand(
-            @PathVariable("gameId")
-                    Long gameId
-    ) {
+    Game discardHand(@PathVariable("gameId") Long gameId) {
         Game game = getGame(gameId);
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
@@ -74,10 +71,8 @@ public class GameController {
 
     @PostMapping(value = "/{gameId}/purchase")
     Game purchase(
-            @PathVariable("gameId")
-            Long gameId,
-            @RequestBody
-            Card card
+            @PathVariable("gameId") Long gameId,
+            @RequestBody Card card
     ) {
         Game game = getGame(gameId);
         Account account = getAccount();
@@ -91,10 +86,8 @@ public class GameController {
 
     @PostMapping(value = "/{gameId}/play")
     Game play(
-            @PathVariable("gameId")
-                    Long gameId,
-            @RequestBody
-                    Card card
+            @PathVariable("gameId") Long gameId,
+            @RequestBody Card card
     ) {
         Game game = getGame(gameId);
         Account account = getAccount();
@@ -133,8 +126,7 @@ public class GameController {
 
     @PostMapping(value = "/{gameId}/next-phase")
     Game endPhase(
-            @PathVariable("gameId")
-                    Long gameId
+            @PathVariable("gameId") Long gameId
     ) {
         Game game = matchService.getGame(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
