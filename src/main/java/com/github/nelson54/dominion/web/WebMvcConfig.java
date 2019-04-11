@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.http.CacheControl;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -12,12 +14,16 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @EnableWebMvc
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Autowired
+    Environment environment;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -29,12 +35,22 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/public/**")
-                .addResourceLocations("classpath:public/");
 
-        registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:public/")
-                .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
+        if((Arrays.asList(environment.getActiveProfiles()).contains("prod"))) {
+            registry.addResourceHandler("/public/**")
+                    .addResourceLocations("file:/root/builds/frontend/current/dist/");
+
+            registry.addResourceHandler("/**")
+                    .addResourceLocations("file:/root/builds/frontend/current/dist/")
+                    .setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
+        } else {
+            registry.addResourceHandler("/public/**")
+                    .addResourceLocations("file:/Users/dcnelson/projects/dominion-frontend/dist/");
+
+            registry.addResourceHandler("/**")
+                    .addResourceLocations("file:/Users/dcnelson/projects/dominion-frontend/dist/")
+                    .setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
+        }
 
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
