@@ -4,7 +4,8 @@
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
 ## Todo
-- [ ] Add i18n (https://g00glen00b.be/spring-internationalization-i18n/)
+- [ ] Show number of cards in opponents hand
+- [ ] Add i18n/messages (https://g00glen00b.be/spring-internationalization-i18n/)
 - [x] Calculate winning score.
 - [x] JWT Authentication 
 - [ ] Matchmaking
@@ -31,17 +32,17 @@ Cards Working
 - [x] Woodcutter **Working**
 - [x] Village **Working**
 - [x] Workshop **Working**
-- [ ] Bureaucrat **Untested**
+- [x] Bureaucrat **Working**
 - [x] Gardens **Working**
 - [x] Militia **Working**
 - [x] Moneylender **Working**
 - [x] Feast **Working**
-- [ ] Spy **Untested**
+- [x] Spy **Working**
 - [x] Thief **Working**
 - [x] Remodel **Working**
 - [x] Smithy **Working**
-- [x] Throne Room **Untested**
-- [ ] Council Room **Untested** 
+- [x] Throne Room **Working**
+- [x] Council Room **Working** 
 - [x] Festival **Working**
 - [x] Laboratory **Working**
 - [ ] Library **Untested**
