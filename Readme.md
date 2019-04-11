@@ -4,6 +4,7 @@
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
 ## Todo
+- [ ] Add i18n (https://g00glen00b.be/spring-internationalization-i18n/)
 - [x] Calculate winning score.
 - [x] JWT Authentication 
 - [ ] Matchmaking

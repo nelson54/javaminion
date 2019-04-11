@@ -22,7 +22,7 @@ public class ThiefEffect extends Effect {
             trashedCard.setOwner(target);
             game.getTrash().remove(trashedCard);
             target.getDiscard().add(trashedCard);
-
+            game.log(target.getName() + " gained the card " + trashedCard.getName() + " from Thief.");
             return true;
         } else if (!response.isYes()) {
             return true;

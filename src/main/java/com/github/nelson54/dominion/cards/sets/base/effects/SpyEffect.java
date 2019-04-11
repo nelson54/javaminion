@@ -18,8 +18,10 @@ public class SpyEffect extends Effect {
 
         if (response.isYes()) {
             owner.discard(displayCard);
+            game.log(owner.getName() + " discarded " + displayCard.getName() + " from Spy.");
         } else {
             owner.putOnTopOfDeck(displayCard);
+            game.log(owner.getName() + " kept " + displayCard.getName() + " on top of deck from Spy.");
         }
 
         return true;
