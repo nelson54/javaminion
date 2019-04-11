@@ -32,7 +32,6 @@ public class Workshop extends ComplexActionCard {
     @Override
     public Choice getChoiceForTarget(Choice choice, Player target, Game game) {
         Choice parent = choice.getParentChoice();
-        choice.setMessage("Choose a card to gain.");
         choice.setExpectedAnswerType(OptionType.CARD);
         choice.setNumber((byte) 1);
         choice.setRange(Range.EXACTLY);
