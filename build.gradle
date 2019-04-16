@@ -22,7 +22,6 @@ apply plugin: 'checkstyle'
 apply plugin: 'com.github.spotbugs'
 apply plugin: 'jacoco'
 
-
 group = 'dominionback'
 version = '1.0-SNAPSHOT'
 mainClassName = 'com.github.nelson54.dominion.web.Application'
@@ -89,6 +88,8 @@ dependencies {
     runtime group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
     runtime group: 'com.h2database', name: 'h2', version: '1.4.197'
 
+    compile "org.flywaydb:flyway-core:5.2.4"
+    
     testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.2')
 
     testCompile(

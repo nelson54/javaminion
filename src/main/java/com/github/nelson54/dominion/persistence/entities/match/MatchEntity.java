@@ -6,8 +6,10 @@ import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.match.MatchState;
 import com.github.nelson54.dominion.persistence.entities.AccountEntity;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,6 +49,9 @@ public class MatchEntity {
     @JoinColumn
     private AccountEntity winner;
 
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
     public MatchEntity() {}
 
     public Long getId() {
@@ -64,6 +69,8 @@ public class MatchEntity {
         Match match = new Match(id, seed, state, playerCount, cardSet);
 
         players.forEach((playerAccount) -> accounts.put(playerAccount.getId(), playerAccount));
+
+        match.setCreatedAt(createdAt);
 
         Arrays.asList(turnOrder.split(",")).stream()
                 .map(Long::valueOf)

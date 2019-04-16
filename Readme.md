@@ -23,7 +23,7 @@
 - [x] Update and save PM2 configuration every time a build is done.
 - [x] Prevent from rebuilding database every time
 - [x] Test leaving and coming back to games.
-
+- [x] Add domain name
 Cards Working
 - [x] Cellar **Working**
 - [x] Chapel **Working**

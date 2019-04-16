@@ -3,6 +3,7 @@ package com.github.nelson54.dominion.match;
 import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.cards.GameCardSet;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ public class Match {
     private MatchParticipant winner;
     private MatchState matchState;
     private GameCardSet cards;
+    private LocalDateTime createdAt;
 
     public Match(Integer playerCount, GameCardSet cards) {
         this.seed = new Random().nextLong();
@@ -107,5 +109,13 @@ public class Match {
 
     public void setWinner(MatchParticipant winner) {
         this.winner = winner;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

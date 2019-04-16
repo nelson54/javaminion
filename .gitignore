@@ -8,7 +8,7 @@ target
 target
 build
 out
-db
+./db
 logs/*
 src/main/js/dist/*
 *.retry
