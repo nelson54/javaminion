@@ -96,25 +96,26 @@ public class MatchService {
         matchRepository.save(MatchEntity.ofMatch(match));
     }
 
-    public Optional<Match> endGame(Game game) {
+    private void endGame(Game game) {
         if (game.isGameOver()) {
 
             Optional<MatchEntity> optionalMatchEntity = matchRepository.findById(game.getId());
 
             Long winningPlayerId = game.getWinningPlayer().get().getId();
             Collection<Player> players = game.getPlayers().values();
-            return optionalMatchEntity.map((matchEntity) -> {
+            optionalMatchEntity.map((matchEntity) -> {
                 AccountEntity winner = matchEntity.findPlayerById(winningPlayerId);
                 matchEntity.setState(MatchState.FINISHED);
                 matchEntity.setWinner(winner);
                 Set<PlayerScoreEntity> scores = new HashSet<>();
 
-                players.forEach((player) -> {
+                for (Player player : players) {
                     PlayerScoreEntity playerScoreEntity = new PlayerScoreEntity();
+                    playerScoreEntity.setAccount(matchEntity.findPlayerById(player.getId()));
                     playerScoreEntity.setScore(player.getVictoryPoints());
 
                     scores.add(playerScoreEntity);
-                });
+                }
 
                 matchEntity.setScores(scores);
                 matchEntity = matchRepository.save(matchEntity);
@@ -122,12 +123,6 @@ public class MatchService {
                 return matchEntity.toMatch();
             });
         }
-
-        return Optional.empty();
-    }
-
-    public void prepareToPlay() {
-
     }
 
     public void completeGame(Match match) {

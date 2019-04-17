@@ -70,12 +70,26 @@ public class MatchEntity {
 
         players.forEach((playerAccount) -> accounts.put(playerAccount.getId(), playerAccount));
 
+        Map<Long, Long> scores = new HashMap<>();
+
+        this.scores.forEach((score) -> {
+            scores.put(score.getAccount().getId(), score.getScore());
+        });
+
+        match.setScores(scores);
+
         match.setCreatedAt(createdAt);
 
-        Arrays.asList(turnOrder.split(",")).stream()
+        Arrays.stream(turnOrder.split(","))
                 .map(Long::valueOf)
                 .map(accounts::get)
-                .map((playerAccount) -> new MatchParticipant(playerAccount.asAccount()))
+                .map((playerAccount) -> {
+                    MatchParticipant mp = new MatchParticipant(playerAccount.asAccount());
+                    if(winner != null && winner.getId().equals(playerAccount.getId())) {
+                        match.setWinner(mp);
+                    }
+                    return mp;
+                })
                 .forEachOrdered(match::addParticipant);
 
         return match;

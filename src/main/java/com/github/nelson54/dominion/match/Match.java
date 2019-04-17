@@ -12,6 +12,7 @@ public class Match {
     private Long seed;
     private Integer playerCount;
     private List <MatchParticipant> participants;
+    private Map<Long, Long> scores;
     private MatchParticipant winner;
     private MatchState matchState;
     private GameCardSet cards;
@@ -117,5 +118,13 @@ public class Match {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public void setScores(Map<Long, Long> scores) {
+        this.scores = scores;
+    }
+
+    public Map<Long, Long> getScores() {
+        return this.scores;
     }
 }
