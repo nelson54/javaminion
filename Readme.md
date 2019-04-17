@@ -5,6 +5,7 @@
 
 ## Todo
 - [ ] Join game
+- [ ] Shuffle turn order
 - [ ] Show number of cards in opponents hand
 
 ## Backlog
