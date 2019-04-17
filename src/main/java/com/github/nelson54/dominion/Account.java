@@ -2,6 +2,8 @@ package com.github.nelson54.dominion;
 
 import org.springframework.security.core.userdetails.User;
 
+import java.util.Objects;
+
 public class Account {
 
     private Long id;
@@ -48,5 +50,19 @@ public class Account {
 
     public String getEmail() {
         return this.email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return id.equals(account.id) &&
+                email.equals(account.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email);
     }
 }

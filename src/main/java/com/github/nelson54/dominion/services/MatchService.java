@@ -86,13 +86,24 @@ public class MatchService {
     }
 
     public Match createMatch(Match match) {
+        if (match.getMatchState().equals(MatchState.IN_PROGRESS)) {
+            match.shuffleTurnOrder();
+        }
+
         MatchEntity entity = matchRepository.save(MatchEntity.ofMatch(match));
+
         return entity.toMatch();
     }
 
     public void addPlayerAccount(Match match, Account account) {
         MatchParticipant matchParticipant = new MatchParticipant(account);
         match.addParticipant(matchParticipant);
+        match.shuffleTurnOrder();
+
+        if (match.isReady()) {
+            match.setMatchState(MatchState.IN_PROGRESS);
+        }
+
         matchRepository.save(MatchEntity.ofMatch(match));
     }
 

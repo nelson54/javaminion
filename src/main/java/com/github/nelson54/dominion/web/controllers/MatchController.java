@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @RestController()
@@ -99,7 +100,7 @@ public class MatchController {
 
         match.addAiParticipants(participants);
 
-        if (match.isReady()) {
+        if(match.isReady()) {
             match.setMatchState(MatchState.IN_PROGRESS);
         } else {
             match.setMatchState(MatchState.WAITING_FOR_PLAYERS);
@@ -117,8 +118,20 @@ public class MatchController {
         Match match = matchService.getMatch(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        if(match.getMatchState().equals(MatchState.IN_PROGRESS)) {
+            throw new ResponseStatusException(HttpStatus.NOT_MODIFIED);
+        }
+
         Account account = getAccount()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
+        boolean hasAccount = match.getParticipants().stream()
+                .map(MatchParticipant::getAccount)
+                .collect(Collectors.toList()).contains(account);
+
+        if(hasAccount) {
+            throw new ResponseStatusException(HttpStatus.NOT_MODIFIED);
+        }
 
         matchService.addPlayerAccount(match, account);
     }

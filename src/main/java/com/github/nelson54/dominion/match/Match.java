@@ -11,7 +11,7 @@ public class Match {
     private Long id;
     private Long seed;
     private Integer playerCount;
-    private List <MatchParticipant> participants;
+    private LinkedHashSet <MatchParticipant> participants;
     private Map<Long, Long> scores;
     private MatchParticipant winner;
     private MatchState matchState;
@@ -20,14 +20,14 @@ public class Match {
 
     public Match(Integer playerCount, GameCardSet cards) {
         this.seed = new Random().nextLong();
-        this.participants = new ArrayList<>();
+        this.participants = new LinkedHashSet<>();
         this.playerCount = playerCount;
         this.cards = cards;
     }
 
     public Match(Integer playerCount, Long seed, GameCardSet cards) {
         this.seed = new Random().nextLong();
-        this.participants = new ArrayList<>();
+        this.participants = new LinkedHashSet<>();
         this.playerCount = playerCount;
         this.cards = cards;
     }
@@ -41,7 +41,7 @@ public class Match {
         this.id = id;
         this.seed = seed;
         this.matchState = matchState;
-        this.participants = new ArrayList<>();
+        this.participants = new LinkedHashSet<>();
         this.playerCount = playerCount;
         this.cards = cards;
     }
@@ -57,7 +57,7 @@ public class Match {
 
 
     public List<MatchParticipant> getParticipants() {
-        return this.participants;
+        return new LinkedList<>(this.participants);
     }
 
     public List<Long> getTurnOrder() {
@@ -66,10 +66,10 @@ public class Match {
                 .collect(Collectors.toList());
     }
 
-    public List<Long> shuffleTurnOrder() {
-        Collections.shuffle(this.participants, new Random(this.seed));
-
-        return getTurnOrder();
+    public void shuffleTurnOrder() {
+        List<MatchParticipant> matchParticipants = new ArrayList<>(this.participants);
+        Collections.shuffle(matchParticipants, new Random(this.seed));
+        participants = new LinkedHashSet<>(matchParticipants);
     }
 
     public GameCardSet getCards() {

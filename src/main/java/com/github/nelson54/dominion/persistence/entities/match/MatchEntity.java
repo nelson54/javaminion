@@ -24,7 +24,7 @@ public class MatchEntity {
     @Column
     private Long seed;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private List<AccountEntity> players;
 
     @Column
@@ -72,9 +72,11 @@ public class MatchEntity {
 
         Map<Long, Long> scores = new HashMap<>();
 
-        this.scores.forEach((score) -> {
-            scores.put(score.getAccount().getId(), score.getScore());
-        });
+        if(this.scores != null) {
+            this.scores.forEach((score) -> {
+                scores.put(score.getAccount().getId(), score.getScore());
+            });
+        }
 
         match.setScores(scores);
 

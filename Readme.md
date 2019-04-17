@@ -4,8 +4,6 @@
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
 ## Todo
-- [ ] Join game
-- [ ] Shuffle turn order
 - [ ] Show number of cards in opponents hand
 - [ ] Add card lookup [https://github.com/cypressf/dominion/blob/master/cards.json]
 
@@ -15,6 +13,8 @@
 - [ ] Implement discard preferences for AI or reverse buy preferences
 
 ##Done
+- [x] Join game
+- [x] Shuffle turn order
 - [x] Create game page
 - [x] Display open games
 - [x] Join AI game
@@ -71,3 +71,5 @@ docker-compose build
 docker-compose up
 
 ```
+
+# Refactor classes
