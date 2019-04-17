@@ -1,2 +1,0 @@
-DELETE FROM match
-WHERE match.STATE = 'FINISHED';
