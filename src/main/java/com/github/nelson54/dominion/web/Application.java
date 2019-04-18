@@ -3,6 +3,7 @@ package com.github.nelson54.dominion.web;
 import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.KingdomFactory;
 import com.github.nelson54.dominion.services.CommandService;
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
@@ -32,6 +33,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableMongoRepositories("com.github.nelson54.dominion.commands")
 
 @Configuration
+
+@EnableAdminServer
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

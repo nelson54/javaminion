@@ -49,10 +49,16 @@ dependencies {
 
     developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$spring"
 
+    compile group: 'de.codecentric', name: 'spring-boot-admin-server', version: '2.1.4'
+    compile group: 'de.codecentric', name: 'spring-boot-admin-server-ui', version: '2.1.4'
+    compile group: 'de.codecentric', name: 'spring-boot-admin-starter-client', version: '2.1.4'
+
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$spring",  {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
+
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-netflix', version: "2.1.1.RELEASE"
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: "$spring"
