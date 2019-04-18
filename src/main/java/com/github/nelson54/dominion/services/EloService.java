@@ -4,6 +4,7 @@ import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.persistence.AccountRepository;
 import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.HashMap;

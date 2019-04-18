@@ -18,14 +18,14 @@ public class AccountEntity {
     private Boolean ai;
 
     @NotNull
-    @Column(name = "first_name", length = 100, unique = true, nullable = false, updatable = false)
+    @Column(name = "first_name", length = 100, unique = true, nullable = false)
     private String firstname;
 
     @NotNull
-    @Column(name = "email", length = 100, unique = true, nullable = false, updatable = false)
+    @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
 
-    @OneToOne(cascade = {CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn
     private UserEntity user;
 
@@ -74,7 +74,9 @@ public class AccountEntity {
     }
 
     public Account asAccount() {
-        return new Account(id, user.asUser(), email, firstname, ai);
+        Account account = new Account(id, user.asUser(), email, firstname, ai);
+        account.setElo(elo);
+        return account;
     }
 
     public Long getElo() {
