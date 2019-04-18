@@ -254,6 +254,10 @@ public class Player {
         this.choices = choices;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
     void addChoice(Choice choice) {
         choices.addFirst(choice);
     }
@@ -286,9 +290,5 @@ public class Player {
         result = 31 * result + (currentTurn != null ? currentTurn.hashCode() : 0);
         result = 31 * result + (choices != null ? choices.hashCode() : 0);
         return result;
-    }
-
-    public Account getAccount() {
-        return account;
     }
 }

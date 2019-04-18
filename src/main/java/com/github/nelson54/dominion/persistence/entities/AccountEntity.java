@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.persistence.entities;
 
 import com.github.nelson54.dominion.Account;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,20 +14,25 @@ public class AccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "is_ai")
+    @Column(name = "is_ai", updatable = false)
     private Boolean ai;
 
     @NotNull
-    @Column(name = "first_name", length = 100, unique = true, nullable = false)
+    @Column(name = "first_name", length = 100, unique = true, nullable = false, updatable = false)
     private String firstname;
 
     @NotNull
-    @Column(name = "email", length = 100, unique = true, nullable = false)
+    @Column(name = "email", length = 100, unique = true, nullable = false, updatable = false)
     private String email;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn
     private UserEntity user;
+
+    @Column(name = "elo")
+    @NotNull
+    @ColumnDefault(value = "1000")
+    private Long elo;
 
     public AccountEntity() {}
 
@@ -50,6 +56,8 @@ public class AccountEntity {
 
         accountEntity.id = account.getId();
         accountEntity.user = UserEntity.ofUser(account.getUser());
+        accountEntity.elo = account.getElo();
+
         return accountEntity;
     }
 
@@ -67,5 +75,13 @@ public class AccountEntity {
 
     public Account asAccount() {
         return new Account(id, user.asUser(), email, firstname, ai);
+    }
+
+    public Long getElo() {
+        return elo;
+    }
+
+    public void setElo(Long elo) {
+        this.elo = elo;
     }
 }

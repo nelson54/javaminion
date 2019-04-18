@@ -26,15 +26,18 @@ public class MatchService {
     private MatchRepository matchRepository;
     private GameFactory gameFactory;
     private CommandService commandService;
+    private EloService eloService;
 
     public MatchService(
             MatchRepository matchRepository,
             GameFactory gameFactory,
-            CommandService commandService) {
+            CommandService commandService,
+            EloService eloService) {
 
         this.commandService = commandService;
         this.matchRepository = matchRepository;
         this.gameFactory = gameFactory;
+        this.eloService = eloService;
     }
 
     public List<Match> findByStateIn(List<MatchState> states) {
@@ -133,6 +136,13 @@ public class MatchService {
 
                 return matchEntity.toMatch();
             });
+
+            eloService.updateEloForAccounts(
+                    players.parallelStream()
+                            .map((Player::getAccount))
+                            .collect(Collectors.toList()),
+                    winningPlayerId
+            );
         }
     }
 

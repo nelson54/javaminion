@@ -4,6 +4,7 @@
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
 ## Todo
+- [ ] Adding Elo
 - [ ] Show number of cards in opponents hand
 - [ ] Add card lookup [https://github.com/cypressf/dominion/blob/master/cards.json]
 

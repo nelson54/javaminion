@@ -24,7 +24,7 @@ public class MatchEntity {
     @Column
     private Long seed;
 
-    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private List<AccountEntity> players;
 
     @Column
@@ -41,7 +41,7 @@ public class MatchEntity {
     @JoinColumn
     private Set<PlayerScoreEntity> scores;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn
     private List<CardTypeReferenceEntity> gameCards;
 
@@ -74,6 +74,7 @@ public class MatchEntity {
 
         if(this.scores != null) {
             this.scores.forEach((score) -> {
+                if(score.getAccount() != null)
                 scores.put(score.getAccount().getId(), score.getScore());
             });
         }
