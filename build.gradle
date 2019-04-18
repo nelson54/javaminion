@@ -1,12 +1,11 @@
 buildscript {
     repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://repo.spring.io/snapshot' }
+        maven { url 'https://repo.spring.io/milestone' }
     }
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.1.RELEASE'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.4.RELEASE'
         classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.0'
     }
 }
@@ -43,7 +42,7 @@ repositories {
 }
 
 ext{
-    spring = '2.1.1.RELEASE'
+    spring = '2.1.4.RELEASE'
 }
 
 dependencies {

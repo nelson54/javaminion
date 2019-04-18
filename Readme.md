@@ -4,7 +4,8 @@
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
 ## Todo
-- [ ] Adding Elo
+- [ ] Don't allow players to watch games while IN_PROGRESS.
+- [ ] Tie Breaks
 - [ ] Show number of cards in opponents hand
 - [ ] Add card lookup [https://github.com/cypressf/dominion/blob/master/cards.json]
 
@@ -14,6 +15,8 @@
 - [ ] Implement discard preferences for AI or reverse buy preferences
 
 ##Done
+- [x] Allow spectating
+- [x] Adding Elo
 - [x] Join game
 - [x] Shuffle turn order
 - [x] Create game page
