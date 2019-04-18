@@ -17,12 +17,12 @@ public class UserEntity {
     private Long id;
 
     @NotNull
-    @Column(name = "username", length = 100, unique = true, nullable = false)
+    @Column(name = "username", length = 100, unique = true, updatable = false)
     private String username;
 
     @JsonIgnore
     @NotNull
-    @Column(name = "password", length = 60)
+    @Column(name = "password", length = 60, updatable = false)
     private String password;
 
     @Column

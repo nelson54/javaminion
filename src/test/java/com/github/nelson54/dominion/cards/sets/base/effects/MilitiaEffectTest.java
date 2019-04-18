@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +35,7 @@ public class MilitiaEffectTest extends DominionTestCase {
     public void testEffect() {
         Turn turn = game.getTurn();
 
-        Set<Card> hand = new HashSet<>();
+        LinkedHashSet<Card> hand = new LinkedHashSet<>();
 
         for(Player p : game.getPlayers().values()){
             p.drawXCards(5);

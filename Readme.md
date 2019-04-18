@@ -4,27 +4,36 @@
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
 ## Todo
+- [ ] Don't allow players to watch games while IN_PROGRESS.
+- [ ] Tie Breaks
 - [ ] Show number of cards in opponents hand
+- [ ] Add card lookup [https://github.com/cypressf/dominion/blob/master/cards.json]
+
+## Backlog
 - [ ] Add i18n/messages (https://g00glen00b.be/spring-internationalization-i18n/)
-- [x] Calculate winning score.
-- [x] JWT Authentication 
-- [ ] Matchmaking
-    - [x] Create game page
-    - [x] Display open games
-    - [ ] Join game
-    - [x] Join AI game
-    - [x] Show Completed games
-    - [ ] Show wins and losses
 - [ ] Animations
-- [x] Moat
-    - [x] Add Attack Bypass to turn
-- [ ] Implement discard preferences for AI or reverse buy preferences   
-- [x] End turn if no additional actions in pool or cards in hand after playing ComplexActionCard's
-- [x] Update and save PM2 configuration every time a build is done.
+- [ ] Implement discard preferences for AI or reverse buy preferences
+
+##Done
+- [x] Allow spectating
+- [x] Adding Elo
+- [x] Join game
+- [x] Shuffle turn order
+- [x] Create game page
+- [x] Display open games
+- [x] Join AI game
+- [x] Show Completed games
+- [x] JWT Authentication
+- [x] End Games
+- [x] Store winners in database
+- [x] Show score for finished games
+- [x] End turn if no additional actions in pool or cards in hand after playing ComplexActionCard
+- [x] Update and save PM2 configuration every time a build is done
 - [x] Prevent from rebuilding database every time
-- [x] Test leaving and coming back to games.
+- [x] Test leaving and coming back to games
 - [x] Add domain name
-Cards Working
+
+## Cards 
 - [x] Cellar **Working**
 - [x] Chapel **Working**
 - [x] Moat **Working**
@@ -66,3 +75,5 @@ docker-compose build
 docker-compose up
 
 ```
+
+# Refactor classes

@@ -5,10 +5,8 @@ out
 target
 .DS_STORE
 .gradle
-target
 build
-out
-./db
+/db
 logs/*
 src/main/js/dist/*
 *.retry

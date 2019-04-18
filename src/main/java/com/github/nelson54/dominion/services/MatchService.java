@@ -26,15 +26,18 @@ public class MatchService {
     private MatchRepository matchRepository;
     private GameFactory gameFactory;
     private CommandService commandService;
+    private EloService eloService;
 
     public MatchService(
             MatchRepository matchRepository,
             GameFactory gameFactory,
-            CommandService commandService) {
+            CommandService commandService,
+            EloService eloService) {
 
         this.commandService = commandService;
         this.matchRepository = matchRepository;
         this.gameFactory = gameFactory;
+        this.eloService = eloService;
     }
 
     public List<Match> findByStateIn(List<MatchState> states) {
@@ -86,48 +89,61 @@ public class MatchService {
     }
 
     public Match createMatch(Match match) {
+        if (match.getMatchState().equals(MatchState.IN_PROGRESS)) {
+            match.shuffleTurnOrder();
+        }
+
         MatchEntity entity = matchRepository.save(MatchEntity.ofMatch(match));
+
         return entity.toMatch();
     }
 
     public void addPlayerAccount(Match match, Account account) {
         MatchParticipant matchParticipant = new MatchParticipant(account);
         match.addParticipant(matchParticipant);
+        match.shuffleTurnOrder();
+
+        if (match.isReady()) {
+            match.setMatchState(MatchState.IN_PROGRESS);
+        }
+
         matchRepository.save(MatchEntity.ofMatch(match));
     }
 
-    public Optional<Match> endGame(Game game) {
+    private void endGame(Game game) {
         if (game.isGameOver()) {
 
             Optional<MatchEntity> optionalMatchEntity = matchRepository.findById(game.getId());
 
             Long winningPlayerId = game.getWinningPlayer().get().getId();
             Collection<Player> players = game.getPlayers().values();
-            return optionalMatchEntity.map((matchEntity) -> {
+            optionalMatchEntity.map((matchEntity) -> {
                 AccountEntity winner = matchEntity.findPlayerById(winningPlayerId);
                 matchEntity.setState(MatchState.FINISHED);
                 matchEntity.setWinner(winner);
                 Set<PlayerScoreEntity> scores = new HashSet<>();
 
-                players.forEach((player) -> {
+                for (Player player : players) {
                     PlayerScoreEntity playerScoreEntity = new PlayerScoreEntity();
+                    playerScoreEntity.setAccount(matchEntity.findPlayerById(player.getId()));
                     playerScoreEntity.setScore(player.getVictoryPoints());
 
                     scores.add(playerScoreEntity);
-                });
+                }
 
                 matchEntity.setScores(scores);
                 matchEntity = matchRepository.save(matchEntity);
 
                 return matchEntity.toMatch();
             });
+
+            eloService.updateEloForAccounts(
+                    players.parallelStream()
+                            .map((Player::getAccount))
+                            .collect(Collectors.toList()),
+                    winningPlayerId
+            );
         }
-
-        return Optional.empty();
-    }
-
-    public void prepareToPlay() {
-
     }
 
     public void completeGame(Match match) {

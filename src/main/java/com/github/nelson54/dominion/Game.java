@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.google.common.collect.Multimap;
-import org.jboss.logging.Logger;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -18,7 +17,7 @@ import static com.github.nelson54.dominion.Phase.*;
 
 
 public class Game {
-    private static final Logger logger = Logger.getLogger(Game.class);
+
     @JsonProperty
     private LinkedHashSet<String> logs;
     @JsonProperty @JsonSerialize(using = ToStringSerializer.class) @JsonDeserialize(as = Long.class)
@@ -85,13 +84,11 @@ public class Game {
 
         if (turn.hasActionsInHand()) {
             turn.setPhase(ACTION);
-            logger.info("Now entering action phase for Player[" + nextPlayer.getId() + "] "
-                    + nextPlayer.getName());
+            log(nextPlayer.getName() + " is now entering action phase");
             nextPlayer.onActionPhase();
         } else {
             turn.setPhase(BUY);
-            logger.info("Now entering buy phase for Player[" + nextPlayer.getId() + "] "
-                    + nextPlayer.getName());
+            log(nextPlayer.getName() + " is now entering buy phase");
             nextPlayer.onBuyPhase();
         }
 
@@ -239,6 +236,10 @@ public class Game {
 
     public void log(String string) {
         LocalDateTime dateTime = commandTime;
+
+        if(dateTime == null) {
+            dateTime = LocalDateTime.now();
+        }
 
         logs.add(dateTime + ":: " + string);
     }

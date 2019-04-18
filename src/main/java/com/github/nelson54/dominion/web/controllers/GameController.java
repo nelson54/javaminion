@@ -69,30 +69,30 @@ public class GameController {
         return game;
     }
 
-    @PostMapping(value = "/{gameId}/purchase")
+    @PostMapping(value = "/{gameId}/purchase/{cardId}")
     Game purchase(
             @PathVariable("gameId") Long gameId,
-            @RequestBody Card card
+            @PathVariable("cardId") Long cardId
     ) {
         Game game = getGame(gameId);
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
-        Card purchasedCard = game.getAllCards().get(card.getId());
+        Card purchasedCard = game.getAllCards().get(cardId);
 
         game = matchService.applyCommand(game, Command.buy(game, player, purchasedCard));
 
         return game;
     }
 
-    @PostMapping(value = "/{gameId}/play")
+    @PostMapping(value = "/{gameId}/play/{cardId}")
     Game play(
             @PathVariable("gameId") Long gameId,
-            @RequestBody Card card
+            @PathVariable("cardId") Long cardId
     ) {
         Game game = getGame(gameId);
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
-        Card playing = game.getAllCards().get(card.getId());
+        Card playing = game.getAllCards().get(cardId);
 
         if (playing.getCardTypes().contains(CardType.ACTION)) {
             matchService.applyCommand(game, Command.action(game, player, playing));

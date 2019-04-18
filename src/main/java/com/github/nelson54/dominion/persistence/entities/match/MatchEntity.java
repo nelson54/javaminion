@@ -24,7 +24,7 @@ public class MatchEntity {
     @Column
     private Long seed;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private List<AccountEntity> players;
 
     @Column
@@ -41,7 +41,7 @@ public class MatchEntity {
     @JoinColumn
     private Set<PlayerScoreEntity> scores;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn
     private List<CardTypeReferenceEntity> gameCards;
 
@@ -70,12 +70,29 @@ public class MatchEntity {
 
         players.forEach((playerAccount) -> accounts.put(playerAccount.getId(), playerAccount));
 
+        Map<Long, Long> scores = new HashMap<>();
+
+        if(this.scores != null) {
+            this.scores.forEach((score) -> {
+                if(score.getAccount() != null)
+                scores.put(score.getAccount().getId(), score.getScore());
+            });
+        }
+
+        match.setScores(scores);
+
         match.setCreatedAt(createdAt);
 
-        Arrays.asList(turnOrder.split(",")).stream()
+        Arrays.stream(turnOrder.split(","))
                 .map(Long::valueOf)
                 .map(accounts::get)
-                .map((playerAccount) -> new MatchParticipant(playerAccount.asAccount()))
+                .map((playerAccount) -> {
+                    MatchParticipant mp = new MatchParticipant(playerAccount.asAccount());
+                    if(winner != null && winner.getId().equals(playerAccount.getId())) {
+                        match.setWinner(mp);
+                    }
+                    return mp;
+                })
                 .forEachOrdered(match::addParticipant);
 
         return match;

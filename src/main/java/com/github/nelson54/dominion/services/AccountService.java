@@ -9,6 +9,7 @@ import com.github.nelson54.dominion.web.dto.AccountCredentialsDto;
 import com.github.nelson54.dominion.web.dto.AccountDto;
 import com.github.nelson54.dominion.web.dto.AuthenticationDto;
 import com.github.nelson54.dominion.web.dto.RegistrationDto;
+import org.checkerframework.checker.nullness.Opt;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -34,6 +36,10 @@ public class AccountService {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
+    }
+
+    public Optional<Account> findById(Long id) {
+        return accountRepository.findById(id).map(AccountEntity::asAccount);
     }
 
     public Optional<AuthenticationDto> authenticateWithCredentials(
