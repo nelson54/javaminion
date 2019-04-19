@@ -1,5 +1,6 @@
 package com.github.nelson54.dominion.web.controllers;
 
+import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.persistence.AccountRepository;
 import com.github.nelson54.dominion.services.AccountService;
 import com.github.nelson54.dominion.web.dto.AccountCredentialsDto;
@@ -50,5 +51,10 @@ public class AccountController {
                 .getAuthorizedAccount()
                 .map(AccountDto::fromAccount)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+    }
+
+    @GetMapping("/accounts")
+    public Iterable<Account> getUsers() {
+        return accountService.findAll();
     }
 }

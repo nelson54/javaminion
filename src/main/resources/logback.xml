@@ -25,7 +25,7 @@
         </encoder>
     </appender>
 
-    <root level="info">
+    <root level="debug">
         <!-- IMPORTANT: make sure to include this line, otherwise the appender won't be used -->
         <appender-ref ref="LogzioLogbackAppender"/>
         <appender-ref ref="FILE"/>

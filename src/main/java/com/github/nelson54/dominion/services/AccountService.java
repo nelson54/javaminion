@@ -23,6 +23,8 @@ import javax.naming.AuthenticationException;
 import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @Resource(name = "accountService")
@@ -42,6 +44,11 @@ public class AccountService {
 
     public Optional<Account> findById(Long id) {
         return accountRepository.findById(id).map(AccountEntity::asAccount);
+    }
+
+    public Iterable<Account> findAll() {
+        return StreamSupport.stream(accountRepository.findAll().spliterator(), false)
+            .map(AccountEntity::asAccount).collect(Collectors.toList());
     }
 
     public Optional<AuthenticationDto> authenticateWithCredentials(
