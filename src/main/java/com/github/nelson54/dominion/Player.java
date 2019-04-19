@@ -179,6 +179,10 @@ public class Player {
         game.revealCard(this, card);
     }
 
+    public void revealHand() {
+        game.revealCardsFromHand(this, this.hand);
+    }
+
     @JsonIgnore
     public Map<Long, Card> getAllCards() {
         Map<Long, Card> allCards = new HashMap<>();

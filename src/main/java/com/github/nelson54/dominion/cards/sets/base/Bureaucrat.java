@@ -51,6 +51,7 @@ public class Bureaucrat extends ComplexActionAttackCard {
 
             return choice;
         } else {
+            target.revealHand();
             throw new NoValidChoiceException();
         }
     }

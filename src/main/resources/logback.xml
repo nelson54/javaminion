@@ -12,15 +12,23 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>/root/logs/production.log</file>
+        <file>${user.home}/logs/dominion.log</file>
         <append>false</append>
         <encoder>
             <pattern>%-5relative %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <root level="debug">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-5relative %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
         <!-- IMPORTANT: make sure to include this line, otherwise the appender won't be used -->
         <appender-ref ref="LogzioLogbackAppender"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
