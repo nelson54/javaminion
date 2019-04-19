@@ -11,7 +11,9 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.services.AccountService;
 import com.github.nelson54.dominion.services.MatchService;
-import org.jboss.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,7 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/dominion")
 public class GameController {
 
-    private static final Logger logger = Logger.getLogger(GameController.class);
+    private static final Logger logger = LoggerFactory.getLogger(GameController.class);
     private AccountService accountService;
     private MatchService matchService;
 

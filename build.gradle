@@ -49,6 +49,10 @@ dependencies {
 
     developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$spring"
 
+    compile group: 'io.logz.logback', name: 'logzio-logback-appender', version: '1.0.22'
+    compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$spring",  {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
@@ -75,7 +79,7 @@ dependencies {
     compile group: 'javax.activation', name: 'javax.activation-api', version: '1.2.0'
     compile group: 'io.jsonwebtoken', name:'jjwt', version: '0.7.0'
 
-    compile 'com.google.guava:guava:27.0.1-jre'
+    compile 'com.google.guava:guava:27.1-jre'
     compile group: 'org.javassist', name: 'javassist', version: '3.23.1-GA'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-guava', version: '2.9.7'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.7'
@@ -85,6 +89,9 @@ dependencies {
     compile group: 'com.google.inject', name: 'guice', version: '4.0'
     runtime group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
     runtime group: 'com.h2database', name: 'h2', version: '1.4.197'
+
+    testRuntime group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta2'
+
 
     compile "org.flywaydb:flyway-core:5.2.4"
     

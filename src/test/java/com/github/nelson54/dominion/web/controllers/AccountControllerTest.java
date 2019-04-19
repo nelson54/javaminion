@@ -4,27 +4,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nelson54.dominion.web.Application;
 import com.github.nelson54.dominion.web.dto.AccountCredentialsDto;
-import com.github.nelson54.dominion.web.dto.AccountDto;
 import com.github.nelson54.dominion.web.dto.AuthenticationDto;
 import com.github.nelson54.dominion.web.dto.RegistrationDto;
-import org.jboss.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.net.URI;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
@@ -38,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class AccountControllerTest {
 
-    private static final Logger logger = Logger.getLogger(AccountControllerTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(AccountControllerTest.class);
 
     @LocalServerPort
     private int port;

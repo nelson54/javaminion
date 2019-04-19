@@ -8,14 +8,14 @@ import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.web.Application;
 import com.github.nelson54.dominion.web.dto.RegistrationDto;
-import org.jboss.logging.Logger;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
+
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
@@ -24,7 +24,7 @@ import java.util.Set;
 @SpringBootTest(classes = Application.class)
 class MatchServiceTest {
 
-    private static final Logger logger = Logger.getLogger(MatchServiceTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(MatchServiceTest.class);
 
     @Autowired
     AccountService accountService;

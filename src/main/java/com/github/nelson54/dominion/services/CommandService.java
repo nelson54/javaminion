@@ -15,7 +15,8 @@ import com.github.nelson54.dominion.commands.CommandRepository;
 import com.github.nelson54.dominion.commands.CommandType;
 import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
 import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintWriter;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
 @Service
 public class CommandService {
 
-    private static final Logger logger = Logger.getLogger(CommandService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommandService.class);
     private CommandRepository commandRepository;
     private ObjectMapper objectMapper;
 

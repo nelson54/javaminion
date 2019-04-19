@@ -2,7 +2,7 @@
 
 cd /app
 
-./gradlew check || true
+./gradlew spotbugsMain || true
 
 cd /app/build/reports/spotbugs
 tar -cvzf ./spotbugs.tar.gz .
