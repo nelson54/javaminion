@@ -12,17 +12,20 @@ import com.github.nelson54.dominion.persistence.MatchRepository;
 import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 import com.github.nelson54.dominion.persistence.entities.match.MatchEntity;
 import com.github.nelson54.dominion.persistence.entities.match.PlayerScoreEntity;
-import org.jboss.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Component
 public class MatchService {
-    private static final Logger logger = Logger.getLogger(MatchService.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(MatchService.class);
     private MatchRepository matchRepository;
     private GameFactory gameFactory;
     private CommandService commandService;
@@ -55,7 +58,6 @@ public class MatchService {
     }
 
     public Optional<Game> getGame(Long matchId) {
-
         return matchRepository
                 .findById(matchId)
                 .map(MatchEntity::toMatch)
@@ -70,6 +72,8 @@ public class MatchService {
     }
 
     private Game applyCommands(Game game) {
+        logger.info("Rebuilding game {}", game.getId());
+
         commandService
                 .findCommandsForGame(game)
                 .forEach(command -> applyCommand(game, command));
@@ -99,6 +103,7 @@ public class MatchService {
     }
 
     public void addPlayerAccount(Match match, Account account) {
+        logger.info("Player {} joined game {}", account.getId(), match.getId());
         MatchParticipant matchParticipant = new MatchParticipant(account);
         match.addParticipant(matchParticipant);
         match.shuffleTurnOrder();
@@ -118,6 +123,11 @@ public class MatchService {
             Long winningPlayerId = game.getWinningPlayer().get().getId();
             Collection<Player> players = game.getPlayers().values();
             optionalMatchEntity.map((matchEntity) -> {
+
+                if(matchEntity.getState().equals(MatchState.FINISHED)) {
+                    return matchEntity.toMatch();
+                }
+
                 AccountEntity winner = matchEntity.findPlayerById(winningPlayerId);
                 matchEntity.setState(MatchState.FINISHED);
                 matchEntity.setWinner(winner);
@@ -145,14 +155,4 @@ public class MatchService {
             );
         }
     }
-
-    public void completeGame(Match match) {
-
-    }
-
-    private Match save(Match match) {
-        return match;
-    }
-
-
 }

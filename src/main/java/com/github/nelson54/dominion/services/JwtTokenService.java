@@ -3,6 +3,8 @@ package com.github.nelson54.dominion.services;
 import com.github.nelson54.dominion.web.security.SecurityConstants;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -13,6 +15,7 @@ import java.util.Date;
 
 @Service
 public class JwtTokenService {
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenService.class);
 
     public static Authentication getAuthentication(String token) {
         if (token != null) {
@@ -23,6 +26,7 @@ public class JwtTokenService {
                     .getSubject();
 
             if (user != null) {
+                logger.info("User {} has logged in", user);
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             }
         }

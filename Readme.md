@@ -11,10 +11,11 @@
 
 ## Backlog
 - [ ] Add i18n/messages (https://g00glen00b.be/spring-internationalization-i18n/)
-- [ ] Animations
 - [ ] Implement discard preferences for AI or reverse buy preferences
+- [ ] Replay - Animations
+- [ ] Replay - Add copy button to play a game from a state against AI players.
 
-##Done
+## Done
 - [x] Allow spectating
 - [x] Adding Elo
 - [x] Join game
@@ -34,6 +35,11 @@
 - [x] Add domain name
 
 ## Cards 
+
+- [ ] Bureaucrat **Broke**
+- [ ] Library **Untested**
+- [ ] Adventurer **Untested**
+
 - [x] Cellar **Working**
 - [x] Chapel **Working**
 - [x] Moat **Working**
@@ -41,7 +47,6 @@
 - [x] Woodcutter **Working**
 - [x] Village **Working**
 - [x] Workshop **Working**
-- [x] Bureaucrat **Working**
 - [x] Gardens **Working**
 - [x] Militia **Working**
 - [x] Moneylender **Working**
@@ -54,11 +59,9 @@
 - [x] Council Room **Working** 
 - [x] Festival **Working**
 - [x] Laboratory **Working**
-- [ ] Library **Untested**
 - [x] Market **Working**
 - [x] Mine **Working**
 - [x] Witch **Working**
-- [ ] Adventurer **Untested**
 
 #For port forwarding to jenkins server:
 ```bash

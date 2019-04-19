@@ -3,11 +3,11 @@ package com.github.nelson54.dominion.cards;
 import com.github.nelson54.dominion.DominionTestCase;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.types.ActionAttackCard;
-import com.github.nelson54.dominion.cards.types.ActionCard;
 import com.github.nelson54.dominion.cards.types.Card;
-import org.jboss.logging.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class WitchTest extends DominionTestCase {
 
-    private static final Logger logger = Logger.getLogger(WitchTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(WitchTest.class);
 
     @BeforeEach
     public void setup() {

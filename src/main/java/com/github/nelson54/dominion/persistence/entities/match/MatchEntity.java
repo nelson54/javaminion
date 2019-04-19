@@ -144,6 +144,10 @@ public class MatchEntity {
         this.state = state;
     }
 
+    public MatchState getState() {
+        return state;
+    }
+
     public void setScores(Set<PlayerScoreEntity> scores) {
         this.scores = scores;
     }
