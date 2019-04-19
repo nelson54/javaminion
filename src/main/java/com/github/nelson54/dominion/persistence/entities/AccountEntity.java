@@ -2,12 +2,14 @@ package com.github.nelson54.dominion.persistence.entities;
 
 import com.github.nelson54.dominion.Account;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "accounts")
+@DynamicInsert
 public class AccountEntity {
 
     @Id
