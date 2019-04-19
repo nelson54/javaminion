@@ -48,7 +48,7 @@ public class GameController {
         Player player = game.getPlayers().get(account.getId());
         Card purchasedCard = game.getAllCards().get(cardId);
 
-        logger.info("Game[{}] Player[{}] purchased Card[{}] ", gameId, account.getId(), purchasedCard.getName());
+        logger.info("Game[{}] - {}[{}] purchased Card[{}] ", gameId, account.getUser().getUsername(), account.getId(), purchasedCard.getName());
 
         game = matchService.applyCommand(game, Command.buy(game, player, purchasedCard));
 
@@ -66,7 +66,7 @@ public class GameController {
         Card playing = game.getAllCards().get(cardId);
 
         if (playing.getCardTypes().contains(CardType.ACTION)) {
-            logger.info("Game[{}] Player[{}] played Card[{}] ", gameId, account.getId(), playing.getName());
+            logger.info("Game[{}] - {}[{}] played Card[{}] ", gameId, account.getUser().getUsername(), account.getId(), playing.getName());
             matchService.applyCommand(game, Command.action(game, player, playing));
         } else {
             throw new IllegalStateException();
@@ -86,7 +86,7 @@ public class GameController {
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
         choiceResponse.setSource(player);
-        logger.info("Game[{}] Player[{}] made a choice.", gameId, account.getId());
+        logger.info("Game[{}] - {}[{}] made a choice.", gameId, account.getUser().getUsername(), account.getId());
 
         if (choiceResponse.getCard() != null && choiceResponse.getCard().getId() != null) {
             choiceResponse.setCard(game.getAllCards().get(choiceResponse.getCard().getId()));
@@ -107,7 +107,7 @@ public class GameController {
         Player player = game.getPlayers().get(account.getId());
         Choice choice = player.getChoices().peek();
 
-        logger.info("Game[{}] Player[{}] is ending phase.", gameId, account.getId());
+        logger.info("Game[{}] - {}[{}] is ending phase.", gameId, account.getUser().getUsername(), account.getId());
 
         if(game.getTurn().getPhase().equals(Phase.WAITING_FOR_CHOICE) && choice != null) {
             ChoiceResponse choiceResponse = new ChoiceResponse();
