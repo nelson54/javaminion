@@ -84,7 +84,7 @@ public class AccountService {
                 registrationDto.getFirstname(),
                 registrationDto.getEmail(),
                 userEntity);
-
+        accountEntity.setElo(1000L);
         accountRepository.save(accountEntity);
 
         return Optional.of(accountEntity.asAccount());

@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "accounts")
-@DynamicInsert
 public class AccountEntity {
 
     @Id
