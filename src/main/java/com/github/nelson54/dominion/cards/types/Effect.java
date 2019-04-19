@@ -1,4 +1,4 @@
-package com.github.nelson54.dominion.cards.sets.base.effects;
+package com.github.nelson54.dominion.cards.types;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,7 +30,7 @@ public abstract class Effect {
     @JsonBackReference(value = "choice")
     private Choice choice;
 
-    Effect() {
+    public Effect() {
         cancelled = false;
     }
 
@@ -43,7 +43,7 @@ public abstract class Effect {
         }
     }
 
-    abstract boolean effect(ChoiceResponse response, Player target, Turn turn, Game game)
+    public abstract boolean effect(ChoiceResponse response, Player target, Turn turn, Game game)
             throws MissingCardException, MissingEffectException;
 
     void onNoValidTarget(Choice choice, Player target, Turn turn, Game game) {}
@@ -80,7 +80,7 @@ public abstract class Effect {
         this.cancelled = cancelled;
     }
 
-    Choice getChoice() {
+    public Choice getChoice() {
         return choice;
     }
 

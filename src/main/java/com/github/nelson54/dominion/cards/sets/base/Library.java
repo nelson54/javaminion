@@ -6,12 +6,9 @@ import com.github.nelson54.dominion.cards.types.ComplexActionCard;
 import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
-import com.github.nelson54.dominion.cards.sets.base.effects.LibraryEffect;
+import com.github.nelson54.dominion.cards.types.Effect;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Set;
 
 
 public class Library extends ComplexActionCard {

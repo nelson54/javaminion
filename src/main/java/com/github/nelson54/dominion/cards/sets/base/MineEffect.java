@@ -1,10 +1,11 @@
-package com.github.nelson54.dominion.cards.sets.base.effects;
+package com.github.nelson54.dominion.cards.sets.base;
 
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.Turn;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.CardState;
+import com.github.nelson54.dominion.cards.types.Effect;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 
@@ -14,7 +15,7 @@ public class MineEffect extends Effect {
     private Card trashedCard;
 
     @Override
-    boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
+    public boolean effect(ChoiceResponse response, Player target, Turn turn, Game game) {
         Card card = response.getCard();
         Choice choice = getChoice();
 

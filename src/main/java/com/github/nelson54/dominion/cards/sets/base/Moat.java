@@ -9,8 +9,7 @@ import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.choices.Reaction;
-import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
-import com.github.nelson54.dominion.cards.sets.base.effects.MoatRevealEffect;
+import com.github.nelson54.dominion.cards.types.Effect;
 
 public class Moat extends ActionReactionCard {
 

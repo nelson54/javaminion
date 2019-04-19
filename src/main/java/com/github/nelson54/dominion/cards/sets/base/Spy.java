@@ -8,8 +8,7 @@ import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.cards.types.SymmetricActionAttackCard;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
-import com.github.nelson54.dominion.cards.sets.base.effects.SpyEffect;
+import com.github.nelson54.dominion.cards.types.Effect;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -10,8 +10,7 @@ import com.github.nelson54.dominion.cards.types.TreasureCard;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
-import com.github.nelson54.dominion.cards.sets.base.effects.MineEffect;
+import com.github.nelson54.dominion.cards.types.Effect;
 
 import java.util.Set;
 import java.util.stream.Collectors;

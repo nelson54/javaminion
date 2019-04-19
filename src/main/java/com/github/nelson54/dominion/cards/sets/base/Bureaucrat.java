@@ -7,14 +7,14 @@ import com.github.nelson54.dominion.cards.Cards;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.types.ComplexActionAttackCard;
 import com.github.nelson54.dominion.cards.Cost;
-import com.github.nelson54.dominion.cards.types.VictoryCard;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.cards.sets.base.effects.BureaucratEffect;
-import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
+import com.github.nelson54.dominion.cards.types.Effect;
 import com.github.nelson54.dominion.exceptions.NoValidChoiceException;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
@@ -34,20 +34,20 @@ public class Bureaucrat extends ComplexActionAttackCard {
     @Override
     public Choice getChoiceForTarget(Choice choice, Player target, Game game)
             throws NoValidChoiceException {
-        Choice parent = choice.getParentChoice();
         choice.setMessage("Choose a victory card to put on top of your deck.");
 
-        Set<Card> victoryCardsInHand = target.getHand().stream()
+        LinkedHashSet<Long> victoryCardsInHand = target.getHand().stream()
                 .filter(card -> card.getCardTypes().contains(CardType.VICTORY))
-                .collect(Collectors.toSet());
+                .map(Card::getId)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
 
         if (victoryCardsInHand.size() > 0) {
 
-            choice.setOptions(Cards.getIds(victoryCardsInHand));
+            choice.setOptions(victoryCardsInHand);
 
             choice.setExpectedAnswerType(OptionType.CARD);
             choice.setRequired(true);
-            choice.setNumber((byte) 3);
+            choice.setNumber((byte) 1);
 
             return choice;
         } else {

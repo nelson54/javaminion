@@ -9,8 +9,7 @@ import com.github.nelson54.dominion.cards.types.ComplexActionAttackCard;
 import com.github.nelson54.dominion.cards.types.TreasureCard;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
-import com.github.nelson54.dominion.cards.sets.base.effects.Effect;
-import com.github.nelson54.dominion.cards.sets.base.effects.ThiefEffect;
+import com.github.nelson54.dominion.cards.types.Effect;
 
 import java.util.Set;
 
