@@ -63,6 +63,7 @@ public class Bureaucrat extends ComplexActionAttackCard {
 
     @Override
     public void play(Player player, Game game) {
+        game.log(player.getName() + " gained a silver to the top of their deck.");
         game.giveCardToPlayer("Silver", player);
     }
 }
