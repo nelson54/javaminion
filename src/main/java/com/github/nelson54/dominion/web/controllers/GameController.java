@@ -23,7 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/dominion")
 public class GameController {
 
-    private static final Logger logger = LoggerFactory.getLogger(GameController.class);
+    private final Logger logger = LoggerFactory.getLogger(GameController.class);
     private AccountService accountService;
     private MatchService matchService;
 
@@ -38,39 +38,6 @@ public class GameController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/{gameId}/shuffle")
-    Game shuffle(@PathVariable("gameId") Long gameId) {
-        Game game = getGame(gameId);
-        Account account = getAccount();
-        Player player = game.getPlayers().get(account.getId());
-        player.shuffle();
-
-        return game;
-    }
-
-    @PostMapping("/{gameId}/draw")
-    Game drawHand(
-            @PathVariable("gameId")
-                    Long gameId
-    ) {
-        Game game = getGame(gameId);
-        Account account = getAccount();
-        Player player = game.getPlayers().get(account.getId());
-        player.drawHand();
-
-        return game;
-    }
-
-    @PostMapping("/{gameId}/discard")
-    Game discardHand(@PathVariable("gameId") Long gameId) {
-        Game game = getGame(gameId);
-        Account account = getAccount();
-        Player player = game.getPlayers().get(account.getId());
-        player.discardHand();
-
-        return game;
-    }
-
     @PostMapping(value = "/{gameId}/purchase/{cardId}")
     Game purchase(
             @PathVariable("gameId") Long gameId,
@@ -80,6 +47,8 @@ public class GameController {
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
         Card purchasedCard = game.getAllCards().get(cardId);
+
+        logger.info("Game[{}] Player[{}] purchased Card[{}] ", gameId, account.getId(), cardId);
 
         game = matchService.applyCommand(game, Command.buy(game, player, purchasedCard));
 
@@ -97,6 +66,7 @@ public class GameController {
         Card playing = game.getAllCards().get(cardId);
 
         if (playing.getCardTypes().contains(CardType.ACTION)) {
+            logger.info("Game[{}] Player[{}] played Card[{}] ", gameId, account.getId(), cardId);
             matchService.applyCommand(game, Command.action(game, player, playing));
         } else {
             throw new IllegalStateException();
@@ -116,6 +86,7 @@ public class GameController {
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
         choiceResponse.setSource(player);
+        logger.info("Game[{}] Player[{}] made a choice.", gameId, account.getId());
 
         if (choiceResponse.getCard() != null && choiceResponse.getCard().getId() != null) {
             choiceResponse.setCard(game.getAllCards().get(choiceResponse.getCard().getId()));
@@ -135,6 +106,8 @@ public class GameController {
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
         Choice choice = player.getChoices().peek();
+
+        logger.info("Game[{}] Player[{}] is ending phase.", gameId, account.getId());
 
         if(game.getTurn().getPhase().equals(Phase.WAITING_FOR_CHOICE) && choice != null) {
             ChoiceResponse choiceResponse = new ChoiceResponse();

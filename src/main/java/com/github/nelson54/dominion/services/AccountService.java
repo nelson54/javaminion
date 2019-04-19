@@ -10,6 +10,8 @@ import com.github.nelson54.dominion.web.dto.AccountDto;
 import com.github.nelson54.dominion.web.dto.AuthenticationDto;
 import com.github.nelson54.dominion.web.dto.RegistrationDto;
 import org.checkerframework.checker.nullness.Opt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -25,7 +27,7 @@ import java.util.Optional;
 @Service
 @Resource(name = "accountService")
 public class AccountService {
-
+    private final Logger logger = LoggerFactory.getLogger(JwtTokenService.class);
     BCryptPasswordEncoder passwordEncoder;
     UserRepository userRepository;
     AccountRepository accountRepository;
@@ -50,6 +52,8 @@ public class AccountService {
         if (!passwordEncoder.matches(accountCredentials.getPassword(), userEntity.getPassword())) {
             throw new AuthenticationException("Incorrect password");
         }
+
+        logger.info("User {} has logged in", accountCredentials.getUsername());
 
         User user = new User(
                 accountCredentials.getUsername(),

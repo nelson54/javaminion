@@ -72,7 +72,6 @@ public class MatchService {
     }
 
     private Game applyCommands(Game game) {
-        logger.info("Rebuilding game {}", game.getId());
 
         commandService
                 .findCommandsForGame(game)

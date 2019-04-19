@@ -11,6 +11,8 @@ import com.github.nelson54.dominion.services.AccountService;
 import com.github.nelson54.dominion.services.AiPlayerService;
 import com.github.nelson54.dominion.services.MatchService;
 import com.github.nelson54.dominion.web.dto.MatchDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,7 @@ import java.util.stream.Collectors;
 @RestController()
 @RequestMapping("/dominion")
 public class MatchController {
-
+    private final Logger logger = LoggerFactory.getLogger(GameController.class);
 
     private final AccountRepository accountRepository;
 
@@ -80,7 +82,6 @@ public class MatchController {
     @PostMapping(value = "/matches")
     @ResponseStatus(HttpStatus.CREATED)
     MatchDto createMatch(@RequestBody MatchDto matchDto) {
-
         Integer totalPlayers = matchDto.getCount();
 
         GameCardSet gameCardSet = GameCardSet.byName(matchDto.getCards());
@@ -109,6 +110,8 @@ public class MatchController {
         match = matchService.createMatch(match);
 
         matchDto.setId(match.getId());
+
+        logger.info("Created match {}", match.getId());
 
         return matchDto;
     }

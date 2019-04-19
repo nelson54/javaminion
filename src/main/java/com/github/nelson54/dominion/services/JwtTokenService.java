@@ -15,7 +15,6 @@ import java.util.Date;
 
 @Service
 public class JwtTokenService {
-    private static final Logger logger = LoggerFactory.getLogger(JwtTokenService.class);
 
     public static Authentication getAuthentication(String token) {
         if (token != null) {
@@ -26,7 +25,6 @@ public class JwtTokenService {
                     .getSubject();
 
             if (user != null) {
-                logger.info("User {} has logged in", user);
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             }
         }
