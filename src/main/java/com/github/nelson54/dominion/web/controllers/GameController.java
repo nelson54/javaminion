@@ -48,7 +48,7 @@ public class GameController {
         Player player = game.getPlayers().get(account.getId());
         Card purchasedCard = game.getAllCards().get(cardId);
 
-        logger.info("Game[{}] Player[{}] purchased Card[{}] ", gameId, account.getId(), cardId);
+        logger.info("Game[{}] Player[{}] purchased Card[{}] ", gameId, account.getId(), purchasedCard.getName());
 
         game = matchService.applyCommand(game, Command.buy(game, player, purchasedCard));
 
@@ -66,7 +66,7 @@ public class GameController {
         Card playing = game.getAllCards().get(cardId);
 
         if (playing.getCardTypes().contains(CardType.ACTION)) {
-            logger.info("Game[{}] Player[{}] played Card[{}] ", gameId, account.getId(), cardId);
+            logger.info("Game[{}] Player[{}] played Card[{}] ", gameId, account.getId(), playing.getName());
             matchService.applyCommand(game, Command.action(game, player, playing));
         } else {
             throw new IllegalStateException();
