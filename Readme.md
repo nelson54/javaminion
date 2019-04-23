@@ -4,16 +4,17 @@
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
 ## Todo
-- [ ] Don't allow players to watch games while IN_PROGRESS.
 - [ ] Tie Breaks
 - [ ] Show number of cards in opponents hand
-- [ ] Add card lookup [https://github.com/cypressf/dominion/blob/master/cards.json]
 
 ## Backlog
+- [ ] Show contents of deck after game.
 - [ ] Add i18n/messages (https://g00glen00b.be/spring-internationalization-i18n/)
 - [ ] Implement discard preferences for AI or reverse buy preferences
 - [ ] Replay - Animations
 - [ ] Replay - Add copy button to play a game from a state against AI players.
+- [ ] Don't allow players to watch games while IN_PROGRESS.
+- [ ] Add card lookup [https://github.com/cypressf/dominion/blob/master/cards.json]
 
 ## Done
 - [x] Allow spectating
@@ -33,13 +34,13 @@
 - [x] Prevent from rebuilding database every time
 - [x] Test leaving and coming back to games
 - [x] Add domain name
+- [x] Add game log to show which card Bureaucrat puts on deck.
 
 ## Cards 
-
-- [ ] Bureaucrat **Broke**
 - [ ] Library **Untested**
 - [ ] Adventurer **Untested**
 
+- [x] Bureaucrat **Working**
 - [x] Cellar **Working**
 - [x] Chapel **Working**
 - [x] Moat **Working**
@@ -78,5 +79,3 @@ docker-compose build
 docker-compose up
 
 ```
-
-# Refactor classes
