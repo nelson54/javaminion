@@ -37,6 +37,7 @@
 - [x] Add domain name
 - [x] Add game log to show which card Bureaucrat puts on deck.
 - [x] Adding finish timestamp
+- [x] Fixed ELO from being recalculated whenever you view a completed game page.
 
 ## Cards 
 - [ ] Library **Untested**
@@ -65,6 +66,7 @@
 - [x] Market **Working**
 - [x] Mine **Working**
 - [x] Witch **Working**
+
 
 #For port forwarding to jenkins server:
 ```bash
