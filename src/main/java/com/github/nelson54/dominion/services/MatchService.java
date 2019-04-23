@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -121,37 +122,38 @@ public class MatchService {
 
             Long winningPlayerId = game.getWinningPlayer().get().getId();
             Collection<Player> players = game.getPlayers().values();
-            optionalMatchEntity.map((matchEntity) -> {
+            optionalMatchEntity
+                    .filter((matchEntity) -> !matchEntity.getState().equals(MatchState.FINISHED))
+                    .map((matchEntity) -> {
+                        AccountEntity winner = matchEntity.findPlayerById(winningPlayerId);
+                        matchEntity.setState(MatchState.FINISHED);
+                        matchEntity.setWinner(winner);
+                        Set<PlayerScoreEntity> scores = new HashSet<>();
 
-                if(matchEntity.getState().equals(MatchState.FINISHED)) {
-                    return matchEntity.toMatch();
-                }
+                        for (Player player : players) {
+                            PlayerScoreEntity playerScoreEntity = new PlayerScoreEntity();
+                            playerScoreEntity.setAccount(matchEntity.findPlayerById(player.getId()));
+                            playerScoreEntity.setScore(player.getVictoryPoints());
 
-                AccountEntity winner = matchEntity.findPlayerById(winningPlayerId);
-                matchEntity.setState(MatchState.FINISHED);
-                matchEntity.setWinner(winner);
-                Set<PlayerScoreEntity> scores = new HashSet<>();
+                            scores.add(playerScoreEntity);
+                        }
 
-                for (Player player : players) {
-                    PlayerScoreEntity playerScoreEntity = new PlayerScoreEntity();
-                    playerScoreEntity.setAccount(matchEntity.findPlayerById(player.getId()));
-                    playerScoreEntity.setScore(player.getVictoryPoints());
+                        matchEntity.setFinishedAt(LocalDateTime.now());
 
-                    scores.add(playerScoreEntity);
-                }
+                        matchEntity.setScores(scores);
+                        matchEntity = matchRepository.save(matchEntity);
 
-                matchEntity.setScores(scores);
-                matchEntity = matchRepository.save(matchEntity);
 
-                return matchEntity.toMatch();
-            });
 
-            eloService.updateEloForAccounts(
-                    players.parallelStream()
-                            .map((Player::getAccount))
-                            .collect(Collectors.toList()),
-                    winningPlayerId
-            );
+                        eloService.updateEloForAccounts(
+                                players.parallelStream()
+                                        .map((Player::getAccount))
+                                        .collect(Collectors.toList()),
+                                winningPlayerId
+                        );
+
+                        return matchEntity.toMatch();
+                    });
         }
     }
 }

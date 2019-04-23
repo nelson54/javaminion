@@ -52,6 +52,9 @@ public class MatchEntity {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Column
+    private LocalDateTime finishedAt;
+
     public MatchEntity() {}
 
     public Long getId() {
@@ -95,6 +98,8 @@ public class MatchEntity {
                 })
                 .forEachOrdered(match::addParticipant);
 
+        match.setFinishedAt(finishedAt);
+
         return match;
     }
 
@@ -130,6 +135,8 @@ public class MatchEntity {
                 .map(CardTypeReferenceEntity::ofCardTypeReference)
                 .collect(Collectors.toList());
 
+        matchEntity.finishedAt = match.getFinishedAt();
+
         return matchEntity;
     }
 
@@ -154,5 +161,21 @@ public class MatchEntity {
 
     public void setWinner(AccountEntity accountEntity) {
         this.winner = accountEntity;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(LocalDateTime finishedAt) {
+        this.finishedAt = finishedAt;
     }
 }

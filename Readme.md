@@ -4,8 +4,9 @@
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
 ## Todo
-- [ ] Tie Breaks
-- [ ] Show number of cards in opponents hand
+- [ ] Tie Breaks.
+- [ ] Show number of cards in opponents hand.
+- [ ] Show opponents discard pile.
 
 ## Backlog
 - [ ] Show contents of deck after game.
@@ -35,6 +36,7 @@
 - [x] Test leaving and coming back to games
 - [x] Add domain name
 - [x] Add game log to show which card Bureaucrat puts on deck.
+- [x] Adding finish timestamp
 
 ## Cards 
 - [ ] Library **Untested**

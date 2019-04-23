@@ -17,6 +17,7 @@ public class Match {
     private MatchState matchState;
     private GameCardSet cards;
     private LocalDateTime createdAt;
+    private LocalDateTime finishedAt;
 
     public Match(Integer playerCount, GameCardSet cards) {
         this.seed = new Random().nextLong();
@@ -126,5 +127,13 @@ public class Match {
 
     public Map<Long, Long> getScores() {
         return this.scores;
+    }
+
+    public LocalDateTime getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(LocalDateTime finishedAt) {
+        this.finishedAt = finishedAt;
     }
 }
