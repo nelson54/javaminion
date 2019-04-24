@@ -2,7 +2,7 @@
 <configuration>
     <!-- Use shutdownHook so that we can close gracefully and finish the log drain -->
 
-    <property file="${user.home}/config/logback.properties" />
+    <property file="${USER_HOME}/config/logback.properties" />
 
     <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
     <appender name="LogzioLogbackAppender" class="io.logz.logback.LogzioLogbackAppender">
@@ -15,7 +15,7 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${user.home}/logs/dominion.log</file>
+        <file>${USER_HOME}/logs/dominion.log</file>
         <append>false</append>
         <encoder>
             <pattern>%-5relative %-5level %logger{35} - %msg%n</pattern>
