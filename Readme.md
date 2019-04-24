@@ -36,37 +36,38 @@
 - [x] Prevent from rebuilding database every time
 - [x] Test leaving and coming back to games
 - [x] Add domain name
-- [x] Add game log to show which card Bureaucrat puts on deck.
+- [x] Add game log to show which card Bureaucrat puts on deck
 - [x] Adding finish timestamp
-- [x] Fixed ELO from being recalculated whenever you view a completed game page.
+- [x] Fixed ELO from being recalculated whenever you view a completed game page
+- [x] Setup configurable logback.xml
 
 ## Cards 
 - [ ] Library **Untested**
 - [ ] Adventurer **Untested**
 
-- [x] Bureaucrat **Working**
-- [x] Cellar **Working**
-- [x] Chapel **Working**
-- [x] Moat **Working**
-- [x] Chancellor **Working**
-- [x] Woodcutter **Working**
-- [x] Village **Working**
-- [x] Workshop **Working**
-- [x] Gardens **Working**
-- [x] Militia **Working**
-- [x] Moneylender **Working**
-- [x] Feast **Working**
-- [x] Spy **Working**
-- [x] Thief **Working**
-- [x] Remodel **Working**
-- [x] Smithy **Working**
-- [x] Throne Room **Working**
-- [x] Council Room **Working** 
-- [x] Festival **Working**
-- [x] Laboratory **Working**
-- [x] Market **Working**
-- [x] Mine **Working**
-- [x] Witch **Working**
+- [x] Bureaucrat **Testing**
+- [x] Cellar **Testing**
+- [x] Chapel **Testing**
+- [x] Moat **Testing**
+- [x] Chancellor **Testing**
+- [x] Woodcutter **Testing**
+- [x] Village **Testing**
+- [x] Workshop **Testing**
+- [x] Gardens **Testing**
+- [x] Militia **Testing**
+- [x] Moneylender **Testing**
+- [x] Feast **Testing**
+- [x] Spy **Testing**
+- [x] Thief **Testing**
+- [x] Remodel **Testing**
+- [x] Smithy **Testing**
+- [x] Throne Room **Testing**
+- [x] Council Room **Testing** 
+- [x] Festival **Testing**
+- [x] Laboratory **Testing**
+- [x] Market **Testing**
+- [x] Mine **Testing**
+- [x] Witch **Testing**
 
 
 #For port forwarding to jenkins server:
