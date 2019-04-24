@@ -2,17 +2,9 @@
 <configuration>
     <!-- Use shutdownHook so that we can close gracefully and finish the log drain -->
     <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
-    <appender name="LogzioLogbackAppender" class="io.logz.logback.LogzioLogbackAppender">
-        <token>cwmeqfbDxgHJrvsGpqgzjlZqWBlXgrbD</token>
-        <logzioUrl>https://listener.logz.io:8071</logzioUrl>
-        <logzioType>myType</logzioType>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
-        </filter>
-    </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${user.home}/logs/dominion.log</file>
+        <file>logs/local.log</file>
         <append>false</append>
         <encoder>
             <pattern>%-5relative %-5level %logger{35} - %msg%n</pattern>
@@ -25,9 +17,8 @@
         </encoder>
     </appender>
 
-    <root level="debug">
+    <root level="info">
         <!-- IMPORTANT: make sure to include this line, otherwise the appender won't be used -->
-        <appender-ref ref="LogzioLogbackAppender"/>
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
     </root>
