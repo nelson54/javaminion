@@ -8,6 +8,7 @@ import com.github.nelson54.dominion.cards.types.ComplexActionCard;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.cards.types.Effect;
+import com.github.nelson54.dominion.exceptions.NoValidChoiceException;
 import com.google.common.collect.Multimap;
 
 import java.util.Optional;
@@ -37,14 +38,21 @@ public class Remodel extends ComplexActionCard {
     }
 
     @Override
-    public Choice getChoiceForTarget(Choice choice, Player target, Game game) {
+    public Choice getChoiceForTarget(Choice choice, Player target, Game game) throws NoValidChoiceException {
         Choice parent = choice.getParentChoice();
         choice.setIsDialog(false);
+        choice.setRequired(true);
         choice.setExpectedAnswerType(OptionType.CARD);
 
         if (choice.getState() == CardState.TRASHING_CARD) {
+            if(target.getHand().size() == 0) {
+                throw new NoValidChoiceException();
+            }
+
             choice.setMessage("Choose a card to trash.");
             choice.setOptions(Cards.getIds(target.getHand()));
+
+
         } else if (choice.getState() == CardState.GAINING_CARD) {
             Card lastChoice = parent.getResponse().getCard();
             choice.setMessage("Choose a card to Gain.");

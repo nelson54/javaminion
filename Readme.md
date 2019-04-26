@@ -10,7 +10,31 @@
 - [ ] Show number of cards in opponents hand.
 - [ ] Show opponents discard pile.
 
+### Movement Log
+- [ ] Gains hand
+- [ ] Gains discard
+- [ ] Gains deck
+- [ ] Discard
+- [ ] 
+
+### Animations
+- [ ] Move Card
+- [ ] Clean up
+- [ ] Draw Hand
+
+### Error messages
+- [ ] Add Angular service for showing error messages
+- [ ] Login Failed
+- [ ] Sign Up
+- [ ] Incorrect Phase
+- [ ] Insufficient Funds
+- [ ] Insufficient Buys
+- [ ] Already played
+- [ ] Not Implemented
+- [ ] Unable to create game exception
+
 ## Backlog
+- [ ] Add custom game creation.
 - [ ] Show contents of deck after game.
 - [ ] Add i18n/messages (https://g00glen00b.be/spring-internationalization-i18n/)
 - [ ] Implement discard preferences for AI or reverse buy preferences
@@ -70,19 +94,3 @@
 - [x] Mine **Testing**
 - [x] Witch **Testing**
 
-
-#For port forwarding to jenkins server:
-```bash
-ssh -L 8080:142.93.14.62:8080 -L 8081:142.93.14.62:8081 -L 8082:142.93.14.62:8082 root@142.93.14.62
-```
-
-```bash
-cd javaminion
-
-./setup-environment.sh
-
-docker-compose build
-
-docker-compose up
-
-```
