@@ -4,6 +4,7 @@
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
 ## Todo
+- [ ] Remodel is cancellable but goes into a broken state.
 - [ ] Removing keys.
 - [ ] Tie Breaks.
 - [ ] Show number of cards in opponents hand.
