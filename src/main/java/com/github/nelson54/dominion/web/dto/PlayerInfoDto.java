@@ -11,6 +11,10 @@ public class PlayerInfoDto {
 
     private List<Match> matches;
 
+    private Long rank;
+
+    private Long totalPlayers;
+
     public Account getAccount() {
         return account;
     }
@@ -25,5 +29,21 @@ public class PlayerInfoDto {
 
     public void setMatches(List<Match> matches) {
         this.matches = matches;
+    }
+
+    public Long getRank() {
+        return rank;
+    }
+
+    public void setRank(Long rank) {
+        this.rank = rank;
+    }
+
+    public Long getTotalPlayers() {
+        return totalPlayers;
+    }
+
+    public void setTotalPlayers(Long totalPlayers) {
+        this.totalPlayers = totalPlayers;
     }
 }

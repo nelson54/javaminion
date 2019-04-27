@@ -48,7 +48,8 @@ public class PlayerController {
 
         playerInfo.setMatches(matches);
 
-
+        playerInfo.setRank(accountRepository.findRank(playerInfo.getAccount().getElo()));
+        playerInfo.setTotalPlayers(accountRepository.findTotalPlayers(playerInfo.getAccount().getElo()));
 
         return playerInfo;
     }
