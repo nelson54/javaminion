@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.http.CacheControl;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -45,10 +44,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
                     .setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
         } else {
             registry.addResourceHandler("/public/**")
-                    .addResourceLocations("file:/Users/dcnelson/projects/dominion-frontend/dist/");
+                    .addResourceLocations("file:/Users/derek/IdeaProjects/dominion-frontend/dist/");
 
             registry.addResourceHandler("/**")
-                    .addResourceLocations("file:/Users/dcnelson/projects/dominion-frontend/dist/")
+                    .addResourceLocations("file:/Users/derek/IdeaProjects/dominion-frontend/dist/")
                     .setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
         }
 

@@ -9,7 +9,6 @@ import com.github.nelson54.dominion.web.dto.AccountCredentialsDto;
 import com.github.nelson54.dominion.web.dto.AccountDto;
 import com.github.nelson54.dominion.web.dto.AuthenticationDto;
 import com.github.nelson54.dominion.web.dto.RegistrationDto;
-import org.checkerframework.checker.nullness.Opt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
