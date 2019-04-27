@@ -1,6 +1,7 @@
 package com.github.nelson54.dominion.web.dto;
 
 import com.github.nelson54.dominion.Account;
+import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.match.Match;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public class PlayerInfoDto {
     private Long rank;
 
     private Long totalPlayers;
+
+    private List<Command> commands;
 
     public Account getAccount() {
         return account;
@@ -45,5 +48,13 @@ public class PlayerInfoDto {
 
     public void setTotalPlayers(Long totalPlayers) {
         this.totalPlayers = totalPlayers;
+    }
+
+    public List<Command> getCommands() {
+        return commands;
+    }
+
+    public void setCommands(List<Command> commands) {
+        this.commands = commands;
     }
 }

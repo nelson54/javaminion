@@ -1,5 +1,6 @@
 package com.github.nelson54.dominion.web.controllers;
 
+import com.github.nelson54.dominion.commands.CommandRepository;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.persistence.AccountRepository;
 import com.github.nelson54.dominion.persistence.MatchRepository;
@@ -20,13 +21,14 @@ import java.util.stream.StreamSupport;
 public class PlayerController {
 
     private final AccountRepository accountRepository;
-    private AccountService accountService;
-
+    private final AccountService accountService;
+    private final CommandRepository commandRepository;
     private final MatchRepository matchRepository;
 
-    public PlayerController(AccountService accountService, AccountRepository accountRepository, MatchRepository matchRepository) {
+    public PlayerController(AccountService accountService, AccountRepository accountRepository, CommandRepository commandRepository, MatchRepository matchRepository) {
         this.accountService = accountService;
         this.accountRepository = accountRepository;
+        this.commandRepository = commandRepository;
         this.matchRepository = matchRepository;
     }
 
@@ -47,6 +49,9 @@ public class PlayerController {
                 .collect(Collectors.toList());
 
         playerInfo.setMatches(matches);
+
+        commandRepository.findByAccountIdAndBuyNameNotNull(id)
+                .ifPresent(playerInfo::setCommands);
 
         playerInfo.setRank(accountRepository.findRank(playerInfo.getAccount().getElo()));
         playerInfo.setTotalPlayers(accountRepository.findTotalPlayers(playerInfo.getAccount().getElo()));

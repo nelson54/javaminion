@@ -11,4 +11,6 @@ public interface CommandRepository extends MongoRepository<Command, String> {
 
     Optional<List<Command>> findByGameIdOrderByTimeAsc(Long gameId);
 
+
+    Optional<List<Command>> findByAccountIdAndBuyNameNotNull(Long accountId);
 }
