@@ -3,8 +3,18 @@ package com.github.nelson54.dominion.cards;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.nelson54.dominion.cards.sets.base.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum GameCards {
+
+    RANDOM(
+            "Random",
+            null
+    ),
 
     FIRST_GAME(
             "First Game",
@@ -151,5 +161,12 @@ public enum GameCards {
         }
 
         return null;
+    }
+
+    public static GameCardSet random() {
+        List<CardTypeReference> cards = new ArrayList<>(ALL_CARDS.gameCardSet.getCards());
+        Collections.shuffle(cards);
+LinkedHashSet<CardTypeReference> kingdomCards = new LinkedHashSet<>(cards.subList(0,9));
+        return new GameCardSet(kingdomCards);
     }
 }

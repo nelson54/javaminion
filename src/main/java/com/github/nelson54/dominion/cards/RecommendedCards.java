@@ -7,6 +7,9 @@ import com.github.nelson54.dominion.cards.types.Card;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum RecommendedCards {
 
+    RANDOM(
+            "Random"
+    ),
     FIRST_GAME(
             "First Game",
             Cellar.class,
