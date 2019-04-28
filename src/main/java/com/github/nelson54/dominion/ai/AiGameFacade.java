@@ -1,11 +1,12 @@
 package com.github.nelson54.dominion.ai;
 
 import com.github.nelson54.dominion.*;
+import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.cards.types.ActionCard;
 import com.github.nelson54.dominion.cards.types.Card;
-import com.github.nelson54.dominion.cards.Cost;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
+import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.services.CommandService;
 
 import java.util.HashSet;
@@ -69,7 +70,8 @@ public class AiGameFacade {
     }
 
     public void buy(Card card) {
-        turn.purchaseCardForPlayer(card, player);
+        Command command = Command.buy(game, player, card);
+        commandService.applyCommand(game, command);
     }
 
     void respond(ChoiceResponse choiceResponse) {
