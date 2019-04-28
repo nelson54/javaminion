@@ -4,8 +4,6 @@
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
 ## Todo
-- [ ] Remodel is cancellable but goes into a broken state.
-- [ ] Removing keys.
 - [ ] Tie Breaks.
 - [ ] Show number of cards in opponents hand.
 - [ ] Show opponents discard pile.
@@ -15,7 +13,12 @@
 - [ ] Gains discard
 - [ ] Gains deck
 - [ ] Discard
-- [ ] 
+
+### Adding Basic user stats
+- [x] Wins
+- [x] Losses
+- [x] Rank
+- [x] Card Preferences
 
 ### Animations
 - [ ] Move Card
@@ -44,6 +47,9 @@
 - [ ] Add card lookup [https://github.com/cypressf/dominion/blob/master/cards.json]
 
 ## Done
+- [x] Remodel is cancellable but goes into a broken state.
+- [x] Removing keys.
+- [x] Add Random card set
 - [x] Allow spectating
 - [x] Adding Elo
 - [x] Join game
