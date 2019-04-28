@@ -166,7 +166,7 @@ public enum GameCards {
     public static GameCardSet random() {
         List<CardTypeReference> cards = new ArrayList<>(ALL_CARDS.gameCardSet.getCards());
         Collections.shuffle(cards);
-LinkedHashSet<CardTypeReference> kingdomCards = new LinkedHashSet<>(cards.subList(0,9));
+LinkedHashSet<CardTypeReference> kingdomCards = new LinkedHashSet<>(cards.subList(0,10));
         return new GameCardSet(kingdomCards);
     }
 }
