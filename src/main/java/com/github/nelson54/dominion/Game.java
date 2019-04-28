@@ -278,6 +278,10 @@ public class Game {
         this.commandTime = commandTime;
     }
 
+    public LocalDateTime getCommandTime() {
+        return commandTime;
+    }
+
     @JsonProperty
     @Override
     public int hashCode() {

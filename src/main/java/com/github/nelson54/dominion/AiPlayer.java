@@ -29,12 +29,16 @@ public class AiPlayer extends Player {
 
     @Override
     public void onBuyPhase() {
-        aiStrategy.buyPhase(new AiGameFacade(commandService, getGame(), getCurrentTurn(), this));
+        if(this.getGame().getCommandTime() == null) {
+            aiStrategy.buyPhase(new AiGameFacade(commandService, getGame(), getCurrentTurn(), this));
+        }
     }
 
     @Override
     public void onChoice() {
-        aiStrategy.choice(new AiGameFacade(commandService, getGame(), getCurrentTurn(), this));
+        if(this.getGame().getCommandTime() == null) {
+            aiStrategy.choice(new AiGameFacade(commandService, getGame(), getCurrentTurn(), this));
+        }
     }
 
     public void setAiStrategy(AiStrategy aiStrategy) {
