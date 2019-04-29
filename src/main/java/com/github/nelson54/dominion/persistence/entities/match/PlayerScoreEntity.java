@@ -5,7 +5,7 @@ import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "card_type_reference")
+@Table(name = "player_score_entity")
 public class PlayerScoreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

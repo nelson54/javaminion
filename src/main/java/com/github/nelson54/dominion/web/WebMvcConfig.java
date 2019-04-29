@@ -44,10 +44,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
                     .setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
         } else {
             registry.addResourceHandler("/public/**")
-                    .addResourceLocations("file:/Users/derek/IdeaProjects/dominion-frontend/dist/");
+                    .addResourceLocations("file:/Users/dcnelson/projects/dominion-frontend/dist/");
 
             registry.addResourceHandler("/**")
-                    .addResourceLocations("file:/Users/derek/IdeaProjects/dominion-frontend/dist/")
+                    .addResourceLocations("file:/Users/dcnelson/projects/dominion-frontend/dist/")
                     .setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
         }
 

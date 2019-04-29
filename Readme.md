@@ -3,7 +3,18 @@
 [![Build Status](https://travis-ci.org/nelson54/javaminion.svg?branch=master)](https://travis-ci.org/nelson54/javaminion)
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
+## Refactor plans:
+* game
+    * game.cards
+    * game.commands
+    * game.players
+    * game.service
+* match
+* user
+
 ## Todo
+- [ ] Remodel is cancellable but goes into a broken state.
+- [ ] Removing keys.
 - [ ] Tie Breaks.
 - [ ] Show number of cards in opponents hand.
 - [ ] Show opponents discard pile.
