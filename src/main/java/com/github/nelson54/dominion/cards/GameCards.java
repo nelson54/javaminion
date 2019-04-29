@@ -3,8 +3,18 @@ package com.github.nelson54.dominion.cards;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.nelson54.dominion.cards.sets.base.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum GameCards {
+
+    RANDOM(
+            "Random",
+            null
+    ),
 
     FIRST_GAME(
             "First Game",
@@ -99,31 +109,31 @@ public enum GameCards {
     ALL_CARDS(
             "All Cards",
             GameCardSet.of(
-                    CardTypeReference.of("Cellar", Cellar.class),
-                    CardTypeReference.of("Chapel", Chapel.class),
-                    CardTypeReference.of("Moat", Moat.class),
-                    CardTypeReference.of("Chancellor", Chancellor.class),
-                    CardTypeReference.of("Woodcutter", Woodcutter.class),
-                    CardTypeReference.of("Village", Village.class),
-                    CardTypeReference.of("Workshop", Workshop.class),
-                    CardTypeReference.of("Bureaucrat", Bureaucrat.class),
-                    CardTypeReference.of("Gardens", Gardens.class),
-                    CardTypeReference.of("Militia", Militia.class),
-                    CardTypeReference.of("Moneylender", Moneylender.class),
-                    CardTypeReference.of("Feast", Feast.class),
-                    CardTypeReference.of("Spy", Spy.class),
-                    CardTypeReference.of("Thief", Thief.class),
-                    CardTypeReference.of("Remodel", Remodel.class),
-                    CardTypeReference.of("Smithy", Smithy.class),
-                    CardTypeReference.of("Throne Room", ThroneRoom.class),
-                    CardTypeReference.of("Council Room", CouncilRoom.class),
-                    CardTypeReference.of("Festival", Festival.class),
-                    CardTypeReference.of("Laboratory", Laboratory.class),
-                    CardTypeReference.of("Library", Library.class),
-                    CardTypeReference.of("Market", Market.class),
-                    CardTypeReference.of("Mine", Mine.class),
-                    CardTypeReference.of("Witch", Witch.class),
-                    CardTypeReference.of("Adventurer", Adventurer.class)
+                CardTypeReference.of("Cellar", Cellar.class),
+                CardTypeReference.of("Chapel", Chapel.class),
+                CardTypeReference.of("Moat", Moat.class),
+                CardTypeReference.of("Chancellor", Chancellor.class),
+                CardTypeReference.of("Woodcutter", Woodcutter.class),
+                CardTypeReference.of("Village", Village.class),
+                CardTypeReference.of("Workshop", Workshop.class),
+                CardTypeReference.of("Bureaucrat", Bureaucrat.class),
+                CardTypeReference.of("Gardens", Gardens.class),
+                CardTypeReference.of("Militia", Militia.class),
+                CardTypeReference.of("Moneylender", Moneylender.class),
+                CardTypeReference.of("Feast", Feast.class),
+                CardTypeReference.of("Spy", Spy.class),
+                CardTypeReference.of("Thief", Thief.class),
+                CardTypeReference.of("Remodel", Remodel.class),
+                CardTypeReference.of("Smithy", Smithy.class),
+                CardTypeReference.of("Throne Room", ThroneRoom.class),
+                CardTypeReference.of("Council Room", CouncilRoom.class),
+                CardTypeReference.of("Festival", Festival.class),
+                CardTypeReference.of("Laboratory", Laboratory.class),
+                CardTypeReference.of("Library", Library.class),
+                CardTypeReference.of("Market", Market.class),
+                CardTypeReference.of("Mine", Mine.class),
+                CardTypeReference.of("Witch", Witch.class),
+                CardTypeReference.of("Adventurer", Adventurer.class)
             )
     );
 
@@ -151,5 +161,12 @@ public enum GameCards {
         }
 
         return null;
+    }
+
+    public static GameCardSet random() {
+        List<CardTypeReference> cards = new ArrayList<>(ALL_CARDS.gameCardSet.getCards());
+        Collections.shuffle(cards);
+LinkedHashSet<CardTypeReference> kingdomCards = new LinkedHashSet<>(cards.subList(0,10));
+        return new GameCardSet(kingdomCards);
     }
 }

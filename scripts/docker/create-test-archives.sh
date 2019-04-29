@@ -2,7 +2,8 @@
 
 cd /app
 
-SPRING_PROFILES_ACTIVE=test ./gradlew test
+rm -Rf ./build/resources
+SPRING_PROFILES_ACTIVE=test ./gradlew processResources test
 
 cd /app/build/test-results
 tar -cvzf ./test-results.tar.gz .

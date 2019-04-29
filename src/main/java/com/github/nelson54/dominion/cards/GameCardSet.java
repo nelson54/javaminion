@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class GameCardSet {
     private LinkedHashSet<CardTypeReference> cards;
 
-    private GameCardSet(LinkedHashSet<CardTypeReference> cards) {
+    public GameCardSet(LinkedHashSet<CardTypeReference> cards) {
         this.cards = cards;
     }
 
@@ -29,7 +29,9 @@ public class GameCardSet {
     public static GameCardSet byName(String name) {
         GameCardSet gameCardSet;
         GameCards gameCards = GameCards.ofName(name);
-        if (gameCards != null) {
+        if(name.equals("Random")) {
+            gameCardSet = GameCards.random();
+        } else if (gameCards != null) {
             gameCardSet = gameCards.getGameCardSet();
         } else {
             throw new InvalidCardSetName();

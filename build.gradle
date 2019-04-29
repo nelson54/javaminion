@@ -1,3 +1,5 @@
+logging.captureStandardOutput LogLevel.INFO
+
 buildscript {
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
@@ -106,6 +108,14 @@ dependencies {
     )
 }
 
+processResources {
+    def profile = System.getenv('SPRING_PROFILES_ACTIVE') ?: 'local'
+    def projectDir = project.getProjectDir()
+    def profileResources = "${projectDir}/environments/${profile}/resources/"
+
+    from(profileResources)
+}
+
 subprojects {
     tasks.withType(Test) {
         maxParallelForks = Runtime.runtime.availableProcessors()
@@ -153,3 +163,4 @@ checkstyle {
 checkstyleMain {
     configProperties += ['checkstyle.cache.file': file('checkstyleCacheFile')]
 }
+

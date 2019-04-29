@@ -22,6 +22,7 @@ public class Witch extends ActionAttackCard {
     @Override
     public void attack(Player player, Game game) {
         game.giveCardToPlayer("Curse", player);
+        game.log(player.getName() + " has gained a curse from Witch.");
     }
 
     @Override

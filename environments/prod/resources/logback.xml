@@ -1,0 +1,42 @@
+<!-- Use debug=true here if you want to see output from the appender itself -->
+<configuration>
+    <!-- Use shutdownHook so that we can close gracefully and finish the log drain -->
+
+    <property file="${user.home}/config/logback.properties" />
+
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+    <appender name="LogzioLogbackAppender" class="io.logz.logback.LogzioLogbackAppender">
+        <token>${logback.token}</token>
+        <logzioUrl>https://listener.logz.io:8071</logzioUrl>
+        <logzioType>myType</logzioType>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${user.home}/logs/dominion.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%-5relative %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-5relative %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <!-- IMPORTANT: make sure to include this line, otherwise the appender won't be used -->
+        <appender-ref ref="LogzioLogbackAppender"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

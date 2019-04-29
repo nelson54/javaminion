@@ -16,9 +16,11 @@ public class Command {
     public Long accountId;
     public Long gameId;
     public Long cardId;
+    public String buyName;
     public LocalDateTime time;
     public ChoiceResponseMongo choiceResponse;
     public CommandType type;
+    public Integer gameHash;
 
     public Command(){}
 
@@ -35,6 +37,7 @@ public class Command {
         this.cardId = card.getId();
         this.type = commandType;
         this.time = LocalDateTime.now();
+        this.gameHash = game.hashCode();
     }
 
     private Command(
@@ -47,10 +50,13 @@ public class Command {
         this.choiceResponse = ChoiceResponseMongo.ofChoiceResponse(choiceResponse);
         this.type = commandType;
         this.time = LocalDateTime.now();
+        this.gameHash = game.hashCode();
     }
 
     public static Command buy(Game game, Player account, Card card) {
-        return new Command(game, account, card, CommandType.BUY_COMMAND);
+        Command command = new Command(game, account, card, CommandType.BUY_COMMAND);
+        command.buyName = card.getName();
+        return command;
     }
 
     public static Command action(Game game, Player account, Card card) {

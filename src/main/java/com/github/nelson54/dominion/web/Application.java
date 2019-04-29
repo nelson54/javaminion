@@ -3,7 +3,6 @@ package com.github.nelson54.dominion.web;
 import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.KingdomFactory;
 import com.github.nelson54.dominion.services.CommandService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -49,11 +47,6 @@ public class Application extends SpringBootServletInitializer {
     @Bean
     public BCryptPasswordEncoder createBCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Autowired
-    void clearMongo(MongoTemplate mongoTemplate) {
-        mongoTemplate.dropCollection("commands");
     }
 
 }

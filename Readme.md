@@ -3,12 +3,52 @@
 [![Build Status](https://travis-ci.org/nelson54/javaminion.svg?branch=master)](https://travis-ci.org/nelson54/javaminion)
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#builds/nelson54/javaminion)
 
+## Refactor plans:
+* game
+    * game.cards
+    * game.commands
+    * game.players
+    * game.service
+* match
+* user
+
 ## Todo
+- [ ] Remodel is cancellable but goes into a broken state.
+- [ ] Removing keys.
 - [ ] Tie Breaks.
 - [ ] Show number of cards in opponents hand.
 - [ ] Show opponents discard pile.
 
+### Movement Log
+- [ ] Gains hand
+- [ ] Gains discard
+- [ ] Gains deck
+- [ ] Discard
+
+### Adding Basic user stats
+- [x] Wins
+- [x] Losses
+- [x] Rank
+- [x] Card Preferences
+
+### Animations
+- [ ] Move Card
+- [ ] Clean up
+- [ ] Draw Hand
+
+### Error messages
+- [ ] Add Angular service for showing error messages
+- [ ] Login Failed
+- [ ] Sign Up
+- [ ] Incorrect Phase
+- [ ] Insufficient Funds
+- [ ] Insufficient Buys
+- [ ] Already played
+- [ ] Not Implemented
+- [ ] Unable to create game exception
+
 ## Backlog
+- [ ] Add custom game creation.
 - [ ] Show contents of deck after game.
 - [ ] Add i18n/messages (https://g00glen00b.be/spring-internationalization-i18n/)
 - [ ] Implement discard preferences for AI or reverse buy preferences
@@ -18,6 +58,9 @@
 - [ ] Add card lookup [https://github.com/cypressf/dominion/blob/master/cards.json]
 
 ## Done
+- [x] Remodel is cancellable but goes into a broken state.
+- [x] Removing keys.
+- [x] Add Random card set
 - [x] Allow spectating
 - [x] Adding Elo
 - [x] Join game
@@ -35,49 +78,36 @@
 - [x] Prevent from rebuilding database every time
 - [x] Test leaving and coming back to games
 - [x] Add domain name
-- [x] Add game log to show which card Bureaucrat puts on deck.
+- [x] Add game log to show which card Bureaucrat puts on deck
 - [x] Adding finish timestamp
+- [x] Fixed ELO from being recalculated whenever you view a completed game page
+- [x] Setup configurable logback.xml
 
 ## Cards 
 - [ ] Library **Untested**
 - [ ] Adventurer **Untested**
 
-- [x] Bureaucrat **Working**
-- [x] Cellar **Working**
-- [x] Chapel **Working**
-- [x] Moat **Working**
-- [x] Chancellor **Working**
-- [x] Woodcutter **Working**
-- [x] Village **Working**
-- [x] Workshop **Working**
-- [x] Gardens **Working**
-- [x] Militia **Working**
-- [x] Moneylender **Working**
-- [x] Feast **Working**
-- [x] Spy **Working**
-- [x] Thief **Working**
-- [x] Remodel **Working**
-- [x] Smithy **Working**
-- [x] Throne Room **Working**
-- [x] Council Room **Working** 
-- [x] Festival **Working**
-- [x] Laboratory **Working**
-- [x] Market **Working**
-- [x] Mine **Working**
-- [x] Witch **Working**
+- [x] Bureaucrat **Testing**
+- [x] Cellar **Testing**
+- [x] Chapel **Testing**
+- [x] Moat **Testing**
+- [x] Chancellor **Testing**
+- [x] Woodcutter **Testing**
+- [x] Village **Testing**
+- [x] Workshop **Testing**
+- [x] Gardens **Testing**
+- [x] Militia **Testing**
+- [x] Moneylender **Testing**
+- [x] Feast **Testing**
+- [x] Spy **Testing**
+- [x] Thief **Testing**
+- [x] Remodel **Testing**
+- [x] Smithy **Testing**
+- [x] Throne Room **Testing**
+- [x] Council Room **Testing** 
+- [x] Festival **Testing**
+- [x] Laboratory **Testing**
+- [x] Market **Testing**
+- [x] Mine **Testing**
+- [x] Witch **Testing**
 
-#For port forwarding to jenkins server:
-```bash
-ssh -L 8080:142.93.14.62:8080 -L 8081:142.93.14.62:8081 -L 8082:142.93.14.62:8082 root@142.93.14.62
-```
-
-```bash
-cd javaminion
-
-./setup-environment.sh
-
-docker-compose build
-
-docker-compose up
-
-```

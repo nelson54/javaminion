@@ -23,13 +23,15 @@ public class CardTypeReferenceEntity {
 
     public static CardTypeReferenceEntity ofCardTypeReference(CardTypeReference cardTypeReference) {
         return new CardTypeReferenceEntity(
+                cardTypeReference.getId(),
                 cardTypeReference.getCardClass().toString(),
                 cardTypeReference.toString());
     }
 
     public CardTypeReferenceEntity() {}
 
-    private CardTypeReferenceEntity(String clazz, String name) {
+    private CardTypeReferenceEntity(Long id, String clazz, String name) {
+        this.id = id;
         this.clazz = clazz;
         this.name = name;
     }
@@ -45,7 +47,7 @@ public class CardTypeReferenceEntity {
             }
 
             Class<Card> clazz = (Class<Card>) Class.forName(this.clazz);
-            return CardTypeReference.of(name, clazz);
+            return CardTypeReference.of(this.id, name, clazz);
 
         } catch (Exception e) {
             // This shouldn't be possible
