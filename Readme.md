@@ -13,23 +13,16 @@
 * user
 
 ## Todo
-- [ ] Remodel is cancellable but goes into a broken state.
-- [ ] Removing keys.
 - [ ] Tie Breaks.
 - [ ] Show number of cards in opponents hand.
 - [ ] Show opponents discard pile.
+- [ ] Add Queue for running AI code.
 
 ### Movement Log
 - [ ] Gains hand
 - [ ] Gains discard
 - [ ] Gains deck
 - [ ] Discard
-
-### Adding Basic user stats
-- [x] Wins
-- [x] Losses
-- [x] Rank
-- [x] Card Preferences
 
 ### Animations
 - [ ] Move Card
@@ -48,16 +41,16 @@
 - [ ] Unable to create game exception
 
 ## Backlog
-- [ ] Add custom game creation.
-- [ ] Show contents of deck after game.
+- [ ] Add custom card selection.
+- [ ] Show contents of decks after game.
 - [ ] Add i18n/messages (https://g00glen00b.be/spring-internationalization-i18n/)
 - [ ] Implement discard preferences for AI or reverse buy preferences
-- [ ] Replay - Animations
 - [ ] Replay - Add copy button to play a game from a state against AI players.
 - [ ] Don't allow players to watch games while IN_PROGRESS.
 - [ ] Add card lookup [https://github.com/cypressf/dominion/blob/master/cards.json]
 
 ## Done
+- [x] Adding HTTPS with certbot.
 - [x] Remodel is cancellable but goes into a broken state.
 - [x] Removing keys.
 - [x] Add Random card set
@@ -82,6 +75,14 @@
 - [x] Adding finish timestamp
 - [x] Fixed ELO from being recalculated whenever you view a completed game page
 - [x] Setup configurable logback.xml
+- [x] Remodel is cancellable but goes into a broken state.
+- [x] Removing keys.
+
+### Adding Basic user stats
+- [x] Wins
+- [x] Losses
+- [x] Rank
+- [x] Card Preferences
 
 ## Cards 
 - [ ] Library **Untested**

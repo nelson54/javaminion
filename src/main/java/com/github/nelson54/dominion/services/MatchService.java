@@ -1,9 +1,6 @@
 package com.github.nelson54.dominion.services;
 
-import com.github.nelson54.dominion.Account;
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.GameFactory;
-import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.*;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
@@ -18,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,7 +62,28 @@ public class MatchService {
                 .findById(matchId)
                 .map(MatchEntity::toMatch)
                 .map(gameFactory::createGame)
-                .map(this::applyCommands);
+                .map(game -> {
+                    game.setRebuilding(true);
+                    return game;
+                })
+                .map(this::applyCommands)
+                .map(game -> {
+                    game.setRebuilding(false);
+
+                    Turn turn = game.getTurn();
+
+                    Player player = turn.getPlayer();
+
+                    if(turn.getPhase().equals(Phase.BUY)) {
+                        player.onBuyPhase();
+                    } else if(turn.getPhase().equals(Phase.ACTION)) {
+                        player.onActionPhase();
+                    } else if(turn.getPhase().equals(Phase.WAITING_FOR_CHOICE)) {
+                        game.getChoices().forEach((choice) -> choice.getTarget().onChoice());
+                    }
+
+                    return game;
+                });
     }
 
     public Optional<Match> getMatch(Long matchId) {
@@ -73,10 +93,28 @@ public class MatchService {
     }
 
     private Game applyCommands(Game game) {
+        List<Command> commands;
+        try {
+            commands = commandService
+                    .findCommandsForGame(game);
 
-        commandService
-                .findCommandsForGame(game)
-                .forEach(command -> applyCommand(game, command));
+            if(commands.size() == 0) {
+                game.setRebuilding(false);
+                game.nextPlayer();
+            } else {
+                game.ensureTurnerator();
+                Player nextPlayer = game.getTurnerator().next();
+                game.setTurn(nextPlayer.getCurrentTurn());
+
+                commands.forEach(command ->
+                        applyCommand(game, command));
+            }
+
+        } catch (Exception e) {
+            StringWriter outError = new StringWriter();
+            e.printStackTrace(new PrintWriter(outError));
+            logger.error(outError.toString());
+        }
 
         return game;
     }

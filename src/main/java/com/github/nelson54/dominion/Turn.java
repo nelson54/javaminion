@@ -60,7 +60,7 @@ public class Turn {
         turn.setBuyPool(1);
         turn.setActionPool(1);
         turn.setMoneyPool(0);
-        turn.setPhase(WAITING_FOR_OPPONENT);
+        turn.setPhase(BUY);
         turn.setPlay(new LinkedList<>());
         turn.setPlayer(player);
 

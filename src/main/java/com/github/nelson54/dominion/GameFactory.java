@@ -5,6 +5,8 @@ import com.github.nelson54.dominion.ai.AiStrategy;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.services.CommandService;
+import com.github.nelson54.dominion.services.MatchService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -12,12 +14,11 @@ import java.util.stream.Stream;
 
 @Component
 public class GameFactory {
-    private KingdomFactory kingdomFactory;
-    private CommandService commandService;
+    private final KingdomFactory kingdomFactory;
+    private MatchService matchService;
 
-    public GameFactory(KingdomFactory kingdomFactory, CommandService commandService) {
+    public GameFactory(KingdomFactory kingdomFactory) {
         this.kingdomFactory = kingdomFactory;
-        this.commandService = commandService;
     }
 
     public Game createGame(Match match) {
@@ -34,7 +35,6 @@ public class GameFactory {
             game.setKingdom(kingdom);
 
             addPlayers(match.getParticipants(), game);
-            game.nextPlayer();
             Iterator<Player> turnerator = game.getTurnOrder().iterator();
 
             byte i = 0;
@@ -88,7 +88,7 @@ public class GameFactory {
 
     private Player createAiPlayer(Game game, Account account, AiStrategy aiStrategy) {
         AiPlayer player = new AiPlayer(account);
-        player.setCommandService(commandService);
+        player.setMatchService(matchService);
         player.setAiStrategy(aiStrategy);
         return getPlayer(game, player);
     }
@@ -98,5 +98,10 @@ public class GameFactory {
                 "Estate", "Estate", "Estate",
                 "Copper", "Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
                 .forEach(name -> game.giveCardToPlayer(name, player));
+    }
+
+    @Autowired
+    public void setMatchService(MatchService matchService) {
+        this.matchService = matchService;
     }
 }

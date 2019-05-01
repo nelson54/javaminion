@@ -3,6 +3,7 @@ package com.github.nelson54.dominion.web;
 import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.KingdomFactory;
 import com.github.nelson54.dominion.services.CommandService;
+import com.github.nelson54.dominion.services.MatchService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -39,8 +40,8 @@ public class Application extends SpringBootServletInitializer {
     }
 
     @Bean
-    GameFactory getGameFactory(KingdomFactory kingdomFactory, CommandService commandService) {
-        return new GameFactory(kingdomFactory, commandService);
+    GameFactory getGameFactory(KingdomFactory kingdomFactory) {
+        return new GameFactory(kingdomFactory);
 
     }
 

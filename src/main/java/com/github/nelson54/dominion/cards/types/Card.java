@@ -39,6 +39,8 @@ public class Card {
     @JsonProperty
     int kingdomSortOrder = 0;
 
+    public Card() {}
+
     public Card(Long id) {
         this.id = id;
         cardTypes = new HashSet<>();

@@ -41,6 +41,8 @@ public class Game {
     @JsonProperty
     private Turn turn;
 
+    private Boolean rebuilding;
+
     private LocalDateTime commandTime;
 
     public Game(Long id, Long seed) {
@@ -51,6 +53,7 @@ public class Game {
         allCards = new HashMap<>();
         trash = new HashSet<>();
         logs = new LinkedHashSet<>();
+        rebuilding = false;
     }
 
     public Game(Long seed) {
@@ -59,15 +62,18 @@ public class Game {
         allCards = new HashMap<>();
         trash = new HashSet<>();
         logs = new LinkedHashSet<>();
+        rebuilding = false;
     }
 
-
-
-    public Player nextPlayer() {
-
+    public void ensureTurnerator() {
         if (turnerator == null || !turnerator.hasNext()) {
             turnerator = turnOrder.iterator();
         }
+    }
+
+    public Player nextPlayer() {
+
+        ensureTurnerator();
 
         if (turn != null) {
             clearAllChoices();
@@ -226,7 +232,7 @@ public class Game {
         player.getDeck().remove(card);
         player.getHand().remove(card);
 
-        log("Player[" + player.getId() + "] " + player.getName()
+        log(player.getName()
                 + " trashed " + card.getName() + ".");
 
         card.setOwner(null);
@@ -270,8 +276,8 @@ public class Game {
         return trash;
     }
 
-    public void setTurnerator(Iterator<Player> turnerator) {
-        this.turnerator = turnerator;
+    public Iterator<Player> getTurnerator() {
+        return turnerator;
     }
 
     public void setCommandTime(LocalDateTime commandTime) {
@@ -280,6 +286,15 @@ public class Game {
 
     public LocalDateTime getCommandTime() {
         return commandTime;
+    }
+
+
+    public Boolean getRebuilding() {
+        return rebuilding;
+    }
+
+    public void setRebuilding(Boolean rebuilding) {
+        this.rebuilding = rebuilding;
     }
 
     @JsonProperty

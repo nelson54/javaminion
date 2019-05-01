@@ -38,16 +38,16 @@ public class CommandService {
         this.objectMapper = objectMapper;
     }
 
-    public List<Command> findCommandsForGame(Game game) {
+    List<Command> findCommandsForGame(Game game) {
         return this.commandRepository.findByGameIdOrderByTimeAsc(game.getId())
                 .orElse(new ArrayList<>());
     }
 
-    public Command save(Command command) {
+    Command save(Command command) {
         return this.commandRepository.save(command);
     }
 
-    public Game applyCommand(Game game, Command command) {
+    Game applyCommand(Game game, Command command) {
         String msg = null;
         game.setCommandTime(command.time);
         Turn turn = game.getTurn();
@@ -81,6 +81,7 @@ public class CommandService {
             StringWriter outError = new StringWriter();
             e.printStackTrace(new PrintWriter(outError));
             logger.error(outError.toString());
+            return null;
         } finally {
             game.setCommandTime(null);
         }
@@ -107,7 +108,7 @@ public class CommandService {
     }
 
 
-    public void deleteAll() {
+    private void deleteAll() {
         commandRepository.deleteAll();
     }
 

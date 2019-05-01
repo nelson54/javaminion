@@ -23,7 +23,7 @@ public class RemodelEffect extends Effect {
             Card gainedCard = response.getCard();
             game.giveCardToPlayer(gainedCard.getName(), target);
 
-            game.log("Player[" + target.getId() + "] " + target.getName()
+            game.log(target.getName()
                     + " gained the card "
                     + card.getName() + " from Remodel.");
             return true;

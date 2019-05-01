@@ -8,6 +8,7 @@ import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.services.CommandService;
+import com.github.nelson54.dominion.services.MatchService;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -16,13 +17,13 @@ import java.util.Set;
 
 public class AiGameFacade {
 
-    private CommandService commandService;
+    private MatchService matchService;
     private Game game;
     private Player player;
     private Turn turn;
 
-    public AiGameFacade(CommandService commandService, Game game, Turn turn, Player player) {
-        this.commandService = commandService;
+    public AiGameFacade(MatchService matchService, Game game, Turn turn, Player player) {
+        this.matchService = matchService;
         this.game = game;
         this.player = player;
         this.turn = turn;
@@ -65,18 +66,17 @@ public class AiGameFacade {
     }
 
     public void play(ActionCard card) {
-
         turn.playCard(card, player, game);
     }
 
     public void buy(Card card) {
         Command command = Command.buy(game, player, card);
-        commandService.applyCommand(game, command);
+        matchService.applyCommand(game, command);
     }
 
     void respond(ChoiceResponse choiceResponse) {
-        game.getChoiceById(choiceResponse.getChoice())
-                .ifPresent(choice -> choice.apply(choiceResponse, turn));
+        Command command = Command.choice(game, player, choiceResponse);
+        matchService.applyCommand(game, command);
     }
 
     public boolean canAffordCost(Cost cost) {
