@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 
+import javax.inject.Inject;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
@@ -26,20 +27,19 @@ import java.util.stream.StreamSupport;
 public class MatchService {
 
     private static final Logger logger = LoggerFactory.getLogger(MatchService.class);
-    private MatchRepository matchRepository;
+    private final MatchRepository matchRepository;
+    private final CommandService commandService;
+    private final EloService eloService;
+
     private GameFactory gameFactory;
-    private CommandService commandService;
-    private EloService eloService;
 
     public MatchService(
             MatchRepository matchRepository,
-            GameFactory gameFactory,
             CommandService commandService,
             EloService eloService) {
 
         this.commandService = commandService;
         this.matchRepository = matchRepository;
-        this.gameFactory = gameFactory;
         this.eloService = eloService;
     }
 
@@ -193,5 +193,10 @@ public class MatchService {
                         return matchEntity.toMatch();
                     });
         }
+    }
+
+    @Inject
+    public void setGameFactory(GameFactory gameFactory) {
+        this.gameFactory = gameFactory;
     }
 }
