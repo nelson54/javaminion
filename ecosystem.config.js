@@ -1,6 +1,6 @@
 module.exports = {
     apps : [{
-        name: 'Javaminion',
+        name: 'javaminion',
         script: '/usr/bin/java',
         cwd: '/root/archives/',
         // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/

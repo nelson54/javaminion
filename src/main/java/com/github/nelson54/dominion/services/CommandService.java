@@ -80,10 +80,15 @@ public class CommandService {
             logger.error(e.getMessage());
             StringWriter outError = new StringWriter();
             e.printStackTrace(new PrintWriter(outError));
-            logger.error(outError.toString());
+            msg = outError.toString();
             return null;
         } finally {
             game.setCommandTime(null);
+
+            if(msg != null) {
+                game.log(msg);
+                logger.error(msg);
+            }
         }
 
 
