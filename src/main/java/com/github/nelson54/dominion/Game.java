@@ -88,16 +88,6 @@ public class Game {
         pastTurns.add(turn);
         turn = nextPlayer.getCurrentTurn();
 
-        if (turn.hasActionsInHand()) {
-            turn.setPhase(ACTION);
-            log(nextPlayer.getName() + " is now entering action phase");
-            nextPlayer.onActionPhase();
-        } else {
-            turn.setPhase(BUY);
-            log(nextPlayer.getName() + " is now entering buy phase");
-            nextPlayer.onBuyPhase();
-        }
-
         return nextPlayer;
     }
 
