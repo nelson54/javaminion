@@ -44,11 +44,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
                     .setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
         } else {
             registry.addResourceHandler("/public/**")
-                    .addResourceLocations("file:/Users/dcnelson/projects/dominion-frontend/dist/");
+                    .addResourceLocations(
+                            "file:/Users/dcnelson/projects/dominion-frontend/dist/",
+                            "file:/Users/derek/IdeaProjects/dominion-frontend/dist/"
+                    );
 
             registry.addResourceHandler("/**")
-                    .addResourceLocations("file:/Users/dcnelson/projects/dominion-frontend/dist/")
-                    .setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
+                    .addResourceLocations(
+                            "file:/Users/dcnelson/projects/dominion-frontend/dist/",
+                            "file:/Users/derek/IdeaProjects/dominion-frontend/dist/"
+                    ).setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
         }
 
         registry.addResourceHandler("swagger-ui.html")
