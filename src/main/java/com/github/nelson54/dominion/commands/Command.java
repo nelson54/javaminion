@@ -7,6 +7,7 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Command {
 
@@ -133,5 +134,19 @@ public class Command {
 
     public void setType(CommandType type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Command command = (Command) o;
+        return id.equals(command.id) &&
+                gameId.equals(command.gameId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, gameId);
     }
 }

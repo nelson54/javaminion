@@ -71,7 +71,7 @@ public class CommandService {
             }
         } catch (IncorrectPhaseException e) {
             msg = "Incorrect phase command for Player[" + player.getId() + "] " + player.getName()
-                    + " attempted command {" + command.toString() + "} of type " + command.type + " in Phase " + turn.getPhase();
+                    + " attempted command of type " + command.type + " in Phase " + turn.getPhase();
         } catch (InsufficientFundsException e) {
             msg = "Insufficient funds for[" + player.getId() + "] " + player.getName()
                     + " attempted to buy " + card.getName()
@@ -86,7 +86,6 @@ public class CommandService {
             game.setCommandTime(null);
 
             if(msg != null) {
-                game.log(msg);
                 logger.error(msg);
             }
         }

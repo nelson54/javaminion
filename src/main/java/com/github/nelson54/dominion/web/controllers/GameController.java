@@ -1,5 +1,7 @@
 package com.github.nelson54.dominion.web.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nelson54.dominion.Account;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Phase;
@@ -11,12 +13,13 @@ import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.services.AccountService;
 import com.github.nelson54.dominion.services.MatchService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
@@ -24,18 +27,32 @@ import org.springframework.web.server.ResponseStatusException;
 public class GameController {
 
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
+    private final ObjectMapper objectMapper;
     private AccountService accountService;
     private MatchService matchService;
 
-    public GameController(AccountService accountService, MatchService matchService) {
+    public GameController(AccountService accountService, MatchService matchService, ObjectMapper objectMapper) {
         this.accountService = accountService;
         this.matchService = matchService;
+        this.objectMapper = objectMapper;
     }
 
-    @RequestMapping(value = "/{gameId}", method = {RequestMethod.GET, RequestMethod.OPTIONS})
-    Game getGame(@PathVariable("gameId") Long id) {
+    private Game getGame(Long id) {
         return matchService.getGame(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @RequestMapping(value = "/{gameId}", method = {RequestMethod.GET, RequestMethod.OPTIONS}, produces="application/json")
+    @ResponseBody
+    Game getGame(HttpServletResponse response, @PathVariable("gameId") Long id) throws JsonProcessingException {
+        Game game = matchService.getGame(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        String gameJson = objectMapper.writeValueAsString(game);
+        Integer hashCode = gameJson.hashCode();
+
+        response.addHeader("hashcode", hashCode.toString());
+
+        return game;
     }
 
     @PostMapping(value = "/{gameId}/purchase/{cardId}")

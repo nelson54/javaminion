@@ -72,7 +72,7 @@ public class Game {
     }
 
     public Player nextPlayer() {
-        log("Starting Turn " + (pastTurns.size() + 1));
+        logs.add("Starting Turn " + (pastTurns.size() + 1));
         ensureTurnerator();
 
         if (turn != null) {
@@ -295,7 +295,7 @@ public class Game {
         this.rebuilding = rebuilding;
     }
 
-    @JsonProperty
+    @JsonIgnore
     @Override
     public int hashCode() {
         int result = (0);
