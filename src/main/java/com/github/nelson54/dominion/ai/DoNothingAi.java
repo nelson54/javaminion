@@ -31,6 +31,8 @@ class DoNothingAi extends AiStrategy {
         choiceResponse.setChoice(choice.getId().toString());
         choiceResponse.setSource(choice.getTarget());
 
+        choiceResponse.setTargetChoice(choice.getId().toString());
+
         if (!choice.isRequired()) {
             choiceResponse.setDone(true);
         } else if (choice.getExpectedAnswerType().equals(YES_OR_NO)) {

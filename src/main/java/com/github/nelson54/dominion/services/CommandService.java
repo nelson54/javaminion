@@ -81,7 +81,7 @@ public class CommandService {
             StringWriter outError = new StringWriter();
             e.printStackTrace(new PrintWriter(outError));
             msg = outError.toString();
-            return null;
+            return game;
         } finally {
             game.setCommandTime(null);
 
