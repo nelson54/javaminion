@@ -44,6 +44,7 @@ class DoNothingAi extends AiStrategy {
 
             option.ifPresent(choices::add);
 
+            choiceResponse.setCard(game.getCardById(option.get()));
             choiceResponse.setChoices(choices);
         }
 

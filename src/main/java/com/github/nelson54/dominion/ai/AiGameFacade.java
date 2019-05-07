@@ -7,7 +7,6 @@ import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.commands.Command;
-import com.github.nelson54.dominion.services.CommandService;
 import com.github.nelson54.dominion.services.MatchService;
 
 import java.util.HashSet;
@@ -77,6 +76,10 @@ public class AiGameFacade {
     void respond(ChoiceResponse choiceResponse) {
         Command command = Command.choice(game, player, choiceResponse);
         matchService.applyCommand(game, command);
+    }
+
+    public Card getCardById(Long id) {
+        return game.getAllCards().get(id);
     }
 
     public boolean canAffordCost(Cost cost) {
