@@ -72,7 +72,7 @@ public class Game {
     }
 
     public Player nextPlayer() {
-
+        log("Starting Turn " + (pastTurns.size() + 1));
         ensureTurnerator();
 
         if (turn != null) {

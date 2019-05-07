@@ -12,6 +12,12 @@
 * match
 * user
 
+##
+- [ ] Migrate to MongoDB fully.
+- [ ] Move back to Heroku.
+- [ ] Move from Jenkins to GitLab CI
+- [ ] 
+
 ## Todo
 - [ ] Tie Breaks.
 - [ ] Show number of cards in opponents hand.
