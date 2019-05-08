@@ -82,7 +82,6 @@ public class GameFactory {
     }
 
     private Player createAiPlayer(Game game, Account account) {
-
         return createAiPlayer(game, account, AiStrategies.random());
     }
 

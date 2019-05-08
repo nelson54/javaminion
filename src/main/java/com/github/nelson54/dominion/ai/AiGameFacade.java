@@ -98,4 +98,8 @@ public class AiGameFacade {
     void endPhase() {
         matchService.applyCommand(game, Command.endPhase(game, player));
     }
+
+    public Long getTurnNumber() {
+        return game.getTurnNumber();
+    }
 }

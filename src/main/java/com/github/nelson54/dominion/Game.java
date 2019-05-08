@@ -298,6 +298,10 @@ public class Game {
         endGame();
     }
 
+    public Long getTurnNumber() {
+        return turnNumber;
+    }
+
     @JsonIgnore
     @Override
     public int hashCode() {
