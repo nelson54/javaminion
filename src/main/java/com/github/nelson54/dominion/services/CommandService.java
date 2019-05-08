@@ -19,8 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +45,7 @@ public class CommandService {
         return this.commandRepository.save(command);
     }
 
-    Game applyCommand(Game game, Command command) {
+    Game applyCommand(Game game, Command command) throws JsonProcessingException {
         String msg = null;
         game.setCommandTime(command.time);
         Turn turn = game.getTurn();
@@ -76,20 +74,14 @@ public class CommandService {
             msg = "Insufficient funds for[" + player.getId() + "] " + player.getName()
                     + " attempted to buy " + card.getName()
                     + " with a money pool of" + turn.getMoney();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            StringWriter outError = new StringWriter();
-            e.printStackTrace(new PrintWriter(outError));
-            msg = outError.toString();
-            return null;
         } finally {
             game.setCommandTime(null);
-
-            if(msg != null) {
-                logger.error(msg);
-            }
         }
 
+        if(msg != null) {
+            logger.error(msg);
+            return null;
+        }
 
         if (command.getId() == null && msg == null) {
             save(command);

@@ -9,11 +9,9 @@ import com.github.nelson54.dominion.persistence.MatchRepository;
 import com.github.nelson54.dominion.persistence.entities.AccountEntity;
 import com.github.nelson54.dominion.persistence.entities.match.MatchEntity;
 import com.github.nelson54.dominion.persistence.entities.match.PlayerScoreEntity;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 
 import javax.inject.Inject;
 import java.io.PrintWriter;
@@ -121,10 +119,14 @@ public class MatchService {
 
     public Game applyCommand(Game game, Command command) {
 
-        game = commandService.applyCommand(game, command);
+        try {
+            game = commandService.applyCommand(game, command);
 
-        if (game.isGameOver()) {
-            endGame(game);
+            if (game.isGameOver()) {
+                endGame(game);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return game;
