@@ -264,7 +264,6 @@ public class Player {
 
     void addChoice(Choice choice) {
         choices.addFirst(choice);
-        this.onChoice();
     }
 
     public void setOrder(byte order) {

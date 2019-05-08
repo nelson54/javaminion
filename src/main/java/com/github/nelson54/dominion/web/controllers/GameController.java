@@ -57,9 +57,10 @@ public class GameController {
 
     @PostMapping(value = "/{gameId}/purchase/{cardId}")
     Game purchase(
+            HttpServletResponse response,
             @PathVariable("gameId") Long gameId,
             @PathVariable("cardId") Long cardId
-    ) {
+    ) throws JsonProcessingException {
         Game game = getGame(gameId);
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
@@ -69,14 +70,20 @@ public class GameController {
 
         game = matchService.applyCommand(game, Command.buy(game, player, purchasedCard));
 
+        String gameJson = objectMapper.writeValueAsString(game);
+        Integer hashCode = gameJson.hashCode();
+
+        response.addHeader("hashcode", hashCode.toString());
+
         return game;
     }
 
     @PostMapping(value = "/{gameId}/play/{cardId}")
     Game play(
+            HttpServletResponse response,
             @PathVariable("gameId") Long gameId,
             @PathVariable("cardId") Long cardId
-    ) {
+    ) throws JsonProcessingException {
         Game game = getGame(gameId);
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
@@ -89,16 +96,22 @@ public class GameController {
             throw new IllegalStateException();
         }
 
+        String gameJson = objectMapper.writeValueAsString(game);
+        Integer hashCode = gameJson.hashCode();
+
+        response.addHeader("hashcode", hashCode.toString());
+
         return game;
     }
 
     @PostMapping(value = "/{gameId}/choice")
     Game chooseResponse(
+            HttpServletResponse response,
             @PathVariable("gameId")
             Long gameId,
             @RequestBody
             ChoiceResponse choiceResponse
-    ) {
+    ) throws JsonProcessingException {
         Game game = getGame(gameId);
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
@@ -111,13 +124,19 @@ public class GameController {
 
         matchService.applyCommand(game, Command.choice(game, player, choiceResponse));
 
+        String gameJson = objectMapper.writeValueAsString(game);
+        Integer hashCode = gameJson.hashCode();
+
+        response.addHeader("hashcode", hashCode.toString());
+
         return game;
     }
 
     @PostMapping(value = "/{gameId}/next-phase")
     Game endPhase(
+            HttpServletResponse response,
             @PathVariable("gameId") Long gameId
-    ) {
+    ) throws JsonProcessingException {
         Game game = matchService.getGame(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Account account = getAccount();
@@ -137,6 +156,12 @@ public class GameController {
         } else {
             matchService.applyCommand(game, Command.endPhase(game, player));
         }
+
+        String gameJson = objectMapper.writeValueAsString(game);
+        Integer hashCode = gameJson.hashCode();
+
+        response.addHeader("hashcode", hashCode.toString());
+
         return game;
     }
 

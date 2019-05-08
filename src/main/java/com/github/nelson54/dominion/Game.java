@@ -161,7 +161,6 @@ public class Game {
     public void addChoice(Choice choice) {
         turn.phase = Phase.WAITING_FOR_CHOICE;
         choice.getTarget().addChoice(choice);
-        choice.getTarget().onChoice();
     }
 
     void endGame() {
