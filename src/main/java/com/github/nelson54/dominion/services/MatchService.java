@@ -99,10 +99,14 @@ public class MatchService {
             if(commands.size() == 0) {
                 game.setRebuilding(false);
                 game.nextPlayer();
+                game.resetPastTurns();
+                game.getLogs().add("Start of Game");
             } else {
                 game.ensureTurnerator();
                 Player nextPlayer = game.getTurnerator().next();
                 game.setTurn(nextPlayer.getCurrentTurn());
+                game.resetPastTurns();
+                game.getLogs().add("Start of Game");
 
                 commands.forEach(command ->
                         applyCommand(game, command));

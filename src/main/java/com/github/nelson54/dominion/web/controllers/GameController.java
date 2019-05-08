@@ -104,6 +104,27 @@ public class GameController {
         return game;
     }
 
+    @PostMapping(value = "/{gameId}/resign")
+    Game resign(
+            HttpServletResponse response,
+            @PathVariable("gameId") Long gameId
+    ) throws JsonProcessingException {
+        Game game = getGame(gameId);
+        Account account = getAccount();
+        Player player = game.getPlayers().get(account.getId());
+
+        logger.info("Game[{}] - {}[{}] resigned.", gameId, account.getUser().getUsername(), account.getId());
+
+        matchService.applyCommand(game, Command.resign(game, player));
+
+        String gameJson = objectMapper.writeValueAsString(game);
+        Integer hashCode = gameJson.hashCode();
+
+        response.addHeader("hashcode", hashCode.toString());
+
+        return game;
+    }
+
     @PostMapping(value = "/{gameId}/choice")
     Game chooseResponse(
             HttpServletResponse response,

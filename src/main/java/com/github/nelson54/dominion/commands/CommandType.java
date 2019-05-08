@@ -5,5 +5,6 @@ public enum CommandType {
     BUY_COMMAND,
     END_PHASE,
     END_TURN,
-    CHOICE_RESPONSE
+    CHOICE_RESPONSE,
+    RESIGN
 }

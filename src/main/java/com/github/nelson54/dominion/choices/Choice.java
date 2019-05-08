@@ -155,11 +155,8 @@ public class Choice {
             choices.remove(this);
             resolved.add(this);
 
-            if (choices.size() > 0) {
-                choices.stream().findFirst().ifPresent((choice) -> choice.getTarget().onChoice());
-            } else {
+            if (choices.size() == 0) {
                 game.getTurn().setPhase(Phase.ACTION);
-                game.getTurn().getPlayer().onActionPhase();
             }
 
 

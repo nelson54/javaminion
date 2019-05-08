@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.google.common.collect.Multimap;
+import net.bytebuddy.dynamic.scaffold.MethodGraph;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -31,37 +32,35 @@ public class Game {
     @JsonIgnore
     private Map<Long, Card> allCards;
     @JsonProperty
-    private Set<Turn> pastTurns;
-    @JsonProperty
-    private Set<Card> trash;
+    private LinkedHashSet<Card> trash;
     @JsonIgnore
     Iterator<Player> turnerator;
     @JsonProperty
     private Map<Long, Player> players;
     @JsonProperty
     private Turn turn;
-
     private Boolean rebuilding;
-
     private LocalDateTime commandTime;
+    private Long turnNumber;
+    private Player resign;
 
     public Game(Long id, Long seed) {
         this.id = id;
         this.seed = RandomSeed.create(seed);
         players = new HashMap<>();
-        pastTurns = new LinkedHashSet<>();
         allCards = new HashMap<>();
-        trash = new HashSet<>();
+        trash = new LinkedHashSet<>();
         logs = new LinkedHashSet<>();
+        turnNumber = 1L;
         rebuilding = false;
     }
 
     public Game(Long seed) {
         this.seed = RandomSeed.create(seed);
-        pastTurns = new LinkedHashSet<>();
         allCards = new HashMap<>();
-        trash = new HashSet<>();
+        trash = new LinkedHashSet<>();
         logs = new LinkedHashSet<>();
+        turnNumber = 1L;
         rebuilding = false;
     }
 
@@ -72,7 +71,7 @@ public class Game {
     }
 
     public Player nextPlayer() {
-        logs.add("Starting Turn " + (pastTurns.size() + 1));
+        logs.add("Starting Turn " + turnNumber++);
         ensureTurnerator();
 
         if (turn != null) {
@@ -85,16 +84,11 @@ public class Game {
         }
 
         Player nextPlayer = turnerator.next();
-        pastTurns.add(turn);
         turn = nextPlayer.getCurrentTurn();
 
-        if (turn.hasActionsInHand()) {
-            turn.setPhase(ACTION);
-            log(nextPlayer.getName() + " is now entering action phase");
-        } else {
-            turn.setPhase(BUY);
-            log(nextPlayer.getName() + " is now entering buy phase");
-        }
+
+        turn.setPhase(ACTION);
+        log(nextPlayer.getName() + " is now entering action phase");
 
         return nextPlayer;
     }
@@ -108,7 +102,7 @@ public class Game {
 
     @JsonProperty
     public boolean isGameOver() {
-        return kingdom.getNumberOfRemainingCardsByName("Province") == 0;
+        return kingdom.getNumberOfRemainingCardsByName("Province") == 0 || this.resign != null;
     }
 
     public Card giveCardToPlayer(String name, Player player) {
@@ -185,6 +179,7 @@ public class Game {
 
             return players.values()
                     .stream()
+                    .filter((player)-> !player.equals(resign))
                     .max(Comparator.comparing(player -> (Long) player.getVictoryPoints()));
 
     }
@@ -294,13 +289,21 @@ public class Game {
         this.rebuilding = rebuilding;
     }
 
+    public void resetPastTurns() {
+        logs.clear();
+    }
+
+    public void setResign(Player player) {
+        resign = player;
+        endGame();
+    }
+
     @JsonIgnore
     @Override
     public int hashCode() {
         int result = (0);
         result = 31 * result + kingdom.hashCode();
         result = 31 * result + allCards.hashCode();
-        result = 31 * result + pastTurns.hashCode();
         result = 31 * result + trash.hashCode();
         result = 31 * result + players.hashCode();
         if (turn != null && turn.getPhase() != null) {
@@ -318,10 +321,13 @@ public class Game {
         if (!allCards.equals(game.allCards)) return false;
         if (!id.equals(game.id)) return false;
         if (!kingdom.equals(game.kingdom)) return false;
-        if (!pastTurns.equals(game.pastTurns)) return false;
         if (!players.equals(game.players)) return false;
         if (!trash.equals(game.trash)) return false;
         return turn.equals(game.turn);
 
+    }
+
+    public LinkedHashSet<String> getLogs() {
+        return logs;
     }
 }

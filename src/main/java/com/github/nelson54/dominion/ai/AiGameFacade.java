@@ -65,7 +65,8 @@ public class AiGameFacade {
     }
 
     public void play(ActionCard card) {
-        turn.playCard(card, player, game);
+        Command command = Command.action(game, player, card);
+        matchService.applyCommand(game, command);
     }
 
     public void buy(Card card) {
@@ -95,6 +96,6 @@ public class AiGameFacade {
     }
 
     void endPhase() {
-        turn.endPhase();
+        matchService.applyCommand(game, Command.endPhase(game, player));
     }
 }

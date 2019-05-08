@@ -72,6 +72,10 @@ public class Command {
         return new Command(game, player, CommandType.END_PHASE);
     }
 
+    public static Command resign(Game game, Player player) {
+        return new Command(game, player, CommandType.RESIGN);
+    }
+
     public static Command endTurn(Game game, Player player) {
         return new Command(game, player, CommandType.END_TURN);
     }

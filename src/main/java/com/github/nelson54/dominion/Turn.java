@@ -15,9 +15,7 @@ import com.google.common.collect.Multimap;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
-import static com.github.nelson54.dominion.Phase.ACTION;
-import static com.github.nelson54.dominion.Phase.BUY;
-import static com.github.nelson54.dominion.Phase.WAITING_FOR_OPPONENT;
+import static com.github.nelson54.dominion.Phase.*;
 
 public class Turn {
 
@@ -82,6 +80,7 @@ public class Turn {
             case ACTION:
             default:
                 phase = BUY;
+                game.log(player.getName() + " is now entering buy phase");
                 break;
         }
     }
@@ -113,13 +112,12 @@ public class Turn {
         card.apply(player, game);
 
         if (game.getChoices().size() > 0) {
-            game.getChoices().forEach(choice -> choice.getTarget().onChoice());
-        } else if ((actionPool == 0)
-                || (Cards.ofType(player.getHand(), CardType.ACTION).size() == 0)) {
-            endPhase();
-        } else {
-            player.onActionPhase();
+            setPhase(WAITING_FOR_CHOICE);
         }
+        //else if ((actionPool == 0)
+        //        || (Cards.ofType(player.getHand(), CardType.ACTION).size() == 0)) {
+        //    endPhase();
+        //}
 
         return card;
     }
@@ -148,13 +146,12 @@ public class Turn {
 
         spendMoney(card.getCost().getMoney());
         buyPool--;
-        Card bought = getGame().giveCardToPlayer(card.getName(), player);
 
-        if (buyPool == 0) {
-            endPhase();
-        }
+        // if (buyPool == 0) {
+        //     endPhase();
+        // }
 
-        return bought;
+        return getGame().giveCardToPlayer(card.getName(), player);
     }
 
     public boolean canAffordCost(Cost cost) {

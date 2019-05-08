@@ -66,6 +66,8 @@ public class CommandService {
                 turn.endPhase();
             } else if (command.type.equals(CommandType.END_TURN)) {
                 turn.endTurn();
+            } else if (command.type.equals(CommandType.RESIGN)) {
+                game.setResign(player);
             }
         } catch (IncorrectPhaseException e) {
             msg = "Incorrect phase command for Player[" + player.getId() + "] " + player.getName()
@@ -110,8 +112,6 @@ public class CommandService {
 
     private void applyChoiceResponse(Game game, Command command) throws JsonProcessingException {
         ChoiceResponse choiceResponse = command.getChoiceResponse(game);
-        logger.info("command: " + objectMapper.writeValueAsString(command));
-        logger.info("choice response: " + objectMapper.writeValueAsString(choiceResponse));
         Choice choice = game.getChoiceById(choiceResponse.getTargetChoice()).get();
         OptionType expectedType = choice.getExpectedAnswerType();
 

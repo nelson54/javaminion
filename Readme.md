@@ -20,7 +20,7 @@
 
 ## Todo
 - [ ] Tie Breaks.
-- [ ] Show number of cards in opponents hand.
+- [ ] Resign
 - [ ] Show opponents discard pile.
 - [ ] Add Queue for running AI code.
 
@@ -56,6 +56,7 @@
 - [ ] Add card lookup [https://github.com/cypressf/dominion/blob/master/cards.json]
 
 ## Done
+- [x] Show number of cards in opponents hand.
 - [x] Adding HTTPS with certbot.
 - [x] Remodel is cancellable but goes into a broken state.
 - [x] Removing keys.
