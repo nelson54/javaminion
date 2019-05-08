@@ -82,7 +82,6 @@ public class Turn {
             case ACTION:
             default:
                 phase = BUY;
-                player.onBuyPhase();
                 break;
         }
     }
@@ -153,8 +152,6 @@ public class Turn {
 
         if (buyPool == 0) {
             endPhase();
-        } else {
-            player.onBuyPhase();
         }
 
         return bought;
