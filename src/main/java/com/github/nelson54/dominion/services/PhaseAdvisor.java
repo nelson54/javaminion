@@ -22,7 +22,10 @@ public class PhaseAdvisor {
         Turn turn = game.getTurn();
         Player player = turn.getPlayer();
 
-        while (player.getAccount().getAi()) {
+        boolean hasAiChoices = game.getChoices().stream()
+                .anyMatch((choice) -> choice.getTarget().getAccount().getAi());
+
+        while (player.getAccount().getAi() || hasAiChoices) {
             if (turn.getPhase().equals(Phase.BUY)) {
                 player.onBuyPhase();
             } else if (turn.getPhase().equals(Phase.ACTION)) {
