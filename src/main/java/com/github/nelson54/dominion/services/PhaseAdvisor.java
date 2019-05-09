@@ -52,7 +52,7 @@ public class PhaseAdvisor {
                 apply(game, Command.endPhase(game, player));
             }
 
-            if(turn.getPhase().equals(Phase.ACTION) && hasActionCardsInHand(player)) {
+            if(turn.getPhase().equals(Phase.ACTION) && hasNoActionCardsInHand(player)) {
                 apply(game, Command.endPhase(game, player));
             }
 
@@ -71,9 +71,9 @@ public class PhaseAdvisor {
                 .anyMatch((choice) -> choice.getTarget().getAccount().getAi());
     }
 
-    private boolean hasActionCardsInHand(Player player) {
+    private boolean hasNoActionCardsInHand(Player player) {
         return player.getHand().stream()
-                .anyMatch((card -> card.isType(CardType.ACTION)));
+                .noneMatch((card -> card.isType(CardType.ACTION)));
     }
 
     private void apply(Game game, Command command) {
