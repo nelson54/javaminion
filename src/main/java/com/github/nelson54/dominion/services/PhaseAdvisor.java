@@ -29,7 +29,7 @@ public class PhaseAdvisor {
         Turn turn = game.getTurn();
         Player player = turn.getPlayer();
 
-        while (player.getAccount().getAi() || hasAiChanges(game)) {
+        while (player.getAccount().getAi() || hasAiChoices(game)) {
             if (turn.getPhase().equals(Phase.BUY)) {
                 player.onBuyPhase();
             } else if (turn.getPhase().equals(Phase.ACTION)) {
@@ -52,11 +52,7 @@ public class PhaseAdvisor {
                 apply(game, Command.endPhase(game, player));
             }
 
-            long actionCardsInHand = player.getHand().stream()
-                    .filter((card -> card.isType(CardType.ACTION)))
-                    .count();
-
-            if(turn.getPhase().equals(Phase.ACTION) && actionCardsInHand == 0L) {
+            if(turn.getPhase().equals(Phase.ACTION) && hasActionCardsInHand(player)) {
                 apply(game, Command.endPhase(game, player));
             }
 
@@ -70,16 +66,21 @@ public class PhaseAdvisor {
         }
     }
 
+    private boolean hasAiChoices(Game game) {
+        return game.getChoices().stream()
+                .anyMatch((choice) -> choice.getTarget().getAccount().getAi());
+    }
+
+    private boolean hasActionCardsInHand(Player player) {
+        return player.getHand().stream()
+                .anyMatch((card -> card.isType(CardType.ACTION)));
+    }
+
     private void apply(Game game, Command command) {
         try {
             commandService.applyCommand(game, command);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-    }
-
-    private boolean hasAiChanges(Game game) {
-        return game.getChoices().stream()
-                .anyMatch((choice) -> choice.getTarget().getAccount().getAi());
     }
 }
