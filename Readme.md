@@ -19,6 +19,7 @@
 - [ ] 
 
 ## Todo
+- [ ] Don't buy cards immediately, zoom and show text.
 - [ ] Tie Breaks.
 - [ ] Resign
 - [ ] Show opponents discard pile.
