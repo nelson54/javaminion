@@ -8,13 +8,13 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.Choice;
 import com.google.common.collect.Multimap;
-import net.bytebuddy.dynamic.scaffold.MethodGraph;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.github.nelson54.dominion.Phase.*;
+import static com.github.nelson54.dominion.Phase.ACTION;
+import static com.github.nelson54.dominion.Phase.END_OF_GAME;
 
 
 public class Game {
@@ -43,6 +43,8 @@ public class Game {
     private LocalDateTime commandTime;
     private Long turnNumber;
     private Player resign;
+
+    private Boolean isReadOnly = false;
 
     public Game(Long id, Long seed) {
         this.id = id;
@@ -118,8 +120,9 @@ public class Game {
                 player.getDiscard().add(card);
                 card.setOwner(player);
             });
-
-            return purchasedCard.get();
+            if(purchasedCard.isPresent()) {
+                return purchasedCard.get();
+            } return null;
         } else {
             return null;
         }
@@ -300,6 +303,14 @@ public class Game {
 
     public Long getTurnNumber() {
         return turnNumber;
+    }
+
+    public Boolean getReadOnly() {
+        return isReadOnly;
+    }
+
+    public void setReadOnly(Boolean readOnly) {
+        isReadOnly = readOnly;
     }
 
     @JsonIgnore

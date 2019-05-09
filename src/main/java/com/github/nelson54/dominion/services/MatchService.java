@@ -126,7 +126,7 @@ public class MatchService {
         try {
             game = commandService.applyCommand(game, command);
 
-            if (game.isGameOver()) {
+            if (game.isGameOver() && !game.getReadOnly()) {
                 endGame(game);
             }
         } catch (Exception e) {

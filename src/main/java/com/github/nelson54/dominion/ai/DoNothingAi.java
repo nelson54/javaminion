@@ -1,5 +1,7 @@
 package com.github.nelson54.dominion.ai;
 
+import com.github.nelson54.dominion.cards.CardType;
+import com.github.nelson54.dominion.cards.types.ActionCard;
 import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 
@@ -24,6 +26,21 @@ class DoNothingAi extends AiStrategy {
     @Override
     public void choice(AiGameFacade game) {
         game.getChoice().ifPresent(c -> handleChoice(game, c));
+    }
+
+    public boolean playIfFound(AiGameFacade game, String name) {
+        Optional<ActionCard> card = game.getHand().stream()
+                .filter(c -> c.getName().equals(name) )
+                .filter(c -> c.isType(CardType.ACTION))
+                .map(c -> (ActionCard)c)
+                .findFirst();
+
+        if (card.isPresent() && game.getActions() > 0) {
+            game.play(card.get());
+            return true;
+        }
+
+        return false;
     }
 
     void handleChoice(AiGameFacade game, Choice choice) {

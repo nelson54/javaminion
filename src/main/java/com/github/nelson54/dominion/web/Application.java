@@ -19,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @ComponentScan(value = {
         "com.github.nelson54.dominion",
-        "com.github.nelson54.dominion.web",
         "com.github.nelson54.dominion.services",
         "com.github.nelson54.dominion.ai"
     }, excludeFilters = {
