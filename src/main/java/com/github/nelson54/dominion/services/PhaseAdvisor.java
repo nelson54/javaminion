@@ -22,10 +22,7 @@ public class PhaseAdvisor {
         Turn turn = game.getTurn();
         Player player = turn.getPlayer();
 
-        boolean hasAiChoices = game.getChoices().stream()
-                .anyMatch((choice) -> choice.getTarget().getAccount().getAi());
-
-        while (player.getAccount().getAi() || hasAiChoices) {
+        while (player.getAccount().getAi() || hasAiChanges(game)) {
             if (turn.getPhase().equals(Phase.BUY)) {
                 player.onBuyPhase();
             } else if (turn.getPhase().equals(Phase.ACTION)) {
@@ -67,5 +64,10 @@ public class PhaseAdvisor {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean hasAiChanges(Game game) {
+        return game.getChoices().stream()
+                .anyMatch((choice) -> choice.getTarget().getAccount().getAi());
     }
 }
