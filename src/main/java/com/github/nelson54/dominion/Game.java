@@ -149,10 +149,10 @@ public class Game {
         return optChoice;
     }
 
-    public Set<Choice> getChoices() {
+    public LinkedHashSet<Choice> getChoices() {
         return players.values().stream()
                 .flatMap(p -> p.getChoices().stream())
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public void addChoice(Choice choice) {
