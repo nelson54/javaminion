@@ -1,9 +1,8 @@
 package com.github.nelson54.dominion.web;
 
+import com.github.nelson54.dominion.AiSimulator;
 import com.github.nelson54.dominion.GameFactory;
 import com.github.nelson54.dominion.KingdomFactory;
-import com.github.nelson54.dominion.services.CommandService;
-import com.github.nelson54.dominion.services.MatchService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,19 +10,21 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 
-@ComponentScan({
+@ComponentScan(value = {
         "com.github.nelson54.dominion",
         "com.github.nelson54.dominion.web",
         "com.github.nelson54.dominion.services",
         "com.github.nelson54.dominion.ai"
-})
+    }, excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value= AiSimulator.class)
+    })
 
 @EntityScan("com.github.nelson54.dominion.persistence.entities")
 
