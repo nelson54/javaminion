@@ -7,6 +7,7 @@ import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
 import com.github.nelson54.dominion.services.AccountService;
 import com.github.nelson54.dominion.services.AiPlayerService;
+import com.github.nelson54.dominion.services.PhaseAdvisor;
 import com.github.nelson54.dominion.web.Application;
 import com.github.nelson54.dominion.web.controllers.AccountController;
 import com.github.nelson54.dominion.web.controllers.GameController;
@@ -55,6 +56,8 @@ public class AiSimulator implements CommandLineRunner {
     private AiPlayerService aiPlayerService;
     private GameFactory gameFactory;
 
+    private PhaseAdvisor phaseAdvisor;
+
     private final int timeout = 60*60*5;
     private final int timesToRun = 100;
 
@@ -90,6 +93,7 @@ public class AiSimulator implements CommandLineRunner {
         p2Wins = 0;
 
         completed = 0;
+
         while ( completed < timesToRun ){
 
             Match match = new Match(2, GameCards.ALL_CARDS.getGameCardSet());
@@ -106,19 +110,7 @@ public class AiSimulator implements CommandLineRunner {
             game.resetPastTurns();
 
             while(!game.getTurn().getPhase().equals(Phase.END_OF_GAME)) {
-                Turn turn = game.getTurn();
-                Player player = turn.getPlayer();
-                try {
-                    if (turn.getPhase().equals(Phase.BUY)) {
-                        player.onBuyPhase();
-                    } else if (turn.getPhase().equals(Phase.ACTION)) {
-                        player.onActionPhase();
-                    } else if (turn.getPhase().equals(Phase.WAITING_FOR_CHOICE)) {
-                        game.getChoices().forEach((choice) -> choice.getTarget().onChoice());
-                    }
-                } catch(RuntimeException e) {
-                    // Do Nothing
-                }
+                phaseAdvisor.advise(game);
             }
 
 
@@ -168,5 +160,10 @@ public class AiSimulator implements CommandLineRunner {
     @Inject
     public void setContext(ApplicationContext context) {
         this.context = context;
+    }
+
+    @Inject
+    public void setPhaseAdvisor(PhaseAdvisor phaseAdvisor) {
+        this.phaseAdvisor = phaseAdvisor;
     }
 }

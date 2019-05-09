@@ -28,17 +28,20 @@ public class MatchService {
     private final MatchRepository matchRepository;
     private final CommandService commandService;
     private final EloService eloService;
+    private final PhaseAdvisor phaseAdvisor;
 
     private GameFactory gameFactory;
 
     public MatchService(
             MatchRepository matchRepository,
             CommandService commandService,
-            EloService eloService) {
+            EloService eloService,
+            PhaseAdvisor phaseAdvisor) {
 
         this.commandService = commandService;
         this.matchRepository = matchRepository;
         this.eloService = eloService;
+        this.phaseAdvisor = phaseAdvisor;
     }
 
     public List<Match> findByStateIn(List<MatchState> states) {
@@ -68,17 +71,7 @@ public class MatchService {
                 .map(game -> {
                     game.setRebuilding(false);
 
-                    Turn turn = game.getTurn();
-
-                    Player player = turn.getPlayer();
-
-                    if(turn.getPhase().equals(Phase.BUY)) {
-                        player.onBuyPhase();
-                    } else if(turn.getPhase().equals(Phase.ACTION)) {
-                        player.onActionPhase();
-                    } else if(turn.getPhase().equals(Phase.WAITING_FOR_CHOICE)) {
-                        game.getChoices().forEach((choice) -> choice.getTarget().onChoice());
-                    }
+                    phaseAdvisor.advise(game);
 
                     return game;
                 });
