@@ -5,8 +5,14 @@ import com.github.nelson54.dominion.ai.AiStrategy;
 import com.github.nelson54.dominion.cards.GameCards;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
+import com.github.nelson54.dominion.services.AccountService;
 import com.github.nelson54.dominion.services.AiPlayerService;
 import com.github.nelson54.dominion.web.Application;
+import com.github.nelson54.dominion.web.controllers.AccountController;
+import com.github.nelson54.dominion.web.controllers.GameController;
+import com.github.nelson54.dominion.web.controllers.MatchController;
+import com.github.nelson54.dominion.web.controllers.PlayerController;
+import com.github.nelson54.dominion.web.security.WebSecurityConfig;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.springframework.boot.CommandLineRunner;
@@ -18,11 +24,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @SpringBootApplication
 
@@ -31,13 +37,18 @@ import java.util.List;
         "com.github.nelson54.dominion.services",
         "com.github.nelson54.dominion.ai"
 }, excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value= Application.class)
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = Application.class),
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = AccountService.class),
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = AccountController.class),
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = GameController.class),
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = MatchController.class),
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = PlayerController.class),
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class),
 })
 
 @EntityScan("com.github.nelson54.dominion.persistence.entities")
 
 @EnableJpaRepositories("com.github.nelson54.dominion.persistence")
-@EnableMongoRepositories("com.github.nelson54.dominion.commands")
 public class AiSimulator implements CommandLineRunner {
     public ApplicationContext context;
 

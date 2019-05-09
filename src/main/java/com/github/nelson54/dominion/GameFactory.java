@@ -4,7 +4,6 @@ import com.github.nelson54.dominion.ai.AiStrategies;
 import com.github.nelson54.dominion.ai.AiStrategy;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
-import com.github.nelson54.dominion.services.CommandService;
 import com.github.nelson54.dominion.services.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,7 +33,7 @@ public class GameFactory {
 
             game.setKingdom(kingdom);
 
-            addPlayers(match.getParticipants(), game);
+            addPlayers(match.getParticipants(), game, match.getSeed());
             Iterator<Player> turnerator = game.getTurnOrder().iterator();
 
             byte i = 0;
@@ -49,13 +48,13 @@ public class GameFactory {
         return game;
     }
 
-    private void addPlayers(Collection<MatchParticipant> players, Game game) {
+    private void addPlayers(Collection<MatchParticipant> players, Game game, Long seed) {
 
         for (MatchParticipant player : players) {
             Player p;
 
             if (player.isAi()) {
-                p = createAiPlayer(game, player.getAccount());
+                p = createAiPlayer(game, player.getAccount(), seed);
             } else {
                 p = createHumanPlayer(game, player.getAccount());
             }
@@ -81,8 +80,8 @@ public class GameFactory {
         return player;
     }
 
-    private Player createAiPlayer(Game game, Account account) {
-        return createAiPlayer(game, account, AiStrategies.random());
+    private Player createAiPlayer(Game game, Account account, Long seed) {
+        return createAiPlayer(game, account, AiStrategies.random(seed));
     }
 
     private Player createAiPlayer(Game game, Account account, AiStrategy aiStrategy) {

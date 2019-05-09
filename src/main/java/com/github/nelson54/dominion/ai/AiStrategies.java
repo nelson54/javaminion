@@ -3,6 +3,7 @@ package com.github.nelson54.dominion.ai;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public enum AiStrategies {
@@ -29,6 +30,17 @@ public enum AiStrategies {
                 .collect(Collectors.toList());
 
         Collections.shuffle(strategies);
+
+        return strategies.get(0);
+    }
+
+
+    public static AiStrategy random(Long seed) {
+        List<AiStrategy> strategies = Arrays.stream(values())
+                .map(AiStrategies::getAiStrategy)
+                .collect(Collectors.toList());
+
+        Collections.shuffle(strategies, new Random(seed));
 
         return strategies.get(0);
     }
