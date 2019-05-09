@@ -19,6 +19,13 @@ public class PhaseAdvisor {
     }
 
     public void advise(Game game) {
+        makeCallsToAI(game);
+
+        skipEmptyPhases(game);
+
+    }
+
+    private void makeCallsToAI(Game game) {
         Turn turn = game.getTurn();
         Player player = turn.getPlayer();
 
@@ -34,6 +41,11 @@ public class PhaseAdvisor {
             turn = game.getTurn();
             player = turn.getPlayer();
         }
+    }
+
+    private void skipEmptyPhases(Game game) {
+        Turn turn = game.getTurn();
+        Player player = turn.getPlayer();
 
         if(commandService != null) {
             if(turn.getPhase().equals(Phase.ACTION) && turn.getActionPool() == 0L) {
