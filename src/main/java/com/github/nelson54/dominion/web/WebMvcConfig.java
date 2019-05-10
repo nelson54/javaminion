@@ -41,19 +41,22 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
             registry.addResourceHandler("/**")
                     .addResourceLocations("file:/root/builds/frontend/current/dist/")
-                    .setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
+                    .setCacheControl(CacheControl.maxAge(10, TimeUnit.DAYS))
+                    .resourceChain(false);
         } else {
             registry.addResourceHandler("/public/**")
                     .addResourceLocations(
                             "file:/Users/dcnelson/projects/dominion-frontend/dist/",
                             "file:/Users/derek/IdeaProjects/dominion-frontend/dist/"
-                    );
+                    )
+                    .resourceChain(false);
 
             registry.addResourceHandler("/**")
                     .addResourceLocations(
                             "file:/Users/dcnelson/projects/dominion-frontend/dist/",
                             "file:/Users/derek/IdeaProjects/dominion-frontend/dist/"
-                    ).setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
+                    ).setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS))
+                    .resourceChain(false);
         }
 
         registry.addResourceHandler("swagger-ui.html")

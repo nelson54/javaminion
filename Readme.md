@@ -12,16 +12,11 @@
 * match
 * user
 
-##
-- [ ] Migrate to MongoDB fully.
-- [ ] Move back to Heroku.
-- [ ] Move from Jenkins to GitLab CI
-- [ ] 
-
 ## Todo
+- [ ] USE REACTIVE MONGO REPOSITORIES
 - [ ] Don't buy cards immediately, zoom and show text.
 - [ ] Tie Breaks.
-- [ ] Resign
+- [ ] Resign (UI, server code is finished).
 - [ ] Show opponents discard pile.
 - [ ] Add Queue for running AI code.
 
@@ -55,6 +50,7 @@
 - [ ] Replay - Add copy button to play a game from a state against AI players.
 - [ ] Don't allow players to watch games while IN_PROGRESS.
 - [ ] Add card lookup [https://github.com/cypressf/dominion/blob/master/cards.json]
+- [ ] Move from Jenkins to GitLab CI
 
 ## Done
 - [x] Show number of cards in opponents hand.
