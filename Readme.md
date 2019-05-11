@@ -14,7 +14,6 @@
 
 ## Todo
 - [ ] Don't buy cards immediately, zoom and show text.
-- [ ] Tie Breaks.
 - [ ] Resign (UI, server code is finished).
 - [ ] Show opponents discard pile.
 
@@ -52,6 +51,7 @@
 - [ ] Move from Jenkins to GitLab CI
 
 ## Done
+- [x] Tie Breaks.
 - [x] Separate running AI code from matchService.
 - [x] Show number of cards in opponents hand.
 - [x] Adding HTTPS with certbot.

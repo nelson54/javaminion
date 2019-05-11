@@ -178,12 +178,29 @@ public class Game {
         this.players = players;
     }
 
+    public Comparator<Player> rankComparator() {
+        Comparator<Player> c = (a, b) -> {
+            if (a.getVictoryPoints() > b.getVictoryPoints()) {
+                return 1;
+            } else if (a.getVictoryPoints() < b.getVictoryPoints()) {
+                return -1;
+            } else if (a.getTotalMoney() > b.getTotalMoney()) {
+                return 1;
+            } else if (b.getTotalMoney() > a.getTotalMoney()) {
+                return -1;
+            }
+            return 0;
+        };
+
+        return c.reversed();
+    }
+
     public Optional<Player> getWinningPlayer() {
 
             return players.values()
                     .stream()
-                    .filter((player)-> !player.equals(resign))
-                    .max(Comparator.comparing(player -> (Long) player.getVictoryPoints()));
+                    .filter((player) -> !player.equals(resign))
+                    .min(rankComparator());
 
     }
 

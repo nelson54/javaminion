@@ -3,8 +3,10 @@ package com.github.nelson54.dominion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.nelson54.dominion.cards.CardType;
+import com.github.nelson54.dominion.cards.Cards;
 import com.github.nelson54.dominion.cards.base.CurseCard;
 import com.github.nelson54.dominion.cards.types.Card;
+import com.github.nelson54.dominion.cards.types.TreasureCard;
 import com.github.nelson54.dominion.cards.types.VictoryCard;
 import com.github.nelson54.dominion.choices.Choice;
 
@@ -87,6 +89,14 @@ public class Player {
 
         currentTurn = Turn.create(this);
 
+    }
+
+    public long getTotalMoney() {
+        return Cards.ofType(this.getAllCards().values(), CardType.TREASURE)
+                .stream()
+                .map(card -> (TreasureCard) card)
+                .mapToLong(card -> (int) card.getMoneyValue())
+                .sum();
     }
 
     public void discard(Card card) {
