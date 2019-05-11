@@ -77,6 +77,25 @@ public class MatchService {
                 });
     }
 
+    public Optional<Game> getGame(Long matchId, String commandId) {
+        return matchRepository
+                .findById(matchId)
+                .map(MatchEntity::toMatch)
+                .map(gameFactory::createGame)
+                .map(game -> {
+                    game.setRebuilding(true);
+                    return game;
+                })
+                .map(game -> applyCommandsUntil(game, commandId))
+                .map(game -> {
+                    game.setRebuilding(false);
+
+                    phaseAdvisor.advise(game);
+
+                    return game;
+                });
+    }
+
     public Optional<Match> getMatch(Long matchId) {
         return matchRepository
                 .findById(matchId)
@@ -95,11 +114,7 @@ public class MatchService {
                 game.resetPastTurns();
                 game.getLogs().add("Start of Game");
             } else {
-                game.ensureTurnerator();
-                Player nextPlayer = game.getTurnerator().next();
-                game.setTurn(nextPlayer.getCurrentTurn());
-                game.resetPastTurns();
-                game.getLogs().add("Start of Game");
+                prepareForCommands(game);
 
                 commands.forEach(command ->
                         applyCommand(game, command));
@@ -112,6 +127,48 @@ public class MatchService {
         }
 
         return game;
+    }
+
+    private Game applyCommandsUntil(Game game, String commandId) {
+        List<Command> commands;
+        try {
+            commands = commandService
+                    .findCommandsForGame(game);
+
+            boolean hasReachedCommand = false;
+
+            if(commands.size() == 0) {
+                game.setRebuilding(false);
+                game.nextPlayer();
+                game.resetPastTurns();
+                game.getLogs().add("Start of Game");
+            } else {
+                prepareForCommands(game);
+
+                Iterator<Command> commandIterator = commands.iterator();
+
+                while(!hasReachedCommand && commandIterator.hasNext()) {
+                    Command command = commandIterator.next();
+                    hasReachedCommand = command.getId().equals(commandId);
+                    applyCommand(game, command);
+                }
+            }
+
+        } catch (Exception e) {
+            StringWriter outError = new StringWriter();
+            e.printStackTrace(new PrintWriter(outError));
+            logger.error(outError.toString());
+        }
+
+        return game;
+    }
+
+    private void prepareForCommands(Game game) {
+        game.ensureTurnerator();
+        Player nextPlayer = game.getTurnerator().next();
+        game.setTurn(nextPlayer.getCurrentTurn());
+        game.resetPastTurns();
+        game.getLogs().add("Start of Game");
     }
 
     public Game applyCommand(Game game, Command command) {

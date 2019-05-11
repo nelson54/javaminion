@@ -13,12 +13,10 @@
 * user
 
 ## Todo
-- [ ] USE REACTIVE MONGO REPOSITORIES
 - [ ] Don't buy cards immediately, zoom and show text.
 - [ ] Tie Breaks.
 - [ ] Resign (UI, server code is finished).
 - [ ] Show opponents discard pile.
-- [ ] Add Queue for running AI code.
 
 ### Movement Log
 - [ ] Gains hand
@@ -27,6 +25,7 @@
 - [ ] Discard
 
 ### Animations
+- [x] Allow to replay up until a point
 - [ ] Move Card
 - [ ] Clean up
 - [ ] Draw Hand
@@ -53,6 +52,7 @@
 - [ ] Move from Jenkins to GitLab CI
 
 ## Done
+- [x] Separate running AI code from matchService.
 - [x] Show number of cards in opponents hand.
 - [x] Adding HTTPS with certbot.
 - [x] Remodel is cancellable but goes into a broken state.

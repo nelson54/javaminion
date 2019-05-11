@@ -55,6 +55,23 @@ public class GameController {
         return game;
     }
 
+    @RequestMapping(value = "/{gameId}/command", method = {RequestMethod.GET, RequestMethod.OPTIONS}, produces="application/json")
+    @ResponseBody
+    Game getGameAtCommand(
+            HttpServletResponse response,
+            @PathVariable("commandId") String commandId,
+            @PathVariable("gameId") Long id
+    ) throws JsonProcessingException {
+        Game game = matchService.getGame(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        String gameJson = objectMapper.writeValueAsString(game);
+        Integer hashCode = gameJson.hashCode();
+
+        response.addHeader("hashcode", hashCode.toString());
+
+        return game;
+    }
+
     @PostMapping(value = "/{gameId}/purchase/{cardId}")
     Game purchase(
             HttpServletResponse response,
