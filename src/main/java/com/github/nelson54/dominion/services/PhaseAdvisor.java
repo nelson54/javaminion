@@ -1,6 +1,5 @@
 package com.github.nelson54.dominion.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Phase;
 import com.github.nelson54.dominion.Player;
@@ -77,10 +76,6 @@ public class PhaseAdvisor {
     }
 
     private void apply(Game game, Command command) {
-        try {
-            commandService.applyCommand(game, command);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        commandService.applyCommand(game, command);
     }
 }

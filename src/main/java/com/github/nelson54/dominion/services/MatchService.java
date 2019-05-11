@@ -1,6 +1,9 @@
 package com.github.nelson54.dominion.services;
 
-import com.github.nelson54.dominion.*;
+import com.github.nelson54.dominion.Account;
+import com.github.nelson54.dominion.Game;
+import com.github.nelson54.dominion.GameFactory;
+import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
@@ -102,7 +105,8 @@ public class MatchService {
                 game.getLogs().add("Start of Game");
 
                 commands.forEach(command ->
-                        applyCommand(game, command));
+                        applyCommand(game, command)
+                );
             }
 
         } catch (Exception e) {

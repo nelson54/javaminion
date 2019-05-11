@@ -13,11 +13,14 @@ import com.github.nelson54.dominion.choices.OptionType;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.commands.CommandRepository;
 import com.github.nelson54.dominion.commands.CommandType;
+import com.github.nelson54.dominion.commands.ReactiveCommandRepository;
 import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
 import com.github.nelson54.dominion.exceptions.InsufficientFundsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +31,14 @@ import java.util.stream.Collectors;
 public class CommandService {
 
     private static final Logger logger = LoggerFactory.getLogger(CommandService.class);
-    private CommandRepository commandRepository;
+    private final ReactiveCommandRepository reactiveCommandRepository;
+    private final CommandRepository commandRepository;
     private ObjectMapper objectMapper;
 
-    public CommandService(CommandRepository commandRepository, ObjectMapper objectMapper) {
+    public CommandService(ObjectMapper objectMapper, CommandRepository commandRepository, ReactiveCommandRepository reactiveCommandRepository) {
         this.commandRepository = commandRepository;
         this.objectMapper = objectMapper;
+        this.reactiveCommandRepository = reactiveCommandRepository;
     }
 
     List<Command> findCommandsForGame(Game game) {
@@ -41,11 +46,16 @@ public class CommandService {
                 .orElse(new ArrayList<>());
     }
 
-    Command save(Command command) {
-        return this.commandRepository.save(command);
+    Mono<Command> save(Command command) {
+        return reactiveCommandRepository.save(command);
     }
 
-    Game applyCommand(Game game, Command command) throws JsonProcessingException {
+    public Flux<Command> listenForCommands(Long gameId) {
+        return reactiveCommandRepository.findByGameId(gameId);
+    }
+
+    Game applyCommand(Game game, Command command) {
+
         String msg = null;
         game.setCommandTime(command.time);
         Turn turn = game.getTurn();
@@ -76,6 +86,8 @@ public class CommandService {
             msg = "Insufficient funds for[" + player.getId() + "] " + player.getName()
                     + " attempted to buy " + card.getName()
                     + " with a money pool of" + turn.getMoney();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         } finally {
             game.setCommandTime(null);
         }
@@ -85,12 +97,11 @@ public class CommandService {
             return null;
         }
 
-        if (command.getId() == null && msg == null && !game.getReadOnly()) {
-            save(command);
-        } else if (command.getId() == null && msg != null) {
-            logger.error(msg);
-            game.log(msg);
+        if (command.getId() == null && !game.getReadOnly()) {
+            save(command).map((c) ->  command.id = c.id);
         }
+
+        game.getCommandIds().add(command.getId());
 
         return game;
     }
@@ -107,7 +118,7 @@ public class CommandService {
 
 
     private void deleteAll() {
-        commandRepository.deleteAll();
+        reactiveCommandRepository.deleteAll();
     }
 
     private void applyChoiceResponse(Game game, Command command) throws JsonProcessingException {

@@ -33,6 +33,8 @@ public class Game {
     private Map<Long, Card> allCards;
     @JsonProperty
     private LinkedHashSet<Card> trash;
+    @JsonProperty
+    private LinkedHashSet<String> commandIds;
     @JsonIgnore
     Iterator<Player> turnerator;
     @JsonProperty
@@ -53,6 +55,7 @@ public class Game {
         allCards = new HashMap<>();
         trash = new LinkedHashSet<>();
         logs = new LinkedHashSet<>();
+        commandIds = new LinkedHashSet<>();
         turnNumber = 1L;
         rebuilding = false;
     }
@@ -62,6 +65,7 @@ public class Game {
         allCards = new HashMap<>();
         trash = new LinkedHashSet<>();
         logs = new LinkedHashSet<>();
+        commandIds = new LinkedHashSet<>();
         turnNumber = 1L;
         rebuilding = false;
     }
@@ -311,6 +315,10 @@ public class Game {
 
     public void setReadOnly(Boolean readOnly) {
         isReadOnly = readOnly;
+    }
+
+    public LinkedHashSet<String> getCommandIds() {
+        return commandIds;
     }
 
     @JsonIgnore

@@ -4,11 +4,13 @@ import com.github.nelson54.dominion.Game;
 import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Document(collection = "commands")
 public class Command {
 
     @Id

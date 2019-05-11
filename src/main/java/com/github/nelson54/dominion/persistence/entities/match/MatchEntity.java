@@ -1,6 +1,5 @@
 package com.github.nelson54.dominion.persistence.entities.match;
 
-import com.github.nelson54.dominion.Player;
 import com.github.nelson54.dominion.cards.GameCardSet;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
@@ -24,8 +23,8 @@ public class MatchEntity {
     @Column
     private Long seed;
 
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private List<AccountEntity> players;
+    @ManyToMany(cascade = CascadeType.REFRESH)
+    private Set<AccountEntity> players;
 
     @Column
     private Integer playerCount;
@@ -37,15 +36,15 @@ public class MatchEntity {
     @Enumerated(EnumType.STRING)
     private MatchState state;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
     private Set<PlayerScoreEntity> scores;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn
     private List<CardTypeReferenceEntity> gameCards;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
     private AccountEntity winner;
 
@@ -118,7 +117,7 @@ public class MatchEntity {
 
         matchEntity.players = match.getParticipants().stream()
                 .map((participant) -> AccountEntity.ofAccount(participant.getAccount()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
         if (match.getWinner() != null) {
             matchEntity.winner = AccountEntity.ofAccount(match.getWinner().getAccount());

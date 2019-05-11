@@ -56,7 +56,9 @@ dependencies {
     compile group: 'io.logz.logback', name: 'logzio-logback-appender', version: '1.0.22'
     compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-
+    compile 'org.springframework.boot:spring-boot-starter-webflux'
+    compile 'org.projectreactor:reactor-spring:1.0.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb-reactive', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$spring",  {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
@@ -69,7 +71,7 @@ dependencies {
         exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
         exclude group: 'org.hibernate', module: 'hibernate-core'
     }
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "$spring"
+    compile group: 'org.springFramework.boot', name: 'spring-boot-starter-actuator', version: "$spring"
     compile group: 'org.springframework.boot',name: 'spring-boot-devtools', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "$spring"

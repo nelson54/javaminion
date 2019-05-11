@@ -12,14 +12,22 @@ import com.github.nelson54.dominion.choices.Choice;
 import com.github.nelson54.dominion.choices.ChoiceResponse;
 import com.github.nelson54.dominion.commands.Command;
 import com.github.nelson54.dominion.services.AccountService;
+import com.github.nelson54.dominion.services.CommandService;
 import com.github.nelson54.dominion.services.MatchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import reactor.core.publisher.Flux;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 @RestController
@@ -28,13 +36,16 @@ public class GameController {
 
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
     private final ObjectMapper objectMapper;
-    private AccountService accountService;
-    private MatchService matchService;
+    private final AccountService accountService;
+    private final MatchService matchService;
+    private final CommandService commandService;
 
-    public GameController(AccountService accountService, MatchService matchService, ObjectMapper objectMapper) {
+
+    public GameController(AccountService accountService, MatchService matchService, ObjectMapper objectMapper, CommandService commandService) {
         this.accountService = accountService;
         this.matchService = matchService;
         this.objectMapper = objectMapper;
+        this.commandService = commandService;
     }
 
     private Game getGame(Long id) {
@@ -53,6 +64,15 @@ public class GameController {
         response.addHeader("hashcode", hashCode.toString());
 
         return game;
+    }
+
+    @GetMapping(value = "/{gameId}/poll", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    Flux<ServerSentEvent<Command>> listenForChanges(@PathVariable Long gameId) throws JsonProcessingException {
+        return commandService.listenForCommands(gameId)
+        //        .map(command -> matchService
+        //                .getGame(command.gameId)
+        //                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)))
+                .map(command -> ServerSentEvent.builder(command).build());
     }
 
     @PostMapping(value = "/{gameId}/purchase/{cardId}")
@@ -76,6 +96,28 @@ public class GameController {
         response.addHeader("hashcode", hashCode.toString());
 
         return game;
+    }
+
+    @GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter streamFlux() {
+        SseEmitter emitter = new SseEmitter();
+        ExecutorService sseMvcExecutor = Executors.newSingleThreadExecutor();
+        sseMvcExecutor.execute(() -> {
+            commandService.listenForCommands(1002L)
+                    //        .map(command -> matchService
+                    //                .getGame(command.gameId)
+                    //                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)))
+                    .map(command -> ServerSentEvent.builder(command))
+                    .map(sse -> {
+                        try {
+                            emitter.send(sse);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return sse;
+                    });
+        });
+        return emitter;
     }
 
     @PostMapping(value = "/{gameId}/play/{cardId}")
