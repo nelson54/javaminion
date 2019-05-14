@@ -51,6 +51,7 @@
 - [ ] Move from Jenkins to GitLab CI
 
 ## Done
+- [x] Prevent from playing cards not currently owned.
 - [x] Tie Breaks.
 - [x] Separate running AI code from matchService.
 - [x] Show number of cards in opponents hand.

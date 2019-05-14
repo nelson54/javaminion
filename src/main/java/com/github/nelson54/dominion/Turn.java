@@ -98,6 +98,10 @@ public class Turn {
             throw new IncorrectPhaseException();
         }
 
+        if (card.getOwner() != null && card.getOwner().getId().equals(player.getId())) {
+            throw new IllegalStateException();
+        }
+
         if (actionPool == 0) {
             throw new InsufficientActionsException();
         }
