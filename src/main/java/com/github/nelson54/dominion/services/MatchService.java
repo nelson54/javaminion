@@ -110,9 +110,7 @@ public class MatchService {
 
             if(commands.size() == 0) {
                 game.setRebuilding(false);
-                game.nextPlayer();
-                game.resetPastTurns();
-                game.getLogs().add("Start of Game");
+                prepareForCommands(game);
             } else {
                 prepareForCommands(game);
 
