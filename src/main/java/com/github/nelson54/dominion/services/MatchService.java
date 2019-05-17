@@ -77,7 +77,7 @@ public class MatchService {
                 });
     }
 
-    public Optional<Game> getGame(Long matchId, String commandId) {
+    public Optional<Game> getGameUpToCommand(Long matchId, String commandId) {
         return matchRepository
                 .findById(matchId)
                 .map(MatchEntity::toMatch)
@@ -110,7 +110,9 @@ public class MatchService {
 
             if(commands.size() == 0) {
                 game.setRebuilding(false);
-                prepareForCommands(game);
+                game.nextPlayer();
+                game.resetPastTurns();
+                game.getLogs().add("Start of Game");
             } else {
                 prepareForCommands(game);
 

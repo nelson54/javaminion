@@ -29,18 +29,15 @@ class DoNothingAi extends AiStrategy {
     }
 
     public boolean playIfFound(AiGameFacade game, String name) {
-        Optional<ActionCard> card = game.getHand().stream()
+        return game.getHand().stream()
                 .filter(c -> c.getName().equals(name) )
-                .filter(c -> c.isType(CardType.ACTION))
-                .map(c -> (ActionCard)c)
-                .findFirst();
-
-        if (card.isPresent() && game.getActions() > 0) {
-            game.play(card.get());
-            return true;
-        }
-
-        return false;
+                .filter(c -> c.isType(CardType.ACTION) && game.getActions() > 0)
+                .findFirst()
+                .map(c -> {
+                    game.play((ActionCard) c);
+                    return c;
+                })
+                .isPresent();
     }
 
     void handleChoice(AiGameFacade game, Choice choice) {

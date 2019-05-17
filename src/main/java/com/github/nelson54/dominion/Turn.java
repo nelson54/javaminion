@@ -94,8 +94,8 @@ public class Turn {
     public Card playCard(@NotNull ActionCard card, @NotNull Player player, Game game) {
         game.log(" " + player.getName() + " played card " + card.getName());
 
-        if ((phase != ACTION || !player.getId().equals(this.player.getId())) ||
-                card.getOwner() != null && card.getOwner().getId().equals(player.getId())) {
+        if ((!phase.equals(ACTION) || !player.getId().equals(this.player.getId())) ||
+                card.getOwner() == null || !card.getOwner().getId().equals(player.getId())) {
             throw new IncorrectPhaseException();
         }
 

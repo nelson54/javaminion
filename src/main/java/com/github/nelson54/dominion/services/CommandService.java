@@ -82,7 +82,8 @@ public class CommandService {
 
         if(msg != null) {
             logger.error(msg);
-            return null;
+            System.out.println(msg);
+            return game;
         }
 
         if (command.getId() == null && msg == null && !game.getReadOnly()) {
