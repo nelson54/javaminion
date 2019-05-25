@@ -53,8 +53,10 @@ public class GameFactory {
         for (MatchParticipant player : players) {
             Player p;
 
-            if (player.isAi()) {
+            if (player.isAi() && player.getAiStrategy() == null) {
                 p = createAiPlayer(game, player.getAccount(), seed);
+            } else if (player.isAi() && player.getAiStrategy() != null) {
+                p = createAiPlayer(game, player.getAccount(), player.getAiStrategy());
             } else {
                 p = createHumanPlayer(game, player.getAccount());
             }

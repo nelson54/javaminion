@@ -13,7 +13,6 @@ public class Account {
     private Boolean ai;
     private Long elo;
 
-
     public Account(Long id, User user, String email, String firstname, Boolean ai) {
         this.id = id;
         this.user = user;

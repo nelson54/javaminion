@@ -1,12 +1,14 @@
 package com.github.nelson54.dominion.match;
 
 import com.github.nelson54.dominion.Account;
-import com.github.nelson54.dominion.ai.AiUtils;
+import com.github.nelson54.dominion.ai.AiStrategies;
+import com.github.nelson54.dominion.ai.AiStrategy;
 
 import java.util.Objects;
 
 public class MatchParticipant {
     private Account account;
+    private AiStrategy aiStrategy;
     private boolean ai;
 
     public MatchParticipant(Account account) {
@@ -16,6 +18,7 @@ public class MatchParticipant {
 
     public static MatchParticipant createAi(Account account) {
         MatchParticipant ai = new MatchParticipant(account);
+        ai.aiStrategy = AiStrategies.random();
         ai.ai = true;
         return ai;
     }
@@ -26,6 +29,14 @@ public class MatchParticipant {
 
     public boolean isAi() {
         return ai;
+    }
+
+    public AiStrategy getAiStrategy() {
+        return aiStrategy;
+    }
+
+    public void setAiStrategy(AiStrategy strategy) {
+        this.aiStrategy = strategy;
     }
 
     @Override

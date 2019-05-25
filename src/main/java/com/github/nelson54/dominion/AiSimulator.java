@@ -14,6 +14,7 @@ import com.github.nelson54.dominion.web.controllers.GameController;
 import com.github.nelson54.dominion.web.controllers.MatchController;
 import com.github.nelson54.dominion.web.controllers.PlayerController;
 import com.github.nelson54.dominion.web.security.WebSecurityConfig;
+import com.google.common.collect.Streams;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.springframework.boot.CommandLineRunner;
@@ -27,8 +28,9 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 @SpringBootApplication
@@ -58,8 +60,7 @@ public class AiSimulator implements CommandLineRunner {
 
     private PhaseAdvisor phaseAdvisor;
 
-    private final int timeout = 60*60*5;
-    private final int timesToRun = 100;
+    private final int timesToRun = 1000;
 
     private int completed = 0;
     private int p1Wins = 0;
@@ -67,6 +68,7 @@ public class AiSimulator implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(AiSimulator.class);
+        app.setAdditionalProfiles("simulation");
         app.run(args);
     }
 
@@ -75,17 +77,13 @@ public class AiSimulator implements CommandLineRunner {
     }
 
     public void run(String[] args) {
-        for(int i=0; i < 10; i++){
-            run();
-        }
-
-    }
-
-    private void run() {
         AiStrategy ai1 = AiStrategies.random();
         AiStrategy ai2 = AiStrategies.random();
+        AiStrategy[] ais = {ai1, ai2};
 
-        Game game =  null;
+        List<AiStrategy> aiStrategyList = Arrays.asList(ais);
+
+        Game game;
         DateTime start = DateTime.now();
         DateTime end;
 
@@ -98,41 +96,32 @@ public class AiSimulator implements CommandLineRunner {
 
             Match match = new Match(2, GameCards.ALL_CARDS.getGameCardSet());
 
-            aiPlayerService
-                    .random(2)
+            Stream<MatchParticipant> mps = aiPlayerService.random(2)
                     .stream()
-                    .map(MatchParticipant::new)
-                    .forEach(match::addParticipant);
+                    .map(MatchParticipant::new);
+
+            Streams.zip(mps, aiStrategyList.stream(), (mp, s) -> {
+                mp.setAiStrategy(s);
+                return mp;
+            }).forEach(match::addParticipant);
 
             game = gameFactory.createGame(match);
             game.setReadOnly(true);
             game.nextPlayer();
             game.resetPastTurns();
 
-            while(!game.getTurn().getPhase().equals(Phase.END_OF_GAME)) {
+            while(game.getWinningPlayer().isEmpty()) {
                 phaseAdvisor.advise(game);
             }
 
-
             completed++;
 
-            List<Player> players = new ArrayList<>(game.getPlayers().values());
-
-            Player firstPlayer;
-            Player secondPlayer;
-
-            if( players.get(0).getName().equals("p1")){
-                firstPlayer = players.get(0);
-                secondPlayer = players.get(1);
-            } else {
-                firstPlayer = players.get(1);
-                secondPlayer = players.get(0);
-            }
-
-            if(firstPlayer.getVictoryPoints() > secondPlayer.getVictoryPoints()){
+            if(((AiPlayer)game.getWinningPlayer().get()).getAiStrategy().equals(ai1)){
                 p1Wins++;
-            } else {
+            } else if (((AiPlayer)game.getWinningPlayer().get()).getAiStrategy().equals(ai2)) {
                 p2Wins++;
+            } else {
+                System.out.println("WTF!");
             }
 
         }
@@ -143,7 +132,11 @@ public class AiSimulator implements CommandLineRunner {
         System.out.println("Ran " + timesToRun+ " simulations in " +duration.toString());
         System.out.println( ai1.getClass().toString() + " finished with " + p1Wins +"/"+timesToRun+ " wins.");
         System.out.println( ai2.getClass().toString() + " finished with " + p2Wins +"/"+timesToRun+ " wins.");
-        //((ConfigurableApplicationContext) context).close();
+
+    }
+
+    private void run() {
+
     }
 
     @Bean

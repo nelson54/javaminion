@@ -50,4 +50,8 @@ public class AiPlayer extends Player {
     public void setAiStrategy(AiStrategy aiStrategy) {
         this.aiStrategy = aiStrategy;
     }
+
+    public AiStrategy getAiStrategy() {
+        return aiStrategy;
+    }
 }
