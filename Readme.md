@@ -13,6 +13,9 @@
 * user
 
 ## Todo
+- [ ] Migrate to new webpack
+- [ ] Migrate to typescript
+- [ ] Migrate to Angular 7
 - [ ] Redesign card modal (possibly based on tooltip).
 - [ ] Move cards from <img> to css {background-image}.
 - [ ] Remove zoom button from cards and 
