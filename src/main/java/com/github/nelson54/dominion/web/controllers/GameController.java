@@ -81,7 +81,12 @@ public class GameController {
         Game game = getGame(gameId);
         Account account = getAccount();
         Player player = game.getPlayers().get(account.getId());
-        Card purchasedCard = game.getAllCards().get(cardId);
+
+        Card purchasedCard = game.getKingdom().getAllCards().get(cardId);
+
+        if(purchasedCard == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
 
         logger.info("Game[{}] - {}[{}] purchased Card[{}] ", gameId, account.getUser().getUsername(), account.getId(), purchasedCard.getName());
 
