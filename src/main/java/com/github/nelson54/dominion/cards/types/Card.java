@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.game.Player;
 import com.github.nelson54.dominion.cards.CardType;
 import com.github.nelson54.dominion.cards.Cost;
-import com.github.nelson54.dominion.choices.Choice;
+import com.github.nelson54.dominion.game.choices.Choice;
 
 import java.util.HashSet;
 import java.util.Set;

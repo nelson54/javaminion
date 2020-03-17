@@ -1,7 +1,7 @@
 package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.DominionTestCase;
-import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.game.Player;
 import com.github.nelson54.dominion.cards.types.ActionAttackCard;
 import com.github.nelson54.dominion.cards.types.Card;
 import org.junit.jupiter.api.BeforeEach;

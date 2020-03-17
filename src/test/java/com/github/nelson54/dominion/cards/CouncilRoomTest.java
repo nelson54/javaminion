@@ -1,12 +1,10 @@
 package com.github.nelson54.dominion.cards;
-;
-;
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.Turn;
+import com.github.nelson54.dominion.DominionTestCase;
 import com.github.nelson54.dominion.cards.sets.base.CouncilRoom;
 import com.github.nelson54.dominion.cards.types.ActionCard;
-import com.github.nelson54.dominion.DominionTestCase;
+import com.github.nelson54.dominion.game.Game;
+import com.github.nelson54.dominion.game.Player;
+import com.github.nelson54.dominion.game.Turn;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockRunner;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+;
+;
 
 @RunWith(EasyMockRunner.class)
 public class CouncilRoomTest extends DominionTestCase {;

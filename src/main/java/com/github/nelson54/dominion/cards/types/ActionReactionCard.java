@@ -1,9 +1,9 @@
 package com.github.nelson54.dominion.cards.types;
 
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.game.Game;
+import com.github.nelson54.dominion.game.Player;
 import com.github.nelson54.dominion.cards.CardType;
-import com.github.nelson54.dominion.choices.Choice;
+import com.github.nelson54.dominion.game.choices.Choice;
 
 import java.util.Map;
 import java.util.Set;

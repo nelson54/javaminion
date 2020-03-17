@@ -1,9 +1,9 @@
 package com.github.nelson54.dominion.controllers;
 
 import com.github.nelson54.dominion.DominionTestCase;
-import com.github.nelson54.dominion.web.Application;
-import com.github.nelson54.dominion.web.controllers.GameController;
-import com.github.nelson54.dominion.web.controllers.MatchController;
+import com.github.nelson54.dominion.Application;
+import com.github.nelson54.dominion.game.GameController;
+import com.github.nelson54.dominion.match.MatchController;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

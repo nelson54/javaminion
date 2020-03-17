@@ -1,8 +1,8 @@
 package com.github.nelson54.dominion.match;
 
-import com.github.nelson54.dominion.Account;
-import com.github.nelson54.dominion.ai.AiStrategies;
-import com.github.nelson54.dominion.ai.AiStrategy;
+import com.github.nelson54.dominion.user.account.Account;
+import com.github.nelson54.dominion.game.ai.AiStrategies;
+import com.github.nelson54.dominion.game.ai.AiStrategy;
 
 import java.util.Objects;
 

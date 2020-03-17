@@ -1,13 +1,12 @@
 package com.github.nelson54.dominion.cards.sets.intrigue;
 
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.Turn;
+import com.github.nelson54.dominion.game.Game;
+import com.github.nelson54.dominion.game.Player;
+import com.github.nelson54.dominion.game.Turn;
 import com.github.nelson54.dominion.cards.Cost;
-import com.github.nelson54.dominion.cards.sets.base.BureaucratEffect;
 import com.github.nelson54.dominion.cards.types.Effect;
 import com.github.nelson54.dominion.cards.types.ComplexActionAttackCard;
-import com.github.nelson54.dominion.choices.Choice;
+import com.github.nelson54.dominion.game.choices.Choice;
 import com.github.nelson54.dominion.exceptions.NoValidChoiceException;
 
 import java.util.HashSet;

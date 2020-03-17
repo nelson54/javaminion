@@ -1,11 +1,10 @@
 package com.github.nelson54.dominion;
-import com.github.nelson54.dominion.*;
+import com.github.nelson54.dominion.game.*;
 import com.github.nelson54.dominion.cards.GameCards;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
-import org.junit.Before;
+import com.github.nelson54.dominion.user.account.Account;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class DominionTestCase {
     @BeforeEach
     public void setup() {
         kingdomFactory = new KingdomFactory();
-        gameFactory = new GameFactory(kingdomFactory, null);
+        gameFactory = new GameFactory(kingdomFactory);
 
         Match model = gameModel();
         game = gameFactory.createGame(model);

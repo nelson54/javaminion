@@ -1,9 +1,10 @@
 package com.github.nelson54.dominion.utils;
 
-import com.github.nelson54.dominion.*;
+import com.github.nelson54.dominion.game.*;
 import com.github.nelson54.dominion.cards.GameCards;
 import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchParticipant;
+import com.github.nelson54.dominion.user.account.Account;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class GameTestProvider {
 
     public Game createGame() {
         KingdomFactory kingdomFactory = new KingdomFactory();
-        GameFactory gameFactory = new GameFactory(kingdomFactory, null);
+        GameFactory gameFactory = new GameFactory(kingdomFactory);
 
         Match match = new Match(2, GameCards.ALL_CARDS.getGameCardSet());
 

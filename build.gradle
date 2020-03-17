@@ -1,5 +1,9 @@
 logging.captureStandardOutput LogLevel.INFO
 
+ext{
+    spring = '2.2.5.RELEASE'
+}
+
 buildscript {
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
@@ -7,7 +11,7 @@ buildscript {
         maven { url 'https://repo.spring.io/milestone' }
     }
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.4.RELEASE'
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.2.5.RELEASE"
         classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.0'
     }
 }
@@ -24,7 +28,7 @@ apply plugin: 'jacoco'
 
 group = 'dominionback'
 version = '1.0-SNAPSHOT'
-mainClassName = 'com.github.nelson54.dominion.web.Application'
+mainClassName = 'com.github.nelson54.dominion.Application'
 sourceCompatibility = 11.0
 targetCompatibility = 11.0
 
@@ -43,19 +47,14 @@ repositories {
     mavenCentral()
 }
 
-ext{
-    spring = '2.1.4.RELEASE'
-}
-
 dependencies {
 
     developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$spring"
 
-    compile group: 'org.tensorflow', name: 'tensorflow', version: '1.12.0'
-
-    compile group: 'io.logz.logback', name: 'logzio-logback-appender', version: '1.0.22'
-    compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: "$spring"
+    //compile group: 'io.logz.logback', name: 'logzio-logback-appender', version: '1.0.22'
+    //compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+    //compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$spring",  {
@@ -69,6 +68,7 @@ dependencies {
         exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
         exclude group: 'org.hibernate', module: 'hibernate-core'
     }
+
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "$spring"
     compile group: 'org.springframework.boot',name: 'spring-boot-devtools', version: "$spring"
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: "$spring"
@@ -104,7 +104,7 @@ dependencies {
     testCompile(
         'junit:junit:4.12',
         'org.easymock:easymock:4.0.2',
-        'org.springframework.boot:spring-boot-starter-test:2.1.1.RELEASE',
+        "org.springframework.boot:spring-boot-starter-test:$spring",
         'org.junit.jupiter:junit-jupiter-api:5.3.2',
         'org.junit.jupiter:junit-jupiter-params:5.3.2'
     )

@@ -1,6 +1,6 @@
 package com.github.nelson54.dominion.cards.types;
 
-import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.game.Player;
 import com.github.nelson54.dominion.cards.CardType;
 
 public abstract class TreasureCard extends Card {

@@ -1,7 +1,7 @@
 package com.github.nelson54.dominion.cards.sets.base;
 
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.game.Game;
+import com.github.nelson54.dominion.game.Player;
 import com.github.nelson54.dominion.cards.types.ActionCard;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.Cost;

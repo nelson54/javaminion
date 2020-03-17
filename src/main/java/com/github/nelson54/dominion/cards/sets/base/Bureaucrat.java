@@ -1,20 +1,17 @@
 package com.github.nelson54.dominion.cards.sets.base;
 
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Player;
+import com.github.nelson54.dominion.game.Game;
+import com.github.nelson54.dominion.game.Player;
 import com.github.nelson54.dominion.cards.CardType;
-import com.github.nelson54.dominion.cards.Cards;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.types.ComplexActionAttackCard;
 import com.github.nelson54.dominion.cards.Cost;
-import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.choices.OptionType;
+import com.github.nelson54.dominion.game.choices.Choice;
+import com.github.nelson54.dominion.game.choices.OptionType;
 import com.github.nelson54.dominion.cards.types.Effect;
 import com.github.nelson54.dominion.exceptions.NoValidChoiceException;
 
 import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 

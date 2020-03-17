@@ -2,7 +2,6 @@ package com.github.nelson54.dominion.cards;
 
 import com.github.nelson54.dominion.DominionTestCase;
 import com.github.nelson54.dominion.cards.types.ActionCard;
-import com.github.nelson54.dominion.cards.types.TreasureCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

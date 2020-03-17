@@ -1,6 +1,6 @@
 package com.github.nelson54.dominion.match;
 
-import com.github.nelson54.dominion.Account;
+import com.github.nelson54.dominion.user.account.Account;
 import com.github.nelson54.dominion.cards.GameCardSet;
 
 import java.time.LocalDateTime;

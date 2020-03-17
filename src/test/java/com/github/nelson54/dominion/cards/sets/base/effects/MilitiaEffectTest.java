@@ -1,21 +1,19 @@
 package com.github.nelson54.dominion.cards.sets.base.effects;
 
 
-import com.github.nelson54.dominion.Phase;
-import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.Turn;
+import com.github.nelson54.dominion.game.Phase;
+import com.github.nelson54.dominion.game.Player;
+import com.github.nelson54.dominion.game.Turn;
 import com.github.nelson54.dominion.cards.Cards;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.types.ComplexActionCard;
-import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.choices.ChoiceResponse;
+import com.github.nelson54.dominion.game.choices.Choice;
+import com.github.nelson54.dominion.game.choices.ChoiceResponse;
 import com.github.nelson54.dominion.DominionTestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 

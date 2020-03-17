@@ -2,12 +2,11 @@ package com.github.nelson54.dominion.cards.types;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.nelson54.dominion.Game;
-import com.github.nelson54.dominion.Player;
-import com.github.nelson54.dominion.Turn;
-import com.github.nelson54.dominion.cards.types.Card;
-import com.github.nelson54.dominion.choices.Choice;
-import com.github.nelson54.dominion.choices.ChoiceResponse;
+import com.github.nelson54.dominion.game.Game;
+import com.github.nelson54.dominion.game.Player;
+import com.github.nelson54.dominion.game.Turn;
+import com.github.nelson54.dominion.game.choices.Choice;
+import com.github.nelson54.dominion.game.choices.ChoiceResponse;
 import com.github.nelson54.dominion.exceptions.MissingCardException;
 import com.github.nelson54.dominion.exceptions.MissingEffectException;
 
