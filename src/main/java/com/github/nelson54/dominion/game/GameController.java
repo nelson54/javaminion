@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
-@RequestMapping("/dominion")
+@RequestMapping("/api/dominion")
 public class GameController {
 
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
@@ -34,14 +34,9 @@ public class GameController {
         this.objectMapper = objectMapper;
     }
 
-    private Game getGame(Long id) {
-        return matchService.getGame(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
     @RequestMapping(value = "/{gameId}", method = {RequestMethod.GET, RequestMethod.OPTIONS}, produces="application/json")
     @ResponseBody
-    Game getGame(HttpServletResponse response, @PathVariable("gameId") Long id) throws JsonProcessingException {
+    public Game getGame(HttpServletResponse response, @PathVariable("gameId") Long id) throws JsonProcessingException {
         Game game = matchService.getGame(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         String gameJson = objectMapper.writeValueAsString(game);
@@ -54,7 +49,7 @@ public class GameController {
 
     @RequestMapping(value = "/{gameId}/command", method = {RequestMethod.GET, RequestMethod.OPTIONS}, produces="application/json")
     @ResponseBody
-    Game getGameAtCommand(
+    public Game getGameAtCommand(
             HttpServletResponse response,
             @PathVariable("commandId") String commandId,
             @PathVariable("gameId") Long id
@@ -70,7 +65,7 @@ public class GameController {
     }
 
     @PostMapping(value = "/{gameId}/purchase/{cardId}")
-    Game purchase(
+    public Game purchase(
             HttpServletResponse response,
             @PathVariable("gameId") Long gameId,
             @PathVariable("cardId") Long cardId
@@ -98,7 +93,7 @@ public class GameController {
     }
 
     @PostMapping(value = "/{gameId}/play/{cardId}")
-    Game play(
+    public Game play(
             HttpServletResponse response,
             @PathVariable("gameId") Long gameId,
             @PathVariable("cardId") Long cardId
@@ -124,7 +119,7 @@ public class GameController {
     }
 
     @PostMapping(value = "/{gameId}/resign")
-    Game resign(
+    public Game resign(
             HttpServletResponse response,
             @PathVariable("gameId") Long gameId
     ) throws JsonProcessingException {
@@ -145,7 +140,7 @@ public class GameController {
     }
 
     @PostMapping(value = "/{gameId}/choice")
-    Game chooseResponse(
+    public Game chooseResponse(
             HttpServletResponse response,
             @PathVariable("gameId")
             Long gameId,
@@ -173,7 +168,7 @@ public class GameController {
     }
 
     @PostMapping(value = "/{gameId}/next-phase")
-    Game endPhase(
+    public Game endPhase(
             HttpServletResponse response,
             @PathVariable("gameId") Long gameId
     ) throws JsonProcessingException {
@@ -208,5 +203,10 @@ public class GameController {
     Account getAccount() {
         return accountService.getAuthorizedAccount()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+    }
+
+    private Game getGame(Long id) {
+        return matchService.getGame(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

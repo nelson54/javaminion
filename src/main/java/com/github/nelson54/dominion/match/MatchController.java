@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController()
-@RequestMapping("/dominion")
+@RequestMapping("/api/dominion")
 public class MatchController {
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
 
@@ -45,12 +45,12 @@ public class MatchController {
     }
 
     @GetMapping(value = "/recommended")
-    RecommendedCards[] getRecomendedCards(){
+    public RecommendedCards[] getRecomendedCards(){
         return RecommendedCards.values();
     }
 
     @GetMapping(value = "/matches")
-    Page<Match> matches(
+    public Page<Match> matches(
             @RequestParam(defaultValue = "true") Boolean waitingForOpponent,
             @RequestParam(defaultValue = "false") Boolean isFinished,
             @RequestParam(defaultValue = "false") Boolean inProgress) {
@@ -76,7 +76,7 @@ public class MatchController {
 
     @PostMapping(value = "/matches")
     @ResponseStatus(HttpStatus.CREATED)
-    MatchDto createMatch(@RequestBody MatchDto matchDto) {
+    public MatchDto createMatch(@RequestBody MatchDto matchDto) {
         Integer totalPlayers = matchDto.getCount();
 
         GameCardSet gameCardSet = GameCardSet.byName(matchDto.getCards());
@@ -112,7 +112,7 @@ public class MatchController {
     }
 
     @PatchMapping(value = "/matches/{gameId}")
-    void join(@PathVariable Long gameId) {
+    public void join(@PathVariable Long gameId) {
         Match match = matchService.getMatch(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
