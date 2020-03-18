@@ -10,3 +10,4 @@ build
 logs/*
 src/main/js/dist/*
 *.retry
+mongo
