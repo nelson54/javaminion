@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -35,29 +34,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        if((Arrays.asList(environment.getActiveProfiles()).contains("prod"))) {
-            registry.addResourceHandler("/public/**")
-                    .addResourceLocations("file:/root/builds/frontend/current/dist/");
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/public");
 
-            registry.addResourceHandler("/**")
-                    .addResourceLocations("file:/root/builds/frontend/current/dist/")
-                    .setCacheControl(CacheControl.maxAge(10, TimeUnit.DAYS))
-                    .resourceChain(false);
-        } else {
-            registry.addResourceHandler("/public/**")
-                    .addResourceLocations(
-                            "file:/Users/dcnelson/projects/dominion-frontend/dist/",
-                            "file:/Users/derek/IdeaProjects/dominion-frontend/dist/"
-                    )
-                    .resourceChain(false);
-
-            registry.addResourceHandler("/**")
-                    .addResourceLocations(
-                            "file:/Users/dcnelson/projects/dominion-frontend/dist/",
-                            "file:/Users/derek/IdeaProjects/dominion-frontend/dist/"
-                    ).setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS))
-                    .resourceChain(false);
-        }
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/public/")
+                .setCacheControl(CacheControl.maxAge(10, TimeUnit.DAYS))
+                .resourceChain(false);
 
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");

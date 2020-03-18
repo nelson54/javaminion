@@ -49,6 +49,9 @@ repositories {
 
 dependencies {
 
+    implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+
     developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$spring"
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: "$spring"
@@ -62,8 +65,6 @@ dependencies {
     }
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version: "$spring"
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: "$spring"
-    
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "$spring", {
         exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
         exclude group: 'org.hibernate', module: 'hibernate-core'

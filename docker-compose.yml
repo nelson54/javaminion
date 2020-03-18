@@ -14,16 +14,18 @@ services:
 
   app:
     build:
-      context: ./
+      dockerfile: ./Dockerfile
+      context: .
     volumes:
-      - /root/logs:/logs
-      - /root/db:/db
-      - /root/javaminion:/app
-      - /root/archives:/archives
-      - /root/gradle_home:/root/.gradle
+      - ./logs:/logs
+      - ./db:/db
+      - ./:/app/
     ports:
       - "8080:8080"
       - "5005:5005"
       - "35729:35729"
     depends_on:
       - mongo
+
+
+
