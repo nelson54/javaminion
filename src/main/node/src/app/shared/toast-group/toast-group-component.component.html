@@ -1,0 +1,21 @@
+<div class="toast-group " style="position:absolute; ">
+  <div
+    class="toast nga-default nga-stagger nga-fade"
+    role="alert"
+    aria-live="assertive"
+    *ngFor="let message of messages"
+    [ngClass]="{ 'bg-primary': !message.time, 'text-white': !message.time }"
+  >
+    <div class="toast-header" *ngIf="message.time">
+      <!--<img src="test" class="rounded mr-2" alt="test">-->
+      <strong class="mr-auto">Game log</strong>
+      <small class="text-muted" am-time-ago="message.time"></small>
+      <!--<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>-->
+    </div>
+    <div class="toast-body">
+      {{ message }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,184 @@
+body {
+  background-color: #2f2f2d;
+}
+
+.game-player-info {
+  height: 98px;
+
+  li {
+    height: 99px;
+  }
+
+  .player {
+    margin: auto 15px;
+
+    .player-name {
+      text-align: center;
+    }
+
+    .my-player .player-name {
+      color: #3a3a3a;
+    }
+  }
+
+  .active-player {
+    font-weight: bold;
+    border-bottom: 5px solid #e8e8e8;
+  }
+}
+
+.cards-container > div {
+  display: inline-block;
+}
+
+.game-space {
+  margin: 0 auto;
+}
+
+.btn-choice {
+  background-color: rgba(96, 179, 96, 0.4);
+}
+
+.btn.btn-card {
+  color: white;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+
+.btn.btn-card img {
+  opacity: 0.65;
+}
+
+.btn.btn-card:not([disabled]) img {
+  cursor: pointer;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 102, 255, 1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 102, 255, 1);
+  opacity: 1;
+  box-shadow: 0px 0px 5px 0px rgba(0, 102, 255, 1);
+}
+
+.display-container {
+  width: 70px;
+  font-size: 10px;
+  color: white;
+  font-weight: bold;
+  height: calc(100vh);
+  float: left;
+  background-color: rgb(47, 47, 47);
+  padding-top: 30px;
+  position: relative;
+  top: -30px;
+  border-right: 1px solid #989898;
+}
+
+.hand-container,
+.common-container,
+.kingdom-container {
+  .name,
+  .count {
+    display: block;
+    font-size: 0.8em;
+  }
+
+  img {
+    height: 150px;
+  }
+
+  ul {
+    margin-left: 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+    }
+  }
+}
+
+.kingdom-container {
+  width: 675px;
+}
+.hand-container {
+  display: inline-block;
+
+  ul {
+    padding-left: 0;
+  }
+}
+.cards-container {
+  display: inline-block;
+  float: right;
+
+  img {
+    height: 39px;
+  }
+
+  span {
+    display: block;
+  }
+
+  .btn.btn-card {
+    padding: 0;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 687px) {
+  .common-container {
+    max-width: 756px;
+  }
+
+  .hand-container,
+  .kingdom-container {
+    max-width: 540px;
+  }
+
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 0) and (max-width: 686px) {
+  .controls-container {
+    font-size: 0.7em;
+  }
+
+  .common-container,
+  .hand-container {
+    max-width: calc((13vw + 5px) * 8.5);
+  }
+
+  .kingdom-container {
+    max-width: calc((13vw + 5px) * 5);
+  }
+
+  .hand-container,
+  .kingdom-container,
+  .common-container {
+    li {
+      width: calc(13vw - 5px);
+      text-align: center;
+      margin-right: 5px;
+    }
+
+    li button span {
+      font-size: 0.2em;
+    }
+
+    img {
+      height: calc((13vw - 5px) * 1.6);
+      width: calc(13vw - 5px);
+    }
+  }
+}

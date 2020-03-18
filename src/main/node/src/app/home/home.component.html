@@ -1,0 +1,147 @@
+<div class="container-fluid">
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-body">
+        <form (submit)="createGame()">
+          <div class="form-group">
+            <label>Cards</label>
+            <select
+              ngModel="matchmaking.cards"
+              name="matchmaking.cards"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="setCards(cards)"
+              class="form-control"
+            >
+              <option *ngFor="let cardSet of recommendedCards">{{ cardSet.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Number of players</label>
+            <select
+              ngModel="matchmaking.playerCount"
+              name="matchmaking.playerCount"
+              [ngModelOptions]="{ standalone: true }"
+              (change)="updatePlayerCount(playerCount)"
+              class="form-control"
+            >
+              <option *ngFor="let number of playerNumbers" [selected]="number === 2">{{ number }}</option>
+            </select>
+          </div>
+          <div class="form-check" *ngFor="let player of players">
+            <input type="checkbox" ngModel="player.ai" ngModelOptions="{standalone: true}" />
+            <label>AI</label>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" (click)="modal.close('Save click')">Create Game</button>
+      <button (click)="modal.dismiss('Create Game')" type="reset" class="btn">Cancel</button>
+    </div>
+  </ng-template>
+
+  <div class="d-flex justify-content-center">
+    <div class="btn-group" role="group" aria-label="Create Game Form control">
+      <button (click)="open(content)" class="btn btn-success">New</button>
+      <button (click)="reload()" class="btn btn-primary">Refresh</button>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <div class="form-check form-check-inline">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="waiting-for-opponent"
+        (change)="reload()"
+        ngModel="filters.waitingForOpponent"
+      />
+      <label class="form-check-label" for="waiting-for-opponent">Waiting for Opponent</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="finished"
+        (change)="reload()"
+        ngModel="matchmaking.filters.isFinished"
+      />
+      <label class="form-check-label" for="finished">Finished</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="in-progress"
+        (change)="reload()"
+        ngModel="matchmaking.filters.inProgress"
+      />
+      <label class="form-check-label" for="in-progress">In Progress</label>
+    </div>
+  </div>
+
+  <ul class="list-group matchmaking-game-list">
+    <li
+      *ngIf="isLoading"
+      class="list-group-item border border-primary text-center nga-default nga-stagger nga-collapse"
+      style="background-color: #e3f1ff"
+    >
+      <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </li>
+    <li
+      *ngFor="let game of matches | gameOrder: credentials.username"
+      class="list-group-item nga-collapse nga-default nga-stagger border border-primary"
+      style="background-color: #e3f1ff"
+    >
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">
+          <a [hidden]="game.matchState == 'WAITING_FOR_PLAYERS'" routerLink="/game/{{ game.id }}" class="text-dark">
+            Game {{ game.id }}
+          </a>
+          <span [hidden]="game.matchState != 'WAITING_FOR_PLAYERS'" class="text-dark">Game {{ game.id }}</span>
+          - {{ game.matchState | gameStatePipe }}
+        </h5>
+        <small *ngIf="game.createdAt"
+          >Created <span class="log-time">{{ game.createdAt | amTimeAgo: true }}</span></small
+        >
+      </div>
+      <p>
+        <span *ngFor="let participant of game.participants; let isLast = last">
+          <span class="badge badge-pill badge-primary" *ngIf="game.scores != null">{{
+            game.scores[participant.account.id]
+          }}</span>
+          <identicon username="participant.account.user.username"></identicon>
+          <a
+            ui-sref="playerDetails({id: participant.account.id})"
+            [ngClass]="{
+              winner: game.winner && game.winner.account.id === participant.id,
+              loser: game.winner && game.winner.account.id !== participant.id
+            }"
+          >
+            {{ participant.account.user.username }}
+          </a>
+          <elo score="{{ participant.account.elo }}"></elo>
+          {{ isLast ? '' : ', ' }}
+        </span>
+      </p>
+
+      <small>
+        <span *ngFor="let card of game.cards.cards">
+          <a class="badge badge-dark text-light">{{ card.cardClass.split('.').reverse()[0] }}</a>
+        </span>
+      </small>
+
+      <button class="btn btn-primary" *ngIf="isMyGame(game)">Play</button>
+      <button *ngIf="game.matchState === 'WAITING_FOR_PLAYERS'" (click)="joinGame(game)" class="btn btn-primary">
+        Join
+      </button>
+    </li>
+  </ul>
+</div>

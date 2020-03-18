@@ -1,0 +1,169 @@
+<section class="nga-default nga-stagger nga-slide-right">
+  <toast-group></toast-group>
+  <game-nav></game-nav>
+
+  <div
+    class="tooltip bs-tooltip-bottom nga-fast nga-stagger nga-fade show"
+    role="tooltip"
+    x-placement="bottom"
+    *ngIf="cardDetails"
+    style="position: absolute; left: calc(100vw / 2 - 100px);"
+  >
+    <div class="tooltip-inner" style="max-width: none">
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        style="color:white;"
+        (click)="showCardDetails(null)"
+        aria-label="Close"
+      >
+        <span aria-hidden="true" class="color:white;">&times;</span>
+      </button>
+      <img width="200px" height="320px" [src]="cardDetails" />
+    </div>
+  </div>
+
+  <div class="modal choice-box nga-fast nga-stagger nga-fade" *ngIf="turn?.phase == 'END_OF_GAME'">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="end-game">
+            Scores<a class="anchorjs-link" href="#modal-title"><span class="anchorjs-icon"></span></a>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p *ngIf="choice.message">{{ choice.message }}</p>
+          <ul>
+            <li *ngFor="let pid of playerIds()">
+              <span>
+                <strong>{{ players[pid].name }}</strong
+                >: {{ players[pid].victoryPoints }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row" style="background-color:white; padding-top: 10px;">
+      <div class="game-list-container" *ngIf="!hasCurrentPlayer()">
+        <h3>Players</h3>
+
+        <ul class="game-list">
+          <li *ngFor="let pid of playerIds()">
+            <a
+              [ngClass]="{ active: isActivePlayer(players[pid]) }"
+              [routerLink]="['/gamePlayer']"
+              [state]="{ gameId: game.id, playerId: pid }"
+            >
+              {{ players[pid].name }}
+            </a>
+            <span *ngIf="isLoggedInPlayer(players[pid])">(showing)</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="game-space">
+        <kingdom></kingdom>
+      </div>
+
+      <div class="player-space">
+        <div class="controls-container" *ngIf="hasCurrentPlayer()">
+          <div class="turn-stat">
+            <strong>Phase</strong>
+            <span>{{ turn.phase | phaseFilter }}</span>
+          </div>
+          <div class="turn-stat">
+            <strong>Actions</strong>
+            <span>{{ turn.actionPool }}</span>
+          </div>
+          <div class="turn-stat">
+            <strong>Buys</strong>
+            <span>{{ turn.buyPool }}</span>
+          </div>
+          <div class="turn-stat">
+            <strong>Money</strong>
+            <span>{{ turn.money }}</span>
+          </div>
+          <div class="turn-stat">
+            <strong>Turn</strong>
+            <span>{{ playBackTurn }}</span>
+          </div>
+
+          <button
+            *ngIf="turn.phase != 'BUY' && turn.phase != 'WAITING_FOR_OPPONENT' && turn.phase != 'WAITING_FOR_CHOICE'"
+            type="button"
+            class="btn btn-primary"
+            [class.disabled]="turn.phase != 'ACTION'"
+            (click)="nextPhase()"
+          >
+            Next
+          </button>
+          <button *ngIf="turn.phase == 'BUY'" (click)="nextPhase()" type="button" class="btn btn-primary">
+            Pass
+          </button>
+          <button
+            *ngIf="choice && !choice.dialog"
+            [class.disabled]="choice.required"
+            type="button"
+            class="btn btn-primary"
+            (click)="chooseDone(game, player, choice)"
+          >
+            Done
+          </button>
+        </div>
+
+        <div class="play-container" *ngIf="hasCurrentPlayer()">
+          <ul>
+            <li *ngFor="let card of play" style="position: relative;">
+              <a
+                class="btn btn-link btn-card"
+                disabled
+                [ngClass]="{ 'btn-choice': isOption(card.id) }"
+                (click)="selectCard(card)"
+              >
+                <button
+                  class="link"
+                  style="position: absolute; bottom: 0; right: 0; opacity: .6;"
+                  (click)="showCardDetails(getLargeImagePath(card))"
+                >
+                  +
+                </button>
+                <img [src]="getImagePath(card)" />
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="player-area" *ngIf="hasCurrentPlayer()">
+          <div class="library">
+            <div class="hand-container">
+              <ul>
+                <li *ngFor="let card of hand" style="position: relative;">
+                  <a
+                    *ngIf="!isCardInPlay(card)"
+                    [class.disabled]="player.currentTurn.phase === 'BUY'"
+                    class="btn btn-link  btn-card"
+                    [ngClass]="{ 'btn-choice': isOption(card.id) }"
+                    (click)="selectCard(card)"
+                  >
+                    <img [src]="getImagePath(card)" />
+                  </a>
+                  <button
+                    class="link"
+                    style="position: absolute; bottom: 0; right: 0; opacity: .6;"
+                    (click)="showCardDetails(getLargeImagePath(card))"
+                  >
+                    +
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

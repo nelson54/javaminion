@@ -1,0 +1,56 @@
+.game-player-info {
+  height: 98px;
+
+  li {
+    height: 99px;
+  }
+
+  .player {
+    margin: 0 10px 2px 10px;
+
+    .player-name {
+      text-align: center;
+    }
+
+    .my-player.player-name {
+      color: #3a3a3a;
+    }
+  }
+
+  .active-player {
+    font-weight: bold;
+    border-bottom: 5px solid #e8e8e8;
+  }
+}
+
+.cards-container {
+  display: inline-block;
+  float: right;
+
+  img {
+    height: 39px;
+  }
+
+  span {
+    display: block;
+  }
+
+  .btn.btn-card {
+    padding: 0;
+  }
+}
+
+.deck-container,
+.discard-container {
+  float: left;
+}
+
+.game-nav {
+  .dropdown {
+    margin-left: 15px;
+  }
+
+  .dropdown-toggle::after {
+    display: none !important;
+  }
+}

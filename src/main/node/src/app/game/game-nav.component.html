@@ -1,0 +1,76 @@
+<ul
+  class="nav bg-info navbar-dark text-white game-player-info d-flex justify-content-between border border-info align-items-stretch"
+  *ngIf="gamePlay.hasCurrentPlayer()"
+>
+  <li class="nav-item game-nav">
+    <div ngbDropdown class="d-inline-block" style="line-height: 90px;">
+      <button class="btn btn-outline-light" id="game-menu" style="vertical-align: middle;" ngbDropdownToggle>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="game-menu" style="line-height: 35px;">
+        <a ngbDropdownItem routerLink="/home">Back</a>
+        <button ngbDropdownItem (click)="gamePlay.surrender()">Surrender</button>
+        <button ngbDropdownItem (click)="gamePlay.logout()">Logout</button>
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item d-flex justify-content-center">
+    <div
+      class="player"
+      *ngFor="let pid of gamePlay.playerIds()"
+      [ngClass]="{
+        'my-player': gamePlay.isLoggedInPlayer(gamePlay.players[pid]),
+        'active-player': gamePlay.isActivePlayer(gamePlay.players[pid])
+      }"
+    >
+      <div class="player-name">
+        <span>
+          {{ gamePlay.players[pid].name }}
+          <small class="badge badge-light">{{ gamePlay.players[pid].hand.length }}</small>
+        </span>
+      </div>
+      <div class="cards-container">
+        <div class="deck-container">
+          <span>
+            <img src="/assets/card-back-sm.jpg" />
+            <span class="count">{{ gamePlay.players[pid].deck.length }}</span>
+          </span>
+        </div>
+        <div class="discard-container">
+          <span>
+            <img [src]="gamePlay.getImagePath(null)" />
+            <span class="count">{{ gamePlay.players[pid].discard.length }}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </li>
+  <li class="" style="right:0; height:90px;">
+    <button
+      class="display-inline btn btn-link text-white"
+      (click)="open(logsModal)"
+      style="line-height:89px; vertical-align: middle; margin-top: 0; padding-top:0"
+    >
+      Logs
+    </button>
+  </li>
+</ul>
+
+<ng-template #logsModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Game logs</h5>
+    <button type="button" class="close" data-dismiss="modal" (click)="modal.dismiss('Create Game')" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let log of gamePlay.logs?.reverse()" class="log-statement">
+      <div class="d-flex w-100 justify-content-between">
+        <p [ngClass]="{ 'font-weight-bold': !log.time }">{{ log.message }}</p>
+        <small class="log-time" am-time-ago="log.time"></small>
+      </div>
+      <hr />
+    </div>
+  </div>
+</ng-template>
