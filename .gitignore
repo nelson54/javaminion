@@ -12,3 +12,4 @@ src/main/node/dist/*
 src/main/resources/public/*
 *.retry
 mongo
+node_modules

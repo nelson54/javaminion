@@ -1,0 +1,54 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="modal-body">
+    <form (submit)="createGame()" [formGroup]="form">
+      <div class="form-group">
+        <label>Cards</label>
+        <select formControlName="cards" (change)="setCards(cards)" class="form-control">
+          <option *ngFor="let cardSet of recommendedCards">{{ cardSet.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Number of players</label>
+        <select
+          formControlName="playerCount"
+          name="matchmaking.playerCount"
+          (change)="updatePlayerCount(playerCount)"
+          class="form-control"
+        >
+          <option *ngFor="let number of playerNumbers" [selected]="number === 2">{{ number }}</option>
+        </select>
+      </div>
+      <p>
+        <label>Player 1</label>
+        <input type="checkbox" name="player-1" formControlName="player1" />
+        <label>AI</label>
+      </p>
+      <p>
+        <label>Player 2</label>
+        <input type="checkbox" name="player-2" formControlName="player2" />
+        <label>AI</label>
+      </p>
+      <p *ngIf="playerCount >= 3">
+        <label>Player 3</label>
+        <input type="checkbox" name="player-3" formControlName="player3" />
+        <label>AI</label>
+      </p>
+      <p *ngIf="playerCount >= 4">
+        <label>Player 4</label>
+        <input type="checkbox" name="player-4" formControlName="player4" />
+        <label>AI</label>
+      </p>
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary" (click)="modal.close('Save click')">Create Game</button>
+  <button (click)="modal.dismiss('Create Game')" type="reset" class="btn">Cancel</button>
+</div>

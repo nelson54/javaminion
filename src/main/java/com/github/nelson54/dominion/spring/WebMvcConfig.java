@@ -8,6 +8,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.CacheControl;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -26,20 +28,23 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     ObjectMapper objectMapper;
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("forward:/index.html");
+    @Controller
+    static class Routes {
+        @RequestMapping("/{path:[^\\.]+}/**")
+        public String forward() {
+            return "forward:/index.html";
+        }
     }
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
         registry.addResourceHandler("/**")
+                .setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS))
                 .addResourceLocations("classpath:/public");
 
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/public/")
-                .setCacheControl(CacheControl.maxAge(10, TimeUnit.DAYS))
+                .setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS))
                 .resourceChain(false);
 
         registry.addResourceHandler("swagger-ui.html")

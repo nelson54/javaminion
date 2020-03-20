@@ -12,8 +12,9 @@ import { MatchService } from '@app/shared/match.service';
 import { GameStatePipe } from '@app/home/GameState.pipe';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '@app/core/http/token-interceptor';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GameOrderPipe } from '@app/home/game-order.pipe';
+import { MatchFormComponent } from '@app/shared/match/match-form.component';
 
 @NgModule({
   imports: [
@@ -24,8 +25,10 @@ import { GameOrderPipe } from '@app/home/game-order.pipe';
     Angulartics2Module,
     HomeRoutingModule,
     MomentModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
+
   declarations: [HomeComponent, GameStatePipe, GameOrderPipe],
   providers: [MatchService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }]
 })

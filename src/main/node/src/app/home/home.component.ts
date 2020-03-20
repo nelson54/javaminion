@@ -1,9 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MatchService } from '@app/shared/match.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { GameService } from '@app/shared/game.service';
 import { Match } from '@app/shared/game/match.interface';
 import { AuthenticationService, Credentials, CredentialsService } from '@app/core';
+import { MatchFormComponent } from '@app/shared/match/match-form.component';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,7 @@ import { AuthenticationService, Credentials, CredentialsService } from '@app/cor
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  modalInstance: NgbModalRef;
   public filters = {
     waitingForOpponent: true,
     inProgress: true,
@@ -45,8 +47,10 @@ export class HomeComponent implements OnInit {
     this.gameService.getRecommendedCards().subscribe(response => (this.recommendedCards = response));
   }
 
-  open(content: TemplateRef<any>) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+  create() {
+    this.modalInstance = this.modalService.open(MatchFormComponent, { ariaLabelledBy: 'modal-basic-title' });
+
+    this.modalInstance.result.then(
       result => {
         this.closeResult = `Closed with: ${result}`;
       },

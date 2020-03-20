@@ -1,54 +1,7 @@
 <div class="container-fluid">
-  <ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-body">
-        <form (submit)="createGame()">
-          <div class="form-group">
-            <label>Cards</label>
-            <select
-              ngModel="matchmaking.cards"
-              name="matchmaking.cards"
-              [ngModelOptions]="{ standalone: true }"
-              (change)="setCards(cards)"
-              class="form-control"
-            >
-              <option *ngFor="let cardSet of recommendedCards">{{ cardSet.name }}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Number of players</label>
-            <select
-              ngModel="matchmaking.playerCount"
-              name="matchmaking.playerCount"
-              [ngModelOptions]="{ standalone: true }"
-              (change)="updatePlayerCount(playerCount)"
-              class="form-control"
-            >
-              <option *ngFor="let number of playerNumbers" [selected]="number === 2">{{ number }}</option>
-            </select>
-          </div>
-          <div class="form-check" *ngFor="let player of players">
-            <input type="checkbox" ngModel="player.ai" ngModelOptions="{standalone: true}" />
-            <label>AI</label>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary" (click)="modal.close('Save click')">Create Game</button>
-      <button (click)="modal.dismiss('Create Game')" type="reset" class="btn">Cancel</button>
-    </div>
-  </ng-template>
-
   <div class="d-flex justify-content-center">
     <div class="btn-group" role="group" aria-label="Create Game Form control">
-      <button (click)="open(content)" class="btn btn-success">New</button>
+      <button (click)="create()" class="btn btn-success">New</button>
       <button (click)="reload()" class="btn btn-primary">Refresh</button>
     </div>
   </div>
