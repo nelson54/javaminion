@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import {CreateMatch} from "@app/shared/match/match.interface";
 
-const root = '/dominion/matches';
+const root = '/api/matches';
 
 @Injectable()
 export class MatchService {
@@ -21,7 +22,7 @@ export class MatchService {
     return this.httpClient.get(root + '/' + id, { params });
   }
 
-  save(data: any) {
+  save(data: CreateMatch) {
     return this.httpClient.post(root, data);
   }
 
@@ -31,5 +32,9 @@ export class MatchService {
 
   remove(data: any) {
     return this.httpClient.delete(root + '/' + data.id);
+  }
+
+  getRecommendedCards() {
+    return this.httpClient.get(`/recommended`);
   }
 }

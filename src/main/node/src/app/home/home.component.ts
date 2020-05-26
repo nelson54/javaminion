@@ -12,25 +12,16 @@ import { MatchFormComponent } from '@app/shared/match/match-form.component';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  modalInstance: NgbModalRef;
+  private modalInstance: NgbModalRef;
+  public isLoading: boolean;
+  public credentials: Credentials;
+  public matches: Match[];
+
   public filters = {
     waitingForOpponent: true,
     inProgress: true,
     isFinished: false
   };
-  recommendedCards: [] | any;
-  matches: Match[];
-  isLoading = false;
-  newGame = false;
-
-  cards = 'First Game';
-  playerNumbers = [2, 3, 4];
-  playerCount = 2;
-
-  players = [{ id: 0, ai: true }, { id: 1, ai: true }];
-
-  closeResult: string;
-  credentials: Credentials;
 
   constructor(
     private modalService: NgbModal,
@@ -44,7 +35,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.reload();
-    this.gameService.getRecommendedCards().subscribe(response => (this.recommendedCards = response));
   }
 
   create() {
@@ -52,20 +42,12 @@ export class HomeComponent implements OnInit {
 
     this.modalInstance.result.then(
       result => {
-        this.closeResult = `Closed with: ${result}`;
+        this.reload();
       },
       reason => {
-        this.closeResult = `Dismissed `; // ${this.getDismissReason(reason)}`;
+        console.log(reason)
       }
     );
-  }
-
-  startCreate() {
-    this.newGame = true;
-  }
-
-  setCards(cards: any) {
-    this.cards = cards;
   }
 
   joinGame(game: any) {
@@ -80,17 +62,6 @@ export class HomeComponent implements OnInit {
       this.isLoading = false;
       this.matches = matches.content;
     });
-  }
-
-  createGame() {
-    this.newGame = true;
-  }
-
-  updatePlayerCount(count: number) {
-    this.players = [];
-    for (count; count !== 1; count--) {
-      this.players.push({ id: count, ai: true });
-    }
   }
 
   isMyGame(match: Match) {

@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController()
-@RequestMapping("/api/dominion")
+@RequestMapping("/api")
 public class MatchController {
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
 

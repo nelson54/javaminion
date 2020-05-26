@@ -5,6 +5,7 @@ import { GameService } from '@app/shared/game.service';
 import { Match } from '@app/shared/game/match.interface';
 import { AuthenticationService, Credentials, CredentialsService } from '@app/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import {CreateMatch} from "@app/shared/match/match.interface";
 
 @Component({
   selector: 'match-form',
@@ -14,6 +15,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class MatchFormComponent implements OnInit {
   recommendedCards: [] | any;
   newGame: boolean = false;
+  private isSaving: boolean = false;
   cards: string = 'First Game';
   playerNumbers: number[] = [2, 3, 4];
   playerCount: number = 2;
@@ -57,22 +59,36 @@ export class MatchFormComponent implements OnInit {
     this.cards = cards;
   }
 
-  createGame() {
-    let players = [];
-    players.push({ id: 0, ai: this.form.controls.player1.value });
-    players.push({ id: 1, ai: this.form.controls.player1.value });
+  private findNumberOfAiPlayers() : number {
+    return [
+      this.form.controls.player1,
+      this.form.controls.player2,
+      this.form.controls.player3,
+      this.form.controls.player4
+    ].filter((control: FormControl, i: number) => {
+      return i <= this.form.controls.playerCount.value && !control.value
+    }).length;
+  }
 
-    if (this.playerCount > 2) {
-      players.push({ id: 1, ai: this.form.controls.player1.value });
-    }
+  createMatch() {
+    let match: CreateMatch = <CreateMatch>{};
+    match.count = this.form.controls.playerCount.value;
+    match.numberOfAiPlayers = this.findNumberOfAiPlayers();
+    match.numberOfHumanPlayers = match.count - match.numberOfAiPlayers;
+    match.cards = this.form.controls.cards.value;
 
-    if (this.playerCount > 3) {
-      players.push({ id: 1, ai: this.form.controls.player1.value });
-    }
+    this.isSaving = true;
 
-    console.log(players);
+    console.log(match);
 
-    //this.matchService.save()
+    return this.matchService.save(match)
+      .subscribe(() => {
+        this.modal.close('Saved');
+      })
+  }
+
+  cancel(){
+    this.modal.dismiss('Cancelled')
   }
 
   updatePlayerCount(count: number) {}

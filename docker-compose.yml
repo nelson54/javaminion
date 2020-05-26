@@ -14,10 +14,11 @@ services:
       MONGODB_USER: root
       MONGODB_PASS: testing
       MONGO_INITDB_DATABASE: admin
-    networks: [dominion]
     ##volumes:
     ##  - ./mongo:/data/db
-
+  frontend:
+    image: node:14.3.0-alpine3.10
+    ports:
   app:
     build:
       dockerfile: ./Dockerfile
@@ -32,7 +33,3 @@ services:
       - "35729:35729"
     depends_on:
       - mongo
-    networks: [dominion]
-networks:
-  dominion:
-    external: true

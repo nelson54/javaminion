@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
-@RequestMapping("/api/dominion")
+@RequestMapping("/api/game")
 public class GameController {
 
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
@@ -39,10 +39,10 @@ public class GameController {
     public Game getGame(HttpServletResponse response, @PathVariable("gameId") Long id) throws JsonProcessingException {
         Game game = matchService.getGame(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        String gameJson = objectMapper.writeValueAsString(game);
-        Integer hashCode = gameJson.hashCode();
 
-        response.addHeader("hashcode", hashCode.toString());
+        String gameString = objectMapper.writeValueAsString(game);
+
+        response.addHeader("hashcode", String.valueOf(gameString.hashCode()));
 
         return game;
     }

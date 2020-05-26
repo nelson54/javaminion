@@ -7,7 +7,7 @@
 
 <div class="modal-body">
   <div class="modal-body">
-    <form (submit)="createGame()" [formGroup]="form">
+    <form (submit)="createMatch()" [formGroup]="form">
       <div class="form-group">
         <label>Cards</label>
         <select formControlName="cards" (change)="setCards(cards)" class="form-control">
@@ -49,6 +49,7 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button type="submit" class="btn btn-primary" (click)="modal.close('Save click')">Create Game</button>
-  <button (click)="modal.dismiss('Create Game')" type="reset" class="btn">Cancel</button>
+  <button type="submit" class="btn btn-primary" (click)="createMatch()">Create Game</button>
+  <button type="cancel" class="btn btn-primary">wtf?</button>
+  <button (click)="cancel()" type="reset" class="btn">Cancel</button>
 </div>

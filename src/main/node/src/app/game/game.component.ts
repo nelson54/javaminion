@@ -177,7 +177,11 @@ export class GameComponent implements OnInit {
       done: true
     };
 
-    this.gameService.choice(game, choice);
+    this.gameService.choice(game, choice).subscribe(() => {
+      console.log("Done with choice.")
+    }, error => {
+      console.log(error)
+    });
   }
 
   isLoggedInPlayer(player: Player) {
@@ -210,7 +214,7 @@ export class GameComponent implements OnInit {
 
   getImagePath(card: Card) {
     if (card && card.name) {
-      return '/assets/' + card.name.toLowerCase().replace(/\s/g, '') + '-sm.jpg';
+      return '/assets/cards/' + card.name.toLowerCase().replace(/\s/g, '') + '-sm.jpg';
     } else {
       return '/assets/empty-card-back-sm.jpg';
     }
@@ -218,7 +222,7 @@ export class GameComponent implements OnInit {
 
   getLargeImagePath(card: any) {
     if (card && card.name) {
-      return '/assets/' + card.name.toLowerCase().replace(/\s/g, '') + '.jpg';
+      return '/assets/cards/' + card.name.toLowerCase().replace(/\s/g, '') + '.jpg';
     } else {
       return '/assets/empty-card-back.jpg';
     }
@@ -338,7 +342,7 @@ export class GameComponent implements OnInit {
           }
         });
       }
-    }, 150);
+    }, 1000);
   }
 
   surrender() {}

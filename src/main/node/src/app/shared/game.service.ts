@@ -6,7 +6,7 @@ import { Card } from '@app/shared/game/card.interface';
 
 @Injectable()
 export class GameService {
-  private apiRoot = '/dominion';
+  private apiRoot = '/api/game';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -31,6 +31,6 @@ export class GameService {
   }
 
   getRecommendedCards() {
-    return this.httpClient.get('/dominion/recommended');
+    return this.httpClient.get(`/api/recommended`);
   }
 }

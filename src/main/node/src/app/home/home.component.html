@@ -62,7 +62,7 @@
           - {{ game.matchState | gameStatePipe }}
         </h5>
         <small *ngIf="game.createdAt"
-          >Created <span class="log-time">{{ game.createdAt | amTimeAgo: true }}</span></small
+          >Created <span class="log-time">{{ game.createdAt | amTimeAgo: true }} ago</span></small
         >
       </div>
       <p>
