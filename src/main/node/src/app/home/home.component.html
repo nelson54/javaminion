@@ -70,7 +70,7 @@
           <span class="badge badge-pill badge-primary" *ngIf="game.scores != null">{{
             game.scores[participant.account.id]
           }}</span>
-          <identicon username="participant.account.user.username"></identicon>
+          <identicon username="{{participant.account.user.username}}"></identicon>
           <a
             ui-sref="playerDetails({id: participant.account.id})"
             [ngClass]="{
@@ -91,7 +91,7 @@
         </span>
       </small>
 
-      <button class="btn btn-primary" *ngIf="isMyGame(game)">Play</button>
+      <a class="btn btn-primary btn-play" *ngIf="isMyGame(game)" routerLink="/game/{{ game.id }}">Play</a>
       <button *ngIf="game.matchState === 'WAITING_FOR_PLAYERS'" (click)="joinGame(game)" class="btn btn-primary">
         Join
       </button>

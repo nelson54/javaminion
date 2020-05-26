@@ -19,7 +19,6 @@
         <select
           formControlName="playerCount"
           name="matchmaking.playerCount"
-          (change)="updatePlayerCount(playerCount)"
           class="form-control"
         >
           <option *ngFor="let number of playerNumbers" [selected]="number === 2">{{ number }}</option>
@@ -35,12 +34,12 @@
         <input type="checkbox" name="player-2" formControlName="player2" />
         <label>AI</label>
       </p>
-      <p *ngIf="playerCount >= 3">
+      <p *ngIf="getPlayerCount() >= 3">
         <label>Player 3</label>
         <input type="checkbox" name="player-3" formControlName="player3" />
         <label>AI</label>
       </p>
-      <p *ngIf="playerCount >= 4">
+      <p *ngIf="getPlayerCount() >= 4">
         <label>Player 4</label>
         <input type="checkbox" name="player-4" formControlName="player4" />
         <label>AI</label>
@@ -50,6 +49,5 @@
 </div>
 <div class="modal-footer">
   <button type="submit" class="btn btn-primary" (click)="createMatch()">Create Game</button>
-  <button type="cancel" class="btn btn-primary">wtf?</button>
   <button (click)="cancel()" type="reset" class="btn">Cancel</button>
 </div>

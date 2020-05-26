@@ -91,5 +91,7 @@ export class MatchFormComponent implements OnInit {
     this.modal.dismiss('Cancelled')
   }
 
-  updatePlayerCount(count: number) {}
+  getPlayerCount() {
+    return this.form.controls.playerCount.value
+  }
 }
