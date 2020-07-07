@@ -10,9 +10,9 @@ import com.github.nelson54.dominion.game.commands.Command;
 import com.github.nelson54.dominion.user.account.AccountEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
@@ -45,7 +45,7 @@ public class MatchService {
 
     public List<Match> findByStateIn(List<MatchState> states) {
         return StreamSupport
-                .stream(matchRepository.findByStateIn(states).spliterator(), false)
+                .stream(matchRepository.findAll().spliterator(), false)//matchRepository.findByStateIn(states).spliterator(), false)
                 .map(MatchEntity::toMatch)
                 .collect(Collectors.toList());
     }
@@ -57,7 +57,7 @@ public class MatchService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Game> getGame(Long matchId) {
+    public Optional<Game> getGame(String matchId) {
         return matchRepository
                 .findById(matchId)
                 .map(MatchEntity::toMatch)
@@ -76,7 +76,7 @@ public class MatchService {
                 });
     }
 
-    public Optional<Game> getGameUpToCommand(Long matchId, String commandId) {
+    public Optional<Game> getGameUpToCommand(String matchId, String commandId) {
         return matchRepository
                 .findById(matchId)
                 .map(MatchEntity::toMatch)
@@ -95,7 +95,7 @@ public class MatchService {
                 });
     }
 
-    public Optional<Match> getMatch(Long matchId) {
+    public Optional<Match> getMatch(String matchId) {
         return matchRepository
                 .findById(matchId)
                 .map(MatchEntity::toMatch);
@@ -213,7 +213,7 @@ public class MatchService {
 
             Optional<MatchEntity> optionalMatchEntity = matchRepository.findById(game.getId());
 
-            Long winningPlayerId = game.getWinningPlayer().get().getId();
+            String winningPlayerId = game.getWinningPlayer().get().getId();
             Collection<Player> players = game.getPlayers().values();
             optionalMatchEntity
                     .filter((matchEntity) -> !matchEntity.getState().equals(MatchState.FINISHED))
@@ -250,7 +250,7 @@ public class MatchService {
         }
     }
 
-    @Inject
+    @Autowired
     public void setGameFactory(GameFactory gameFactory) {
         this.gameFactory = gameFactory;
     }

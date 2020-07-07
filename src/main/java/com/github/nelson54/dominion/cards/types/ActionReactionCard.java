@@ -22,7 +22,7 @@ public abstract class ActionReactionCard extends ActionCard {
     public abstract void react(Effect effect);
 
     public Set<Player> getOtherPlayers(Player player, Game game) {
-        Map<Long, Player> players = game.getPlayers();
+        Map<String, Player> players = game.getPlayers();
 
         return game.getPlayers()
                 .keySet()

@@ -9,8 +9,8 @@ import java.util.Optional;
 @Repository
 public interface CommandRepository extends MongoRepository<Command, String> {
 
-    Optional<List<Command>> findByGameIdOrderByTimeAsc(Long gameId);
+    Optional<List<Command>> findByGameIdOrderByTimeAsc(String gameId);
 
 
-    Optional<List<Command>> findByAccountIdAndBuyNameNotNull(Long accountId);
+    Optional<List<Command>> findByAccountIdAndBuyNameNotNull(String accountId);
 }

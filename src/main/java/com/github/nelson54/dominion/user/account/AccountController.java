@@ -67,14 +67,15 @@ public class AccountController {
 
     @GetMapping("/account/{id}")
     public AccountInfoDto getPlayerInfo(
-            @PathVariable Long id) {
+            @PathVariable String id) {
         AccountInfoDto playerInfo = new AccountInfoDto();
 
         accountService.findById(id)
                 .ifPresent(playerInfo::setAccount);
 
-        Iterable<MatchEntity> matchEntities = matchRepository
-                .findMatchEntitiesWithPlayer(playerInfo.getAccount().getId());
+        //Iterable<MatchEntity> matchEntities = matchRepository
+        //        .findMatchEntitiesWithPlayer(playerInfo.getAccount().getId());
+        Iterable<MatchEntity> matchEntities = matchRepository.findAll();
 
         List<Match> matches = StreamSupport
                 .stream(matchEntities.spliterator(), false)
@@ -86,8 +87,8 @@ public class AccountController {
         commandRepository.findByAccountIdAndBuyNameNotNull(id)
                 .ifPresent(playerInfo::setCommands);
 
-        playerInfo.setRank(accountRepository.findRank(playerInfo.getAccount().getElo()));
-        playerInfo.setTotalPlayers(accountRepository.findTotalPlayers(playerInfo.getAccount().getElo()));
+        //playerInfo.setRank(accountRepository.findRank(playerInfo.getAccount().getElo()));
+        //playerInfo.setTotalPlayers(accountRepository.findTotalPlayers(playerInfo.getAccount().getElo()));
 
         return playerInfo;
     }

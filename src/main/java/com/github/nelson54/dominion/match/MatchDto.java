@@ -1,7 +1,7 @@
 package com.github.nelson54.dominion.match;
 
 public class MatchDto {
-    private Long id;
+    private String id;
     private Integer numberOfHumanPlayers;
     private Integer numberOfAiPlayers;
     private Integer count;
@@ -11,7 +11,7 @@ public class MatchDto {
     public MatchDto() {
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -47,7 +47,7 @@ public class MatchDto {
         this.cards = cards;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 }

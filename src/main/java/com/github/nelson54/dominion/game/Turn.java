@@ -44,7 +44,7 @@ public class Turn {
     private long moneyPool;
     private long buyPool;
 
-    private Long playerId;
+    private String playerId;
 
     public Turn() {
         revealed = ArrayListMultimap.create();
@@ -250,11 +250,11 @@ public class Turn {
         this.resolvedChoices = resolvedChoices;
     }
 
-    public Long getPlayerId() {
+    public String getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(Long playerId) {
+    public void setPlayerId(String playerId) {
         this.playerId = playerId;
     }
 

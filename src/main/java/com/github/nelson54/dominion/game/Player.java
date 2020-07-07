@@ -45,7 +45,7 @@ public class Player {
     }
 
     @JsonProperty("id")
-    public Long getId() {
+    public String getId() {
         return account.getId();
     }
 

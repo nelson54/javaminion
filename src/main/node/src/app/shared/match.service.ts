@@ -35,6 +35,6 @@ export class MatchService {
   }
 
   getRecommendedCards() {
-    return this.httpClient.get(`/recommended`);
+    return this.httpClient.get(`/api/cards/recommended`);
   }
 }

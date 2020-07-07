@@ -14,8 +14,8 @@ public class Command {
     @Id
     public String id;
 
-    public Long accountId;
-    public Long gameId;
+    public String accountId;
+    public String gameId;
     public Long cardId;
     public String buyName;
     public LocalDateTime time;
@@ -92,19 +92,19 @@ public class Command {
         this.id = id;
     }
 
-    public Long getAccountId() {
+    public String getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(String accountId) {
         this.accountId = accountId;
     }
 
-    public Long getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
-    public void setGameId(Long gameId) {
+    public void setGameId(String gameId) {
         this.gameId = gameId;
     }
 

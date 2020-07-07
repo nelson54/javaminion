@@ -11,7 +11,7 @@ export interface LoginContext {
 }
 
 const routes = {
-  authentication: () => '/authentication'
+  authentication: () => '/api/authentication'
 };
 
 /**
@@ -44,6 +44,10 @@ export class AuthenticationService {
       }),
       catchError(() => of(data))
     );
+  }
+
+  register(username: String, password: String) {
+
   }
 
   /**

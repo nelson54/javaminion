@@ -2,37 +2,38 @@ package com.github.nelson54.dominion.user.account;
 
 import com.github.nelson54.dominion.user.UserEntity;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "accounts")
+@Document("account")
 public class AccountEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(name = "is_ai", updatable = false)
+    @Field(name = "is_ai")
     private Boolean ai;
 
+    // TODO: add annotation details for column
     @NotNull
-    @Column(name = "first_name", length = 100, unique = true, nullable = false)
+    @Field(name = "first_name")//, length = 100, unique = true, nullable = false)
     private String firstname;
 
+    // TODO: add annotation details for column
     @NotNull
-    @Column(name = "email", length = 100, unique = true, nullable = false)
+    @Field(name = "email")//, length = 100, unique = true, nullable = false)
     private String email;
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn
+    @Field(name = "user")
     private UserEntity user;
 
-    @Column(name = "elo")
+    @Field(name = "elo")
     @NotNull
-    @ColumnDefault(value = "1000")
-    private Long elo;
+    private Long elo = 1000L;
 
     public AccountEntity() {}
 
@@ -61,7 +62,7 @@ public class AccountEntity {
         return accountEntity;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

@@ -21,8 +21,8 @@ public class Game {
 
     @JsonProperty
     private LinkedHashSet<String> logs;
-    @JsonProperty @JsonSerialize(using = ToStringSerializer.class) @JsonDeserialize(as = Long.class)
-    private Long id;
+    @JsonProperty
+    private String id;
     @JsonIgnore
     public RandomSeed seed;
     @JsonProperty
@@ -36,7 +36,7 @@ public class Game {
     @JsonIgnore
     Iterator<Player> turnerator;
     @JsonProperty
-    private Map<Long, Player> players;
+    private Map<String, Player> players;
     @JsonProperty
     private Turn turn;
     private Boolean rebuilding;
@@ -46,7 +46,7 @@ public class Game {
 
     private Boolean isReadOnly = false;
 
-    public Game(Long id, Long seed) {
+    public Game(String id, Long seed) {
         this.id = id;
         this.seed = RandomSeed.create(seed);
         players = new HashMap<>();
@@ -166,15 +166,15 @@ public class Game {
                 .forEach(turn -> turn.setPhase(END_OF_GAME));
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public Map<Long, Player> getPlayers() {
+    public Map<String, Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(Map<Long, Player> players) {
+    public void setPlayers(Map<String, Player> players) {
         this.players = players;
     }
 

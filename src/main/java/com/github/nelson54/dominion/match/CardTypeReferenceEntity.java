@@ -7,13 +7,11 @@ import javax.persistence.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Entity
-@Table(name = "card_type_reference")
+@Entity(name = "card_type_reference")
 public class CardTypeReferenceEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    public String id;
 
     @Column
     private String clazz;
@@ -30,7 +28,7 @@ public class CardTypeReferenceEntity {
 
     public CardTypeReferenceEntity() {}
 
-    private CardTypeReferenceEntity(Long id, String clazz, String name) {
+    private CardTypeReferenceEntity(String id, String clazz, String name) {
         this.id = id;
         this.clazz = clazz;
         this.name = name;

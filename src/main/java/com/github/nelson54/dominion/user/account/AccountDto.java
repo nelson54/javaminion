@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 public class AccountDto {
 
     @JsonProperty
-    private Long id;
+    private String id;
 
     @NotBlank
     @Size(min = 1, max = 100)
@@ -40,7 +40,7 @@ public class AccountDto {
         return accountDto;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

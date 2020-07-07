@@ -3,57 +3,53 @@ package com.github.nelson54.dominion.match;
 import com.github.nelson54.dominion.cards.GameCardSet;
 import com.github.nelson54.dominion.user.account.AccountEntity;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "match")
+@Document("match")
 public class MatchEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
-    @Column
+    @Field
     private Long seed;
 
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private List<AccountEntity> players;
 
-    @Column
+    @Field
     private Integer playerCount;
 
-    @Column
+    @Field
     private String turnOrder;
 
-    @Column
+    @Field
     @Enumerated(EnumType.STRING)
     private MatchState state;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
     private Set<PlayerScoreEntity> scores;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn
     private List<CardTypeReferenceEntity> gameCards;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+    @DBRef
     private AccountEntity winner;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column
+    @Field
     private LocalDateTime finishedAt;
 
     public MatchEntity() {}
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 
@@ -63,13 +59,13 @@ public class MatchEntity {
                 .map(CardTypeReferenceEntity::asCardTypeReference)
                 .collect(Collectors.toList()));
 
-        Map<Long, AccountEntity> accounts = new HashMap<>();
+        Map<String, AccountEntity> accounts = new HashMap<>();
 
         Match match = new Match(id, seed, state, playerCount, cardSet);
 
         players.forEach((playerAccount) -> accounts.put(playerAccount.getId(), playerAccount));
 
-        Map<Long, Long> scores = new HashMap<>();
+        Map<String, Long> scores = new HashMap<>();
 
         if(this.scores != null) {
             this.scores.forEach((score) -> {
@@ -83,7 +79,6 @@ public class MatchEntity {
         match.setCreatedAt(createdAt);
 
         Arrays.stream(turnOrder.split(","))
-                .map(Long::valueOf)
                 .map(accounts::get)
                 .map((playerAccount) -> {
                     MatchParticipant mp = new MatchParticipant(playerAccount.asAccount());
@@ -136,8 +131,8 @@ public class MatchEntity {
         return matchEntity;
     }
 
-    public AccountEntity findPlayerById(Long id) {
-        Map<Long, AccountEntity> playersById = new HashMap<>();
+    public AccountEntity findPlayerById(String id) {
+        Map<String, AccountEntity> playersById = new HashMap<>();
         this.players.forEach((player) -> playersById.put(player.getId(), player));
 
         return playersById.get(id);

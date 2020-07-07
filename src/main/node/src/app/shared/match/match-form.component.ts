@@ -43,7 +43,7 @@ export class MatchFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.gameService.getRecommendedCards().subscribe(response => (this.recommendedCards = response));
+    this.matchService.getRecommendedCards().subscribe(response => (this.recommendedCards = response));
 
     this.form.controls.cards.setValue('First Game');
 

@@ -44,11 +44,6 @@ public class MatchController {
         this.matchService = matchService;
     }
 
-    @GetMapping(value = "/recommended")
-    public RecommendedCards[] getRecomendedCards(){
-        return RecommendedCards.values();
-    }
-
     @GetMapping(value = "/matches")
     public Page<Match> matches(
             @RequestParam(defaultValue = "true") Boolean waitingForOpponent,
@@ -90,7 +85,6 @@ public class MatchController {
         Collection<MatchParticipant> participants = aiPlayerService
                  .random(matchDto.getNumberOfAiPlayers())
                  .stream()
-                 .map(this::addUserToAccount)
                  .map(MatchParticipant::createAi)
                  .collect(Collectors.toList());
 
@@ -112,7 +106,7 @@ public class MatchController {
     }
 
     @PatchMapping(value = "/matches/{gameId}")
-    public void join(@PathVariable Long gameId) {
+    public void join(@PathVariable String gameId) {
         Match match = matchService.getMatch(gameId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -133,11 +127,6 @@ public class MatchController {
 
         matchService.addPlayerAccount(match, account);
     }
-
-    private Account addUserToAccount(Account account) {
-        return accountRepository.findByUserUsername(account.getFirstname()).get().asAccount();
-    }
-
 
     private Optional<Account> getAccount() {
         return accountService.getAuthorizedAccount();

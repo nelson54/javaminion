@@ -47,9 +47,9 @@ public class CouncilRoomTest extends DominionTestCase {;
 
     @Test
     public void testApply() {
-        Map<Long, Player> players = new HashMap<>();
-        players.put(1L, player1);
-        players.put(2L, player2);
+        Map<String, Player> players = new HashMap<>();
+        players.put("1", player1);
+        players.put("2", player2);
 
         EasyMock.expect(player1.getCurrentTurn()).andReturn(turn);
 
@@ -61,8 +61,8 @@ public class CouncilRoomTest extends DominionTestCase {;
         player2.drawXCards(1);
         EasyMock.expectLastCall();
 
-        EasyMock.expect(player1.getId()).andStubReturn(1L);
-        EasyMock.expect(player2.getId()).andStubReturn(2L);
+        EasyMock.expect(player1.getId()).andStubReturn("1");
+        EasyMock.expect(player2.getId()).andStubReturn("2");
 
         EasyMock.replay(game);
         EasyMock.replay(player1);

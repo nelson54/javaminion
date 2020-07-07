@@ -1,18 +1,21 @@
 logging.captureStandardOutput LogLevel.INFO
 
-ext{
-    spring = '2.2.5.RELEASE'
+ext {
+    springVersion = '2.3.0.RELEASE'
+    jacksonVersion = '2.10.2'
+    hibernateVersion = '5.2.10.Final'
+    guavaVersion = '29.0-jre'
 }
 
 buildscript {
     repositories {
-        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'https://repo.spring.io/snapshot' }
         maven { url 'https://repo.spring.io/milestone' }
     }
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.2.5.RELEASE"
-        classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.0'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.3.0.RELEASE'
+        //classpath 'gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.7.0'
     }
 }
 
@@ -23,14 +26,15 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'checkstyle'
-apply plugin: 'com.github.spotbugs'
+//apply plugin: 'com.github.spotbugs'
 apply plugin: 'jacoco'
 
 group = 'dominionback'
-version = '1.0-SNAPSHOT'
+version = '1.2-SNAPSHOT'
 mainClassName = 'com.github.nelson54.dominion.Application'
-sourceCompatibility = 11.0
-targetCompatibility = 11.0
+sourceCompatibility = 13.0
+targetCompatibility = 13.0
+
 
 configurations {
     all {
@@ -52,60 +56,52 @@ dependencies {
     implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
     implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
 
-    developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$spring"
+    developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$springVersion"
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: "$spring"
-    //compile group: 'io.logz.logback', name: 'logzio-logback-appender', version: '1.0.22'
-    //compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
-    //compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    compileOnly 'org.projectlombok:lombok:1.18.8'
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: "$spring"
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$spring",  {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: "$springVersion"
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: "$springVersion"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$springVersion",  {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
 
-    compile("io.springfox:springfox-swagger2:2.9.2")
-    compile("io.springfox:springfox-swagger-ui:2.9.2")
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version: "$spring"
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "$spring", {
-        exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
-        exclude group: 'org.hibernate', module: 'hibernate-core'
-    }
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow', version: "$springVersion"
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "$spring"
-    compile group: 'org.springframework.boot',name: 'spring-boot-devtools', version: "$spring"
-    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: "$spring"
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "$spring"
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: "$spring"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "$springVersion"
+    compile group: 'org.springframework.boot',name: 'spring-boot-devtools', version: "$springVersion"
+    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: "$springVersion"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "$springVersion"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: "$springVersion"
     
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.10.Final'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: "$hibernateVersion"
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     compile group: 'javax.activation', name: 'javax.activation-api', version: '1.2.0'
     compile group: 'io.jsonwebtoken', name:'jjwt', version: '0.7.0'
 
-    compile 'com.google.guava:guava:27.1-jre'
+    compile "com.google.guava:guava:$guavaVersion"
     compile group: 'org.javassist', name: 'javassist', version: '3.23.1-GA'
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-guava', version: '2.10.2'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.2'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.2'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
-    compile 'joda-time:joda-time:2.7'
-    compile group: 'com.google.inject', name: 'guice', version: '4.0'
-    runtime group: 'org.hsqldb', name: 'hsqldb', version: '2.4.1'
-    runtime group: 'com.h2database', name: 'h2', version: '1.4.197'
+
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-guava', version: "$jacksonVersion"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "$jacksonVersion"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "$jacksonVersion"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "$jacksonVersion"
+
+    compile("io.springfox:springfox-swagger2:2.9.2")
+    compile("io.springfox:springfox-swagger-ui:2.9.2")
+    compileOnly 'org.projectlombok:lombok:1.18.8'
 
     testRuntime group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta2'
 
-
-    compile "org.flywaydb:flyway-core:5.2.4"
     
     testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.2')
 
     testCompile(
         'junit:junit:4.12',
         'org.easymock:easymock:4.0.2',
-        "org.springframework.boot:spring-boot-starter-test:$spring",
+        "org.springframework.boot:spring-boot-starter-test:$springVersion",
         'org.junit.jupiter:junit-jupiter-api:5.3.2',
         'org.junit.jupiter:junit-jupiter-params:5.3.2'
     )
@@ -156,7 +152,7 @@ javadoc {
 
 
 wrapper {
-    gradleVersion = '5.1'
+    gradleVersion = '6.3'
 }
 
 checkstyle {

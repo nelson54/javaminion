@@ -8,11 +8,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Match {
-    private Long id;
+    private String id;
     private Long seed;
     private Integer playerCount;
     private LinkedHashSet <MatchParticipant> participants;
-    private Map<Long, Long> scores;
+    private Map<String, Long> scores;
     private MatchParticipant winner;
     private MatchState matchState;
     private GameCardSet cards;
@@ -33,7 +33,7 @@ public class Match {
         this.cards = cards;
     }
 
-    public Match(Long id,
+    public Match(String id,
                  Long seed,
                  MatchState matchState,
                  Integer playerCount,
@@ -47,7 +47,7 @@ public class Match {
         this.cards = cards;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -61,7 +61,7 @@ public class Match {
         return new LinkedList<>(this.participants);
     }
 
-    public List<Long> getTurnOrder() {
+    public List<String> getTurnOrder() {
         return this.participants.stream()
                 .map((participant) -> participant.getAccount().getId())
                 .collect(Collectors.toList());
@@ -121,11 +121,11 @@ public class Match {
         this.createdAt = createdAt;
     }
 
-    public void setScores(Map<Long, Long> scores) {
+    public void setScores(Map<String, Long> scores) {
         this.scores = scores;
     }
 
-    public Map<Long, Long> getScores() {
+    public Map<String, Long> getScores() {
         return this.scores;
     }
 

@@ -6,14 +6,14 @@ import java.util.Objects;
 
 public class Account {
 
-    private Long id;
+    private String id;
     private User user;
     private String firstname;
     private String email;
     private Boolean ai;
     private Long elo;
 
-    public Account(Long id, User user, String email, String firstname, Boolean ai) {
+    public Account(String id, User user, String email, String firstname, Boolean ai) {
         this.id = id;
         this.user = user;
         this.email = email;
@@ -30,7 +30,7 @@ public class Account {
         this.elo = 1000L;
     }
 
-    public Account(Long id, User user, String email, String firstname, Boolean ai, Long elo) {
+    public Account(String id, User user, String email, String firstname, Boolean ai, Long elo) {
         this.id = id;
         this.user = user;
         this.email = email;
@@ -47,7 +47,7 @@ public class Account {
         this.elo = elo;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

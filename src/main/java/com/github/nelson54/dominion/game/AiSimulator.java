@@ -12,8 +12,8 @@ import com.github.nelson54.dominion.spring.security.WebSecurityConfig;
 import com.github.nelson54.dominion.user.account.AccountController;
 import com.github.nelson54.dominion.user.account.AccountService;
 import com.google.common.collect.Streams;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,9 +22,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import javax.inject.Inject;
+
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -48,14 +50,9 @@ import java.util.stream.Stream;
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class),
 })
 
-@EntityScan("com.github.nelson54.dominion.persistence.entities")
+//@EntityScan("com.github.nelson54.dominion.persistence.entities")
 
-@EnableJpaRepositories({
-        "com.github.nelson54.dominion.game.commands",
-        "com.github.nelson54.dominion.match",
-        "com.github.nelson54.dominion.user",
-        "com.github.nelson54.dominion.user.account"
-})
+
 public class AiSimulator implements CommandLineRunner {
     public ApplicationContext context;
 
@@ -88,8 +85,8 @@ public class AiSimulator implements CommandLineRunner {
         List<AiStrategy> aiStrategyList = Arrays.asList(ais);
 
         Game game;
-        DateTime start = DateTime.now();
-        DateTime end;
+        LocalDateTime start = LocalDateTime.now();
+        LocalDateTime end;
 
         p1Wins = 0;
         p2Wins = 0;
@@ -129,9 +126,9 @@ public class AiSimulator implements CommandLineRunner {
             }
 
         }
-        end = DateTime.now();
+        end = LocalDateTime.now();
 
-        Duration duration = Duration.millis(end.getMillis() - start.getMillis());
+        Duration duration = Duration.between(start, end);
 
         System.out.println("Ran " + timesToRun+ " simulations in " +duration.toString());
         System.out.println( ai1.getClass().toString() + " finished with " + p1Wins +"/"+timesToRun+ " wins.");
@@ -149,17 +146,17 @@ public class AiSimulator implements CommandLineRunner {
         return this.gameFactory;
     }
 
-    @Inject
+    @Autowired
     public void setAiPlayerService(AiPlayerService aiPlayerService) {
         this.aiPlayerService = aiPlayerService;
     }
 
-    @Inject
+    @Autowired
     public void setContext(ApplicationContext context) {
         this.context = context;
     }
 
-    @Inject
+    @Autowired
     public void setPhaseAdvisor(PhaseAdvisor phaseAdvisor) {
         this.phaseAdvisor = phaseAdvisor;
     }

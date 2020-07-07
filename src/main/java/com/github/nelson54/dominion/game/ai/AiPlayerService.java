@@ -33,7 +33,8 @@ public class AiPlayerService {
                 .stream()
                 .map(AiName::name)
                 .map(accountRepository::findByUserUsername)
-                .map(Optional::get)
+                .findFirst()
+                .get().stream()
                 .map(AccountEntity::asAccount)
                 .collect(Collectors.toSet());
     }
@@ -41,6 +42,7 @@ public class AiPlayerService {
     private Account random(String username) {
         return accountRepository
                 .findByUserUsername(UUID.randomUUID().toString())
+                .stream().findFirst()
                 .map(AccountEntity::asAccount)
                 .get();
     }

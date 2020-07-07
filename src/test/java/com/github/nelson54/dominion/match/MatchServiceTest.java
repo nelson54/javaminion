@@ -69,7 +69,7 @@ class MatchServiceTest {
 
         match = matchService.createMatch(match);
 
-        Long matchId = match.getId();
+        String matchId = match.getId();
 
         Game game1 = matchService.getGame(matchId).get();
 

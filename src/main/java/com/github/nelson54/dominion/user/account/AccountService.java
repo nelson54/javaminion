@@ -35,7 +35,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Optional<Account> findById(Long id) {
+    public Optional<Account> findById(String id) {
         return accountRepository.findById(id).map(AccountEntity::asAccount);
     }
 
@@ -46,10 +46,10 @@ public class AccountService {
 
     public Optional<AuthenticationDto> authenticateWithCredentials(
             AccountCredentialsDto accountCredentials) throws AuthenticationException {
-        UserEntity userEntity = userRepository.findByUsername(accountCredentials.getUsername())
+        AccountEntity accountEntity = accountRepository.findByUserUsername(accountCredentials.getUsername())
                 .orElseThrow(() -> new RuntimeException("Incorrect username"));
 
-        if (!passwordEncoder.matches(accountCredentials.getPassword(), userEntity.getPassword())) {
+        if (!passwordEncoder.matches(accountCredentials.getPassword(), accountEntity.getUser().getPassword())) {
             throw new AuthenticationException("Incorrect password");
         }
 
@@ -66,7 +66,7 @@ public class AccountService {
         );
 
         return accountRepository
-                .findByUserUsername(userEntity.getUsername())
+                .findByUserUsername(user.getUsername())
                 .map(AccountEntity::asAccount)
                 .map(AccountDto::fromAccount)
                 .map((accountDto) -> new AuthenticationDto(token, accountDto));
@@ -84,7 +84,7 @@ public class AccountService {
                 registrationDto.getFirstname(),
                 registrationDto.getEmail(),
                 userEntity);
-        accountEntity.setElo(1000L);
+
         accountRepository.save(accountEntity);
 
         return Optional.of(accountEntity.asAccount());
@@ -93,7 +93,7 @@ public class AccountService {
     public Optional<Account> getAuthorizedAccount() {
         return accountRepository
                 .findByUserUsername((String)
-                        SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                .map(AccountEntity::asAccount);
+                        SecurityContextHolder.getContext().getAuthentication().getPrincipal()).stream()
+                .map(AccountEntity::asAccount).findFirst();
     }
 }

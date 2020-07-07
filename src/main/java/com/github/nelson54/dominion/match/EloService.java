@@ -18,14 +18,14 @@ public class EloService {
         this.accountRepository = accountRepository;
     }
 
-    public void updateEloForAccounts(Collection<Account> accounts, Long userIdWinner) {
-        final HashMap<Long, Long> userRating = new HashMap<>();
+    public void updateEloForAccounts(Collection<Account> accounts, String userIdWinner) {
+        final HashMap<String, Long> userRating = new HashMap<>();
 
         accounts.forEach((account) -> {
             userRating.put(account.getId(), account.getElo());
         });
 
-        HashMap<Long, Long> updatedUserRating = calculateMultiplayer(userRating, userIdWinner);
+        HashMap<String, Long> updatedUserRating = calculateMultiplayer(userRating, userIdWinner);
 
         accounts.forEach((account) -> {
             account.setElo(updatedUserRating.get(account.getId()));
@@ -43,25 +43,25 @@ public class EloService {
     }
 
 
-    private HashMap<Long, Long> calculateMultiplayer(HashMap<Long, Long> usersRating, Long userIdWinner) {
+    private HashMap<String, Long> calculateMultiplayer(HashMap<String, Long> usersRating, String userIdWinner) {
 
         if (usersRating.size() == 0) {
             return usersRating;
         }
 
-        HashMap<Long, Long> newUsersPoints = new HashMap<Long, Long>();
+        HashMap<String, Long> newUsersPoints = new HashMap<>();
 
         // K-factor
         int K = 32;
 
         // Calculate total Q
         double Q = 0.0;
-        for (long userId : usersRating.keySet()) {
+        for (String userId : usersRating.keySet()) {
             Q += Math.pow(10.0, ((double) usersRating.get(userId) / 400));
         }
 
         // Calculate new rating
-        for (long userId : usersRating.keySet()) {
+        for (String userId : usersRating.keySet()) {
 
             /**
              * Expected rating for an user
@@ -77,7 +77,7 @@ public class EloService {
              * (another option is to give fractions of 1/number-of-players instead of 0)
              */
             long actualScore;
-            if (userIdWinner == userId) {
+            if (userIdWinner.equals(userId)) {
                 actualScore = 1;
             } else {
                 actualScore = 0;

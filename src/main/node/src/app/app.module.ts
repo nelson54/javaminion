@@ -20,7 +20,9 @@ import { GameService } from '@app/shared/game.service';
 import { GameModule } from '@app/game/game.module';
 import { NavigationStart, Router } from '@angular/router';
 import { ShowMainNavService } from '@app/shared/ShowMainNav.service';
+import {SignupModule} from "@app/signup/signup.module";
 import { filter } from 'rxjs/operators';
+
 
 @NgModule({
   imports: [
@@ -35,6 +37,7 @@ import { filter } from 'rxjs/operators';
     ShellModule,
     HomeModule,
     LoginModule,
+    SignupModule,
     GameModule,
     Angulartics2Module.forRoot(),
     AppRoutingModule // must be imported as the last module as it contains the fallback route

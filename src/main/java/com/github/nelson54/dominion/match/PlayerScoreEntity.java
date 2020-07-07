@@ -1,20 +1,19 @@
 package com.github.nelson54.dominion.match;
 
 import com.github.nelson54.dominion.user.account.AccountEntity;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "player_score_entity")
+@Document
 public class PlayerScoreEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @DBRef
     private AccountEntity account;
 
-    @Column
     private Long score;
 
     public PlayerScoreEntity() {}
@@ -24,11 +23,11 @@ public class PlayerScoreEntity {
         this.score = score;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

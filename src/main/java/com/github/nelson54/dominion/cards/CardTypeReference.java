@@ -3,11 +3,11 @@ package com.github.nelson54.dominion.cards;
 import com.github.nelson54.dominion.cards.types.Card;
 
 public class CardTypeReference {
-    private Long id;
+    private String id;
     private Class<? extends Card> clazz;
     private String name;
 
-    private CardTypeReference(Long id, String name, Class<? extends Card> clazz) {
+    private CardTypeReference(String id, String name, Class<? extends Card> clazz) {
         this.id = id;
         this.clazz = clazz;
         this.name = name;
@@ -17,7 +17,7 @@ public class CardTypeReference {
         this.clazz = clazz;
         this.name = name;
     }
-    public static CardTypeReference of(Long id, String name, Class<? extends Card> clazz) {
+    public static CardTypeReference of(String id, String name, Class<? extends Card> clazz) {
         return new CardTypeReference(id, name, clazz);
     }
 
@@ -25,7 +25,7 @@ public class CardTypeReference {
         return new CardTypeReference(name, clazz);
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

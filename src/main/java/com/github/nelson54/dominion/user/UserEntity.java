@@ -1,6 +1,8 @@
 package com.github.nelson54.dominion.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.*;
@@ -8,24 +10,23 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Objects;
 
-@Entity
-@Table(name = "users")
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @NotNull
-    @Column(name = "username", length = 100, unique = true, updatable = false)
+    //@Column(name = "username", length = 100, unique = true, updatable = false)
+    @Field(name="username")
     private String username;
 
     @JsonIgnore
     @NotNull
-    @Column(name = "password", length = 60, updatable = false)
+    //@Column(name = "password", length = 60, updatable = false)
+    @Field
     private String password;
 
-    @Column
+    @Field
     private Boolean enabled;
 
     /**
@@ -45,11 +46,11 @@ public class UserEntity {
         return null;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

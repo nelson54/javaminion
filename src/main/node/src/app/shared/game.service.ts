@@ -30,7 +30,4 @@ export class GameService {
     return this.httpClient.post(`${this.apiRoot}/${game.id}/next-phase`, {});
   }
 
-  getRecommendedCards() {
-    return this.httpClient.get(`/api/recommended`);
-  }
 }
