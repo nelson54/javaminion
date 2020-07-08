@@ -21,7 +21,7 @@ public class MatchEntity {
     @Field
     private Long seed;
 
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @DBRef
     private List<AccountEntity> players;
 
     @Field
@@ -138,6 +138,10 @@ public class MatchEntity {
         return playersById.get(id);
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setState(MatchState state) {
         this.state = state;
     }
@@ -168,5 +172,49 @@ public class MatchEntity {
 
     public void setFinishedAt(LocalDateTime finishedAt) {
         this.finishedAt = finishedAt;
+    }
+
+    public Long getSeed() {
+        return seed;
+    }
+
+    public void setSeed(Long seed) {
+        this.seed = seed;
+    }
+
+    public List<AccountEntity> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<AccountEntity> players) {
+        this.players = players;
+    }
+
+    public Integer getPlayerCount() {
+        return playerCount;
+    }
+
+    public void setPlayerCount(Integer playerCount) {
+        this.playerCount = playerCount;
+    }
+
+    public String getTurnOrder() {
+        return turnOrder;
+    }
+
+    public void setTurnOrder(String turnOrder) {
+        this.turnOrder = turnOrder;
+    }
+
+    public List<CardTypeReferenceEntity> getGameCards() {
+        return gameCards;
+    }
+
+    public void setGameCards(List<CardTypeReferenceEntity> gameCards) {
+        this.gameCards = gameCards;
+    }
+
+    public AccountEntity getWinner() {
+        return winner;
     }
 }

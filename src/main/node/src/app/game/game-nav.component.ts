@@ -1,8 +1,11 @@
 'use strict';
 
-import { Component, Host, Input, TemplateRef } from '@angular/core';
+import { Component, Host, TemplateRef } from '@angular/core';
 import { GameComponent } from '@app/game/game.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {AuthenticationService} from "@app/core";
+import {Router} from "@angular/router";
+import {GameService} from "@app/shared/game.service";
 
 @Component({
   selector: 'game-nav',
@@ -13,7 +16,11 @@ export class GameNavComponent {
   additionalActions = false;
   closeResult: false | string = false;
 
-  constructor(@Host() public gamePlay: GameComponent, private modalService: NgbModal) {}
+  constructor(@Host() public gamePlay: GameComponent,
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              private gameService: GameService,
+              private modalService: NgbModal) {}
 
   toggleAdditionalActions() {
     this.additionalActions = !this.additionalActions;
@@ -32,5 +39,15 @@ export class GameNavComponent {
 
   showAdditionalActions() {
     return this.additionalActions;
+  }
+
+  logout() {
+    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+  }
+
+  surrender() {
+    this.gameService.surrender(this.gamePlay.gameId).subscribe(()=> {
+      this.router.navigate(['/home'], { replaceUrl: true })
+    })
   }
 }

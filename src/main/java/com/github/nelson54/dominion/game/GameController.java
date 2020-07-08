@@ -118,7 +118,7 @@ public class GameController {
         return game;
     }
 
-    @PostMapping(value = "/{gameId}/resign")
+    @PostMapping(value = "/{gameId}/surrender")
     public Game resign(
             HttpServletResponse response,
             @PathVariable("gameId") String gameId

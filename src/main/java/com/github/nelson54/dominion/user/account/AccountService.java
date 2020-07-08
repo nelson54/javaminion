@@ -3,7 +3,6 @@ package com.github.nelson54.dominion.user.account;
 import com.github.nelson54.dominion.user.authorization.JwtTokenService;
 import com.github.nelson54.dominion.user.authorization.AuthenticationDto;
 import com.github.nelson54.dominion.user.UserEntity;
-import com.github.nelson54.dominion.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,14 +23,11 @@ import java.util.stream.StreamSupport;
 public class AccountService {
     private final Logger logger = LoggerFactory.getLogger(JwtTokenService.class);
     BCryptPasswordEncoder passwordEncoder;
-    UserRepository userRepository;
     AccountRepository accountRepository;
 
     public AccountService(BCryptPasswordEncoder passwordEncoder,
-                          UserRepository userRepository,
                           AccountRepository accountRepository) {
         this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
         this.accountRepository = accountRepository;
     }
 

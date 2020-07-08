@@ -46,7 +46,7 @@ public class DominionTestCase {
         User user2 = new User("User2", "password", new ArrayList());
 
         match.addParticipant(new MatchParticipant(new Account("1", user1, "user1@example.com", "User1", false)));
-        match.addParticipant(new MatchParticipant(new Account("2", user2, "user2@example.com", "User2", false)));
+        match.addParticipant(new MatchParticipant(new Account("2 ", user2, "user2@example.com", "User2", false)));
 
         return match;
     }

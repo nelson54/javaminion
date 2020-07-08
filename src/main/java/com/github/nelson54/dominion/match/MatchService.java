@@ -45,7 +45,7 @@ public class MatchService {
 
     public List<Match> findByStateIn(List<MatchState> states) {
         return StreamSupport
-                .stream(matchRepository.findAll().spliterator(), false)//matchRepository.findByStateIn(states).spliterator(), false)
+                .stream(matchRepository.findByStateIn(states).spliterator(), false)//matchRepository.findByStateIn(states).spliterator(), false)
                 .map(MatchEntity::toMatch)
                 .collect(Collectors.toList());
     }

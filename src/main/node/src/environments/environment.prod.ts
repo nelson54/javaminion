@@ -7,7 +7,7 @@
 import env from './.env';
 
 export const environment = {
-  production: true,
+  production: false,
   version: env.npm_package_version,
   serverUrl: '',
   defaultLanguage: 'en-US',

@@ -5,14 +5,14 @@
       <button (click)="reload()" class="btn btn-primary">Refresh</button>
     </div>
   </div>
-  <div class="d-flex justify-content-center">
+  <form class="d-flex justify-content-center" [formGroup]="filters">
     <div class="form-check form-check-inline">
       <input
         class="form-check-input"
         type="checkbox"
         id="waiting-for-opponent"
-        (change)="reload()"
-        ngModel="filters.waitingForOpponent"
+        formControlName="waitingForOpponent"
+
       />
       <label class="form-check-label" for="waiting-for-opponent">Waiting for Opponent</label>
     </div>
@@ -21,8 +21,7 @@
         class="form-check-input"
         type="checkbox"
         id="finished"
-        (change)="reload()"
-        ngModel="matchmaking.filters.isFinished"
+        formControlName="isFinished"
       />
       <label class="form-check-label" for="finished">Finished</label>
     </div>
@@ -31,12 +30,11 @@
         class="form-check-input"
         type="checkbox"
         id="in-progress"
-        (change)="reload()"
-        ngModel="matchmaking.filters.inProgress"
+        formControlName="inProgress"
       />
       <label class="form-check-label" for="in-progress">In Progress</label>
     </div>
-  </div>
+  </form>
 
   <ul class="list-group matchmaking-game-list">
     <li
@@ -91,8 +89,8 @@
         </span>
       </small>
 
-      <a class="btn btn-primary btn-play" *ngIf="isMyGame(game)" routerLink="/game/{{ game.id }}">Play</a>
-      <button *ngIf="game.matchState === 'WAITING_FOR_PLAYERS'" (click)="joinGame(game)" class="btn btn-primary">
+      <a class="btn btn-primary btn-play" *ngIf="game.matchState === 'IN_PROGRESS' && canPlay(game)" routerLink="/game/{{ game.id }}">Play</a>
+      <button *ngIf="game.matchState === 'WAITING_FOR_PLAYERS' && canJoin(game)" (click)="joinGame(game)" class="btn btn-primary">
         Join
       </button>
     </li>

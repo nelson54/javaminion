@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.nelson54.dominion.cards.sets.base.*;
 import com.github.nelson54.dominion.cards.types.Card;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum RecommendedCards {
 
@@ -112,6 +116,13 @@ public enum RecommendedCards {
 
     public void setCards(Class<? extends Card>[] cards) {
         this.cards = cards;
+    }
+
+
+    public LinkedList<CardTypeReference> getReferences() {
+        return Arrays.stream(this.cards)
+                .map((card) -> CardTypeReference.of(card.toString(), card))
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     public static RecommendedCards ofName(String name) {

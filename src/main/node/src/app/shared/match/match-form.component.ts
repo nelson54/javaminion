@@ -27,10 +27,10 @@ export class MatchFormComponent implements OnInit {
     cards: new FormControl([]),
     playerCount: new FormControl([]),
 
-    player1: new FormControl([]),
-    player2: new FormControl([]),
-    player3: new FormControl([]),
-    player4: new FormControl([])
+    player1: new FormControl({value: false, disabled: true} ),
+    player2: new FormControl({value: true, disabled: false}),
+    player3: new FormControl({value: true, disabled: false}),
+    player4: new FormControl({value: true, disabled: false})
   });
 
   constructor(
@@ -61,12 +61,11 @@ export class MatchFormComponent implements OnInit {
 
   private findNumberOfAiPlayers() : number {
     return [
-      this.form.controls.player1,
       this.form.controls.player2,
       this.form.controls.player3,
       this.form.controls.player4
     ].filter((control: FormControl, i: number) => {
-      return i <= this.form.controls.playerCount.value && !control.value
+      return i < (parseInt(this.form.controls.playerCount.value) - 1)  && control.value
     }).length;
   }
 

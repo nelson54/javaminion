@@ -5,6 +5,8 @@ import { GameService } from '@app/shared/game.service';
 import { Match } from '@app/shared/game/match.interface';
 import { AuthenticationService, Credentials, CredentialsService } from '@app/core';
 import { MatchFormComponent } from '@app/shared/match/match-form.component';
+import {FormControl, FormGroup} from "@angular/forms";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-home',
@@ -17,11 +19,13 @@ export class HomeComponent implements OnInit {
   public credentials: Credentials;
   public matches: Match[];
 
-  public filters = {
-    waitingForOpponent: true,
-    inProgress: true,
-    isFinished: false
-  };
+
+
+  public filters = new FormGroup({
+    waitingForOpponent: new FormControl(true),
+    inProgress: new FormControl(true),
+    isFinished: new FormControl(true)
+  });
 
   constructor(
     private modalService: NgbModal,
@@ -30,6 +34,7 @@ export class HomeComponent implements OnInit {
     private credentialsService: CredentialsService
   ) {
     this.credentials = this.credentialsService.credentials;
+    this.filters.valueChanges.subscribe(()=> this.reload())
   }
 
   ngOnInit() {
@@ -58,7 +63,10 @@ export class HomeComponent implements OnInit {
 
   reload() {
     this.isLoading = true;
-    return this.matchService.query(this.filters).subscribe((matches: any) => {
+
+
+
+    return this.matchService.query(this.filters.getRawValue()).subscribe((matches: any) => {
       this.isLoading = false;
       this.matches = matches.content;
     });
@@ -70,5 +78,17 @@ export class HomeComponent implements OnInit {
         return participant.account.user.username === this.credentialsService.credentials.username;
       }).length > 0
     );
+  }
+
+   canJoin(game: Match) {
+    return game.participants
+      .filter((participant)=> participant.account.user.username === this.credentialsService.credentials.username)
+      .length === 0;
+  }
+
+  canPlay(game: Match) {
+    return game.participants
+      .filter((participant)=> participant.account.user.username === this.credentialsService.credentials.username)
+      .length === 1;
   }
 }

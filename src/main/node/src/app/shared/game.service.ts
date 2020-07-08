@@ -30,4 +30,7 @@ export class GameService {
     return this.httpClient.post(`${this.apiRoot}/${game.id}/next-phase`, {});
   }
 
+  surrender(gameId: string) {
+    return this.httpClient.post(`${this.apiRoot}/${gameId}/surrender`, {});
+  }
 }

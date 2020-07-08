@@ -9,8 +9,8 @@
       </button>
       <div ngbDropdownMenu aria-labelledby="game-menu" style="line-height: 35px;">
         <a ngbDropdownItem routerLink="/home">Back</a>
-        <button ngbDropdownItem (click)="gamePlay.surrender()">Surrender</button>
-        <button ngbDropdownItem (click)="gamePlay.logout()">Logout</button>
+        <button ngbDropdownItem (click)="surrender()">Surrender</button>
+        <a ngbDropdownItem class="logout" (click)="logout()">Logout</a>
       </div>
     </div>
   </li>
