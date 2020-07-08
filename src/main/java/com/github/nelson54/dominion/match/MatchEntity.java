@@ -3,17 +3,21 @@ package com.github.nelson54.dominion.match;
 import com.github.nelson54.dominion.cards.GameCardSet;
 import com.github.nelson54.dominion.user.account.AccountEntity;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.domain.Persistable;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Document("match")
-public class MatchEntity {
+public class MatchEntity implements Persistable<String> {
 
     @Id
     private String id;
@@ -39,13 +43,16 @@ public class MatchEntity {
     private List<CardTypeReferenceEntity> gameCards;
 
     @DBRef
-    private AccountEntity winner;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    public AccountEntity winner;
 
     @Field
-    private LocalDateTime finishedAt;
+    @CreatedDate
+    public LocalDateTime createdAt;
+
+    @Field
+    public LocalDateTime finishedAt;
+
+    private boolean persisted;
 
     public MatchEntity() {}
 
@@ -75,8 +82,8 @@ public class MatchEntity {
         }
 
         match.setScores(scores);
-
         match.setCreatedAt(createdAt);
+        match.setFinishedAt(finishedAt);
 
         Arrays.stream(turnOrder.split(","))
                 .map(accounts::get)
@@ -89,7 +96,7 @@ public class MatchEntity {
                 })
                 .forEachOrdered(match::addParticipant);
 
-        match.setFinishedAt(finishedAt);
+
 
         return match;
     }
@@ -126,8 +133,6 @@ public class MatchEntity {
                 .map(CardTypeReferenceEntity::ofCardTypeReference)
                 .collect(Collectors.toList());
 
-        matchEntity.finishedAt = match.getFinishedAt();
-
         return matchEntity;
     }
 
@@ -156,22 +161,6 @@ public class MatchEntity {
 
     public void setWinner(AccountEntity accountEntity) {
         this.winner = accountEntity;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getFinishedAt() {
-        return finishedAt;
-    }
-
-    public void setFinishedAt(LocalDateTime finishedAt) {
-        this.finishedAt = finishedAt;
     }
 
     public Long getSeed() {
@@ -216,5 +205,14 @@ public class MatchEntity {
 
     public AccountEntity getWinner() {
         return winner;
+    }
+
+    public void setPersisted(boolean persisted) {
+        this.persisted = persisted;
+    }
+
+    @Override
+    public boolean isNew() {
+        return !persisted;
     }
 }

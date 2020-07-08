@@ -11,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -46,6 +49,8 @@ public class MatchController {
 
     @GetMapping(value = "/matches")
     public Page<Match> matches(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "true") Boolean waitingForOpponent,
             @RequestParam(defaultValue = "false") Boolean isFinished,
             @RequestParam(defaultValue = "false") Boolean inProgress) {
@@ -66,7 +71,10 @@ public class MatchController {
             matchStates.add(MatchState.IN_PROGRESS);
         }
 
-        return new PageImpl<>(matchService.findByStateIn(matchStates));
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "createdAt"));
+
+        return matchService.findByStateIn(matchStates, pageRequest);
+
     }
 
     @PostMapping(value = "/matches")

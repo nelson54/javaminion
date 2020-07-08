@@ -19,7 +19,10 @@ export class HomeComponent implements OnInit {
   public credentials: Credentials;
   public matches: Match[];
 
-
+  public first = false;
+  public last = true;
+  public page = 0;
+  public totalPages = 1;
 
   public filters = new FormGroup({
     waitingForOpponent: new FormControl(true),
@@ -64,10 +67,15 @@ export class HomeComponent implements OnInit {
   reload() {
     this.isLoading = true;
 
+    const request = this.filters.getRawValue();
+    request.page = this.page;
 
-
-    return this.matchService.query(this.filters.getRawValue()).subscribe((matches: any) => {
+    return this.matchService.query(request).subscribe((matches: any) => {
       this.isLoading = false;
+      this.page = matches.number;
+      this.first = matches.first;
+      this.last = matches.last;
+      this.totalPages = matches.totalPages;
       this.matches = matches.content;
     });
   }
@@ -90,5 +98,19 @@ export class HomeComponent implements OnInit {
     return game.participants
       .filter((participant)=> participant.account.user.username === this.credentialsService.credentials.username)
       .length === 1;
+  }
+
+  next() {
+    if(!this.last) {
+      this.page++;
+      this.reload()
+    }
+  }
+
+  prev() {
+    if(!this.first) {
+      this.page--;
+      this.reload()
+    }
   }
 }

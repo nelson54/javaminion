@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -29,7 +30,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
     }, excludeFilters = {
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value= AiSimulator.class)
     })
-
+@EnableMongoAuditing
 @EnableMongoRepositories({
         "com.github.nelson54.dominion.user",
         "com.github.nelson54.dominion.user.account",

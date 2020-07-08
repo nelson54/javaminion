@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Match } from '@app/shared/game/match.interface';
 
 @Pipe({ name: 'gameOrder' })
-export class GameOrderPipe implements PipeTransform {
+export class GameOrder implements PipeTransform {
   matchHasUser(match: Match, username: string) {
     return (
       match.participants.filter(participant => {
@@ -42,7 +42,7 @@ export class GameOrderPipe implements PipeTransform {
         return 0;
       }
 
-      return m1.createdAt.localeCompare(m2.createdAt);
+      return m1.createdAt.localeCompare(m2.createdAt) * -1;
     });
 
     return matches;

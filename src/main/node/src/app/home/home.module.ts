@@ -13,8 +13,7 @@ import { GameStatePipe } from '@app/home/GameState.pipe';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '@app/core/http/token-interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GameOrderPipe } from '@app/home/game-order.pipe';
-import { MatchFormComponent } from '@app/shared/match/match-form.component';
+import {GameOrder} from "@app/home/GameOrder.pipe";
 
 @NgModule({
   imports: [
@@ -29,7 +28,7 @@ import { MatchFormComponent } from '@app/shared/match/match-form.component';
     ReactiveFormsModule
   ],
 
-  declarations: [HomeComponent, GameStatePipe, GameOrderPipe],
+  declarations: [HomeComponent, GameStatePipe, GameOrder],
   providers: [MatchService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }]
 })
 export class HomeModule {}

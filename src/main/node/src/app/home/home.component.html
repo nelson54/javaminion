@@ -47,7 +47,7 @@
       </div>
     </li>
     <li
-      *ngFor="let game of matches | gameOrder: credentials.username"
+      *ngFor="let game of (matches | gameOrder: credentials.username)"
       class="list-group-item nga-collapse nga-default nga-stagger border border-primary"
       style="background-color: #e3f1ff"
     >
@@ -95,4 +95,10 @@
       </button>
     </li>
   </ul>
+  <footer class="d-flex justify-content-center">
+    <div class="btn-group">
+      <button [disabled]="first" (click)="prev()" class="btn btn-secondary btn-sm">Previous Page</button>
+      <button (click)="next()" [disabled]="last" class="btn btn-secondary btn-sm">Next Page</button>
+    </div>
+  </footer>
 </div>

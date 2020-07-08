@@ -129,6 +129,7 @@ public class GameController {
 
         logger.info("Game[{}] - {}[{}] resigned.", gameId, account.getUser().getUsername(), account.getId());
 
+        game.setReadOnly(false);
         matchService.applyCommand(game, Command.resign(game, player));
 
         String gameJson = objectMapper.writeValueAsString(game);

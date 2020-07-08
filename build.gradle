@@ -3,7 +3,7 @@ logging.captureStandardOutput LogLevel.INFO
 ext {
     springVersion = '2.3.0.RELEASE'
     jacksonVersion = '2.10.2'
-    hibernateVersion = '5.2.10.Final'
+    hibernateVersion = '5.4.3.Final'
     guavaVersion = '29.0-jre'
 }
 
@@ -75,7 +75,7 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: "$springVersion"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "$springVersion"
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: "$springVersion"
-    
+
     compile group: 'org.hibernate', name: 'hibernate-core', version: "$hibernateVersion"
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     compile group: 'javax.activation', name: 'javax.activation-api', version: '1.2.0'

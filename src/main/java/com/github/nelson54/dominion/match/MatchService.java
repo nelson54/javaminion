@@ -11,11 +11,16 @@ import com.github.nelson54.dominion.user.account.AccountEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -43,11 +48,19 @@ public class MatchService {
         this.phaseAdvisor = phaseAdvisor;
     }
 
-    public List<Match> findByStateIn(List<MatchState> states) {
-        return StreamSupport
-                .stream(matchRepository.findByStateIn(states).spliterator(), false)//matchRepository.findByStateIn(states).spliterator(), false)
+    public Page<Match> findByStateIn(List<MatchState> states, PageRequest page) {
+        Page<MatchEntity> matchEntityPage = matchRepository.findByStateIn(states, page);
+
+        List<Match> matches = StreamSupport
+                .stream(matchEntityPage.spliterator(), false)//matchRepository.findByStateIn(states).spliterator(), false)
                 .map(MatchEntity::toMatch)
                 .collect(Collectors.toList());
+
+
+        return new PageImpl<>(
+                matches,
+                matchEntityPage.getPageable(),
+                matchEntityPage.getTotalElements());
     }
 
     public List<Match> all() {
@@ -189,10 +202,9 @@ public class MatchService {
         if (match.getMatchState().equals(MatchState.IN_PROGRESS)) {
             match.shuffleTurnOrder();
         }
+        MatchEntity entity = MatchEntity.ofMatch(match);
 
-        MatchEntity entity = matchRepository.save(MatchEntity.ofMatch(match));
-
-        return entity.toMatch();
+        return matchRepository.save(entity).toMatch();
     }
 
     public void addPlayerAccount(Match match, Account account) {
@@ -205,7 +217,9 @@ public class MatchService {
             match.setMatchState(MatchState.IN_PROGRESS);
         }
 
-        matchRepository.save(MatchEntity.ofMatch(match));
+        MatchEntity matchEntity = MatchEntity.ofMatch(match);
+        matchEntity.setPersisted(true);
+        matchRepository.save(matchEntity);
     }
 
     private void endGame(Game game) {
@@ -231,12 +245,11 @@ public class MatchService {
                             scores.add(playerScoreEntity);
                         }
 
-                        matchEntity.setFinishedAt(LocalDateTime.now());
+                        matchEntity.finishedAt = LocalDateTime.now();
 
                         matchEntity.setScores(scores);
+                        matchEntity.setPersisted(true);
                         matchEntity = matchRepository.save(matchEntity);
-
-
 
                         eloService.updateEloForAccounts(
                                 players.parallelStream()

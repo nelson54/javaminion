@@ -315,7 +315,6 @@ public class Game {
 
     public void setResign(Player player) {
         resign = player;
-        endGame();
     }
 
     public Long getTurnNumber() {
