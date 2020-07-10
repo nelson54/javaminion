@@ -46,9 +46,7 @@ export class AuthenticationService {
     );
   }
 
-  register(username: String, password: String) {
-
-  }
+  register(username: String, password: String) {}
 
   /**
    * Logs out the user and clear credentials.

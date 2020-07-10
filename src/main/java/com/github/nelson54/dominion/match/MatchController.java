@@ -1,19 +1,16 @@
 package com.github.nelson54.dominion.match;
 
-import com.github.nelson54.dominion.game.GameController;
-import com.github.nelson54.dominion.user.account.Account;
 import com.github.nelson54.dominion.cards.GameCardSet;
-import com.github.nelson54.dominion.cards.RecommendedCards;
+import com.github.nelson54.dominion.game.GameController;
+import com.github.nelson54.dominion.game.ai.AiPlayerService;
+import com.github.nelson54.dominion.user.account.Account;
 import com.github.nelson54.dominion.user.account.AccountRepository;
 import com.github.nelson54.dominion.user.account.AccountService;
-import com.github.nelson54.dominion.game.ai.AiPlayerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,10 +24,9 @@ import java.util.stream.Collectors;
 @RestController()
 @RequestMapping("/api")
 public class MatchController {
+
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
-
     private final AccountRepository accountRepository;
-
     private final AccountService accountService;
     private final AiPlayerService aiPlayerService;
     private MatchService matchService;

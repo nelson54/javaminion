@@ -5,7 +5,7 @@ import { GameService } from '@app/shared/game.service';
 import { Match } from '@app/shared/game/match.interface';
 import { AuthenticationService, Credentials, CredentialsService } from '@app/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import {CreateMatch} from "@app/shared/match/match.interface";
+import { CreateMatch } from '@app/shared/match/match.interface';
 
 @Component({
   selector: 'match-form',
@@ -27,10 +27,10 @@ export class MatchFormComponent implements OnInit {
     cards: new FormControl([]),
     playerCount: new FormControl([]),
 
-    player1: new FormControl({value: false, disabled: true} ),
-    player2: new FormControl({value: true, disabled: false}),
-    player3: new FormControl({value: true, disabled: false}),
-    player4: new FormControl({value: true, disabled: false})
+    player1: new FormControl({ value: false, disabled: true }),
+    player2: new FormControl({ value: true, disabled: false }),
+    player3: new FormControl({ value: true, disabled: false }),
+    player4: new FormControl({ value: true, disabled: false })
   });
 
   constructor(
@@ -59,14 +59,12 @@ export class MatchFormComponent implements OnInit {
     this.cards = cards;
   }
 
-  private findNumberOfAiPlayers() : number {
-    return [
-      this.form.controls.player2,
-      this.form.controls.player3,
-      this.form.controls.player4
-    ].filter((control: FormControl, i: number) => {
-      return i < (parseInt(this.form.controls.playerCount.value) - 1)  && control.value
-    }).length;
+  private findNumberOfAiPlayers(): number {
+    return [this.form.controls.player2, this.form.controls.player3, this.form.controls.player4].filter(
+      (control: FormControl, i: number) => {
+        return i < parseInt(this.form.controls.playerCount.value) - 1 && control.value;
+      }
+    ).length;
   }
 
   createMatch() {
@@ -80,17 +78,16 @@ export class MatchFormComponent implements OnInit {
 
     console.log(match);
 
-    return this.matchService.save(match)
-      .subscribe(() => {
-        this.modal.close('Saved');
-      })
+    return this.matchService.save(match).subscribe(() => {
+      this.modal.close('Saved');
+    });
   }
 
-  cancel(){
-    this.modal.dismiss('Cancelled')
+  cancel() {
+    this.modal.dismiss('Cancelled');
   }
 
   getPlayerCount() {
-    return this.form.controls.playerCount.value
+    return this.form.controls.playerCount.value;
   }
 }

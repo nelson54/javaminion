@@ -5,6 +5,7 @@ import com.github.nelson54.dominion.match.Match;
 import com.github.nelson54.dominion.match.MatchEntity;
 import com.github.nelson54.dominion.match.MatchRepository;
 import com.github.nelson54.dominion.user.authorization.AuthenticationDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +25,15 @@ public class AccountController {
     private final AccountService accountService;
     private final CommandRepository commandRepository;
     private final MatchRepository matchRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public AccountController(AccountService accountService, AccountRepository accountRepository, CommandRepository commandRepository, MatchRepository matchRepository) {
+    public AccountController(AccountService accountService, AccountRepository accountRepository, CommandRepository commandRepository, MatchRepository matchRepository, ModelMapper modelMapper) {
         this.accountService = accountService;
         this.accountRepository = accountRepository;
         this.commandRepository = commandRepository;
         this.matchRepository = matchRepository;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping("/authentication")
@@ -79,7 +82,7 @@ public class AccountController {
 
         List<Match> matches = StreamSupport
                 .stream(matchEntities.spliterator(), false)
-                .map((MatchEntity::toMatch))
+                .map((me) -> modelMapper.map(me, Match.class))
                 .collect(Collectors.toList());
 
         playerInfo.setMatches(matches);
@@ -87,7 +90,7 @@ public class AccountController {
         commandRepository.findByAccountIdAndBuyNameNotNull(id)
                 .ifPresent(playerInfo::setCommands);
 
-        //playerInfo.setRank(accountRepository.findRank(playerInfo.getAccount().getElo()));
+        playerInfo.setRank(accountRepository.findRank(playerInfo.getAccount().getElo()));
         //playerInfo.setTotalPlayers(accountRepository.findTotalPlayers(playerInfo.getAccount().getElo()));
 
         return playerInfo;

@@ -16,8 +16,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.servlet.Registration;
-
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -79,19 +77,5 @@ class AccountControllerTest {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-    }
-
-    @Test
-    void register() {
-        accountRepository.deleteAll();
-
-        RegistrationDto registrationDto = new RegistrationDto();
-        registrationDto.setFirstname("Derek");
-        registrationDto.setFirstname("Nelson");
-        registrationDto.setUsername("derek");
-        registrationDto.setPassword("testing");
-        registrationDto.setEmail("contact@dereknelson.io");
-
-        accountController.register(registrationDto);
     }
 }

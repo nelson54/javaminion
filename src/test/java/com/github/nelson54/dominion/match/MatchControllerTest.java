@@ -3,7 +3,9 @@ package com.github.nelson54.dominion.match;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nelson54.dominion.Application;
 import com.github.nelson54.dominion.user.account.AccountCredentialsDto;
+import com.github.nelson54.dominion.user.account.AccountEntity;
 import com.github.nelson54.dominion.user.authorization.AuthenticationDto;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(SpringRunner.class)
@@ -27,6 +29,16 @@ class MatchControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Before
+    void setup() {
+
+        AccountEntity.builder()
+                .elo(1000L)
+                .firstname("Derek")
+                .
+                .ai(false)
+    }
+
     @Test
     void test1_authorize() throws Exception {
         AccountCredentialsDto accountCredentialsDto = new AccountCredentialsDto();
@@ -34,7 +46,7 @@ class MatchControllerTest {
         accountCredentialsDto.setPassword("testing");
 
         MvcResult authResult = this.mockMvc.perform(post("/api/authentication")
-                .contentType(APPLICATION_JSON_UTF8)
+                .contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(accountCredentialsDto))
         ).andReturn();
 

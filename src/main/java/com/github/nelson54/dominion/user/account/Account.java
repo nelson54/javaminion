@@ -1,9 +1,14 @@
 package com.github.nelson54.dominion.user.account;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Objects;
 
+@Data @NoArgsConstructor @Getter @Setter
 public class Account {
 
     private String id;
@@ -44,38 +49,6 @@ public class Account {
         this.email = email;
         this.firstname = firstname;
         this.ai = ai;
-        this.elo = elo;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public Boolean getAi() {
-        return ai;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public Long getElo() {
-        return elo;
-    }
-
-    public void setElo(Long elo) {
         this.elo = elo;
     }
 

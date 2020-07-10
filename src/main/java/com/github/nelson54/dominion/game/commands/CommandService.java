@@ -85,7 +85,7 @@ public class CommandService {
             return game;
         }
 
-        if (command.getId() == null && msg == null && !game.getReadOnly()) {
+        if (command.getId() == null && msg == null && !game.isReadOnly()) {
             save(command);
         } else if (command.getId() == null && msg != null) {
             logger.error(msg);

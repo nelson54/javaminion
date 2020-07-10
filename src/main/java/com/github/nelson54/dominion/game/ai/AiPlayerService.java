@@ -1,24 +1,21 @@
 package com.github.nelson54.dominion.game.ai;
 
 import com.github.nelson54.dominion.user.account.Account;
-import com.github.nelson54.dominion.user.account.AccountEntity;
 import com.github.nelson54.dominion.user.account.AccountRepository;
-import com.google.common.collect.Range;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.nelson54.dominion.user.account.AccountService;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 
 @Component
 public class AiPlayerService {
 
-    private AccountRepository accountRepository;
+    private final AccountService accountService;
+    private final AccountRepository accountRepository;
 
-    @Autowired
-    public void setAccountRepository(AccountRepository accountRepository) {
+    public AiPlayerService(AccountService accountService, AccountRepository accountRepository) {
+        this.accountService = accountService;
         this.accountRepository = accountRepository;
     }
 
@@ -28,8 +25,10 @@ public class AiPlayerService {
         while(accounts.size() != random) {
             AiName aiName = AiName.random();
             String name = aiName.toString();
-            AccountEntity account = accountRepository.findByUserUsername(name).get();
-            accounts.put(name, account.asAccount());
+
+            accountService.findByUsername(name)
+                    .map((account) -> accounts.put(name, account))
+                    .orElseThrow();
         }
 
         return new HashSet<>(accounts.values());

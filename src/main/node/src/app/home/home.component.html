@@ -7,31 +7,15 @@
   </div>
   <form class="d-flex justify-content-center" [formGroup]="filters">
     <div class="form-check form-check-inline">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        id="waiting-for-opponent"
-        formControlName="waitingForOpponent"
-
-      />
+      <input class="form-check-input" type="checkbox" id="waiting-for-opponent" formControlName="waitingForOpponent" />
       <label class="form-check-label" for="waiting-for-opponent">Waiting for Opponent</label>
     </div>
     <div class="form-check form-check-inline">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        id="finished"
-        formControlName="isFinished"
-      />
+      <input class="form-check-input" type="checkbox" id="finished" formControlName="isFinished" />
       <label class="form-check-label" for="finished">Finished</label>
     </div>
     <div class="form-check form-check-inline">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        id="in-progress"
-        formControlName="inProgress"
-      />
+      <input class="form-check-input" type="checkbox" id="in-progress" formControlName="inProgress" />
       <label class="form-check-label" for="in-progress">In Progress</label>
     </div>
   </form>
@@ -47,7 +31,7 @@
       </div>
     </li>
     <li
-      *ngFor="let game of (matches | gameOrder: credentials.username)"
+      *ngFor="let game of matches | gameOrder: credentials.username"
       class="list-group-item nga-collapse nga-default nga-stagger border border-primary"
       style="background-color: #e3f1ff"
     >
@@ -68,7 +52,7 @@
           <span class="badge badge-pill badge-primary" *ngIf="game.scores != null">{{
             game.scores[participant.account.id]
           }}</span>
-          <identicon username="{{participant.account.user.username}}"></identicon>
+          <identicon username="{{ participant.account.user.username }}"></identicon>
           <a
             ui-sref="playerDetails({id: participant.account.id})"
             [ngClass]="{
@@ -89,8 +73,17 @@
         </span>
       </small>
 
-      <a class="btn btn-primary btn-play" *ngIf="game.matchState === 'IN_PROGRESS' && canPlay(game)" routerLink="/game/{{ game.id }}">Play</a>
-      <button *ngIf="game.matchState === 'WAITING_FOR_PLAYERS' && canJoin(game)" (click)="joinGame(game)" class="btn btn-primary">
+      <a
+        class="btn btn-primary btn-play"
+        *ngIf="game.matchState === 'IN_PROGRESS' && canPlay(game)"
+        routerLink="/game/{{ game.id }}"
+        >Play</a
+      >
+      <button
+        *ngIf="game.matchState === 'WAITING_FOR_PLAYERS' && canJoin(game)"
+        (click)="joinGame(game)"
+        class="btn btn-primary"
+      >
         Join
       </button>
     </li>

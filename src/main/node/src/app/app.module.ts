@@ -20,9 +20,8 @@ import { GameService } from '@app/shared/game.service';
 import { GameModule } from '@app/game/game.module';
 import { NavigationStart, Router } from '@angular/router';
 import { ShowMainNavService } from '@app/shared/ShowMainNav.service';
-import {SignupModule} from "@app/signup/signup.module";
+import { SignupModule } from '@app/signup/signup.module';
 import { filter } from 'rxjs/operators';
-
 
 @NgModule({
   imports: [

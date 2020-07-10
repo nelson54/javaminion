@@ -13,7 +13,7 @@ import { GameStatePipe } from '@app/home/GameState.pipe';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '@app/core/http/token-interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {GameOrder} from "@app/home/GameOrder.pipe";
+import { GameOrder } from '@app/home/GameOrder.pipe';
 
 @NgModule({
   imports: [

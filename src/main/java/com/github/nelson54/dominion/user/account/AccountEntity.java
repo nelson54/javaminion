@@ -1,15 +1,15 @@
 package com.github.nelson54.dominion.user.account;
 
 import com.github.nelson54.dominion.user.UserEntity;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Document("account")
+@Data @NoArgsConstructor @Getter @Setter @Builder
 public class AccountEntity {
 
     @Id
@@ -35,8 +35,6 @@ public class AccountEntity {
     @NotNull
     private Long elo = 1000L;
 
-    public AccountEntity() {}
-
     public AccountEntity(
             Boolean ai,
             @NotNull String firstname,
@@ -46,45 +44,5 @@ public class AccountEntity {
         this.firstname = firstname;
         this.user = user;
         this.email = email;
-    }
-
-    public static AccountEntity ofAccount(Account account) {
-        AccountEntity accountEntity = new AccountEntity(
-                account.getAi(),
-                account.getFirstname(),
-                account.getEmail(),
-                null);
-
-        accountEntity.id = account.getId();
-        accountEntity.user = UserEntity.ofUser(account.getUser());
-        accountEntity.elo = account.getElo();
-
-        return accountEntity;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public Boolean isAi() {
-        return ai;
-    }
-
-    public Account asAccount() {
-        Account account = new Account(id, user.asUser(), email, firstname, ai);
-        account.setElo(elo);
-        return account;
-    }
-
-    public Long getElo() {
-        return elo;
-    }
-
-    public void setElo(Long elo) {
-        this.elo = elo;
     }
 }

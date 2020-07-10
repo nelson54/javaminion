@@ -5,8 +5,8 @@ import { GameService } from '@app/shared/game.service';
 import { Match } from '@app/shared/game/match.interface';
 import { AuthenticationService, Credentials, CredentialsService } from '@app/core';
 import { MatchFormComponent } from '@app/shared/match/match-form.component';
-import {FormControl, FormGroup} from "@angular/forms";
-import {forEach} from "@angular/router/src/utils/collection";
+import { FormControl, FormGroup } from '@angular/forms';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-home',
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
     private credentialsService: CredentialsService
   ) {
     this.credentials = this.credentialsService.credentials;
-    this.filters.valueChanges.subscribe(()=> this.reload())
+    this.filters.valueChanges.subscribe(() => this.reload());
   }
 
   ngOnInit() {
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
         this.reload();
       },
       reason => {
-        console.log(reason)
+        console.log(reason);
       }
     );
   }
@@ -88,29 +88,33 @@ export class HomeComponent implements OnInit {
     );
   }
 
-   canJoin(game: Match) {
-    return game.participants
-      .filter((participant)=> participant.account.user.username === this.credentialsService.credentials.username)
-      .length === 0;
+  canJoin(game: Match) {
+    return (
+      game.participants.filter(
+        participant => participant.account.user.username === this.credentialsService.credentials.username
+      ).length === 0
+    );
   }
 
   canPlay(game: Match) {
-    return game.participants
-      .filter((participant)=> participant.account.user.username === this.credentialsService.credentials.username)
-      .length === 1;
+    return (
+      game.participants.filter(
+        participant => participant.account.user.username === this.credentialsService.credentials.username
+      ).length === 1
+    );
   }
 
   next() {
-    if(!this.last) {
+    if (!this.last) {
       this.page++;
-      this.reload()
+      this.reload();
     }
   }
 
   prev() {
-    if(!this.first) {
+    if (!this.first) {
       this.page--;
-      this.reload()
+      this.reload();
     }
   }
 }

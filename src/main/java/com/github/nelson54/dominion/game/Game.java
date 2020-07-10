@@ -2,12 +2,12 @@ package com.github.nelson54.dominion.game;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.game.choices.Choice;
 import com.google.common.collect.Multimap;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import static com.github.nelson54.dominion.game.Phase.ACTION;
 import static com.github.nelson54.dominion.game.Phase.END_OF_GAME;
 
-
+@NoArgsConstructor @Getter @Setter
 public class Game {
 
     @JsonProperty
@@ -39,12 +39,11 @@ public class Game {
     private Map<String, Player> players;
     @JsonProperty
     private Turn turn;
-    private Boolean rebuilding;
+    private boolean rebuilding;
     private LocalDateTime commandTime;
     private Long turnNumber;
     private Player resign;
-
-    private Boolean isReadOnly = false;
+    private boolean readOnly = false;
 
     public Game(String id, Long seed) {
         this.id = id;
@@ -166,18 +165,6 @@ public class Game {
                 .forEach(turn -> turn.setPhase(END_OF_GAME));
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public Map<String, Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(Map<String, Player> players) {
-        this.players = players;
-    }
-
     public Comparator<Player> rankComparator() {
         Comparator<Player> c = (a, b) -> {
             if (a.getVictoryPoints() > b.getVictoryPoints()) {
@@ -196,16 +183,10 @@ public class Game {
     }
 
     public Optional<Player> getWinningPlayer() {
-
-            return players.values()
-                    .stream()
-                    .filter((player) -> !player.equals(resign))
-                    .min(rankComparator());
-
-    }
-
-    public Kingdom getKingdom() {
-        return kingdom;
+        return players.values()
+                .stream()
+                .filter((player) -> !player.equals(resign))
+                .min(rankComparator());
     }
 
     public void setKingdom(Kingdom kingdom) {
@@ -219,22 +200,6 @@ public class Game {
                 .forEach(card -> this.allCards.put(card.getId(), card));
 
         this.kingdom = kingdom;
-    }
-
-    Set<Player> getTurnOrder() {
-        return turnOrder;
-    }
-
-    public void setTurnOrder(Set<Player> turnOrder) {
-        this.turnOrder = turnOrder;
-    }
-
-    public Turn getTurn() {
-        return turn;
-    }
-
-    public void setTurn(Turn turn) {
-        this.turn = turn;
     }
 
     public void trashCard(Card card) {
@@ -276,58 +241,11 @@ public class Game {
         log(player.getName() + " revealed cards " + sj.toString() + " from hand.");
     }
 
-    public Map<Long, Card> getAllCards() {
-        return allCards;
-    }
-
-    public void setAllCards(Map<Long, Card> allCards) {
-        this.allCards = allCards;
-    }
-
-    public Set<Card> getTrash() {
-        return trash;
-    }
-
-    public Iterator<Player> getTurnerator() {
-        return turnerator;
-    }
-
-    public void setCommandTime(LocalDateTime commandTime) {
-        this.commandTime = commandTime;
-    }
-
-    public LocalDateTime getCommandTime() {
-        return commandTime;
-    }
-
-
-    public Boolean getRebuilding() {
-        return rebuilding;
-    }
-
-    public void setRebuilding(Boolean rebuilding) {
-        this.rebuilding = rebuilding;
-    }
 
     public void resetPastTurns() {
         logs.clear();
     }
 
-    public void setResign(Player player) {
-        resign = player;
-    }
-
-    public Long getTurnNumber() {
-        return turnNumber;
-    }
-
-    public Boolean getReadOnly() {
-        return isReadOnly;
-    }
-
-    public void setReadOnly(Boolean readOnly) {
-        isReadOnly = readOnly;
-    }
 
     @JsonIgnore
     @Override
@@ -358,7 +276,4 @@ public class Game {
 
     }
 
-    public LinkedHashSet<String> getLogs() {
-        return logs;
-    }
 }

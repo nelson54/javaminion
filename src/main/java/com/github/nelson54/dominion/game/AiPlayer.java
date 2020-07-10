@@ -36,14 +36,14 @@ public class AiPlayer extends Player {
 
     @Override
     public void onBuyPhase() {
-        if(!this.getGame().getRebuilding()) {
+        if(!this.getGame().isRebuilding()) {
             aiStrategy.buyPhase(new AiGameFacade(matchService, getGame(), getCurrentTurn(), this));
         }
     }
 
     @Override
     public void onChoice() {
-        if(!this.getGame().getRebuilding()) {
+        if(!this.getGame().isRebuilding()) {
             aiStrategy.choice(new AiGameFacade(matchService, getGame(), getCurrentTurn(), this));
         }
     }

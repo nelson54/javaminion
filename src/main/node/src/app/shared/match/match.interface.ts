@@ -4,5 +4,4 @@ export interface CreateMatch {
   numberOfAiPlayers: number;
   count: number;
   cards: string;
-
 }

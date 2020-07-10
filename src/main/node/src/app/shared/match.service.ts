@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import {CreateMatch} from "@app/shared/match/match.interface";
+import { CreateMatch } from '@app/shared/match/match.interface';
 
 const root = '/api/matches';
 

@@ -177,11 +177,14 @@ export class GameComponent implements OnInit {
       done: true
     };
 
-    this.gameService.choice(game, choice).subscribe(() => {
-      console.log("Done with choice.")
-    }, error => {
-      console.log(error)
-    });
+    this.gameService.choice(game, choice).subscribe(
+      () => {
+        console.log('Done with choice.');
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   isLoggedInPlayer(player: Player) {

@@ -1,8 +1,9 @@
 package com.github.nelson54.dominion.user.account;
 
-import com.github.nelson54.dominion.user.authorization.JwtTokenService;
-import com.github.nelson54.dominion.user.authorization.AuthenticationDto;
 import com.github.nelson54.dominion.user.UserEntity;
+import com.github.nelson54.dominion.user.authorization.AuthenticationDto;
+import com.github.nelson54.dominion.user.authorization.JwtTokenService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,20 +25,24 @@ public class AccountService {
     private final Logger logger = LoggerFactory.getLogger(JwtTokenService.class);
     BCryptPasswordEncoder passwordEncoder;
     AccountRepository accountRepository;
+    ModelMapper modelMapper;
 
-    public AccountService(BCryptPasswordEncoder passwordEncoder,
+    public AccountService(
+            BCryptPasswordEncoder passwordEncoder,
                           AccountRepository accountRepository) {
         this.passwordEncoder = passwordEncoder;
         this.accountRepository = accountRepository;
     }
 
     public Optional<Account> findById(String id) {
-        return accountRepository.findById(id).map(AccountEntity::asAccount);
+        return accountRepository.findById(id)
+                .map((ae)-> modelMapper.map(ae, Account.class));
     }
 
     public Iterable<Account> findAll() {
         return StreamSupport.stream(accountRepository.findAll().spliterator(), false)
-            .map(AccountEntity::asAccount).collect(Collectors.toList());
+                .map((ae)-> modelMapper.map(ae, Account.class))
+                .collect(Collectors.toList());
     }
 
     public Optional<AuthenticationDto> authenticateWithCredentials(
@@ -63,7 +68,7 @@ public class AccountService {
 
         return accountRepository
                 .findByUserUsername(user.getUsername())
-                .map(AccountEntity::asAccount)
+                .map((ae)-> modelMapper.map(ae, Account.class))
                 .map(AccountDto::fromAccount)
                 .map((accountDto) -> new AuthenticationDto(token, accountDto));
     }
@@ -83,13 +88,22 @@ public class AccountService {
 
         accountRepository.save(accountEntity);
 
-        return Optional.of(accountEntity.asAccount());
+        return Optional.of(modelMapper.map(accountEntity, Account.class));
     }
 
     public Optional<Account> getAuthorizedAccount() {
         return accountRepository
                 .findByUserUsername((String)
                         SecurityContextHolder.getContext().getAuthentication().getPrincipal()).stream()
-                .map(AccountEntity::asAccount).findFirst();
+                .map((ae)-> modelMapper.map(ae, Account.class))
+                .findFirst();
+    }
+
+    public Optional<Account> findByUsername(String name) {
+        return accountRepository
+                .findByUserUsername((String)
+                        SecurityContextHolder.getContext().getAuthentication().getPrincipal()).stream()
+                .map((ae)-> modelMapper.map(ae, Account.class))
+                .findFirst();
     }
 }

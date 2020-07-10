@@ -1,15 +1,19 @@
 package com.github.nelson54.dominion.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import javax.persistence.*;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+@Data @Getter @Setter @Builder
+@NoArgsConstructor
 public class UserEntity {
 
     @Id
@@ -29,6 +33,15 @@ public class UserEntity {
     @Field
     private Boolean enabled;
 
+    @Field
+    private List<GrantedAuthority> authorities;
+
+    public UserEntity(String username, String password, List<GrantedAuthority> authorities) {
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
     /**
      * Creates a UserEntity that can be saved to the database.
      * @param user
@@ -45,39 +58,6 @@ public class UserEntity {
 
         return null;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public User asUser() {
         return new User(username, "", new ArrayList());
     }

@@ -1,13 +1,14 @@
 package com.github.nelson54.dominion.match;
 
-import com.github.nelson54.dominion.game.commands.CommandService;
-import com.github.nelson54.dominion.game.PhaseAdvisor;
-import com.github.nelson54.dominion.user.account.Account;
 import com.github.nelson54.dominion.game.Game;
 import com.github.nelson54.dominion.game.GameFactory;
+import com.github.nelson54.dominion.game.PhaseAdvisor;
 import com.github.nelson54.dominion.game.Player;
 import com.github.nelson54.dominion.game.commands.Command;
+import com.github.nelson54.dominion.game.commands.CommandService;
+import com.github.nelson54.dominion.user.account.Account;
 import com.github.nelson54.dominion.user.account.AccountEntity;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -33,6 +32,7 @@ public class MatchService {
     private final CommandService commandService;
     private final EloService eloService;
     private final PhaseAdvisor phaseAdvisor;
+    private final ModelMapper modelMapper;
 
     private GameFactory gameFactory;
 
@@ -40,12 +40,13 @@ public class MatchService {
             MatchRepository matchRepository,
             CommandService commandService,
             EloService eloService,
-            PhaseAdvisor phaseAdvisor) {
+            PhaseAdvisor phaseAdvisor, ModelMapper modelMapper) {
 
         this.commandService = commandService;
         this.matchRepository = matchRepository;
         this.eloService = eloService;
         this.phaseAdvisor = phaseAdvisor;
+        this.modelMapper = modelMapper;
     }
 
     public Page<Match> findByStateIn(List<MatchState> states, PageRequest page) {
@@ -53,7 +54,7 @@ public class MatchService {
 
         List<Match> matches = StreamSupport
                 .stream(matchEntityPage.spliterator(), false)//matchRepository.findByStateIn(states).spliterator(), false)
-                .map(MatchEntity::toMatch)
+                .map((me) -> modelMapper.map(me, Match.class))
                 .collect(Collectors.toList());
 
 
@@ -66,14 +67,14 @@ public class MatchService {
     public List<Match> all() {
         return StreamSupport
                 .stream(matchRepository.findAll().spliterator(), false)
-                .map(MatchEntity::toMatch)
+                .map((me) -> modelMapper.map(me, Match.class))
                 .collect(Collectors.toList());
     }
 
     public Optional<Game> getGame(String matchId) {
         return matchRepository
                 .findById(matchId)
-                .map(MatchEntity::toMatch)
+                .map((me) -> modelMapper.map(me, Match.class))
                 .map(gameFactory::createGame)
                 .map(game -> {
                     game.setRebuilding(true);
@@ -92,7 +93,7 @@ public class MatchService {
     public Optional<Game> getGameUpToCommand(String matchId, String commandId) {
         return matchRepository
                 .findById(matchId)
-                .map(MatchEntity::toMatch)
+                .map((me) -> modelMapper.map(me, Match.class))
                 .map(gameFactory::createGame)
                 .map(game -> {
                     game.setRebuilding(true);
@@ -111,7 +112,7 @@ public class MatchService {
     public Optional<Match> getMatch(String matchId) {
         return matchRepository
                 .findById(matchId)
-                .map(MatchEntity::toMatch);
+                .map((me) -> modelMapper.map(me, Match.class));
     }
 
     private Game applyCommands(Game game) {
@@ -188,7 +189,7 @@ public class MatchService {
         try {
             game = commandService.applyCommand(game, command);
 
-            if (game.isGameOver() && !game.getReadOnly()) {
+            if (game.isGameOver() && !game.isReadOnly()) {
                 endGame(game);
             }
         } catch (Exception e) {
@@ -202,9 +203,9 @@ public class MatchService {
         if (match.getMatchState().equals(MatchState.IN_PROGRESS)) {
             match.shuffleTurnOrder();
         }
-        MatchEntity entity = MatchEntity.ofMatch(match);
+        MatchEntity entity = modelMapper.map(match, MatchEntity.class);
 
-        return matchRepository.save(entity).toMatch();
+        return modelMapper.map(matchRepository.save(entity), Match.class);
     }
 
     public void addPlayerAccount(Match match, Account account) {
@@ -217,8 +218,7 @@ public class MatchService {
             match.setMatchState(MatchState.IN_PROGRESS);
         }
 
-        MatchEntity matchEntity = MatchEntity.ofMatch(match);
-        matchEntity.setPersisted(true);
+        MatchEntity matchEntity = modelMapper.map(match, MatchEntity.class);
         matchRepository.save(matchEntity);
     }
 
@@ -248,7 +248,6 @@ public class MatchService {
                         matchEntity.finishedAt = LocalDateTime.now();
 
                         matchEntity.setScores(scores);
-                        matchEntity.setPersisted(true);
                         matchEntity = matchRepository.save(matchEntity);
 
                         eloService.updateEloForAccounts(
@@ -258,7 +257,7 @@ public class MatchService {
                                 winningPlayerId
                         );
 
-                        return matchEntity.toMatch();
+                        return modelMapper.map(matchEntity, Match.class);
                     });
         }
     }

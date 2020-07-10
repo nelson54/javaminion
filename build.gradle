@@ -91,7 +91,15 @@ dependencies {
 
     compile("io.springfox:springfox-swagger2:2.9.2")
     compile("io.springfox:springfox-swagger-ui:2.9.2")
-    compileOnly 'org.projectlombok:lombok:1.18.8'
+
+    //compile("com.github.cloudyrock.mongock:mongock-bom:4.1.2.BETA")
+    compile("com.github.cloudyrock.mongock:mongock-spring-v5:4.1.2.BETA")
+    compile("com.github.cloudyrock.mongock:mongodb-springdata-v3-driver:4.1.2.BETA")
+
+    compile("org.modelmapper:modelmapper:2.3.2")
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
 
     testRuntime group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta2'
 

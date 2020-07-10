@@ -4,7 +4,6 @@ import com.github.nelson54.dominion.Application;
 import com.github.nelson54.dominion.DominionTestData;
 import com.github.nelson54.dominion.user.account.AccountEntity;
 import com.github.nelson54.dominion.user.account.AccountRepository;
-import com.google.common.collect.Iterators;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,11 +11,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -67,40 +67,33 @@ class MatchRepositoryTest {
 
     @Test
     void findByStateIn() {
-        Iterable<MatchEntity> matchEntities = matchRepository.findByStateIn(Collections.singletonList(MatchState.WAITING_FOR_PLAYERS));
-        Iterator<MatchEntity> entityIterator = matchEntities.iterator();
+        PageRequest pageRequest = PageRequest.of(0,3);
 
-        Assert.assertEquals("Found game waiting for Players", 1, Iterators.size(entityIterator));
+        List<MatchState> gameStates = Collections.singletonList(MatchState.WAITING_FOR_PLAYERS);
+        Page<MatchEntity> matchEntities = matchRepository.findByStateIn(gameStates, pageRequest);
 
-        matchEntities = matchRepository.findByStateIn(Arrays.asList(MatchState.WAITING_FOR_PLAYERS, MatchState.IN_PROGRESS));
-        entityIterator = matchEntities.iterator();
+        Assert.assertEquals("Found game waiting for Players", 1, matchEntities.getTotalElements());
 
-        Assert.assertEquals("Find games waiting and in progress", 2, Iterators.size(entityIterator));
+        Arrays.asList(MatchState.WAITING_FOR_PLAYERS, MatchState.IN_PROGRESS);
+        matchEntities = matchRepository.findByStateIn(gameStates, pageRequest);
 
+        Assert.assertEquals("Find games waiting and in progress", 2, matchEntities.getTotalElements());
 
-        matchEntities = matchRepository.findByStateIn(Arrays.asList(MatchState.WAITING_FOR_PLAYERS, MatchState.IN_PROGRESS, MatchState.FINISHED));
-        entityIterator = matchEntities.iterator();
+        gameStates = Arrays.asList(
+                MatchState.WAITING_FOR_PLAYERS,
+                MatchState.IN_PROGRESS,
+                MatchState.FINISHED);
 
-        Assert.assertEquals("Find games in all states", 3, Iterators.size(entityIterator));
+        matchEntities = matchRepository.findByStateIn(gameStates, pageRequest);
+        Assert.assertEquals("Find games in all states", 3, matchEntities.getTotalElements());
     }
 
     @Test
     void findByPlayerId() {
-        Iterable<MatchEntity> matchEntities = matchRepository.findByPlayerId(playerId);
+        List<MatchEntity> matchEntities = matchRepository.findByPlayerId(playerId);
 
-        Assert.assertTrue("Found matchEntity", matchEntities.iterator().hasNext());
+        Assert.assertEquals("Found matchEntity", 0, matchEntities.size());
     }
 
-    @Test
-    void create() {
-        this.accountRepository.deleteAll();
 
-        DominionTestData dta = new DominionTestData();
-        List<AccountEntity> accounts = Arrays.asList(dta.getAccountEntityA(), dta.getAccountEntityB());
-
-        accounts = this.accountRepository.saveAll(accounts);
-
-        AccountEntity account = accounts.get(0);
-
-    }
 }

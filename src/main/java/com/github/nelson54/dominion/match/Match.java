@@ -1,12 +1,16 @@
 package com.github.nelson54.dominion.match;
 
-import com.github.nelson54.dominion.user.account.Account;
 import com.github.nelson54.dominion.cards.GameCardSet;
+import com.github.nelson54.dominion.user.account.Account;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Data @Getter @Setter
 public class Match {
     private String id;
     private Long seed;
@@ -55,7 +59,9 @@ public class Match {
         return seed;
     }
 
-
+    boolean hasAccount(Account account) {
+        return getTurnOrder().contains(account.getId());
+    }
 
     public List<MatchParticipant> getParticipants() {
         return new LinkedList<>(this.participants);
@@ -73,18 +79,6 @@ public class Match {
         participants = new LinkedHashSet<>(matchParticipants);
     }
 
-    public GameCardSet getCards() {
-        return cards;
-    }
-
-    public void addParticipant(MatchParticipant participant) {
-        participants.add(participant);
-    }
-
-    public Integer getPlayerCount() {
-        return playerCount;
-    }
-
     public boolean isReady() {
         return participants.size() >= playerCount;
     }
@@ -93,47 +87,7 @@ public class Match {
         participants.forEach(this::addParticipant);
     }
 
-    public MatchState getMatchState() {
-        return matchState;
-    }
-
-    public void setMatchState(MatchState matchState) {
-        this.matchState = matchState;
-    }
-
-    boolean hasAccount(Account account) {
-        return getTurnOrder().contains(account.getId());
-    }
-
-    public MatchParticipant getWinner() {
-        return winner;
-    }
-
-    public void setWinner(MatchParticipant winner) {
-        this.winner = winner;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setScores(Map<String, Long> scores) {
-        this.scores = scores;
-    }
-
-    public Map<String, Long> getScores() {
-        return this.scores;
-    }
-
-    public LocalDateTime getFinishedAt() {
-        return finishedAt;
-    }
-
-    public void setFinishedAt(LocalDateTime finishedAt) {
-        this.finishedAt = finishedAt;
+    public void addParticipant(MatchParticipant participant) {
+        participants.add(participant);
     }
 }
