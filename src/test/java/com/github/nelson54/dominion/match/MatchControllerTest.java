@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.match;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.nelson54.dominion.Application;
+import com.github.nelson54.dominion.user.UserEntity;
 import com.github.nelson54.dominion.user.account.AccountCredentialsDto;
 import com.github.nelson54.dominion.user.account.AccountEntity;
 import com.github.nelson54.dominion.user.authorization.AuthenticationDto;
@@ -29,14 +30,22 @@ class MatchControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private AccountEntity accountEntity;
     @Before
     void setup() {
 
-        AccountEntity.builder()
-                .elo(1000L)
-                .firstname("Derek")
-                .
-                .ai(false)
+        UserEntity userEntity = UserEntity.builder()
+                .username("bob")
+                .password("testing")
+                .enabled(Boolean.TRUE).build();
+
+        this.accountEntity = AccountEntity.builder()
+                .elo(1000L).firstname("bob")
+                .email("bob@example.com")
+                .user(userEntity)
+                .ai(false).build();
+
+
     }
 
     @Test

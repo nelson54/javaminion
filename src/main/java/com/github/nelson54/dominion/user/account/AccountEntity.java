@@ -33,7 +33,7 @@ public class AccountEntity {
 
     @Field(name = "elo")
     @NotNull
-    private Long elo = 1000L;
+    private Long elo;
 
     public AccountEntity(
             Boolean ai,

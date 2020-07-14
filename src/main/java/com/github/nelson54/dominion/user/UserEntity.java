@@ -36,9 +36,11 @@ public class UserEntity {
     @Field
     private List<GrantedAuthority> authorities;
 
-    public UserEntity(String username, String password, List<GrantedAuthority> authorities) {
+    public UserEntity(String id, @NotNull String username, @NotNull String password, Boolean enabled, List<GrantedAuthority> authorities) {
+        this.id = id;
         this.username = username;
         this.password = password;
+        this.enabled = enabled;
         this.authorities = authorities;
     }
 
