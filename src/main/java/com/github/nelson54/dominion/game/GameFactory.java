@@ -43,6 +43,8 @@ public class GameFactory {
                 turnerator.next().setOrder(i++);
             }
 
+            game.nextPlayer();
+
         } catch (IllegalAccessException | InstantiationException e) {
             throw new RuntimeException(e);
         }

@@ -7,19 +7,19 @@ import com.github.nelson54.dominion.game.Player;
 import com.github.nelson54.dominion.game.Turn;
 import org.easymock.EasyMock;
 import org.easymock.EasyMockRunner;
+import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-;
-;
-
-@RunWith(EasyMockRunner.class)
+@RunWith(JUnitPlatform.class)
 public class CouncilRoomTest extends DominionTestCase {;
 
     private ActionCard councilRoom;
@@ -28,14 +28,13 @@ public class CouncilRoomTest extends DominionTestCase {;
     private Player player1;
     private Player player2;
 
-    CouncilRoomTest() {
+    @BeforeEach
+    public void setup() {
+
         this.game = EasyMock.createMock(Game.class);
         this.player1 = EasyMock.createMock(Player.class);
         this.player2 = EasyMock.createMock(Player.class);
-    }
 
-    @BeforeEach
-    public void setup() {
         councilRoom = new CouncilRoom(1L);
         councilRoom.setOwner(player1);
 

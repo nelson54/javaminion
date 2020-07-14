@@ -33,7 +33,12 @@ public class Cl001_Initialize {
         authorities.add(new SimpleGrantedAuthority("Root"));
         authorities.add(new SimpleGrantedAuthority("Admin"));
 
-        UserEntity user = new UserEntity("derek", password, authorities);
+        UserEntity user = UserEntity.builder()
+                .username("derek")
+                .password(password)
+                .authorities(authorities)
+                .build();
+
         AccountEntity account = new AccountEntity(false, "Derek", "contact@dereknelson.io", user);
         template.save(account);
     }
@@ -47,7 +52,11 @@ public class Cl001_Initialize {
 
         Arrays.stream(AiName.values()).map(Enum::toString).map(username -> {
                 String email = username.toLowerCase() + "@example.com";
-                UserEntity user = new UserEntity(username, password, authorities);
+                UserEntity user = UserEntity.builder()
+                        .username(username)
+                        .password(password)
+                        .authorities(authorities)
+                        .build();
                 return new AccountEntity(true, username, email, user);
             })
 

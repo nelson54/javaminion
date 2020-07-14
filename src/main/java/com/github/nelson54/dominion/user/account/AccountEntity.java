@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Document("account")
-@Data @NoArgsConstructor @Getter @Setter @Builder
+@Data @NoArgsConstructor @AllArgsConstructor @Getter @Setter @Builder
 public class AccountEntity {
 
     @Id
@@ -35,6 +35,7 @@ public class AccountEntity {
     @NotNull
     private Long elo;
 
+
     public AccountEntity(
             Boolean ai,
             @NotNull String firstname,
@@ -44,5 +45,6 @@ public class AccountEntity {
         this.firstname = firstname;
         this.user = user;
         this.email = email;
+        this.elo = 1000L;
     }
 }
