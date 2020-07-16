@@ -105,10 +105,10 @@ dependencies {
 
     
     testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.2')
-    testRuntime("org.junit.platform:junit-platform-runner:1.5.2")
-
+    testRuntime("org.junit.platform:junit-platform-runner:1.6.2")
+    testRuntime("org.junit.platform:junit-platform-launcher:1.6.2")
     testCompile(
-        'junit:junit:4.12',
+
         'org.easymock:easymock:4.0.2',
         "org.springframework.boot:spring-boot-starter-test:$springVersion",
         'org.junit.jupiter:junit-jupiter-api:5.3.2',

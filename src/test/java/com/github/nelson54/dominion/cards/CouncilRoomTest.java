@@ -6,21 +6,16 @@ import com.github.nelson54.dominion.game.Game;
 import com.github.nelson54.dominion.game.Player;
 import com.github.nelson54.dominion.game.Turn;
 import org.easymock.EasyMock;
-import org.easymock.EasyMockRunner;
-import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(JUnitPlatform.class)
-public class CouncilRoomTest extends DominionTestCase {;
+
+public class CouncilRoomTest extends DominionTestCase {
 
     private ActionCard councilRoom;
     private Turn turn;
