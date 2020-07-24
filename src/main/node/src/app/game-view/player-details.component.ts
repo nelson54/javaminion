@@ -1,20 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 interface Card {
-  name: string
+  name: string;
 }
 
 interface PlayerDetails {
-  hand: Card[]
+  hand: Card[];
 }
 
 @Component({
   selector: 'player-details',
-  templateUrl: './player-details.component.html',
-  //styleUrls: ['./player-area-view.component.scss']
+  templateUrl: './player-details.component.html'
+  // styleUrls: ['./player-area-view.component.scss']
 })
 export class PlayerDetailsComponent implements OnInit {
-
   id: string;
 
   @Input() playerDetails: PlayerDetails;
@@ -22,5 +21,4 @@ export class PlayerDetailsComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
-
 }

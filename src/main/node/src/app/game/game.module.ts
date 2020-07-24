@@ -18,8 +18,9 @@ import { UserService } from '@app/shared/user.service';
 import { SorterCommon } from '@app/game/sorter-common.pipe';
 import { SorterKingdom } from '@app/game/sorter-kingdom.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {GameViewComponent} from "@app/game-view/game-view.component";
-import {PlayerDetailsComponent} from "@app/game-view/player-details.component";
+import { GameViewComponent } from '@app/game-view/game-view.component';
+import { PlayerDetailsComponent } from '@app/game-view/player-details.component';
+import { CardViewComponent } from '@app/game-view/card-view.component';
 
 @NgModule({
   imports: [CommonModule, TranslateModule, CoreModule, SharedModule, Angulartics2Module, GameRoutingModule, NgbModule],
@@ -31,7 +32,8 @@ import {PlayerDetailsComponent} from "@app/game-view/player-details.component";
     SorterCommon,
     SorterKingdom,
     GameViewComponent,
-    PlayerDetailsComponent
+    PlayerDetailsComponent,
+    CardViewComponent
   ],
   providers: [
     GameService,

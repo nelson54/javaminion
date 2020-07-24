@@ -1,0 +1,10 @@
+<a class="btn btn-link btn-card" disabled [ngClass]="{ 'btn-choice': isOption(card.id) }" (click)="selectCard(card)">
+  <button
+    class="link"
+    style="position: absolute; bottom: 0; right: 0; opacity: .6;"
+    (click)="showCardDetails(getLargeImagePath(card))"
+  >
+    +
+  </button>
+  <img [src]="getImagePath(card)" />
+</a>
