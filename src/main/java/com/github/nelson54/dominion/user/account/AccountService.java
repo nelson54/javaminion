@@ -6,6 +6,7 @@ import com.github.nelson54.dominion.user.authorization.JwtTokenService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -22,14 +23,18 @@ import java.util.stream.StreamSupport;
 @Service
 @Resource(name = "accountService")
 public class AccountService {
-    private final Logger logger = LoggerFactory.getLogger(JwtTokenService.class);
-    BCryptPasswordEncoder passwordEncoder;
-    AccountRepository accountRepository;
-    ModelMapper modelMapper;
 
+    private final Logger logger = LoggerFactory.getLogger(AccountService.class);
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final AccountRepository accountRepository;
+    private final ModelMapper modelMapper;
+
+    @Autowired
     public AccountService(
+            ModelMapper modelMapper,
             BCryptPasswordEncoder passwordEncoder,
-                          AccountRepository accountRepository) {
+            AccountRepository accountRepository) {
+        this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.accountRepository = accountRepository;
     }
@@ -101,8 +106,7 @@ public class AccountService {
 
     public Optional<Account> findByUsername(String name) {
         return accountRepository
-                .findByUserUsername((String)
-                        SecurityContextHolder.getContext().getAuthentication().getPrincipal()).stream()
+                .findByUserUsername(name).stream()
                 .map((ae)-> modelMapper.map(ae, Account.class))
                 .findFirst();
     }

@@ -14,9 +14,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * Created by Derek on 3/14/2015.
- */
+
 public class WitchTest extends DominionTestCase {
 
     private static final Logger logger = LoggerFactory.getLogger(WitchTest.class);

@@ -5,13 +5,16 @@ import com.github.nelson54.dominion.Application;
 import com.github.nelson54.dominion.user.UserEntity;
 import com.github.nelson54.dominion.user.account.AccountCredentialsDto;
 import com.github.nelson54.dominion.user.account.AccountEntity;
+import com.github.nelson54.dominion.user.account.AccountRepository;
 import com.github.nelson54.dominion.user.authorization.AuthenticationDto;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -22,37 +25,43 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
+@TestPropertySource(locations="classpath:application-test.properties")
 class MatchControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
+    private ObjectMapper objectMapper;
+    private AccountRepository accountRepository;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    MatchControllerTest(MockMvc mockMvc, ObjectMapper objectMapper, AccountRepository accountRepository) {
+        this.mockMvc = mockMvc;
+        this.objectMapper = objectMapper;
+        this.accountRepository = accountRepository;
+    }
 
-    private AccountEntity accountEntity;
-    @Before
+    @BeforeEach
     void setup() {
+        accountRepository.findByUserUsername("bill")
+                .ifPresent(accountRepository::delete);
 
         UserEntity userEntity = UserEntity.builder()
-                .username("bob")
-                .password("testing")
+                .username("bill")
+                .password("$2a$10$UCrtNnihvVBF63xf.Y3rXODwEtrO4W/Pj6UyohY.23HdBfRmc58eK")
                 .enabled(Boolean.TRUE).build();
 
-        this.accountEntity = AccountEntity.builder()
-                .elo(1000L).firstname("bob")
-                .email("bob@example.com")
+        AccountEntity accountEntity = AccountEntity.builder()
+                .elo(1000L).firstname("bill")
+                .email("bill@example.com")
                 .user(userEntity)
                 .ai(false).build();
 
-
+        accountRepository.save(accountEntity);
     }
 
     @Test
     void test1_authorize() throws Exception {
-        AccountCredentialsDto accountCredentialsDto = new AccountCredentialsDto();
-        accountCredentialsDto.setUsername("bob");
-        accountCredentialsDto.setPassword("testing");
+        AccountCredentialsDto accountCredentialsDto = AccountCredentialsDto.builder()
+                .username("bill").password("testing").build();
 
         MvcResult authResult = this.mockMvc.perform(post("/api/authentication")
                 .contentType(APPLICATION_JSON)

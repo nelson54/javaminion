@@ -4,13 +4,14 @@ import com.github.nelson54.dominion.cards.GameCardSet;
 import com.github.nelson54.dominion.user.account.Account;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Data @Getter @Setter
+@Data @Getter @Setter @NoArgsConstructor
 public class Match {
     private String id;
     private Long seed;

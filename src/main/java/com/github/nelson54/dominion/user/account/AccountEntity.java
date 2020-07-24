@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.user.account;
 
 import com.github.nelson54.dominion.user.UserEntity;
 import lombok.*;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -18,14 +19,14 @@ public class AccountEntity {
     @Field(name = "is_ai")
     private Boolean ai;
 
-    // TODO: add annotation details for column
     @NotNull
-    @Field(name = "first_name")//, length = 100, unique = true, nullable = false)
+    @Field(name = "first_name")
     private String firstname;
 
     // TODO: add annotation details for column
     @NotNull
-    @Field(name = "email")//, length = 100, unique = true, nullable = false)
+    @Field(name = "email")
+    @Indexed(unique=true)
     private String email;
 
     @Field(name = "user")

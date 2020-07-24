@@ -2,6 +2,7 @@ package com.github.nelson54.dominion.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -21,7 +22,7 @@ public class UserEntity {
 
     @NotNull
     //@Column(name = "username", length = 100, unique = true, updatable = false)
-    @Field(name="username")
+    @Indexed(unique=true)
     private String username;
 
     @JsonIgnore

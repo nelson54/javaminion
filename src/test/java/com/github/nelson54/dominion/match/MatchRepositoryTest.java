@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -22,6 +23,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
+@TestPropertySource(locations="classpath:application-test.properties")
 class MatchRepositoryTest {
 
     private final AccountRepository accountRepository;
@@ -37,16 +39,23 @@ class MatchRepositoryTest {
 
     @BeforeEach
     void setup() {
-        this.accountRepository.deleteAll();
-        this.matchRepository.deleteAll();
-
         DominionTestData dta = new DominionTestData();
         List<AccountEntity> accounts = Arrays.asList(dta.getAccountEntityA(), dta.getAccountEntityB());
 
+        accountRepository.findByUserUsername(accounts.get(0).getUser().getUsername())
+                .ifPresent(accountRepository::delete);
+
+        accountRepository.findByUserUsername(accounts.get(1).getUser().getUsername())
+                .ifPresent(accountRepository::delete);
+
         accounts = this.accountRepository.saveAll(accounts);
+
+
 
         AccountEntity accountA = accounts.get(0);
         AccountEntity accountB = accounts.get(1);
+
+        matchRepository.deleteAll();
 
         MatchEntity matchEntity = dta.getMatchEntity(accountA, accountB);
 
@@ -74,7 +83,7 @@ class MatchRepositoryTest {
 
         Assert.assertEquals("Found game waiting for Players", 1, matchEntities.getTotalElements());
 
-        Arrays.asList(MatchState.WAITING_FOR_PLAYERS, MatchState.IN_PROGRESS);
+        gameStates = Arrays.asList(MatchState.WAITING_FOR_PLAYERS, MatchState.IN_PROGRESS);
         matchEntities = matchRepository.findByStateIn(gameStates, pageRequest);
 
         Assert.assertEquals("Find games waiting and in progress", 2, matchEntities.getTotalElements());

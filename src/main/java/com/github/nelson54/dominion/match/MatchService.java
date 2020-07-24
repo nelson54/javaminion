@@ -36,11 +36,13 @@ public class MatchService {
 
     private GameFactory gameFactory;
 
+    @Autowired
     public MatchService(
             MatchRepository matchRepository,
             CommandService commandService,
             EloService eloService,
-            PhaseAdvisor phaseAdvisor, ModelMapper modelMapper) {
+            PhaseAdvisor phaseAdvisor,
+            ModelMapper modelMapper) {
 
         this.commandService = commandService;
         this.matchRepository = matchRepository;

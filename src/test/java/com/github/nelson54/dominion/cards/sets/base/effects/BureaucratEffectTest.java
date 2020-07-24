@@ -55,7 +55,7 @@ public class BureaucratEffectTest extends DominionTestCase {
 
         turn.setPhase(Phase.ACTION);
 
-        for (int i = 0; i < 5; i++) {;
+        for (int i = 0; i < 5; i++) {
             Card card = game.giveCardToPlayer("Copper", player);
             hand.add(card);
         }
@@ -69,7 +69,7 @@ public class BureaucratEffectTest extends DominionTestCase {
     }
 
     Choice getChoice(){
-        return this.getNextPlayer().getChoices().stream()
+        return game.getPlayers().get("2").getChoices().stream()
                 .filter( ch -> (ch.getSource() == bureaucrat) )
                 .findFirst()
                 .get();

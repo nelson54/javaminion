@@ -6,9 +6,11 @@ import com.github.nelson54.dominion.cards.GameCardSet;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.game.commands.Command;
 import com.github.nelson54.dominion.Application;
+import com.github.nelson54.dominion.user.account.AccountRepository;
 import com.github.nelson54.dominion.user.account.RegistrationDto;
 import com.github.nelson54.dominion.user.account.AccountService;
 import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -16,28 +18,42 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
+@TestPropertySource(locations="classpath:application-test.properties")
 class MatchServiceTest {
 
     private static final Logger logger = LoggerFactory.getLogger(MatchServiceTest.class);
 
-    @Autowired
     AccountService accountService;
-
-    @Autowired
+    AccountRepository accountRepository;
     MatchService matchService;
+    CommandService commandService;
 
     @Autowired
-    CommandService commandService;
+    public MatchServiceTest(AccountService accountService, MatchService matchService, CommandService commandService, AccountRepository accountRepository) {
+        this.accountService = accountService;
+        this.matchService = matchService;
+        this.commandService = commandService;
+        this.accountRepository = accountRepository;
+    }
+
+    @BeforeEach
+    void setup() {
+        accountRepository.findByUserUsername("kevin")
+                .ifPresent(accountRepository::delete);
+
+        accountRepository.findByUserUsername("richard")
+                .ifPresent(accountRepository::delete);
+    }
 
     @Test
     void part1_createMatch() {
-        //commandService.deleteAll();
 
         RegistrationDto account1 = new RegistrationDto();
         account1.setEmail("kevin@example.com");
@@ -64,6 +80,7 @@ class MatchServiceTest {
         GameCardSet gameCardSet = GameCardSet.byName("First Game");
         Match match = new Match(2, 12345L, gameCardSet);
 
+        match.setMatchState(MatchState.IN_PROGRESS);
         match.addParticipant(matchParticipant1);
         match.addParticipant(matchParticipant2);
 

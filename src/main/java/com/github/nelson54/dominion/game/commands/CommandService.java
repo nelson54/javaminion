@@ -105,11 +105,6 @@ public class CommandService {
         }
     }
 
-
-    private void deleteAll() {
-        commandRepository.deleteAll();
-    }
-
     private void applyChoiceResponse(Game game, Command command) throws JsonProcessingException {
         ChoiceResponse choiceResponse = command.getChoiceResponse(game);
         Choice choice = game.getChoiceById(choiceResponse.getTargetChoice()).get();

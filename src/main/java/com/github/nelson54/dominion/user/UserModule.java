@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Component
-@Configuration
 public class UserModule {
 
     @Autowired
     void configureMapper(ModelMapper modelMapper) {
+
         modelMapper.addConverter((conversion) -> {
             AccountEntity accountEntity = conversion.getSource();
 
@@ -28,6 +28,9 @@ public class UserModule {
                     accountEntity.getAi());
 
             account.setElo(accountEntity.getElo());
+
+
+
             return account;
         }, AccountEntity.class, Account.class);
 

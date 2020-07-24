@@ -23,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 })
 
 @ComponentScan(value = {
+        "com.github.nelson54.dominion.view",
         "com.github.nelson54.dominion.game",
         "com.github.nelson54.dominion.game.commands",
         "com.github.nelson54.dominion.game.ai",
@@ -30,9 +31,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
         "com.github.nelson54.dominion.spring",
         "com.github.nelson54.dominion.spring.security",
         "com.github.nelson54.dominion.user",
-        "com.github.nelson54.dominion.cards",
         "com.github.nelson54.dominion.user.account",
         "com.github.nelson54.dominion.user.authorization",
+        "com.github.nelson54.dominion.cards",
     }, excludeFilters = {
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value= AiSimulator.class)
     })

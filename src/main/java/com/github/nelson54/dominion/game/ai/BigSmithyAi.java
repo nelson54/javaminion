@@ -13,11 +13,7 @@ public class BigSmithyAi extends DoNothingAi {
     public void actionPhase(AiGameFacade game) {
         if (playIfFound(game, "Smithy")) {
             return;
-        }
-
-
-
-        if (playIfFound(game, "Village")) {
+        } else if (playIfFound(game, "Village")) {
             return;
         }
 

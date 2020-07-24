@@ -9,9 +9,11 @@ import com.github.nelson54.dominion.cards.types.ActionCard;
 import com.github.nelson54.dominion.exceptions.IncorrectPhaseException;
 import com.github.nelson54.dominion.exceptions.InsufficientActionsException;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestPropertySource(locations="classpath:application-test.properties")
 class TurnTest {
 
     @Test

@@ -28,7 +28,7 @@ public class Game {
     @JsonProperty
     private Kingdom kingdom;
     @JsonIgnore
-    private Set<Player> turnOrder;
+    private LinkedHashSet<Player> turnOrder;
     @JsonIgnore
     private Map<Long, Card> allCards;
     @JsonProperty
