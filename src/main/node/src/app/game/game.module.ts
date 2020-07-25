@@ -21,6 +21,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GameViewComponent } from '@app/game-view/game-view.component';
 import { PlayerDetailsComponent } from '@app/game-view/player-details.component';
 import { CardViewComponent } from '@app/game-view/card-view.component';
+import {CardStackViewComponent} from "@app/game-view/card-stack-view.component";
+import {CardMarketViewComponent} from "@app/game-view/card-market-view.component";
+import {FilterKingdom} from "@app/game/filter-kingdom.pipe";
+import {FilterCommon} from "@app/game/filter-common.pipe";
 
 @NgModule({
   imports: [CommonModule, TranslateModule, CoreModule, SharedModule, Angulartics2Module, GameRoutingModule, NgbModule],
@@ -30,10 +34,14 @@ import { CardViewComponent } from '@app/game-view/card-view.component';
     KingdomComponent,
     PhasePipe,
     SorterCommon,
+    FilterCommon,
+    FilterKingdom,
     SorterKingdom,
     GameViewComponent,
     PlayerDetailsComponent,
-    CardViewComponent
+    CardViewComponent,
+    CardStackViewComponent,
+    CardMarketViewComponent
   ],
   providers: [
     GameService,

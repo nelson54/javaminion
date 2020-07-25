@@ -1,33 +1,40 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Card } from '../shared/view/game-view.interface';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'card-view',
   templateUrl: './card-view.component.html',
-  styleUrls: ['./card-view.component.scss']
+  //styleUrls: ['./card-view.component.scss']
 })
 export class CardViewComponent implements OnInit {
-  id: string;
-
+  @Input() gameId: string;
   @Input() card: Card;
 
-  constructor() {}
+  public largeImage: string;
+  public smallImage: string;
 
-  ngOnInit() {}
+  static smallBack: string = '/assets/empty-card-back-sm.jpg';
+  static largeBack: string = '/assets/empty-card-back.jpg';
 
-  getImagePath(card: Card) {
-    if (card && card.name) {
-      return '/assets/cards/' + card.name.toLowerCase().replace(/\s/g, '') + '-sm.jpg';
-    } else {
-      return '/assets/empty-card-back-sm.jpg';
-    }
+  constructor() {
+
   }
 
-  getLargeImagePath(card: any) {
-    if (card && card.name) {
-      return '/assets/cards/' + card.name.toLowerCase().replace(/\s/g, '') + '.jpg';
-    } else {
-      return '/assets/empty-card-back.jpg';
-    }
+  ngOnInit() {
+    this.smallImage = '/assets/cards/' + this.card.name.toLowerCase().replace(/\s/g, '') + '-sm.jpg';
+    this.largeImage = '/assets/cards/' + this.card.name.toLowerCase().replace(/\s/g, '') + '.jpg';
+  }
+
+  isOption() {
+    
+  }
+
+  selectCard() {
+    
+  }
+
+  showCardDetails() {
+    
   }
 }

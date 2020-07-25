@@ -1,0 +1,21 @@
+card-stack-view {
+  display: inline-block;
+  float: right;
+  text-align:center;
+
+
+  img {
+    height: 39px;
+  }
+
+  span {
+    width:100%;
+    text-align:center;
+    display: block;
+  }
+
+  .btn.btn-card {
+    padding: 0;
+  }
+
+}

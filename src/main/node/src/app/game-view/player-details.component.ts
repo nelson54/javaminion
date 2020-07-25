@@ -14,8 +14,7 @@ interface PlayerDetails {
   // styleUrls: ['./player-area-view.component.scss']
 })
 export class PlayerDetailsComponent implements OnInit {
-  id: string;
-
+  @Input() gameId: string;
   @Input() playerDetails: PlayerDetails;
 
   constructor() {}

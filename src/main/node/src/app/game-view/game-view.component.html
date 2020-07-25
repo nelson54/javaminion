@@ -1,3 +1,4 @@
 <p>
-  <player-details [playerDetails]="gameView?.playerDetails"></player-details>
+  <card-market-view [market]="gameView?.cardMarket"></card-market-view>
+  <player-details [gameId]="id" [playerDetails]="gameView?.playerDetails"></player-details>
 </p>

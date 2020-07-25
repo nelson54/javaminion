@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./game-view.component.scss']
 })
 export class GameViewComponent implements OnInit {
-  private id: string;
+  public id: string;
   public gameView: any;
 
   constructor(private route: ActivatedRoute, private gameViewService: GameViewService) {

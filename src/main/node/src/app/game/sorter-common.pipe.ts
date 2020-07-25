@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Card } from '@app/shared/game/card.interface';
 
-const sort = (c1: Card, c2: Card) => {
+const sort = (c1: any, c2: any) => {
   if (c1.kingdomSortOrder === c2.kingdomSortOrder) {
     return 0;
   } else if (c1.kingdomSortOrder > c2.kingdomSortOrder) {
@@ -13,7 +12,9 @@ const sort = (c1: Card, c2: Card) => {
 
 @Pipe({ name: 'sorterCommon' })
 export class SorterCommon implements PipeTransform {
-  transform(cards: Card[]) {
+  transform(cards: any) {
+    if(!cards) return [];
+
     return cards.sort(sort);
   }
 }

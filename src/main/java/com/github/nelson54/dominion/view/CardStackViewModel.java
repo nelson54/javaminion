@@ -15,6 +15,7 @@ public class CardStackViewModel {
     boolean kingdom;
     Set<CardType> cardTypes;
     Cost cost;
+    int kingdomSortOrder;
 
     @Override
     public boolean equals(Object o) {

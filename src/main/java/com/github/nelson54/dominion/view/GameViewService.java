@@ -74,6 +74,7 @@ public class GameViewService {
                         cardStackViewModel.setCardTypes(firstCard.getCardTypes());
                         cardStackViewModel.setCost(firstCard.getCost());
                         cardStackViewModel.setKingdom(firstCard.isKingdom());
+                        cardStackViewModel.setKingdomSortOrder(firstCard.getKingdomSortOrder());
                     }
 
                     return cardStackViewModel;

@@ -13,3 +13,12 @@ export interface Card {
 export interface PlayerDetails {
   hand: Card[];
 }
+
+export interface CardStack {
+  cardTypes?: string[];
+  cost?: Cost;
+  kingdom?: boolean;
+  kingdomSortOrder?: number;
+  name?: string;
+  size: number;
+}
