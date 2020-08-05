@@ -1,8 +1,10 @@
 package com.github.nelson54.dominion.view;
+
+import com.github.nelson54.dominion.game.Phase;
+import lombok.*;
+
 import java.util.List;
 import java.util.Objects;
-
-import lombok.*;
 
 @Data @Builder @Setter @Getter @NoArgsConstructor @AllArgsConstructor
 public class GameViewModel {
@@ -11,7 +13,10 @@ public class GameViewModel {
     List<PlayersViewModel> players;
     PlayerDetailsViewModel playerDetails;
     List<CardStackViewModel> cardMarket;
+    TurnViewModel turn;
+    Phase gamePhase;
     List<String> logs;
+
 
     @Override
     public boolean equals(Object o) {

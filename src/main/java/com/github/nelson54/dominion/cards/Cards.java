@@ -40,8 +40,8 @@ public class Cards {
         return new LinkedHashSet<>(cards.stream().map(Card::getId).collect(Collectors.toList()));
     }
 
-    public static Card ofId(Game game, Long id) {
-        return new CardReference(id);
+    public static CardRef ofId(Game game, Long id) {
+        return new CardRef(id);
     }
 
     public static boolean isAttackCard(Card card) {

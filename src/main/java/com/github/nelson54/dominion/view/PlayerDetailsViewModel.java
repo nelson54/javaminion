@@ -1,15 +1,16 @@
 package com.github.nelson54.dominion.view;
 
+import lombok.*;
+
 import java.util.List;
 import java.util.Objects;
-
-import lombok.*;
 
 @Data @Builder @Setter @Getter @NoArgsConstructor @AllArgsConstructor
 public class PlayerDetailsViewModel {
     int deckSize;
     List<CardViewModel> hand;
     List<CardViewModel> discard;
+    boolean isMyTurn;
 
     @Override
     public boolean equals(Object o) {

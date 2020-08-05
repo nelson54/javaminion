@@ -3,7 +3,7 @@ package com.github.nelson54.dominion.cards.sets.base.effects;
 
 import com.github.nelson54.dominion.game.Phase;
 import com.github.nelson54.dominion.game.Turn;
-import com.github.nelson54.dominion.cards.CardReference;
+import com.github.nelson54.dominion.cards.CardRef;
 import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.cards.types.ComplexActionCard;
 import com.github.nelson54.dominion.game.choices.Choice;
@@ -49,7 +49,7 @@ public class FeastEffectTest extends DominionTestCase {
     }
 
     void applyChoice(Choice choice, Turn turn){
-        Card toTrash = new CardReference(choice.getOptions().stream().findFirst().get());
+        Card toTrash = new CardRef(choice.getOptions().stream().findFirst().get());
 
         ChoiceResponse cr = new ChoiceResponse();
         cr.setCard(toTrash);

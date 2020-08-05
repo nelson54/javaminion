@@ -1,15 +1,14 @@
 package com.github.nelson54.dominion.cards.sets.base.effects;
 
 
+import com.github.nelson54.dominion.DominionTestCase;
+import com.github.nelson54.dominion.cards.types.Card;
+import com.github.nelson54.dominion.cards.types.ComplexActionCard;
 import com.github.nelson54.dominion.game.Phase;
 import com.github.nelson54.dominion.game.Player;
 import com.github.nelson54.dominion.game.Turn;
-import com.github.nelson54.dominion.cards.Cards;
-import com.github.nelson54.dominion.cards.types.Card;
-import com.github.nelson54.dominion.cards.types.ComplexActionCard;
 import com.github.nelson54.dominion.game.choices.Choice;
 import com.github.nelson54.dominion.game.choices.ChoiceResponse;
-import com.github.nelson54.dominion.DominionTestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +34,7 @@ public class MilitiaEffectTest extends DominionTestCase {
 
         LinkedHashSet<Card> hand = new LinkedHashSet<>();
 
-        for(Player p : game.getPlayers().values()){
+        for(Player p : game.getPlayers().values()) {
             p.drawXCards(5);
         }
 
@@ -45,8 +44,6 @@ public class MilitiaEffectTest extends DominionTestCase {
 
         turn.playCard(militia, player, game);
 
-        //assertEquals "Phase is WAITING_FOR_CHOICE ", Phase.WAITING_FOR_CHOICE, turn.getPhase()
-
         applyChoice(getChoice(), turn);
 
 
@@ -55,11 +52,14 @@ public class MilitiaEffectTest extends DominionTestCase {
     Choice getChoice(){
         return getNextPlayer().getChoices().stream()
                 .filter( ch -> (ch.getSource() == militia) )
-                .findFirst().get();
+                .findFirst().orElseThrow();
     }
 
-    void applyChoice(Choice choice, Turn turn){
-        Card toTrash = Cards.ofId(null, choice.getOptions().stream().findFirst().get());
+    void applyChoice(Choice choice, Turn turn) {
+        Card toTrash = choice.getOptions().stream()
+                .findFirst()
+                .map((id) -> turn.getGame().getAllCards().get(id))
+                .orElseThrow();
 
         ChoiceResponse cr = new ChoiceResponse();
         cr.setCard(toTrash);

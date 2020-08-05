@@ -25,6 +25,7 @@ import {CardStackViewComponent} from "@app/game-view/card-stack-view.component";
 import {CardMarketViewComponent} from "@app/game-view/card-market-view.component";
 import {FilterKingdom} from "@app/game/filter-kingdom.pipe";
 import {FilterCommon} from "@app/game/filter-common.pipe";
+import {HighlightOptionsService} from "@app/game-view/highlight-options.service";
 
 @NgModule({
   imports: [CommonModule, TranslateModule, CoreModule, SharedModule, Angulartics2Module, GameRoutingModule, NgbModule],
@@ -44,6 +45,7 @@ import {FilterCommon} from "@app/game/filter-common.pipe";
     CardMarketViewComponent
   ],
   providers: [
+    HighlightOptionsService,
     GameService,
     MessageService,
     UserService,

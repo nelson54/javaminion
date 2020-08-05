@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GameViewService } from '@app/shared/game-view.service';
 import { ActivatedRoute } from '@angular/router';
+import {GameView} from '@app/shared/view/game-view.interface';
+import {HighlightOptions, HighlightOptionsService} from "@app/game-view/highlight-options.service";
 
 @Component({
   selector: 'app-game-view',
@@ -9,16 +11,28 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GameViewComponent implements OnInit {
   public id: string;
-  public gameView: any;
+  public gameView: GameView;
+  public highlightOptions: HighlightOptions;
 
-  constructor(private route: ActivatedRoute, private gameViewService: GameViewService) {
+  constructor(
+    private route: ActivatedRoute,
+    private gameViewService: GameViewService,
+    private highlightOptionsService: HighlightOptionsService,
+  ) {
     this.id = this.route.snapshot.params.id;
   }
 
   ngOnInit() {
-    this.gameViewService.get(this.id).subscribe(gameViewRequest => {
-      this.gameView = gameViewRequest.body;
-      console.dir(this.gameView);
-    });
+    this.tick();
+  }
+
+  private tick() {
+    this.gameViewService.get(this.id)
+      .subscribe(gameView => {
+        this.gameView = gameView;
+        this.highlightOptions = this.highlightOptionsService.getHighlights(gameView);
+
+        console.dir(this.gameView);
+      });
   }
 }

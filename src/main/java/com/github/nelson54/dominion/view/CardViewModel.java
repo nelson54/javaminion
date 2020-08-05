@@ -1,13 +1,11 @@
 package com.github.nelson54.dominion.view;
 
+import com.github.nelson54.dominion.cards.CardType;
 import com.github.nelson54.dominion.cards.Cost;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import lombok.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Data @Builder @Setter @Getter @NoArgsConstructor @AllArgsConstructor
 public class CardViewModel {
@@ -15,6 +13,7 @@ public class CardViewModel {
     String name;
     String ownerId;
     Cost cost;
+    Set<CardType> types;
 
     @Override
     public boolean equals(Object o) {

@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Game } from '@app/shared/game/game.interface';
 import { Choice } from '@app/shared/game/choice.interface';
 import { Card } from '@app/shared/game/card.interface';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import {GameView} from '@app/shared/view/game-view.interface';
 
 @Injectable()
 export class GameViewService {
@@ -10,8 +13,12 @@ export class GameViewService {
 
   constructor(private httpClient: HttpClient) {}
 
-  get(id: string, params?: { string: string }) {
-    return this.httpClient.get(this.apiRoot + '/' + id, { params, observe: 'response' });
+  get(id: string, params?: { string: string }): Observable<GameView> {
+    return this.httpClient.get(this.apiRoot + '/' + id, { params, observe: 'response' })
+      .pipe(
+        map((body: any) => body),
+        catchError(() => of('Error, Unable to access game state.'))
+      );
   }
 
   purchase(game: Game, card: Card) {

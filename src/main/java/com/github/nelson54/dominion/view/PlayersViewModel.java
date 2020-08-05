@@ -1,5 +1,6 @@
 package com.github.nelson54.dominion.view;
 
+import com.github.nelson54.dominion.cards.CardRef;
 import lombok.*;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Objects;
 
 @Data @Builder @Setter @Getter @NoArgsConstructor @AllArgsConstructor
 public class PlayersViewModel {
-    List<CardViewModel> revealedThisTurn;
+    List<CardRef> revealedThisTurn;
 
     String playerId;
     String playerName;

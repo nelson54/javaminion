@@ -4,6 +4,7 @@ import com.github.nelson54.dominion.cards.types.Card;
 import com.github.nelson54.dominion.game.Game;
 import com.github.nelson54.dominion.game.Kingdom;
 import com.github.nelson54.dominion.game.Player;
+import com.github.nelson54.dominion.game.Turn;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class GameViewService {
                 .cardMarket(cardMarket(game.getKingdom()))
                 .playerDetails(playerDetails(player))
                 .players(players(game))
+                .turn(turn(game.getTurn(), player))
                 .logs(new ArrayList<>(game.getLogs()))
                 .build();
     }
@@ -43,6 +45,8 @@ public class GameViewService {
     }
 
     private PlayerDetailsViewModel playerDetails(Player player) {
+        boolean isCurrentPlayer = player.getId()
+                .equals(player.getGame().getTurn().getPlayerId());
 
         List<CardViewModel> hand = player.getHand().stream()
                 .map(this::fromCard).collect(Collectors.toList());
@@ -54,6 +58,19 @@ public class GameViewService {
                 .deckSize(player.getDeck().size())
                 .hand(hand)
                 .discard(discard)
+                .isMyTurn(isCurrentPlayer)
+                .build();
+    }
+
+    private TurnViewModel turn(Turn turn, Player player) {
+        boolean isCurrentPlayer = player.getId()
+                .equals(turn.getPlayerId());
+
+        return TurnViewModel.builder()
+                .isMyTurn(isCurrentPlayer)
+                .actions(turn.getActionPool())
+                .buys(turn.getBuyPool())
+                .money(turn.getMoneyPool())
                 .build();
     }
 
@@ -88,6 +105,7 @@ public class GameViewService {
                 .id(card.getId().toString())
                 .name(card.getName())
                 .cost(card.getCost())
+                .types(card.getCardTypes())
                 .build();
 
         if(card.getOwner() != null) {

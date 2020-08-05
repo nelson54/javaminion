@@ -40,8 +40,11 @@ public class Turn {
     Set<Card> gained;
     Set<Card> bought;
 
+    // TODO convert to bytes
     private long actionPool;
+    // TODO convert to bytes
     private long moneyPool;
+    // TODO convert to bytes
     private long buyPool;
 
     private String playerId;
@@ -221,6 +224,7 @@ public class Turn {
     public long getActionPool() {
         return actionPool;
     }
+
 
     public void setActionPool(long actionPool) {
         this.actionPool = actionPool;

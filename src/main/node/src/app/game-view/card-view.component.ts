@@ -1,21 +1,21 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Card } from '../shared/view/game-view.interface';
-import {Router} from "@angular/router";
+import {Card, CardRef} from '../shared/view/game-view.interface';
 
 @Component({
   selector: 'card-view',
   templateUrl: './card-view.component.html',
-  //styleUrls: ['./card-view.component.scss']
+  // styleUrls: ['./card-view.component.scss']
 })
 export class CardViewComponent implements OnInit {
-  @Input() gameId: string;
-  @Input() card: Card;
+  public static readonly smallBack: string = '/assets/empty-card-back-sm.jpg';
+  public static readonly largeBack: string = '/assets/empty-card-back.jpg';
+
+  @Input() public gameId: string;
+  @Input() public card: Card;
+  @Input() public highlights: CardRef[];
 
   public largeImage: string;
   public smallImage: string;
-
-  static smallBack: string = '/assets/empty-card-back-sm.jpg';
-  static largeBack: string = '/assets/empty-card-back.jpg';
 
   constructor() {
 
@@ -26,15 +26,17 @@ export class CardViewComponent implements OnInit {
     this.largeImage = '/assets/cards/' + this.card.name.toLowerCase().replace(/\s/g, '') + '.jpg';
   }
 
-  isOption() {
-    
+  get isHighlighted() {
+    return this.highlights
+      .filter(card => card.id === this.card.id || card.name === this.card.name)
+      .length > 0;
   }
 
   selectCard() {
-    
+
   }
 
   showCardDetails() {
-    
+
   }
 }
