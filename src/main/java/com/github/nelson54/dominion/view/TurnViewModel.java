@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Data @Getter @Setter @Builder
 public class TurnViewModel {
-    boolean isMyTurn;
+    Boolean isMyTurn;
     long money;
     long buys;
     long actions;

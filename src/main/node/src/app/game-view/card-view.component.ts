@@ -4,7 +4,7 @@ import {Card, CardRef} from '../shared/view/game-view.interface';
 @Component({
   selector: 'card-view',
   templateUrl: './card-view.component.html',
-  // styleUrls: ['./card-view.component.scss']
+  styleUrls: ['./card-view.component.scss']
 })
 export class CardViewComponent implements OnInit {
   public static readonly smallBack: string = '/assets/empty-card-back-sm.jpg';

@@ -12,8 +12,8 @@ interface PlayerDetails {
 
 @Component({
   selector: 'player-details',
-  templateUrl: './player-details.component.html'
-  // styleUrls: ['./player-area-view.component.scss']
+  templateUrl: './player-details.component.html',
+  styleUrls: ['./player-details.component.scss']
 })
 export class PlayerDetailsComponent implements OnInit {
   @Input() public gameId: string;

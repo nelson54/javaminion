@@ -10,7 +10,7 @@ public class PlayerDetailsViewModel {
     int deckSize;
     List<CardViewModel> hand;
     List<CardViewModel> discard;
-    boolean isMyTurn;
+    Boolean isMyTurn;
 
     @Override
     public boolean equals(Object o) {

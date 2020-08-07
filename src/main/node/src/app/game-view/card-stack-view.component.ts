@@ -15,10 +15,9 @@ export class CardStackViewComponent implements OnInit {
   public smallImage: string;
   @Input() public gameId: string;
   @Input() public cardStack: CardStack;
-  @Input() public highlights: CardRef[];
+  @Input() public highlights : CardRef[] = [];
 
   constructor() {
-
   }
 
   ngOnInit() {
@@ -27,8 +26,7 @@ export class CardStackViewComponent implements OnInit {
   }
 
   get isHighlighted() {
-    return this.highlights
-      .filter(card => card.name === this.cardStack.name).length > 0;
+    return (this.highlights || []).filter(card => card.name === this.cardStack.name).length > 0;
   }
 
   choose() {

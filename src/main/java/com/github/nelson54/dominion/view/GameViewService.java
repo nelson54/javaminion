@@ -19,6 +19,7 @@ public class GameViewService {
     public GameViewModel toGameViewModel(Game game, Player player) {
         return GameViewModel.builder()
                 .hash(game.hashCode())
+                .gamePhase(game.getTurn().getPhase())
                 .currentPlayerId(game.getTurn().getPlayerId())
                 .cardMarket(cardMarket(game.getKingdom()))
                 .playerDetails(playerDetails(player))
@@ -32,15 +33,11 @@ public class GameViewService {
         return game.getTurnOrder().stream()
                 .map((player)-> PlayersViewModel.builder()
                     .playerId(player.getId())
-
                     .cardsInDeck(player.getDeck().size())
                     .cardsInDiscard(player.getDiscard().size())
                     .cardsInHand(player.getHand().size())
-
                     .playerName(player.getName())
-
                     .turnOrder(player.getOrder())
-
                     .build()).collect(Collectors.toList());
     }
 
@@ -70,7 +67,7 @@ public class GameViewService {
                 .isMyTurn(isCurrentPlayer)
                 .actions(turn.getActionPool())
                 .buys(turn.getBuyPool())
-                .money(turn.getMoneyPool())
+                .money(turn.getMoneyPool() + turn.getMoney())
                 .build();
     }
 

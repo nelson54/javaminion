@@ -1,21 +1,35 @@
-card-stack-view {
+:host {
+
   display: inline-block;
-  float: right;
-  text-align:center;
+  float: left;
+  text-align: center;
 
-
-  img {
-    height: 39px;
+  .card-stack-container {
+    position: relative;
+    margin-left:10px;
   }
 
-  span {
-    width:100%;
-    text-align:center;
-    display: block;
+  button.plus {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    opacity: .5;
+  }
+
+  .btn-choice {
+    cursor: pointer;
+  }
+
+  .btn-choice img {
+    opacity: 1;
+    box-shadow: 0 0 5px 0 #0066ff;
+  }
+
+  .btn-disable img {
+    opacity: .5;
   }
 
   .btn.btn-card {
     padding: 0;
   }
-
 }

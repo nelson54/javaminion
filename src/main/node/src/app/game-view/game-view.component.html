@@ -1,4 +1,27 @@
-<p>
-  <card-market-view [market]="gameView?.cardMarket"></card-market-view>
-  <player-details [gameId]="id" [highlights]="highlightOptions" [playerDetails]="gameView?.playerDetails"></player-details>
-</p>
+<div>
+  <card-market-view [market]="gameView?.cardMarket" [highlights]="highlightOptions?.market"></card-market-view>
+  <div class="card">
+    <div class="card-header rounded">
+      <dt>Phase:</dt>
+      <dd>{{gameView.gamePhase}}</dd>
+
+      <dt>Actions:</dt>
+      <dd>{{gameView.turn.actions}}</dd>
+
+      <dt>Buys:</dt>
+      <dd>{{gameView.turn.buys}}</dd>
+
+      <dt>Money:</dt>
+      <dd>{{gameView.turn.money}}</dd>
+
+      <dt>Turn:</dt>
+      <dd>buy</dd>
+
+      <button class="btn btn-sm btn-primary float-right header-button">End Phase</button>
+      <button class="btn btn-sm btn-primary float-right header-button">Pass</button>
+    </div>
+    <div class="card-body">
+      <player-details [gameId]="id" [highlights]="highlightOptions" [playerDetails]="gameView?.playerDetails"></player-details>
+    </div>
+  </div>
+</div>

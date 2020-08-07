@@ -1,13 +1,9 @@
-<a class="btn btn-link btn-card" disabled [ngClass]="{ 'btn-choice': isHighlighted }" (click)="choose()">
-  <button
-    class="link"
-    style="position: absolute; bottom: 0; right: 0; opacity: .6;"
-    (click)="showCardDetails()"
-  >
-    +
-  </button>
-  <div class="d-flex flex-column">
-    <img [src]="smallImage" alt="Card {{cardStack.name}}" class="clearfix" />
-    <span class="count">{{cardStack.size}}</span>
-  </div>
-</a>
+<div class="card-stack-container">
+  <a class="btn btn-link btn-card" [ngClass]="{ 'btn-choice': isHighlighted, 'btn-disable': !isHighlighted }" (click)="choose()">
+    <button class="link plus" (click)="showCardDetails()">+</button>
+    <div class="d-flex flex-column">
+      <img [src]="smallImage" alt="Card {{cardStack.name}}" class="clearfix" />
+      <span class="badge badge-dark count">{{cardStack.size}}</span>
+    </div>
+  </a>
+</div>

@@ -16,7 +16,7 @@ export class GameViewService {
   get(id: string, params?: { string: string }): Observable<GameView> {
     return this.httpClient.get(this.apiRoot + '/' + id, { params, observe: 'response' })
       .pipe(
-        map((body: any) => body),
+        map((request: any) => request.body),
         catchError(() => of('Error, Unable to access game state.'))
       );
   }

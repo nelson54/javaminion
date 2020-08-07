@@ -1,9 +1,8 @@
-<div>
+<div class="clearfix">
   <div id="common-cards">
-    <card-stack-view *ngFor="let stack of (market | sorterCommon | filterCommon)" [cardStack]="stack"></card-stack-view>
+    <card-stack-view *ngFor="let stack of (market | filterCommon | sorterCommon)" [highlights]="highlights" [cardStack]="stack"></card-stack-view>
   </div>
   <div id="kingdom-cards">
-    <card-stack-view *ngFor="let stack of (market | filterKingdom | sorterKingdom)" [cardStack]="stack"></card-stack-view>
+    <card-stack-view *ngFor="let stack of (market | filterKingdom | sorterKingdom)" [highlights]="highlights" [cardStack]="stack"></card-stack-view>
   </div>
-
 </div>
